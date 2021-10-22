@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QueryOrderBy__c</fullName>
+    <description>Field API Name for SOQL OrderBy Statement (when pagination is used)</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Field API Name for SOQL OrderBy Statement (when pagination is used)</inlineHelpText>
+    <label>Query OrderBy Field</label>
+    <length>25</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

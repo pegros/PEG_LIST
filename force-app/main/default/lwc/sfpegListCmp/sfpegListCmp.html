@@ -1,0 +1,286 @@
+<template>
+
+    <div class={cardClass}>
+        <!--<lightning-card  title={formatTitle} icon-name={cardIcon} class="cardHeader">-->
+        <lightning-card class="cardHeader">
+            <!-- slds-card_boundary -->
+            <div slot="title" class="slds-media slds-media_center">
+                <template if:true={showCardHeaderIcons}>
+                    <div class="slds-media__figure">
+                        <template if:true={isCollapsible}>
+                            <lightning-button-stateful 
+                                class="expandCollapse"
+                                variant="text"
+                                selected={isCollapsed}
+                                icon-name-when-off="utility:chevrondown"
+                                icon-name-when-on="utility:chevronright"
+                                onclick={handleExpandCollapse}>
+                            </lightning-button-stateful>
+                        </template>
+                        <template if:true={cardIcon}>
+                            <lightning-icon icon-name={cardIcon} size="small" >
+                            </lightning-icon>
+                        </template>
+                    </div>
+                </template>
+                <div class="slds-media__body" >
+                    <h3>{formatTitle}</h3>
+                </div>
+            </div>
+
+            <lightning-button-group slot="actions">
+                <c-sfpeg-action-bar-cmp bar-class= ""
+                                        record-list={selectedRecords}
+                                        config-name={actionConfigName}
+                                        object-api-name={objectApiName}
+                                        record-id={recordId}
+                                        user-id={userId}
+                                        is-debug={isDebug}
+                                        ondone={handleActionDone}
+                                        data-my-id="headerActions">
+                </c-sfpeg-action-bar-cmp>
+            </lightning-button-group>
+
+            <lightning-button-group slot="actions">
+                <!-- Export Action -->
+                <template if:true={showExport}>
+                    <lightning-button-icon
+                            icon-name="utility:download"    size={buttonSize}
+                            variant="border-filled"
+                            alternative-text={exportTitle}  title={exportTitle}
+                            onclick={handleExport}>
+                    </lightning-button-icon>
+                </template>
+
+                <!-- Sort Action (on list display) -->
+                <template if:true={showSort}>
+                    <lightning-button-menu  icon-name="utility:sort"        icon-size={buttonSize}
+                                            variant="border-filled"         menu-alignment="right"
+                                            alternative-text={sortTitle}    title={sortTitle}
+                                            onselect={handleSortSelect} >
+                        <template for:each={sortFields} for:item="iterField">
+                            <lightning-menu-item    key={iterField.fieldName}
+                                                    value={iterField.fieldName}
+                                                    label={iterField.label} 
+                                                    icon-name={iterField.iconName}>
+                            </lightning-menu-item> 
+                        </template>
+                    </lightning-button-menu>
+                </template>
+
+                <!-- Filter Action (if chosen) -->
+                <template if:true={showSearch}>
+                    <lightning-button-icon-stateful icon-name="utility:filterList"  size={buttonSize}
+                                                    variant="border-filled"
+                                                    alternative-text={filterTitle}  title={filterTitle}
+                                                    selected={isFiltered}
+                                                    onclick={handleFilterShow}>
+                    </lightning-button-icon-stateful>
+                    <template if:true={showFilter}>
+                        <section    class="slds-popover slds-nubbin_top-right slds-dynamic-menu"
+                                    role="dialog" style="position:absolute;right:22px;top:50px;">
+                            <div class="slds-popover__body slds-var-p-around_medium">
+                                <lightning-button-group class="slds-col slds-text-color_default slds-align_absolute-center">
+                                    <lightning-button-menu  alternative-text={filterScopeTitle} title={filterScopeTitle}
+                                                            label={filterScope.label}           value={filterScope}
+                                                            onselect={handleFilterSelect}>
+                                        <template for:each={filterFields} for:item="iterFilter"> 
+                                            <lightning-menu-item    key={iterFilter.fieldName}
+                                                                    label={iterFilter.label}
+                                                                    value={iterFilter}
+                                                                    checked={iterFilter.selected}>
+                                            </lightning-menu-item>
+                                        </template>
+                                    </lightning-button-menu>
+                                    <div onkeyup={handleFilterReset} class="slds-button_last" >
+                                        <lightning-input    class="filterInput"
+                                                            placeholder={filterPlaceholder}
+                                                            type="search"
+                                                            value={filterString}
+                                                            variant="label-hidden"
+                                                            onchange={handleFilterChange}>
+                                        </lightning-input>
+                                    </div>
+                                    <lightning-button-icon  icon-name="utility:filter"
+                                                            variant="brand"                 class="slds-button_last"
+                                                            alternative-text={filterApply}  title={filterApplyTitle}
+                                                            onclick={handleFilterApply}>
+                                    </lightning-button-icon>
+                                    <lightning-button-icon  icon-name="utility:close"
+                                                            variant="bare"                  class="slds-var-m-left_medium"
+                                                            alternative-text={filterClose}  title={filterCloseTitle}
+                                                            onclick={handleFilterShow}>
+                                    </lightning-button-icon>
+                                </lightning-button-group>
+                                <template if:true={isFiltering}>
+                                    <lightning-spinner alternative-text={searchLabel} size="medium">
+                                    </lightning-spinner>
+                                </template>
+                            </div>
+                        </section>
+                    </template>
+                </template>
+
+                <!-- Refresh Action -->
+                <lightning-button-icon  icon-name="utility:refresh"     size={buttonSize}
+                                        variant="border-filled"
+                                        alternative-text={refreshTitle} title={refreshTitle}
+                                        onclick={handleRefresh}>
+                </lightning-button-icon>
+            </lightning-button-group>
+           
+            <!-- Debug information display -->
+            <!-- style="text-align:left; width:100%;" -->
+            <template if:true={isDebug}>
+                <div slot="footer" class="footerContent"  >
+                    <dl class="slds-dl_horizontal">
+                        <dt class="slds-dl_horizontal__label slds-truncate">Configuration:</dt>
+                        <dd class="slds-dl_horizontal__detail">Query: {configName} / Header Actions: {actionConfigName}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Loaded?</dt>
+                        <dd class="slds-dl_horizontal__detail">{hasConfig}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Display Type</dt>
+                        <dd class="slds-dl_horizontal__detail">{displayType}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">User</dt>
+                        <dd class="slds-dl_horizontal__detail">User - {userId}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Record</dt>
+                        <dd class="slds-dl_horizontal__detail">{objectApiName} - {recordId}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Records#</dt>
+                        <dd class="slds-dl_horizontal__detail">{resultCount}  </dd>
+                        <template if:true={hasConfig}>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Key / Order Field</dt>
+                        <dd class="slds-dl_horizontal__detail">{configDetails.display.keyField} / {configDetails.query.orderByField} </dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Row Actions</dt>
+                        <dd class="slds-dl_horizontal__detail">{configDetails.rowActions}</dd>
+                        </template>
+                    </dl>
+                </div>
+            </template>
+
+            <!-- Ready state display -->
+            <template if:true={isReady}>
+                
+                <!-- Error Message display -->
+                <template if:true={hasErrorMsg}>
+                    <div class="slds-card__body slds-card__body_inner cardContent slds-var-p-vertical_medium slds-media slds-media_center">
+                            <div    class="slds-media__figure">
+                                <lightning-icon icon-name="utility:warning"
+                                                size="small"
+                                                variant="error">
+                                </lightning-icon>
+                            </div>
+                            <!-- slds-text-title_bold -->
+                            <div    class="slds-media__body slds-text-color_error"
+                                    style="word-wrap: break-word !important;">
+                                {errorMsg}
+                            </div>
+                    </div>
+                </template>
+
+                <!-- Results Display -->
+                <template if:true={hasConfig}>
+                    <div class={contentClass} style={contentStyle}>
+                        <!-- Data Table mode data display -->
+                        <template if:true={isDataTable}>
+                        <!--<div class="slds-card__body cardContent ">-->
+                            <lightning-datatable
+                                    data-id="dataTable"
+                                    key-field={configDetails.display.keyField}
+                                    data={resultList}
+                                    columns={configDetails.display.columns}
+                                    hide-checkbox-column={hideCheckbox}
+                                    column-widths-mode={widthMode} 
+                                    max-row-selection={maxRowSelection}
+                                    default-sort-direction="asc"
+                                    sorted-direction={sortDirection}
+                                    sorted-by={sortedBy}
+                                    onsort={handleSort} 
+                                    onrowaction={handleRowAction}
+                                    onrowselection={handleRowSelection} >
+                            </lightning-datatable>
+                        <!--</div>-->
+                        </template>
+
+                        <!-- Tree Grid mode data display -->
+                        <template if:true={isTreeGrid}>
+                        <!--div class="slds-card__body cardContent ">-->
+                            <lightning-tree-grid
+                                    data-id="treeGrid"
+                                    key-field={configDetails.display.keyField}
+                                    data={resultList}
+                                    columns={configDetails.display.columns}
+                                    hide-checkbox-column={hideCheckbox}
+                                    column-widths-mode={widthMode} 
+                                    max-row-selection={maxRowSelection}
+                                    default-sort-direction="asc"
+                                    sorted-direction={sortDirection}
+                                    sorted-by={sortedBy}
+                                    onsort={handleSort} 
+                                    onrowaction={handleRowAction} >
+                            </lightning-tree-grid>
+                        <!--</div>-->
+                        </template>
+
+                        <!-- List mode data display -->
+                        <template if:true={isList}>
+                        <!--<div class="slds-card__body cardContent slds-var-p-around_small " is-debug={isDebug}>  config-actions={configDetails.rowActions}-->
+                            <lightning-layout   multiple-rows="true"    horizontal-align="end" >
+                                <template for:each={resultList} for:item="iter">
+                                    <lightning-layout-item  key={iter.Id}  size={tileSize} >
+                                        <c-sfpeg-card-dsp   display-type={configDetails.type}
+                                                            config-details={configDetails.display}
+                                                            record-data={iter}
+                                                            is-debug={isDebugFine}
+                                                            onrowaction={handleRowAction}>
+                                        </c-sfpeg-card-dsp>
+                                    </lightning-layout-item>
+                                </template>
+                            </lightning-layout>
+                        <!-- </div> -->
+                        </template>
+                    </div>
+
+                    <!-- Pagination Control -->
+                    <template if:true={showPagination}>
+                        <div class="slds-align_absolute-center slds-card__body cardContent slds-var-p-around_small">
+                            <lightning-button   label={loadMoreLabel}
+                                                variant="base"
+                                                alternative-text={loadMoreLabel}
+                                                onclick={handleLoadNext}>
+                            </lightning-button>
+                        </div>
+                    </template>
+
+                    <!-- Row Action Execution -->
+                    <c-sfpeg-action-bar-cmp bar-class= "slds-hide"
+                                    config-name={configDetails.rowActions}
+                                    object-api-name={objectApiName}
+                                    record-id={recordId}
+                                    user-id={userId}
+                                    is-debug={isDebugFine}
+                                    ondone={handleActionDone}
+                                    data-my-id="rowActions">
+                    </c-sfpeg-action-bar-cmp>
+                </template>
+ 
+            </template>
+
+            <!-- Spinner display (Init vs Loading/Refreshing) -->
+            <template if:false={isReady}>
+                <div class="slds-card__body slds-card__body_inner cardContent">
+                    <p>{initLabel}</p>
+                    <lightning-spinner alternative-text={initLabel} size="medium">
+                    </lightning-spinner>
+                </div>
+            </template>
+            <template if:true={isLoading}>
+                <div class="slds-card__body slds-card__body_inner cardContent">
+                    <p>{searchLabel}</p>
+                    <lightning-spinner alternative-text={searchLabel} size="medium">
+                    </lightning-spinner>
+                </div>
+            </template>
+
+        </lightning-card>
+    </div>
+    
+</template>

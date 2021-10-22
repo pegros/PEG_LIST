@@ -1,0 +1,100 @@
+<template>
+
+    <template if:true={showPopup}>
+        <!-- greyed background -->
+        <div    class="modal-glass slds-backdrop fadein slds-backdrop--open backgroundContainer"
+                tabindex="-1" data-aura-rendered-by="3230:0" style="opacity: 0.8;">
+        </div>
+        <!-- Popup Display -->
+        <section    role="dialog"   class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container popupContainer"  >
+
+                <!-- Header display-->
+                <header class="slds-modal__header">
+                    <template if:true={showClose}>
+                        <lightning-button-icon  icon-name="utility:close" variant="bare"
+                                                class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                                alternative-text="Close" title="Close"
+                                                onclick={handleClose} >
+                        </lightning-button-icon>
+                    </template>
+                    <h2 class="slds-modal__title slds-hyphenate">
+                        {popupTitle}
+                    </h2>
+                </header>
+
+                <!-- Body display-->
+                <div    class="slds-modal__content slds-p-around_large slds-is-relative" >
+                    <p class="slds-text-heading_small slds-p-bottom_small">{popupMessage}</p>
+
+                    <!-- Spinner display-->
+                    <template if:true={showSpinner}>
+                        <!--<div class="slds-is-relative slds-theme_shade" style="height:200px !important;" >-->
+                            <lightning-spinner  alternative-text="Loading"  size="medium">
+                            </lightning-spinner>
+                        <!--</div>-->
+                    </template>
+
+                    <!-- Unitary Create/Edit Form Display -->
+                    <template if:true={showForm}>
+                        <div class="popupForm">
+                        <lightning-record-edit-form record-id={formRecord.Id}
+                                                    object-api-name={formRecord.ObjectApiName}
+                                                    record-type-id={formRecord.RecordTypeId}
+                                                    onload={handleLoad}
+                                              	    onsubmit={handleSubmit}
+                                                    onerror={handleError}
+                                                    onsuccess={handleSave} >
+                            <lightning-messages>
+                            </lightning-messages>
+                            <lightning-layout   multiple-rows="true"    horizontal-align="center" >
+                                <template for:each={formFields} for:item="iterForm">
+                                    <lightning-layout-item  key={iterForm.name}  size={formFieldSize} 
+                                                            alignment-bump="left" >
+                                        <lightning-input-field  field-name={iterForm.name}
+                                                                required={iterForm.required}
+                                                                disabled={iterForm.disabled}
+                                                                value={iterForm.value} >
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+                                </template>
+                                <div class="slds-hide">
+                                    <template for:each={formHiddenFields} for:item="iterFormHidden">
+                                        <lightning-input-field  key={iterFormHidden.name}
+                                                                field-name={iterFormHidden.name}
+                                                                value={iterFormHidden.value} >
+                                        </lightning-input-field>
+                                    </template>
+                                </div>
+                            </lightning-layout>
+                        </lightning-record-edit-form>
+                        </div>
+                    </template>
+
+                </div>
+
+                <!-- Footer display-->
+                <template if:true={showFooter}>
+                    <footer class="slds-modal__footer">
+                        <!-- Confirmation Buttons-->
+                        <template if:true={showConfirmation}>
+                            <lightning-button   variant="neutral"   label={cancelLabel}
+                                                onclick={handleCancel} ></lightning-button>
+                            <lightning-button   variant="brand"     label={confirmLabel}
+                                                class="slds-m-left_small"
+                                                onclick={handleConfirm}></lightning-button>
+                        </template>
+                        <!-- Form Buttons-->
+                        <template if:true={showForm}>
+                            <lightning-button	variant="neutral"   label={cancelLabel}
+                                                onclick={handleCancel}></lightning-button>
+                            <lightning-button	variant="brand"     label={saveLabel}
+                                                class="slds-m-left_small"
+                                                onclick={handleSubmit}></lightning-button>
+                        </template>
+                    </footer>
+                </template>
+            </div>
+        </section>
+    </template>
+</template>

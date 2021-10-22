@@ -1,0 +1,18 @@
+<template>
+
+    <div    name={actionName}  class={iconClass}    onclick={handleIconAction}>
+        <template if:false={isResourceIcon}>
+            <lightning-icon icon-name={iconName}    name={actionName}
+                            size={iconSize}         title={iconTitle}
+                            variant={iconVariant}>
+            </lightning-icon>
+        </template>
+        <template if:true={isResourceIcon}>
+            <lightning-icon src={iconSrc}       name={cmpName}
+                            size={iconSize}     title={iconTitle}
+                            variant={iconVariant} >
+            </lightning-icon>
+            <!-- class={iconClass}   onclick={handleIconAction}-->
+        </template>
+    </div>
+</template>

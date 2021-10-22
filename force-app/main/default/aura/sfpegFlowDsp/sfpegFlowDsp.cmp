@@ -1,0 +1,37 @@
+<aura:component access="global"
+                description="Component to execute a flow in a popup and trigger its closing upon completion.">
+	
+    <!-- Component Parameters -->
+    <aura:attribute name="flowName"     type="String"
+                    access="global"		
+                    description="Name of the flow." />
+    <aura:attribute name="flowParams"   type="Object"
+                    access="global"		
+                    description="Parameters provided as input to the flow." />
+    <aura:attribute name="isDebug"      type="Boolean"
+                    access="global"     default="false"
+                    description="Flag to activate debug logs." />
+    <aura:attribute name="flowParamsStr"   type="String"
+                    access="private"		
+                    description="Stringified version of the Parameters (for debug)." />
+
+    <!-- Component Init -->    
+    <aura:handler   name="init" value="{!this}" action="{!c.doInit}"
+                    description="Init of component / launch of flow."/>
+
+
+    <!-- Utilities -->
+    <lightning:overlayLibrary aura:id="overlayLibrary"/>
+
+    <!-- Component Display -->
+    <div    class="slds-box slds-box_x-small slds-theme_default" 
+            style="min-height:50vh;">
+    	<lightning:flow aura:id="flowContainer" onstatuschange="{!c.statusChange}"/>    
+	</div>
+    <aura:if isTrue="{#v.isDebug}">
+        <div    class="slds-box slds-box_x-small slds-theme_default slds-m-top_small">
+            <p>Flow Name: {!v.flowName}</p>
+            <p>Flow Params: {!v.flowParamsStr}</p>
+        </div>
+    </aura:if>
+</aura:component>

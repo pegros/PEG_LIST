@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>sfpegTest</label>
+    <protected>false</protected>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">Test of the Profile component</value>
+    </values>
+    <values>
+        <field>ProfileActions__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>ProfileAvatar__c</field>
+        <value xsi:type="xsd:string">avatar1.jpg</value>
+    </values>
+    <values>
+        <field>ProfileBanner__c</field>
+        <value xsi:type="xsd:string">banner4.png</value>
+    </values>
+    <values>
+        <field>ProfileDetails__c</field>
+        <value xsi:type="xsd:string">{
+&quot;variant&quot;:&quot;table&quot;,
+&quot;columns&quot;:2,
+&quot;fields&quot;:[&quot;Name&quot;,&quot;OwnerId&quot;]
+}</value>
+    </values>
+    <values>
+        <field>ProfileHeader__c</field>
+        <value xsi:type="xsd:string">{
+&quot;title&quot;: &quot;Name&quot;,
+&quot;badge&quot;:&quot;OwnerId&quot;,
+&quot;details&quot;:[&quot;Name&quot;,&quot;OwnerId&quot;]
+}</value>
+    </values>
+    <values>
+        <field>Scope__c</field>
+        <value xsi:type="xsd:string">sfpegTestObject__c</value>
+    </values>
+</CustomMetadata>

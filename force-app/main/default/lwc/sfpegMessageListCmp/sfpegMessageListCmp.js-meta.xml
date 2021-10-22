@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SF PEG Message List</masterLabel>
+
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage,lightning__RecordPage">
+
+            <property   name="configName"
+                        label="Message Configuration"
+                        type="String"
+                        datasource="apex://sfpegMessageSelector_CTL"
+                        description="(Developer)Name of the Message Configuration record to be used (see sfpegMessage__mdt)."/>
+
+            <property   name="wrappingClass"
+                        label="Wrapping CSS"
+                        description="CSS classes to set on the wrapping component div"
+                        type="String"
+                        default="slds-box slds-theme_default" />
+
+            <property   name="isDebug"
+                        label="Debug?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information."/>
+            <property   name="isDebugFine"
+                        label="Debug (fine) ?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information for all sub-components."/>
+
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

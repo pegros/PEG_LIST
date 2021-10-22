@@ -1,0 +1,235 @@
+<template>
+    <!-- Component Display -->
+    <div  class={wrappingClass}>
+
+        <!-- Error Message display -->
+        <template if:true={errorMsg}>
+            <div class="slds-m-bottom_small">
+                <c-sfpeg-warning-dsp message={errorMsg} variant="warning">
+                </c-sfpeg-warning-dsp>
+            </div>
+        </template>
+
+        <!-- Display of List of Messages -->
+        <template if:true={isReady}>
+
+            <lightning-record-view-form record-id={recordId}
+                                        object-api-name={objectApiName}
+                                        onload={handleFormLoad}>
+                <div class="profileForm">
+
+                    <template if:true={hasHeader}>
+                        <div class="profileHeader">
+
+                            <!-- Banner background display -->
+                            <template if:true={bannerImage}>
+                                <div class={bannerContainerClass}>
+                                    <div class={bannerImageClass}>
+                                        <img src={bannerImage} class="profileBannerImage"/>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <div class="slds-media">
+                                <!-- Avatar icon display -->  
+                                <template if:true={avatarImage}>
+                                    <!--<div class="slds-media__figure">-->
+                                    <div class={avatarClass}>
+                                        <img src={avatarImage} class="profileAvatarImage"/>
+                                    </div>
+                                </template>
+
+                                <div class="slds-media__body">
+                                    <!-- Badges display -->
+                                    <template if:true={headerConfig.badge}>
+                                        <div class={badgeSectionClass} name={headerConfig.badge.name} title={headerConfig.badge.label}>
+                                        <!--<div class={badgeClass} title={headerConfig.badge.label}>-->
+                                            <div class={badgeItemClass}>
+                                                <lightning-output-field field-name={headerConfig.badge.name}
+                                                                        field-class={badgeTextClass} 
+                                                                        variant="label-hidden" >
+                                                </lightning-output-field>
+                                            </div>
+    	                                </div>
+                                    </template>
+                                    <template if:false={headerConfig.badge}>
+                                        <template if:true={bannerImage}>
+                                            <div class={badgeSectionClass}>
+                                                <!--<p>No badge: reserving space</p>-->
+                                            </div>
+                                        </template>
+                                    </template>
+
+                                    <!-- Header info display -->
+                                    <!--<div class={headerClass}>-->
+                                    <template if:true={headerConfig.title}>
+                                        <h2 class={titleDetailsClass}
+                                            style="word-wrap: break-word !important;"
+                                            title={headerConfig.title.label}>
+                                            <lightning-output-field field-name={headerConfig.title.name}
+                                                                    field-class={titleClass} 
+                                                                    variant="label-hidden" >
+                                            </lightning-output-field>
+                                        </h2>
+                                    </template>
+                            
+                                    <template if:true={headerConfig.details}>
+                                        <div class={titleDetailsClass}>
+                                            <ul class="slds-list_horizontal slds-has-dividers_left slds-listbox slds-listbox_horizontal">
+                                                <template for:each={headerConfig.details} for:item="iterFieldH">
+                                                    <li key={iterFieldH.name} class="slds-item" title={iterFieldH.label}>
+                                                        <lightning-output-field field-name={iterFieldH.name}
+                                                                                field-class={fieldClass} 
+                                                                                variant="label-hidden" >
+                                                        </lightning-output-field>
+                                                    </li>
+                                                </template>
+                                            </ul>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- Action bar display -->
+                    <template if:true={hasActions}>
+                        <div class={actionClass}>
+                            <lightning-button-group class="slds-col">
+                                <c-sfpeg-action-bar-cmp bar-class=""
+                                                        config-name={configDetails.actions}
+                                                        object-api-name={objectApiName}
+                                                        record-id={recordId}
+                                                        user-id={userId}
+                                                        is-debug={isDebugFine}>
+                                </c-sfpeg-action-bar-cmp>
+                            </lightning-button-group>
+                        </div>
+                    </template>
+
+                    <!-- Details info display -->
+                    <template if:true={hasDetails}>
+                        <div class={detailsClass}>
+                            <!-- Horizontal list display mode -->
+                            <template if:false={isGridDisplay}>
+                                <ul class="slds-list_horizontal slds-has-dividers_left slds-listbox slds-listbox_horizontal">
+                                    <template for:each={detailsConfig} for:item="iterField">
+                                        <li key={iterField.name} class="slds-item" title={iterField.label}>
+                                            <lightning-output-field field-name={iterField.name}
+                                                                    field-class={fieldClass} 
+                                                                    variant="label-hidden" >
+                                            </lightning-output-field>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </template>
+
+                            <!--Structured display mode (setting grid)-->
+                            <template if:true={isGridDisplay}>
+                                <div class="slds-grid slds-grid_align-spread slds-wrap  slds-grid_vertical-align-start slds-gutters_xx-small slds-grid_pull-padded-xx-small ">
+                                    
+                                    <!-- Base display mode -->
+                                    <template if:true={isBaseDisplay}>
+                                        <template for:each={detailsConfig} for:item="iterField">
+                                            <div class={configDetails.details.fieldClass} key={iterField.name} title={iterField.label}>
+                                                <lightning-output-field field-name={iterField.name}
+                                                                        field-class={fieldClass}
+                                                                        variant={fieldVariant}>
+                                                </lightning-output-field>
+                                            </div>
+                                        </template>
+                                    </template>
+                                    
+                                    <!-- Icon / field display mode -->
+                                    <template if:true={isMediaDisplay}>
+                                        <template for:each={detailsConfig} for:item="iterField">
+                                            <div    class={configDetails.details.fieldClass} key={iterField.name}>
+                                                <div class="slds-media slds-media_small slds-media_center ">
+                                                    <div class="slds-media__figure">
+                                                        <c-sfpeg-icon-dsp   icon-name={iterField.icon}      icon-size={fieldIconSize}
+                                                                            icon-title={iterField.label}    icon-variant={fieldIconVariant}
+                                                                            is-debug={isDebugFine}>
+                                                        </c-sfpeg-icon-dsp>
+                                                    </div>
+                                                    <div class="slds-media__body"> 
+                                                        <lightning-output-field field-name={iterField.name}
+                                                                                field-class={fieldClass}
+                                                                                variant={fieldVariant}>
+                                                        </lightning-output-field>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </template>
+                                    
+                                    <!-- Tab field display mode -->
+                                    <template if:true={isTableDisplay}>
+                                        <template for:each={detailsConfig} for:item="iterField">
+                                            <div class={configDetails.details.fieldClass} key={iterField.name}  >
+                                                <dl class="slds-dl_horizontal slds-has-dividers_top">
+                                                    <dt class="slds-dl_horizontal__label slds-text-color_weak slds-truncate"
+                                                        title={iterField.label} >
+                                                            {iterField.label}
+                                                    </dt>
+                                                    <dd class="slds-dl_horizontal__detail" >
+                                                        <lightning-output-field field-name={iterField.name}
+                                                                                field-class={fieldClass}
+                                                                                variant="label-hidden" >
+                                                        </lightning-output-field>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                        </template>
+                                    </template>
+
+                                </div>
+                            </template>
+
+                        </div>
+                    </template>
+
+                </div>
+            </lightning-record-view-form>
+
+        </template>
+
+        <!-- Loading spinner display -->
+        <template if:false={isReady}>
+            <div class="slds-is-relative" style="height:200px !important;" >-->
+                <lightning-spinner  alternative-text="Loading"  size="medium">
+                </lightning-spinner>
+            </div>
+        </template>
+
+        <template if:true={isDebug}>
+            <div class="slds-box slds-m-top_small"  >
+                <h3 class="slds-text-heading_small">Debug Information</h3>
+                <dl class="slds-dl_horizontal">
+                    <dt class="slds-dl_horizontal__label slds-truncate">Configuration:</dt>
+                    <dd class="slds-dl_horizontal__detail slds-wrap">{configName}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Size</dt>
+                    <dd class="slds-dl_horizontal__detail slds-wrap">Component: {size} / Icons: {fieldIconSize} / Padding: {detailsPadding}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Banner</dt>
+                    <dd class="slds-dl_horizontal__detail slds-wrap">{bannerSrc}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Avatar</dt>
+                    <dd class="slds-dl_horizontal__detail slds-wrap">{avatarSrc}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Header</dt>
+                    <dd class="slds-dl_horizontal__detail slds-wrap">{headerSrc}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Actions</dt>
+                    <dd class="slds-dl_horizontal__detail slds-wrap">{configDetails.actions}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Details</dt>
+                    <dd class="slds-dl_horizontal__detail slds-wrap">{detailsSrc}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Record</dt>
+                    <dd class="slds-dl_horizontal__detail slds-wrap">{objectApiName}: {recordId}</dd>
+                    <template if:true={isReady}>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Display?</dt>
+                        <dd class="slds-dl_horizontal__detail slds-wrap">Header: {hasHeader}, Details: {hasDetails}, Grid: {isGridDisplay}, Base: {isBaseDisplay}, Table: {isTableDisplay}, Media: {isMediaDisplay}</dd>
+                    </template>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Action Class</dt>
+                    <dd class="slds-dl_horizontal__detail slds-wrap">{actionClass}</dd>
+                </dl>
+            </div>
+        </template>
+
+    </div>
+</template>

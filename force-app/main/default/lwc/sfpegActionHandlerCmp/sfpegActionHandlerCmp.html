@@ -1,0 +1,23 @@
+<template>
+    
+    <c-sfpeg-action-bar-cmp bar-class={barClass}
+                            config-name={configName}
+                            user-id={userId}
+                            is-debug={isDebug}
+                            is-vertical="true"
+                            ondone={handleActionDone}>
+    </c-sfpeg-action-bar-cmp>
+
+    <template if:true={isDebug}>
+        <div class="slds-box slds-m-around_xx-small">
+            <p class="slds-m-bottom_xx-small">Handle messages? {doSubscribe}</p>
+            <p class="slds-line-clamp_large" title={lastMessage}>Last Message:<br/> {lastMessage}</p>
+        </div>
+    </template>
+
+    <!-- @Todo: refactor List view config fetch -->
+    <div class="slds-hide">
+        <c-sfpeg-list-cmp></c-sfpeg-list-cmp>
+    </div>
+    
+</template>

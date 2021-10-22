@@ -1,0 +1,16 @@
+.tableLabel {
+    margin-bottom: 0px !important;
+    padding-top: 1px !important;
+    padding-right: 0px !important;
+    /*width: 100% !important;*/
+}
+.horizontalField {
+    margin-bottom: 0px !important;
+    /*width: 100% !important;*/
+}
+.horizontalField .slds-form-element__control {
+    padding-left: 30% !important;
+}
+.fullWidth {
+    width:100% !important;
+}

@@ -1,0 +1,19 @@
+div.gridContainer {
+    max-width: 100% !important;
+    /*margin-top: var(--lwc-spacingXxSmall) !important;
+    margin-bottom: var(--lwc-spacingXxSmall) !important;*/
+}
+
+div.msgWrapper {
+    /*display: block !important;*/
+    max-width: 100% !important;
+}
+.successBox {
+    border-color: var(--lwc-colorBorderSuccess) !important;
+}
+.warningBox {
+    border-color: var(--lwc-colorBorderWarning) !important;
+}
+.errorBox {
+    border-color: var(--lwc-colorBorderError) !important;
+}

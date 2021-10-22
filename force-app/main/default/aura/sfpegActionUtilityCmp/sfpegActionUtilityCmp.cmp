@@ -1,0 +1,57 @@
+<aura:component access="global"
+                implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes"
+                description="Component to display a vertical action menu in the utility bar and handle various utility bar based operations.">
+
+    <!-- Configuration parameters -->
+    <aura:attribute name="barClass"     type="String"   access="global"
+                    default="slds-theme_default slds-p-around_x-small"
+                    description="CSS Classes for the wrapping div"/>
+    <aura:attribute name="configName"   type="String"   access="global"
+                    description="(Developer)Name of the Action Configuration record to be used (see sfpegAction__mdt)."/>
+    <aura:attribute name="handleNotifs" type="Boolean"  access="global"
+                    default="true"
+                    description="Flag to handle action messages (from in page action bars)."/>
+    <aura:attribute name="isDebug"      type="Boolean"  access="global"
+                    default="false"
+                    description="Flag to show debug information."/>
+
+    <!-- Technical internal attributes -->
+    <aura:attribute name="isConsole"    type="Boolean"  access="private"
+                    default="false"
+                    description="Flag to indicate if the component is in console or standard mode."/>
+    <aura:attribute name="userId"       type="String"   access="private"
+                    default="false"
+                    description="Flag to indicate if the component is in console or standard mode."/>
+    <aura:attribute name="isPopupOpen"  type="Boolean"  access="private"
+                    default="false"
+                    description="Flag tracking open state of ."/>
+
+    <!-- Component Init -->    
+    <aura:handler   name="init" value="{!this}" action="{!c.doInit}"
+                    description="Init of component: determination of console/standard mode + fetch of current UserId."/>
+
+    <!-- Console Tab Event Handlers -->
+        <!--
+        <aura:handler event="lightning:tabFocused"
+                  action="{!c.handleTabFocus}"
+                  description="Handling standard Tab focus events" />
+        -->
+
+    <!-- Component Utilities -->
+    <lightning:workspaceAPI     aura:id="workspaceUtil"/>
+    <lightning:navigation       aura:id="navUtil"/>
+    <lightning:utilityBarAPI    aura:id="utilityUtil" />
+    <lightning:overlayLibrary   aura:id="overlayLib"/>
+
+    <!-- Main vertical Action Menu display -->
+    <c:sfpegActionHandlerCmp
+            barClass="{#v.barClass}"
+            configName="{#v.configName}"
+            userId="{!v.userId}"
+            isDebug="{#v.isDebug}"
+            doSubscribe="{#v.handleNotifs}"
+            ondone="{!c.handleAction}">
+    </c:sfpegActionHandlerCmp>
+
+
+</aura:component>	

@@ -1,0 +1,50 @@
+<!--
+* @description  Technical Visualforce page used to fetch custom label values
+*               on server side. Rendering is done as a JSON object, based
+*               on the 'lang' and 'labels' parameters (with the user language
+*               and the list of Custom Label dev names for which translated
+*               display values should be provided).
+* @author       P-E GROS
+* @date         May 2021
+* @see          sfpegMergeLabel_CTL
+*
+* Legal Notice
+* 
+* MIT License
+* 
+* Copyright (c) 2021 pegros
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in all
+* copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
+-->
+
+<apex:page sidebar="false"
+           showChat="false" 
+           showHeader="false" 
+           applyBodyTag="false" 
+           applyHtmlTag="false"
+           contentType="application/json"
+           language="{!$CurrentPage.parameters.lang}"
+           controller="sfpegMergeLabels_CTL" >
+    {
+        <apex:repeat value="{!labelNames}" var="iter" >
+            "{!iter}": "{!JSENCODE($Label[iter])}",
+        </apex:repeat>
+        "END": "END"
+    }
+</apex:page>

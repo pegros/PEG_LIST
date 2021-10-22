@@ -1,0 +1,179 @@
+/* COMPONENT global Classes */
+.profileForm {
+    position    :   relative;
+}
+
+.profileHeader {
+    position    :   relative;
+}
+
+.profileHeader + .profileActions {
+    margin-top   : var(--lwc-varSpacingVerticalSmall);
+}
+
+.profileActions + .profileDetails {
+    margin-top   : var(--lwc-varSpacingVerticalSmall);
+}
+
+.profileHeader + .profileDetails {
+    margin-top   : var(--lwc-varSpacingVerticalSmall); 
+}
+
+
+/* BANNER Classes */
+.profileBannerContainer-large {
+    width	:	100% !important;
+    height	:	27px !important; 
+}
+.profileBannerImage-large {
+    width	    :	100% !important;
+    height	    :	80px !important; 
+    overflow    :	hidden;
+    text-align  :   center;
+    position    :   relative;
+    z-index     :   0;
+	top         :   0px;
+	left        :   0px;
+}
+
+.profileBannerContainer-medium {
+    width	:	100% !important;
+    height	:	17px !important; 
+}
+.profileBannerImage-medium {
+    width	    :	100% !important;
+    height	    :	60px !important; 
+    overflow    :	hidden;
+    text-align  :   center;
+    position    :   relative;
+    z-index     :   0;
+	top         :   0px;
+	left        :   0px;
+}
+
+.profileBannerContainer-small {
+    width	:	100% !important;
+    height	:	7px !important; 
+}
+.profileBannerImage-small {
+    width	    :	100% !important;
+    height	    :	40px !important; 
+    overflow    :	hidden;
+    text-align  :   center;
+    position    :   relative;
+    z-index     :   0;
+	top         :   0px;
+	left        :   0px;
+}
+
+.profileBannerImage {
+    /*margin: -10px 0px 0px -180px;*/
+	object-fit      :   cover;
+    width           :   100%;
+	height          :   100%;
+    object-position :   center;
+}
+
+/* AVATAR Classes */
+.profileAvatar-large {
+    width           :   110px !important;
+    height          :   110px !important; 
+    margin-left     :   20px ;
+    text-align      :   center;
+}
+.profileAvatar-medium {
+    width           :   80px !important;
+    height          :   80px !important; 
+    margin-left     :   15px ;
+    text-align      :   center;
+}
+.profileAvatar-small {
+    width           :   50px !important;
+    height          :   50px !important; 
+    margin-left     :   10px ;
+    text-align      :   center;
+}
+
+.profileAvatarImage {
+    /*margin: -10px 0px 0px -180px;*/
+	object-fit          :   contain;
+    width               :   98%;
+	height              :   98%;
+    border-radius       :   50px !important; 
+    border-style        :   solid;
+    border-width        :   5px !important;
+    border-top-width    :   5px !important;
+    border-bottom-width :   5px !important;
+    border-left-width   :   5px !important;
+    border-right-width  :   5px !important;
+    border-color        :   white !important;
+    object-position     :   50% 50%;
+    z-index             :   50;
+    position            :   relative;
+}
+
+/* BADGE Classes */
+.profileBadge-large {
+    min-height      :   26px;
+    text-align      :   right;    
+    word-wrap       :   break-word !important;
+    margin-bottom   :   34px  !important;
+    margin-right    :   20px  !important;
+    z-index         :   50;
+    position        :   relative;
+}
+.profileBadge-medium {
+    min-height      :   26px;
+    text-align      :   right;    
+    word-wrap       :   break-word !important;
+    margin-bottom   :   24px  !important;
+    margin-right    :   15px  !important;
+    z-index         :   50;
+    position        :   relative;
+}
+.profileBadge-small {
+    min-height      :   26px;
+    text-align      :   right;    
+    word-wrap       :   break-word !important;
+    margin-bottom   :   14px  !important;
+    margin-right    :   10px  !important;
+    z-index         :   50;
+    position        :   relative;
+}
+/*.profileBadge-inverse {
+    color: white !important;
+    --sds-c-input-text-color: white !important;
+    color: var(--lwc-varColorTextInverse) !important;
+}*/
+
+.profileBadgeText {
+    font-weight : var(--lwc-fontWeightBold) !important;
+}
+
+/* HEADER CONTENT Classes */
+.profileHeaderContent {
+    margin-top  : 10px   !important;
+    margin-right : 10px  !important;
+}
+
+/* ACTIONS Classes */
+.profileActions {
+    width: 100%;
+    /*margin-top  : 10px   !important;*/
+    /*display: flex;
+    justify-content: end;*/
+}
+
+/* to override */
+.profileActions * a {
+    color: var(--lwc-colorTextDefault) !important;
+}
+
+
+/* DETAILS Classes */
+.profileDetails {
+    /*margin-top : 10px   !important;
+    margin-bottom : 10px   !important;*/
+    text-overflow: ellipsis !important;
+    /*word-wrap: break-word !important;*/
+}

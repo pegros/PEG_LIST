@@ -1,0 +1,47 @@
+<template>
+
+    <template if:true={isBoolean}>
+        <lightning-icon icon-name={iconValue} title={fieldLabel} size="x-small">
+        </lightning-icon>
+    </template>
+
+    <template if:true={isEmail}>
+        <lightning-formatted-email value={fieldValue} title={fieldLabel} hide-icon>
+        </lightning-formatted-email>
+    </template>
+
+    <template if:true={isPhone}>
+        <lightning-formatted-phone value={fieldValue} title={fieldLabel}>
+        </lightning-formatted-phone>
+    </template>
+
+    <template if:true={isNumber}>
+        <lightning-formatted-number value={fieldValue} format-style="decimal" title={fieldLabel}>
+        </lightning-formatted-number>
+    </template>
+
+    <template if:true={isPercent}>
+        <lightning-formatted-number value={percentValue} format-style="percent" title={fieldLabel}>
+        </lightning-formatted-number>
+    </template>
+
+    <template if:true={isCurrency}>
+        <lightning-formatted-number value={fieldValue} format-style="currency" currency-code={currencyCode} title={fieldLabel}>
+        </lightning-formatted-number>
+    </template>
+
+    <template if:true={isDate}>
+        <lightning-formatted-date-time value={fieldValue} title={fieldLabel}>
+        </lightning-formatted-date-time>
+    </template>
+
+    <template if:true={isDateLocal}>
+        <lightning-formatted-date-time value={fieldValue} title={fieldLabel}>
+        </lightning-formatted-date-time>
+    </template>
+
+    <template if:true={isDefault}>
+        <lightning-formatted-text value={fieldValue} title={fieldLabel}>
+        </lightning-formatted-text>
+    </template>
+</template>

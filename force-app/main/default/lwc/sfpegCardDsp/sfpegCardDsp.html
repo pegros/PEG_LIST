@@ -1,0 +1,111 @@
+<template>
+
+    <template if:true={isReady}>
+
+        <div class="slds-box slds-box_x-small slds-var-m-around_small ">
+            <div class="slds-media">
+                <template if:true={hasIcon}>
+                    <div class="slds-media__figure">
+                        <c-sfpeg-icon-dsp   icon-name={cardIcon}
+                                            icon-size={cardIconSize}
+                                            icon-title={cardTitle}
+                                            icon-variant={cardIconVariant}
+                                            is-debug={isDebug}>
+                        </c-sfpeg-icon-dsp>
+                    </div>
+                </template>
+
+                <div class="slds-media__body">
+                    <!-- slds-hyphenate -->
+                    <div class="slds-media slds-media_center">
+                        <div class="slds-media__body">
+                            <div class="slds-truncate" title={cardTitleLabel} >
+                                <template if:true={hasTitleLink}>
+                                    <a onclick={handleTitleLink}>
+                                        <lightning-formatted-text   value={cardTitle}
+                                                                    class="slds-text-title_bold">
+                                        </lightning-formatted-text>
+                                    </a>
+                                </template>
+                                <template if:false={hasTitleLink}>
+                                    <lightning-formatted-text   value={cardTitle}
+                                                                class="slds-text-title_bold">
+                                    </lightning-formatted-text>
+                                </template>
+                            </div>
+                        </div>
+                        <template if:true={hasActions}>
+                            <div class="slds-media__figure slds-media__figure_reverse">
+                                <lightning-button-menu  icon-size="x-small"               variant="border"
+                                                        alternative-text="Actions"      title="Actions"
+                                                        menu-alignment="right"
+                                                        onselect={handleActionSelect} >
+                                    <!--<template for:each={configActions} for:item="iterAction">-->
+                                    <template for:each={cardMenu} for:item="iterAction">
+                                        <template if:true={iterAction.disabled}>
+                                            <lightning-menu-item    key={iterAction.name}
+                                                                    value={iterAction}
+                                                                    label={iterAction.label} 
+                                                                    disabled
+                                                                    icon-name={iterAction.iconName} >
+                                            </lightning-menu-item> 
+                                        </template>
+                                        <template if:false={iterAction.disabled}>
+                                            <lightning-menu-item    key={iterAction.name}
+                                                                    value={iterAction}
+                                                                    label={iterAction.label} 
+                                                                    icon-name={iterAction.iconName} >
+                                            </lightning-menu-item> 
+                                        </template>
+                                    </template>
+                                </lightning-button-menu>
+                            </div>
+                        </template>
+                    </div>
+
+                    <div class="slds-media slds-var-m-bottom_xx-small slds-var-m-top_xx-small">
+                        <template if:true={isTile}>
+                            <ul class="slds-list_horizontal slds-has-dividers_left slds-listbox slds-listbox_horizontal">      
+                                <template for:each={cardData} for:item="iter">
+                                    <li key={iter.name}
+                                        title={iter.label}
+                                        class="slds-item slds-text-body_small">
+                                        <!--{iter.value}-->
+                                        <c-sfpeg-field-dsp  field-type={iter.type}
+                                                            field-label={iter.label}
+                                                            field-value={iter.value}>
+                                        </c-sfpeg-field-dsp>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+
+                        <template if:true={isCard}>
+                            <div class="slds-form slds-grid slds-gutters slds-wrap fullWidth">
+                                <template for:each={cardData} for:item="iter">
+                                    <div class={fieldClass} key={iter.name} > <!-- key={iter.label} -->
+                                        <label  class="slds-form-element__label slds-truncate tableLabel"
+                                                title={iter.label}>
+                                            {iter.label} <!--{iter._isDuplicate}-->
+                                        </label>
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static slds-text-body_small">
+                                                <!--{iter.value}-->
+                                                <c-sfpeg-field-dsp  field-type={iter.type}
+                                                                    field-label={iter.label}
+                                                                    field-value={iter.value}>
+                                                </c-sfpeg-field-dsp>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </template>
+    
+</template>

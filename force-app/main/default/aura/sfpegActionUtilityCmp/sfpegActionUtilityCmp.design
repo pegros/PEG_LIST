@@ -1,0 +1,19 @@
+<design:component label="SF PEG Utility Action Menu" >
+
+    <design:attribute   name="barClass"     label="CSS Class"
+                        default="slds-theme_shade slds-p-vertical_xx-small"
+                        description="CSS Classes for the wrapping div"/>
+                
+    <design:attribute   name="configName"   label="Action Configuration"
+                        datasource="apex://sfpegActionSelector_CTL"
+                        description="(Developer)Name of the Action Configuration record to be used (see sfpegAction__mdt)."/>
+
+    <design:attribute   name="handleNotifs" label="Handle Notifications?"
+                        default="true"
+                        description="Flag to indicate that this instance of the component handles action messages from other action bar components."/>
+
+    <design:attribute   name="isDebug"      label="Debug?"
+                        default="false"
+                        description="Flag to show debug information."/>
+    
+</design:component>

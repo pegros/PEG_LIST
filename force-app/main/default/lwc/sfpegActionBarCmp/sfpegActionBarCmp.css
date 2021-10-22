@@ -1,0 +1,3 @@
+.slds-dropdown__item a {
+    color: var(--lwc-colorTextDefault) !important;
+}

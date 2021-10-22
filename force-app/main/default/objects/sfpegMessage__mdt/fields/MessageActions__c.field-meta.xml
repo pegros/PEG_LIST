@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MessageActions__c</fullName>
+    <description>Configuration of the Actions used in the message actions (should be a sfpegAction record name)</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Configuration of the Actions used in the message actions (should be a sfpegAction record name)</inlineHelpText>
+    <label>Message Actions</label>
+    <length>256</length>
+    <type>LongTextArea</type>
+    <visibleLines>2</visibleLines>
+</CustomField>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ProfileDetails__c</fullName>
+    <description>Configuration of the list of fields to be displayed in the Details section</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Configuration of the list of fields to be displayed in the Details section</inlineHelpText>
+    <label>Profile Details</label>
+    <length>100000</length>
+    <type>LongTextArea</type>
+    <visibleLines>10</visibleLines>
+</CustomField>

@@ -1,0 +1,321 @@
+({
+/***
+* @author P-E GROS
+* @date   June 2021
+* @description  Aura Component to display an action menu in a utility bar and handle specific console operations.
+*
+* Legal Notice
+* 
+* MIT License
+* 
+* Copyright (c) 2021 pegros
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in all
+* copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
+***/
+    /*TABS_TO_CLOSE : {},
+    TABS_TO_FOCUS : {},*/
+    isDebug : false,
+    // Initialization
+    processInit : function(component,event,helper) {
+        helper.isDebug = component.get("v.isDebug");
+        if (helper.isDebug) console.log('processInit: START');
+
+        // User ID fetch
+        let currentUser = $A.get("$SObjectType.CurrentUser");
+        if (helper.isDebug) console.log('processInit: currentUser fetched',JSON.stringify(currentUser));
+        component.set("v.userId",currentUser.Id);
+
+        // console mode flag init
+        let workspaceUtil = component.find("workspaceUtil");
+        workspaceUtil.isConsoleNavigation()
+        .then(consoleMode => {
+            component.set("v.isConsole",consoleMode);
+            if (helper.isDebug) console.log('processInit: END / console mode set ', consoleMode);
+        }).catch(function(error){
+            console.warn('processInit: END / isConsoleNavigation error ',JSON.stringify(error));  
+        });        
+
+        if (helper.isDebug) console.log('processInit: END (synchronous part)');	
+	},
+    // Action Handling
+    processAction: function(action, component, helper) {
+        if (helper.isDebug) console.log('processAction: START');
+
+        if (helper.isDebug) console.log('processAction: action type provided ',action.type);
+        switch (action.type) {
+            case 'minimize':
+                if (helper.isDebug) console.log('processAction: minimizing utility window');
+                helper.minimize(component,helper);
+                break;
+            case 'openTab':
+                if (helper.isDebug) console.log('processAction: opening/replacing one tab');
+                helper.openTab(action.params,component,helper);
+                break;
+            case 'closeTabs':
+                if (helper.isDebug) console.log('processAction: closing tabs');
+                helper.closeTabs(action.params.closeAll,component,helper);
+                break;
+            case 'openFlow':
+                if (helper.isDebug) console.log('processAction: opening Flow popup');
+                helper.openFlow(action.params,component,helper);
+                break;
+            case 'openPopup':
+                if (helper.isDebug) console.log('processAction: opening custom Aura component popup');
+                helper.openPopup(action.params,component,helper);
+                break;
+            default:
+                console.warn('processAction: Unsupported action type ',action.type);
+        }
+        if (helper.isDebug) console.log('processAction: END');
+    },
+    minimize: function(component,helper) {
+        if (helper.isDebug) console.log('minimize: START');
+
+        let utilityUtil = component.find('utilityUtil');
+        utilityUtil.getEnclosingUtilityId()
+        .then(utilityId  => {
+            if (helper.isDebug) console.log('minimize: utilityId fetched ',utilityId);
+            if( utilityId ) {
+                if (helper.isDebug) console.log('minimize: END OK / minimizing tab');
+                return utilityUtil.minimizeUtility({'utilityId':utilityId});
+            }
+            else {
+                console.warn('minimize: END KO / utility close requested but component not in utility bar');
+                throw 'Configuration problem: utility close requested but component not in utility bar';
+            }
+        }).then(success => {
+            if (helper.isDebug) console.log('minimize: END utility minimized');
+        }).catch(error => {
+            console.warn('minimize: END utility minimization error',error);
+        });
+        if (helper.isDebug) console.log('minimize: fetching utility ID');
+    },
+    closeTabs : function(closeAll,component,helper) {
+        if (helper.isDebug) console.log('closeTabs: START with closeAll positionned to ',closeAll);
+                
+        let isConsole = component.get("v.isConsole");
+        if (helper.isDebug) console.log('closeTabs: isConsole fetched ',isConsole);
+
+        if (isConsole) {
+            if (helper.isDebug) console.log('closeTabs: processing tab close');
+            let workspaceAPI = component.find("workspaceUtil");
+            workspaceAPI.getAllTabInfo()
+            .then(tabinfos => {
+                if (helper.isDebug)console.log('closeTabs: tab info fetched ', JSON.stringify(tabinfos));       
+
+                if (tabinfos) {
+                    if (helper.isDebug) console.log('closeTabs: closing tabs ');
+                    tabinfos.forEach(tab => {
+                        if (helper.isDebug) console.log('closeTabs: closing tab ',JSON.stringify(tab));
+                        if (tab.pinned) {
+                            if (helper.isDebug) console.log('closeTabs: keeping pinned tab');
+                        }
+                        else if (tab.focused) {
+                            if (helper.isDebug) console.log('closeTabs: handling focused tab');
+                            if (closeAll) {
+                                console.log('closeTabs: closing focused tab');
+                                workspaceAPI.closeTab({'tabId': tab.tabId});
+
+                                let navService = component.find("navService");
+                                navService.navigate({
+                                    "type": "standard__namedPage",
+                                    "attributes": {
+                                        "pageName": "home"    
+                                    }
+                                },true);
+                                console.log('closeTabs: opening home');
+                            }
+                            else {
+                                console.log('closeTabs: keeping focused tab');
+                            }
+                        }
+                        else {
+                            console.log('closeTabs: closing tab (non focused/pinned)');
+                            workspaceAPI.closeTab({'tabId': tab.tabId});
+                        }
+                    });
+                    console.log('closeTabs: all tab close requested');
+                }
+                else {
+                    console.warn('closeTabs: END KO / no tabinfos fetched ');
+                }
+            }).catch(error => {
+                console.warn('closeTabs: END KO / tab info request failed ', JSON.stringify(error));
+            });
+            console.log('closeTabs: all tabInfos requested');
+        }
+        else {
+            console.warn('closeTabs: END KO / close tab in non console mode!');
+        }
+    },
+    openTab : function(params,component,helper) {
+        if (helper.isDebug) console.log('openTab: START with params ',JSON.stringify(params));
+
+        let isConsole = component.get("v.isConsole");
+        if (helper.isDebug) console.log('openTab: isConsole fetched ',isConsole);
+
+        let sourceId = params.sourceId;
+        if (helper.isDebug) console.log('openTab: sourceId extracted ',sourceId);
+        let targetId = params.targetId;
+        if (helper.isDebug) console.log('openTab: targetId extracted ',targetId);
+        let targetPage = params.targetPage;
+        if (helper.isDebug) console.log('openTab: targetPage extracted ',targetPage);
+
+        if (isConsole) {
+            // ### CONSOLE MODE ###
+            if (helper.isDebug) console.log('openTab: operating in console mode');
+            
+            let workspaceUtil = component.find("workspaceUtil");
+            let openParams = (targetId ? {recordId: targetId} : {pageReference : targetPage});
+            openParams.focus= true;
+            openParams.overrideNavRules= false;
+            if (helper.isDebug) console.log('openTab: openParams prepared',JSON.stringify(openParams));
+           
+            workspaceUtil.openTab(openParams)
+            .then(function(newTabId){
+                if (helper.isDebug) console.log('openTab: new tab opened ',newTabId);
+                //helper.TABS_TO_FOCUS[newTabId] = true;
+                //if (helper.isDebug) console.log('openTab: TABS_TO_FOCUS updated ',JSON.stringify(helper.TABS_TO_FOCUS));
+                if (sourceId) {
+                    if (helper.isDebug) console.log('openTab: closing old tab ',sourceId);
+                    workspaceUtil.closeTab({tabId: sourceId})
+            		.then(function(status){
+                		if (helper.isDebug) console.log('openTab: END / previous tab closed ',status);
+            		}).catch(function(error){
+            			console.warn('openTab: END / closeTab error ',JSON.stringify(error));  
+        			});
+                }
+                else {
+                    if (helper.isDebug) console.log('openTab: END / no old tab to close ');
+                }
+            }).catch(function(error){
+            	console.warn('openTab: END / openTab error ',JSON.stringify(error));  
+        	});
+        	if (helper.isDebug) console.log('openTab: temporary end');
+        }
+        else {
+            // ### STANDARD MODE ###
+            if (helper.isDebug) console.log('openTab: operating in standard mode');
+            let navService = component.find("navUtil");
+            let pageRef = (targetId ? {"type": "standard__recordPage",
+                                       "attributes": {"recordId": targetId,"actionName": "view" }}
+                                    : targetPage);
+            if (helper.isDebug) console.log('openTab: target pageRef prepared ', JSON.stringify(pageRef));
+            navService.navigate(pageRef);
+            if (helper.isDebug) console.log('openTab: END');
+        }
+    },
+    openFlow : function(params,component,helper) {
+        if (helper.isDebug) console.log('openFlow: START with params ',JSON.stringify(params));
+
+        $A.createComponent("c:sfpegFlowDsp", {
+                "flowName":     params.name,
+                "flowParams":   params.params,
+                "isDebug":      helper.isDebug
+            },
+            function(flowCmp, status, errorMessage) {
+                if (status === "SUCCESS") {
+                    console.log('openFlow: flow component create OK ', flowCmp);
+
+                    let overlayLib = component.find("overlayLib");
+                    overlayLib.showCustomModal({
+                           header: params.header,
+                           body: flowCmp, 
+                           showCloseButton: true,
+                           cssClass: params.class || 'slds-modal slds-fade-in-open slds-slide-down-cancel slds-modal_large',
+                           closeCallback: function() {
+                               if (params.doRefresh) {
+                                   $A.get('e.force:refreshView').fire();
+                                   console.log('openFlow: END / refresh fired');
+                               }
+                               else {
+                                    console.log('openFlow: END / no refresh fired');
+                               }
+                           }
+                    });
+                    console.log('openFlow: showCustomModal done');
+                }
+                else {
+                    console.log('openFlow: END KO / component create failed ', errorMessage);
+                }
+            }
+        );
+
+        if (helper.isDebug) console.log('openFlow: component creation requested');
+    },
+    openPopup : function(params,component,helper) {
+        if (helper.isDebug) console.log('openPopup: START with params ',JSON.stringify(params));
+
+        $A.createComponent(params.name, params.params,
+            function(content, status, errorMessage) {
+              if (status === "SUCCESS") {
+                  console.log('openPopup: component create OK');
+                  let overlayLib = component.find("overlayLib");
+                  overlayLib.showCustomModal({
+                           header: params.header,
+                           body: content, 
+                           showCloseButton: true,
+                           cssClass: content.class || 'slds-modal slds-fade-in-open slds-slide-down-cancel',
+                           closeCallback: function() {
+                               if (params.doRefresh) {
+                                   $A.get('e.force:refreshView').fire();
+                                   console.log('openPopup: END / refresh fired');
+                               }
+                               else {
+                                    console.log('openPopup: END / no refresh fired');
+                               }
+                           }
+                  });
+                  console.log('openPopup: showCustomModal done');
+              }
+              else {
+                  console.log('openPopup: END KO / component create failed ',errorMessage);
+              }
+         });
+
+        if (helper.isDebug) console.log('openFlow: component creation requested');
+    }
+    //,
+    // Workspace Tab Event Handling
+    /*processTabFocus : function(component, event, helper) {
+        if (helper.isDebug) console.log('processTabFocus: START');
+        //if (helper.isDebug) console.log('processTabFocus: event params ', JSON.stringify(event.getParams()));
+        let previousTabId = event.getParam('previousTabId');
+        if (helper.isDebug) console.log('processTabFocus: previousTabId extracted ',previousTabId);
+        
+        //if (helper.isDebug) console.log('processTabFocus: TABS_TO_CLOSE fetched ',JSON.stringify(helper.TABS_TO_CLOSE));
+        //if (helper.isDebug) console.log('processTabFocus: TABS_TO_FOCUS fetched ',JSON.stringify(helper.TABS_TO_FOCUS));
+        if (helper.TABS_TO_FOCUS[previousTabId]) {
+        	if (helper.isDebug) console.log('processTabFocus: previousTabId to refocus');
+            delete helper.TABS_TO_FOCUS[previousTabId];
+        	//if (helper.isDebug) console.log('processTabFocus: TABS_TO_FOCUS updated ',JSON.stringify(helper.TABS_TO_FOCUS));
+            let workspaceUtil = component.find("workspaceUtil");
+        	workspaceUtil.focusTab({tabId: previousTabId})
+            .then(function(status){
+                if (helper.isDebug) console.log('processTabFocus: END / previous tab focused ',status);
+            }).catch(function(error){
+            	console.warn('processTabFocus: END / focusTab error ',JSON.stringify(error));  
+        	});
+            if (helper.isDebug) console.log('processTabFocus: refocusing tab');
+        }
+        else {
+            if (helper.isDebug) console.log('processTabFocus: END (no refocus needed)');	
+        }
+	}*/
+})

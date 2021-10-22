@@ -1,0 +1,149 @@
+<template>
+    <div class="slds-theme_default slds-box slds-m-around_xx-small">
+        <p class="slds-m-bottom_xx-small">Handle messages? {doSubscribe}</p>
+        <p class="slds-line-clamp_large slds-m-bottom_xx-small" title={lastContext}>Last Context: {lastContext}</p>
+        <p class="slds-line-clamp_large slds-m-bottom_xx-small" title={lastMessage}>Last Message:<br/> {lastMessage}</p>
+        <p class="slds-line-clamp_large slds-m-bottom_xx-small" title={fromPage}>Same Page?: {fromPage}</p>
+        <lightning-button-group class="slds-align_absolute-center">
+        <lightning-button   label="Refresh (TEST)"
+                            variant="brand"
+                            onclick={handleAction}>
+        </lightning-button>
+        <lightning-button   label="Toast (TEST2)"
+                            variant="neutral"
+                            onclick={handleAction2}>
+        </lightning-button>
+        </lightning-button-group>
+    </div>
+
+    <div class="slds-theme_inverse slds-box slds-m-around_xx-small">
+        <a>Link</a>
+        <p>Text</p> 
+        <lightning-button-menu alternative-text="Show menu" variant="bare-inverse" label="Bare Inverse">
+                <lightning-menu-item value="MenuItemOne" label="Menu Item One"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemTwo" label="Menu Item Two"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemThree" label="Menu Item Three"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemFour" label="Menu Item Four"></lightning-menu-item>
+        </lightning-button-menu>
+        <span class="slds-m-horizontal_xx-small">
+        <lightning-button-menu alternative-text="Show menu" variant="border-inverse" label="Border Inverse">
+                <lightning-menu-item value="MenuItemOne" label="Menu Item One"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemTwo" label="Menu Item Two"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemThree" label="Menu Item Three"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemFour" label="Menu Item Four"></lightning-menu-item>
+        </lightning-button-menu>
+        </span>
+        <span class="slds-m-horizontal_xx-small">
+        <lightning-button-menu alternative-text="Show menu" variant="border-filled" label="Border Filled">
+                <lightning-menu-item value="MenuItemOne" label="Menu Item One"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemTwo" label="Menu Item Two"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemThree" label="Menu Item Three"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemFour" label="Menu Item Four"></lightning-menu-item>
+        </lightning-button-menu>
+        </span>
+        <span class="slds-m-horizontal_xx-small">
+        <lightning-button-menu alternative-text="Show menu" variant="border" label="Border">
+                <lightning-menu-item value="MenuItemOne" label="Menu Item One"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemTwo" label="Menu Item Two"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemThree" label="Menu Item Three"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemFour" label="Menu Item Four"></lightning-menu-item>
+        </lightning-button-menu>
+        </span>
+        <span class="slds-m-horizontal_xx-small">
+        <lightning-button-menu alternative-text="Show menu" variant="container" label="Container">
+                <lightning-menu-item value="MenuItemOne" label="Menu Item One"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemTwo" label="Menu Item Two"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemThree" label="Menu Item Three"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemFour" label="Menu Item Four"></lightning-menu-item>
+        </lightning-button-menu>
+        </span>
+        <span class="slds-m-horizontal_xx-small">
+        <lightning-button-menu alternative-text="Show menu" variant="bare" label="Bare">
+                <lightning-menu-item value="MenuItemOne" label="Menu Item One"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemTwo" label="Menu Item Two"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemThree" label="Menu Item Three"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemFour" label="Menu Item Four"></lightning-menu-item>
+        </lightning-button-menu>
+        </span>
+    </div>
+
+    <div class="slds-theme_info slds-box slds-m-around_xx-small">
+        <a>Link</a>
+        <p>Text</p> 
+        <lightning-button-menu alternative-text="Show menu" variant="bare-inverse" label="Bare Inverse">
+                <lightning-menu-item value="MenuItemOne" label="Menu Item One"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemTwo" label="Menu Item Two"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemThree" label="Menu Item Three"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemFour" label="Menu Item Four"></lightning-menu-item>
+        </lightning-button-menu>
+        <span class="slds-m-horizontal_xx-small">
+        <lightning-button-menu alternative-text="Show menu" variant="border-inverse" label="Border Inverse">
+                <lightning-menu-item value="MenuItemOne" label="Menu Item One"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemTwo" label="Menu Item Two"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemThree" label="Menu Item Three"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemFour" label="Menu Item Four"></lightning-menu-item>
+        </lightning-button-menu>
+        </span>
+        <span class="slds-m-horizontal_xx-small">
+        <lightning-button-menu alternative-text="Show menu" variant="border-filled" label="Border Filled">
+                <lightning-menu-item value="MenuItemOne" label="Menu Item One"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemTwo" label="Menu Item Two"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemThree" label="Menu Item Three"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemFour" label="Menu Item Four"></lightning-menu-item>
+        </lightning-button-menu>
+        </span>
+        <span class="slds-m-horizontal_xx-small">
+        <lightning-button-menu alternative-text="Show menu" variant="border" label="Border">
+                <lightning-menu-item value="MenuItemOne" label="Menu Item One"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemTwo" label="Menu Item Two"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemThree" label="Menu Item Three"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemFour" label="Menu Item Four"></lightning-menu-item>
+        </lightning-button-menu>
+        </span>
+        <span class="slds-m-horizontal_xx-small">
+        <lightning-button-menu alternative-text="Show menu" variant="container" label="Container">
+                <lightning-menu-item value="MenuItemOne" label="Menu Item One"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemTwo" label="Menu Item Two"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemThree" label="Menu Item Three"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemFour" label="Menu Item Four"></lightning-menu-item>
+        </lightning-button-menu>
+        </span>
+        <span class="slds-m-horizontal_xx-small">
+        <lightning-button-menu alternative-text="Show menu" variant="bare" label="Bare">
+                <lightning-menu-item value="MenuItemOne" label="Menu Item One"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemTwo" label="Menu Item Two"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemThree" label="Menu Item Three"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemFour" label="Menu Item Four"></lightning-menu-item>
+        </lightning-button-menu>
+        </span>
+    </div>
+
+        <c-sfpeg-action-bar-cmp bar-class= "slds-hide "
+                                    config-name="N/A"
+                                    object-api-name={objectApiName}
+                                    record-id={recordId}
+                                    user-id="USER1"
+                                    is-debug={isDebugFine}
+                                    data-my-id="rowActions1">
+        </c-sfpeg-action-bar-cmp>
+
+        <c-sfpeg-action-bar-cmp bar-class= "slds-hide "
+                                    config-name="N/A"
+                                    object-api-name={objectApiName}
+                                    record-id={recordId}
+                                    user-id="USER2"
+                                    is-debug={isDebugFine}
+                                    data-my-id="rowActions2" >
+        </c-sfpeg-action-bar-cmp>
+
+
+        <lightning-button-menu  label="Active Menu">
+                <lightning-menu-item    label="Active option"></lightning-menu-item>
+                <lightning-menu-item    label="Inactive option" disabled></lightning-menu-item>
+        </lightning-button-menu>
+        <lightning-button-menu  label="Inactive Menu" disabled>
+                <lightning-menu-item    label="Active option"></lightning-menu-item>
+                <lightning-menu-item    label="Inactive option" disabled></lightning-menu-item>
+        </lightning-button-menu>
+
+</template>

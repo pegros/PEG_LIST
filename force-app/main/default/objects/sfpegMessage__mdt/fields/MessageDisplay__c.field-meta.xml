@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MessageDisplay__c</fullName>
+    <description>JSON Configuration of the different conditional messages to be displayed</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>JSON Configuration of the different conditional messages to be displayed</inlineHelpText>
+    <label>Message Display</label>
+    <length>100000</length>
+    <type>LongTextArea</type>
+    <visibleLines>10</visibleLines>
+</CustomField>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>sfpegTest</label>
+    <protected>false</protected>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">Test KPI List configuration</value>
+    </values>
+    <values>
+        <field>DisplayConfig__c</field>
+        <value xsi:type="xsd:string">{
+    &quot;groups&quot;: [
+        {
+            &quot;label&quot;: &quot;List #1&quot;,
+            &quot;icon&quot;: &quot;custom:custom19&quot;,
+            &quot;border&quot;: &quot;true&quot;,
+            &quot;kpis&quot;: [
+                {
+                    &quot;name&quot;: &quot;Name&quot;,
+                    &quot;label&quot;: &quot;Name&quot;,
+                    &quot;iconName&quot;: &quot;custom:custom1&quot;,
+                    &quot;title&quot;: &quot;Name&quot;
+                }
+            ]
+        }
+    ]
+}</value>
+    </values>
+    <values>
+        <field>Scope__c</field>
+        <value xsi:type="xsd:string">sfpegTestObject__c</value>
+    </values>
+</CustomMetadata>

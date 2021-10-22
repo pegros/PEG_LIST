@@ -1,0 +1,41 @@
+
+div.groupWrapper {
+    max-width: 100% !important;
+    /*margin-left: 1px !important;
+    margin-right: 1px !important;*/
+    margin-top: var(--lwc-spacingXxSmall) !important;
+    margin-bottom: var(--lwc-spacingXxSmall) !important;
+    /*padding-left: 5px !important;
+    padding-right: 5px !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;*/
+    /*background: pink !important;*/
+}
+
+.cardWrapper {
+    display: block !important;
+    max-width: 100% !important;
+    /*margin-top: 2px !important;
+    margin-bottom: 2px !important;*/
+    /*margin-left: 5px !important;
+    margin-right: 5px !important;*/
+    /*padding-left: var(--lwc-spacingXxSmall) !important;
+    padding-right: var(--lwc-spacingXxSmall) !important;*/
+    /*background: grey !important;*/
+    /*--sds-c-card-header-spacing-block-start: 2px !important; */
+    --sds-c-card-header-spacing-block-start: var(--lwc-spacingXxSmall) !important;
+    --sds-c-card-header-spacing-block-end: 0px !important;
+    --sds-c-card-body-spacing-block-start: 0px !important;
+    --sds-c-card-body-spacing-block-end: 0px !important;
+    --sds-c-card-radius-border: var(--lwc-borderRadiusMedium, 0.25rem) !important;
+    /*margin-left: 2px !important;
+    margin-right: 2px !important;*/
+    /*margin-right: 0.5rem !important;    */
+}
+
+.mainKpi {
+    --lwc-inputStaticFontSize: 1.1em  !important;
+    --lwc-inputStaticFontWeight: bold !important;
+    /*font-size: 1.1em  !important;
+    font-weight: bold !important;*/
+}
