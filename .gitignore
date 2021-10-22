@@ -38,3 +38,6 @@ ehthumbs.db
 $RECYCLE.BIN/
 
 .vscode
+
+#Examples
+force-app/main/example/
