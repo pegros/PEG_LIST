@@ -1,12 +1,11 @@
 # sfpegListComponents
 Set of configurable/actionable list components to enhance Lightning UX
 
-Author: [Pierre-Emmanuel Gros]
-Date: Wednesday 8 September
+![SF PEG Componens!](/media/sfpegLogo.png) 
+Author: [Pierre-Emmanuel Gros](https://github.com/pegros)
+Date: Oct. 2021
 
-## Context of the Document
-
-This document presents a set of LWC components built as part of an ongoing Advisory assignment by [Pierre-Emmanuel Gros] in 2021, porting in LWC and optimising (for end-user performances and easier configuration mutualisation among page layouts) some components previously available in the PEG Aura component package. 
+This package contains a set of LWC components built as contributions/examples for ongoing Advisory assignments by [Pierre-Emmanuel Gros](https://github.com/pegros) in 2021, porting in LWC and optimising (for end-user performances and easier configuration mutualisation among page layouts) some components previously available in a former Aura component package (known as **PEG Components** not available on GitHub). 
 
 
 ### Component Scope
@@ -17,21 +16,23 @@ They heavily rely on standard Lightning framework features such as the Lightning
 
 Experience Cloud is currently not supported but this is in the roadmap and happens mainly for testing reasons than actual technical constraints. Adding support for these usage cases should be relatively easy.
 
-They are not available for Flow Designer but another package with components explicitly dedicated to these use cases is available (see PEG Lightning Component Chatter Group for installation link).
+They are not available for Flow Designer but another package with components explicitly dedicated to these use cases is available (see [PEG_FLW](https://github.com/pegros/PEG_FLW) package).
 
 As much attention as possible has been paid to internationalisation requirements (at least languages), leveraging standard mechanisms to translate labels, field names, picklist values...
 
 
 ### Objectives of the Document
 
-As LWC does not provide embedded documentation for the components, this Quip document provides an overview of the different element available within this project, as well as configuration guidelines and examples for the different App Builder components.
+As LWC does not provide embedded documentation for the components, this readme file provides an overview of the different elements available within this project, as well as configuration guidelines and examples for the different App Builder components.
 
 Most component may also be embedded in other custom LWC components as well but these use cases are currently not documented here for the time being. You may however look at the source code to see how to reuse some of them (main action bar component, or display or utility ones) or reach out to the author for more informations.
 
 
 ### Package Availability
 
-The packge is freely available for use under the MIT license from GiHub.
+The package is freely available for use under the MIT license from this GiHub repository.
+Periodic upgrades will be posted depending on fixes/evolutions implemented as part of assignments & personal interactions.
+For now, all commits are made exclusively by the author.
 
 You may easily deploy it to your Org via a simple SFDX deploy command from the project folder.
 
@@ -54,35 +55,32 @@ Although the main purpose of the package is to provide a set of LWC components f
 
 * **sfpegListCmp**  displays a contextualised and actionable list of records in 3 main formats (data table, data tree or tile list), data being retrieved via SOQL or Apex.
 
-[Image: Screenshot 2021-09-08 at 12.52.04.png][Image: Screenshot 2021-09-23 at 16.40.19.png][Image: Screenshot 2021-09-23 at 16.42.41.png][Image: Screenshot 2021-09-23 at 16.41.36.png]
-
-    * Another “map” display mode is currently in the roadmap to leverage the [lightning-map](https://developer.salesforce.com/docs/component-library/bundle/lightning-map/documentation) standard base component for list display TODO
-
+![List as tiles!](/media/sfpegListTiles.png) 
+![List as cards!](/media/sfpegListCards.png)
+![List as data table!](/media/sfpegListTable.png) 
+![List as tree grid!](/media/sfpegListTree.png) 
 
 
 * **sfpegMessageListCmp** displays a conditional, contextualised and actionable list of end-user messages with customisable styles.
 
-
-[Image: Screenshot 2021-09-08 at 12.53.05.png]
-
-    * A standalone  **sfpegMessageCmp** is available but is less advanced than the **sfpegMessageListCmp** one and the list should be preferably used.
-
+![List of messages!](/media/sfpegMessages.png)
 
 
 * **sfpegKpiListCmp** displays an actionable list of KPI field values in a structured and  graphical way.
 
-
-[Image: Screenshot 2021-09-08 at 12.56.11.png]
+![List of KPIs!](/media/sfpegKpis.png)
 
 
 * **sfpegProfileCmp** displays an actionable graphical summary of a record, with various lists of fields
 
-[Image: Screenshot 2021-09-08 at 12.57.49.png][Image: Screenshot 2021-09-08 at 12.58.28.png][Image: Screenshot 2021-09-08 at 12.58.09.png][Image: Screenshot 2021-09-08 at 12.58.20.png]
+![Complete Profile!](/media/sfpegProfile.png) 
+![Profile with only details!](/media/sfpegProfileDetails.png)
+![Profile with variant!](/media/sfpegProfileInverse.png) 
 
 * **sfpegActionBarCmp** displays an button/menu bar component enabling to trigger a wide variety of  actions, integrated within the previous list components but also available for standalone use in Lightning pages.
 
+![Action bar!](/media/sfpegActionBar.png) 
 
-[Image: Screenshot 2021-09-08 at 13.01.31.png]
 
 2  additional components are available for use in the Lightning Utility bar
 
