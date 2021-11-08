@@ -63,14 +63,33 @@
                                     <!-- Header info display -->
                                     <!--<div class={headerClass}>-->
                                     <template if:true={headerConfig.title}>
-                                        <h2 class={titleDetailsClass}
-                                            style="word-wrap: break-word !important;"
-                                            title={headerConfig.title.label}>
-                                            <lightning-output-field field-name={headerConfig.title.name}
-                                                                    field-class={titleClass} 
-                                                                    variant="label-hidden" >
-                                            </lightning-output-field>
-                                        </h2>
+                                        <div class="slds-media slds-media_center">
+                                            <div class="slds-media__body">
+                                                <h2 class={titleDetailsClass}
+                                                    style="word-wrap: break-word !important;"
+                                                    title={headerConfig.title.label}>
+                                                    <lightning-output-field field-name={headerConfig.title.name}
+                                                                            field-class={titleClass} 
+                                                                            variant="label-hidden" >
+                                                    </lightning-output-field>
+                                                </h2>
+                                            </div>
+                                            <template if:true={hasActions}>
+                                                <template if:true={isTitleAction}>
+                                                    <div class="slds-media__figure slds-media__figure_reverse">
+                                                        <lightning-button-group class="slds-col ">
+                                                            <c-sfpeg-action-bar-cmp bar-class=""
+                                                                config-name={configDetails.actions}
+                                                                object-api-name={objectApiName}
+                                                                record-id={recordId}
+                                                                user-id={userId}
+                                                                is-debug={isDebugFine}>
+                                                            </c-sfpeg-action-bar-cmp>
+                                                        </lightning-button-group>
+                                                    </div>
+                                                </template>
+                                            </template>
+                                        </div>
                                     </template>
                             
                                     <template if:true={headerConfig.details}>
@@ -92,19 +111,21 @@
                         </div>
                     </template>
 
-                    <!-- Action bar display -->
+                    <!-- Action bar display (below Header) -->
                     <template if:true={hasActions}>
-                        <div class={actionClass}>
-                            <lightning-button-group class="slds-col">
-                                <c-sfpeg-action-bar-cmp bar-class=""
-                                                        config-name={configDetails.actions}
-                                                        object-api-name={objectApiName}
-                                                        record-id={recordId}
-                                                        user-id={userId}
-                                                        is-debug={isDebugFine}>
-                                </c-sfpeg-action-bar-cmp>
-                            </lightning-button-group>
-                        </div>
+                        <template if:false={isTitleAction}>
+                            <div class={actionClass}>
+                                <lightning-button-group class="slds-col">
+                                    <c-sfpeg-action-bar-cmp bar-class=""
+                                                            config-name={configDetails.actions}
+                                                            object-api-name={objectApiName}
+                                                            record-id={recordId}
+                                                            user-id={userId}
+                                                            is-debug={isDebugFine}>
+                                        </c-sfpeg-action-bar-cmp>
+                                </lightning-button-group>
+                            </div>
+                        </template>
                     </template>
 
                     <!-- Details info display -->

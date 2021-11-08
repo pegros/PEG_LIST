@@ -31,9 +31,9 @@
 public with sharing class sfpegAction_CTL {
 
     /***
-    * @description  Simple method to fetch configuration details for a List component.
-    *               It provides the required input fields, the type of display (datatable...)
-    *               and the corresponding display configuration.
+    * @description  Simple method to fetch configuration details for an Action component.
+    *               It provides the set of actions (and menus) as well as the
+    *               possible LMS notification channels to subscribe to.
     * @param        name                DeveloperName of the List configuration record
     * @return       Object              sfpegAction__mdt record with Actions__c, NotificationChannels__c,
     *                                   MasterLabel fields filled in.

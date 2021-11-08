@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Configuration of the sfpegCardListCmp component, both in terms of records and layouts to be displayed in a list.</description>
+    <label>sfpegCardList</label>
+    <pluralLabel>sfpegCardLists</pluralLabel>
+    <visibility>Protected</visibility>
+</CustomObject>

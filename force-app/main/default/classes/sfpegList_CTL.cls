@@ -38,11 +38,15 @@ public with sharing class sfpegList_CTL {
     * @description  Simple method to fetch configuration details for a List component.
     *               It provides the required input fields, the type of display (datatable...)
     *               and the corresponding display configuration.
+    *               Custom and field label tokens are automatically replaced by their
+    *               values in the DisplayConfig__c field (depending on the user language),
+    *               leveraging the replaceLabelTokens() method of the sfpegMerge_CTL class.
     * @param        name    DeveloperName of the List configuration record
     * @return       Object  sfpegList__mdt record with DisplayType__c, DisplayConfig__c,
     *               QueryInput__c, FlattenResults__c, RowActions__c, MasterLabel
     *               fields filled in.
     * @exception    AuraHandledException    Raised if no configuration found for the provided name
+    * @see          sfpegMerge_CTL
     ***/
     @AuraEnabled(cacheable=true)
     public static Object getConfiguration(final String name) {
@@ -54,6 +58,25 @@ public with sharing class sfpegList_CTL {
         if ((configs == null) || (configs.size() != 1)) {
             throw new AuraHandledException('Configuration not found with name ' + name);
         }
+
+        if ((configs[0].DisplayConfig__c).contains('{{{LBL.')) {
+            System.debug(LoggingLevel.FINE,'getConfiguration: extracting/replacing custom labels in display config');
+            configs[0].DisplayConfig__c = sfpegMerge_CTL.replaceLabelTokens(configs[0].DisplayConfig__c);
+            System.debug(LoggingLevel.FINE,'getConfiguration: custom labels replaced in display config');
+        }
+        else {
+            System.debug(LoggingLevel.FINE,'getConfiguration: no custom label in display config');
+        }
+
+        if ((configs[0].DisplayConfig__c).contains('{{{FLBL.')) {
+            System.debug(LoggingLevel.FINE,'getConfiguration: extracting/replacing field labels in display config');
+            configs[0].DisplayConfig__c = sfpegMerge_CTL.replaceFieldLabelTokens(configs[0].DisplayConfig__c);
+            System.debug(LoggingLevel.FINE,'getConfiguration: field labels replaced in display config');
+        }
+        else {
+            System.debug(LoggingLevel.FINE,'getConfiguration: no field label in display config');
+        }
+
         //System.debug(LoggingLevel.FINEST,'getConfiguration: END with configuration name ' + configs[0]);
         System.debug(LoggingLevel.FINE,'getConfiguration: END ' + configs[0].MasterLabel);
         return (Object) (configs[0]);

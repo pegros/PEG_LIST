@@ -269,8 +269,8 @@ const sfpegJsonUtl = {
 
     filterRecords: function(recordList,fieldSet,filterKeys) {
         if (sfpegJsonUtl.isDebug) console.log('filterRecords: START with filterKeys ',filterKeys);
-        if (sfpegJsonUtl.isDebug) console.log('filterRecords: fieldSet provided ',fieldSet);
-        if (sfpegJsonUtl.isDebug) console.log('filterRecords: recordList provided ',recordList);
+        if (sfpegJsonUtl.isDebug) console.log('filterRecords: fieldSet provided ',JSON.stringify(fieldSet));
+        if (sfpegJsonUtl.isDebug) console.log('filterRecords: recordList provided ',JSON.stringify(recordList));
         
         let filteredList = [];
         if ((filterKeys) && (fieldSet) && (recordList)) {
@@ -283,7 +283,7 @@ const sfpegJsonUtl = {
                 if ((iterTerm) && (iterTerm.trim())) {
                     iterTerm = iterTerm.trim();
                     filteredList = filteredList.filter(function(iterRecord) {
-                        if (sfpegJsonUtl.isDebug) console.log("filterRecords: processing iterRecord",iterRecord);
+                        if (sfpegJsonUtl.isDebug) console.log("filterRecords: processing iterRecord",JSON.stringify(iterRecord));
                         let matchFound = false;
                         fieldSet.forEach(iterField => {
                             if (sfpegJsonUtl.isDebug) console.log("filterRecords: processing iterField",iterField);
@@ -292,6 +292,9 @@ const sfpegJsonUtl = {
                             }
                             else if (typeof iterRecord[iterField.fieldName] == 'number') {
                                 if (('' + Math.round(iterRecord[iterField.fieldName])).includes(iterTerm)) matchFound = true;
+                            }
+                            else if (typeof iterRecord[iterField.fieldName] == 'boolean') {
+                                if (('' + iterRecord[iterField.fieldName]).includes(iterTerm)) matchFound = true;
                             }
                         });
                         if (sfpegJsonUtl.isDebug) console.log("filterRecords: returning matchFound for iterRecord",matchFound);

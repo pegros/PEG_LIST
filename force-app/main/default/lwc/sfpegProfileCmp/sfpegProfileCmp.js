@@ -122,6 +122,9 @@ export default class SfpegProfileCmp extends LightningElement {
     get hasActions() {
         return ((this.configDetails.actions) &&  (this.configDetails.actions !== 'N/A'));
     }
+    get isTitleAction() {
+        return this.actionAlignment === "title";
+    }
     get actionClass() {
         return "profileActions slds-grid slds-grid_align-" + this.actionAlignment + " slds-var-p-horizontal_" + this.detailsPadding;
     }

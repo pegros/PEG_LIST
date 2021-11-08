@@ -31,6 +31,11 @@
                 <default>false</default>
                 <label>TileList</label>
             </value>
+            <value>
+                <fullName>Hidden</fullName>
+                <default>false</default>
+                <label>Hidden</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

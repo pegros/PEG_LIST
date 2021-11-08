@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SF PEG Record Card List</masterLabel>
+
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property   name="cardTitle"
+                        label="Card Title"
+                        type="String" />
+            <property   name="cardIcon"
+                        label="Card Icon"
+                        type="String"/>
+            <property   name="mainCardClass"
+                        label="Card CSS Class"
+                        type="String"
+                        default="slds-card slds-card_boundary"
+                        description="CSS Classes for the main wrapping card div"/>
+            <property   name="cardClass"
+                        label="Card CSS Class"
+                        type="String"
+                        default="slds-card slds-card_boundary slds-var-m-around_xx-small "
+                        description="CSS Classes for each card of the list"/>
+            <property   name="cardSize"
+                        label="Card Width"
+                        type="Integer"
+                        default="12"
+                        description="Width of each card displayed, on a 12 unit basis"/>
+            <property   name="buttonSize"
+                        label="Button Size"
+                        type="String"
+                        datasource="x-small,small,medium"
+                        default="small"
+                        description="Size of the standard header buttons (to align with custom header actions)"/>
+
+            <property   name="configName"
+                        label="Query Configuration"
+                        type="String"
+                        datasource="apex://sfpegCardListSelector_CTL"
+                        description="(Developer) Name of the Query Configuration record to be used (see sfpegCardList__mdt)."/>
+        
+            <property   name="isReadOnly"
+                        label="Read-Only?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to set the cards in read-only mode."/>
+            <property   name="showCount"
+                        label="Show #Records?"
+                        type="String"
+                        datasource="no,right,left"
+                        default="right"
+                        description="Flag to show record number (to right/left) in title."/>
+            <property   name="showRefresh"
+                        label="Show Refresh?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show Refresh action in header."/>
+
+            <property   name="actionConfigName"
+                        label="Header Action Configuration"
+                        type="String"
+                        datasource="apex://sfpegActionSelector_CTL"
+                        description="(Developer)Name of the Action Configuration record to be used in header (see sfpegAction__mdt)."/>
+
+            <property   name="isDebug"
+                        label="Debug?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information."/>
+            <property   name="isDebugFine"
+                        label="Debug (fine) ?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information for all sub-components."/>
+        </targetConfig>
+
+        <targetConfig targets="lightningCommunity__Default">
+            <property   name="cardTitle"
+                        label="Card Title"
+                        type="String" />
+            <property   name="cardIcon"
+                        label="Card Icon"
+                        type="String"/>
+            <property   name="mainCardClass"
+                        label="Card CSS Class"
+                        type="String"
+                        default="slds-card slds-card_boundary"
+                        description="CSS Classes for the main wrapping card div"/>
+            <property   name="cardClass"
+                        label="Card CSS Class"
+                        type="String"
+                        default="slds-card slds-card_boundary "
+                        description="CSS Classes for each card of the list"/>
+            <property   name="cardSize"
+                        label="Card Width"
+                        type="Integer"
+                        default="12"
+                        description="Width of each card displayed, on a 12 unit basis"/>
+            <property   name="buttonSize"
+                        label="Button Size"
+                        type="String"
+                        datasource="x-small,small,medium"
+                        default="small"
+                        description="Size of the standard header buttons (to align with custom header actions)"/>
+
+            <property   name="configName"
+                        label="Query Configuration"
+                        type="String"
+                        datasource="apex://sfpegCardListSelector_CTL"
+                        description="(Developer) Name of the Query Configuration record to be used (see sfpegCardList__mdt)."/>
+        
+            <property   name="isReadOnly"
+                        label="Read-Only?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to set the cards in read-only mode."/>
+            <property   name="showCount"
+                        label="Show #Records?"
+                        type="String"
+                        datasource="no,right,left"
+                        default="right"
+                        description="Flag to show record number (to right/left) in title."/>
+            <property   name="showRefresh"
+                        label="Show Refresh?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show Refresh action in header."/>
+
+            <property   name="actionConfigName"
+                        label="Header Action Configuration"
+                        type="String"
+                        datasource="apex://sfpegActionSelector_CTL"
+                        description="(Developer)Name of the Action Configuration record to be used in header (see sfpegAction__mdt)."/>
+
+            <property   name="isDebug"
+                        label="Debug?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information."/>
+            <property   name="isDebugFine"
+                        label="Debug (fine) ?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information for all sub-components."/>
+
+            <property   name="objectApiName"
+                        label="Object API Name"
+                        type="String"
+                        default="{!objectApiName}"
+                        description="API Name of Current Object."/>
+            <property   name="recordId"
+                        label="Record ID"
+                        type="String"
+                        default="{!recordId}"
+                        description="ID of current Record"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

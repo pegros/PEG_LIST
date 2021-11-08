@@ -121,6 +121,14 @@
         <value>Save</value>
     </labels>
     <labels>
+        <fullName>sfpegPopupSaveNew</fullName>
+        <categories>PEG Component LWC Action Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegPopupSaveNew</shortDescription>
+        <value>Save &amp; New</value>
+    </labels>
+    <labels>
         <fullName>sfpegPopupCancel</fullName>
         <categories>PEG Component LWC Action Label</categories>
         <language>en_US</language>
@@ -208,5 +216,22 @@
         <shortDescription>sfpegActionDefaultApexHeader</shortDescription>
         <value>Processing operation</value>
     </labels>
-    
+    <labels>
+        <fullName>sfpegCardSave</fullName>
+        <categories>PEG Component LWC Form Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegCardSave</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>sfpegCardCancel</fullName>
+        <categories>PEG Component LWC Form Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegCardCancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+
+
 </CustomLabels>

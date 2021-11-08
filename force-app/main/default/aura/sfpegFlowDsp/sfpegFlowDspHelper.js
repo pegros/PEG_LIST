@@ -30,8 +30,9 @@
 ***/
     isDebug : true,
     initComponent : function(component,event,helper) {
-        //helper.isDebug = component.get("v.isDebug");
+        helper.isDebug = component.get("v.isDebug");
         if (helper.isDebug) console.log('initComponent: START');
+        //if (helper.isDebug) console.log('initComponent: isDebug', helper.isDebug);
         
         // Fetching & analysing inputs     
         let flowName = component.get("v.flowName");
@@ -40,7 +41,7 @@
         //if (helper.isDebug) console.log('initComponent: flowParams fetched',flowParams);
         if (helper.isDebug) console.log('initComponent: flowParams fetched',JSON.stringify(flowParams));
         if (!flowName) {
-            console.error('initComponent: END / missing flow name');
+            console.warn('initComponent: END / missing flow name');
             return;
         }
         component.set("v.flowParamsStr", JSON.stringify(flowParams));

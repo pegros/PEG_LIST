@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ALL_Lists</fullName>
+    <columns>MasterLabel</columns>
+    <columns>DeveloperName</columns>
+    <columns>Scope__c</columns>
+    <columns>QueryType__c</columns>
+    <columns>QueryClass__c</columns>
+    <columns>DisplayType__c</columns>
+    <columns>DoPagination__c</columns>
+    <columns>RowActions__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>ALL Lists</label>
+    <language>en_US</language>
+</ListView>

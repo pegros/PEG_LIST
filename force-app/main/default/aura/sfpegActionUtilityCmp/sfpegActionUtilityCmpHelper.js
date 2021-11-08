@@ -35,6 +35,7 @@
     processInit : function(component,event,helper) {
         helper.isDebug = component.get("v.isDebug");
         if (helper.isDebug) console.log('processInit: START');
+        //if (helper.isDebug) console.log('processInit: isDebug ',helper.isDebug);
 
         // User ID fetch
         let currentUser = $A.get("$SObjectType.CurrentUser");
@@ -71,6 +72,10 @@
                 if (helper.isDebug) console.log('processAction: closing tabs');
                 helper.closeTabs(action.params.closeAll,component,helper);
                 break;
+            case 'refreshTab':
+                if (helper.isDebug) console.log('processAction: refreshing tabs');
+                helper.refreshTab(component,helper);
+                break;
             case 'openFlow':
                 if (helper.isDebug) console.log('processAction: opening Flow popup');
                 helper.openFlow(action.params,component,helper);
@@ -78,6 +83,10 @@
             case 'openPopup':
                 if (helper.isDebug) console.log('processAction: opening custom Aura component popup');
                 helper.openPopup(action.params,component,helper);
+                break;
+            case 'fireEvent':
+                if (helper.isDebug) console.log('processAction: firing App event');
+                helper.fireEvent(action.params,component,helper);
                 break;
             default:
                 console.warn('processAction: Unsupported action type ',action.type);
@@ -221,8 +230,39 @@
             if (helper.isDebug) console.log('openTab: END');
         }
     },
+    refreshTab : function(component,helper) {
+        if (helper.isDebug) console.log('refreshTab: START');
+
+        let isConsole = component.get("v.isConsole");
+        if (helper.isDebug) console.log('refreshTab: isConsole fetched ',isConsole);
+
+        if (isConsole) {
+            // ### CONSOLE MODE (using wokrspace API for refresh) ###
+            if (helper.isDebug) console.log('refreshTab: operating in console mode');
+            
+            let workspaceUtil = component.find("workspaceUtil");
+            workspaceUtil.getFocusedTabInfo()
+            .then(function(currentTab) {
+                if (helper.isDebug) console.log('refreshTab: current tab fetched ',JSON.stringify(currentTab));
+                return workspaceUtil.refreshTab({tabId: currentTab.tabId, includeAllSubtabs: false})
+            })
+            .then(function() {
+                if (helper.isDebug) console.log('refreshTab: END / current tab refreshed ');
+            }).catch(function(error){
+            	console.warn('refreshTab: END KO / refreshTab error ',JSON.stringify(error));  
+        	});
+        	if (helper.isDebug) console.log('refreshTab: temporary end');
+        }
+        else {
+            // ### CONSOLE MODE (using ###
+            if (helper.isDebug) console.log('refreshTab: operating in console mode');
+            $A.get('e.force:refreshView').fire();
+            if (helper.isDebug) console.log('refreshTab: END / Event fired');
+        }
+    },
     openFlow : function(params,component,helper) {
         if (helper.isDebug) console.log('openFlow: START with params ',JSON.stringify(params));
+        //if (helper.isDebug) console.log('openFlow: isDebug ', helper.isDebug);
 
         $A.createComponent("c:sfpegFlowDsp", {
                 "flowName":     params.name,
@@ -231,7 +271,7 @@
             },
             function(flowCmp, status, errorMessage) {
                 if (status === "SUCCESS") {
-                    console.log('openFlow: flow component create OK ', flowCmp);
+                    if (helper.isDebug) console.log('openFlow: flow component create OK ', flowCmp);
 
                     let overlayLib = component.find("overlayLib");
                     overlayLib.showCustomModal({
@@ -242,17 +282,17 @@
                            closeCallback: function() {
                                if (params.doRefresh) {
                                    $A.get('e.force:refreshView').fire();
-                                   console.log('openFlow: END / refresh fired');
+                                   if (helper.isDebug) console.log('openFlow: END / refresh fired');
                                }
                                else {
-                                    console.log('openFlow: END / no refresh fired');
+                                if (helper.isDebug) console.log('openFlow: END / no refresh fired');
                                }
                            }
                     });
-                    console.log('openFlow: showCustomModal done');
+                    if (helper.isDebug) console.log('openFlow: showCustomModal done');
                 }
                 else {
-                    console.log('openFlow: END KO / component create failed ', errorMessage);
+                    console.warn('openFlow: END KO / component create failed ', errorMessage);
                 }
             }
         );
@@ -261,6 +301,7 @@
     },
     openPopup : function(params,component,helper) {
         if (helper.isDebug) console.log('openPopup: START with params ',JSON.stringify(params));
+        if (helper.isDebug) console.log('openPopup: isDebug ', helper.isDebug);
 
         $A.createComponent(params.name, params.params,
             function(content, status, errorMessage) {
@@ -275,21 +316,45 @@
                            closeCallback: function() {
                                if (params.doRefresh) {
                                    $A.get('e.force:refreshView').fire();
-                                   console.log('openPopup: END / refresh fired');
+                                   if (helper.isDebug) console.log('openPopup: END / refresh fired');
                                }
                                else {
-                                    console.log('openPopup: END / no refresh fired');
+                                if (helper.isDebug) console.log('openPopup: END / no refresh fired');
                                }
                            }
                   });
-                  console.log('openPopup: showCustomModal done');
+                  if (helper.isDebug) console.log('openPopup: showCustomModal done');
               }
               else {
-                  console.log('openPopup: END KO / component create failed ',errorMessage);
+                  console.warn('openPopup: END KO / component create failed ',errorMessage);
               }
          });
 
         if (helper.isDebug) console.log('openFlow: component creation requested');
+    },
+    fireEvent : function(params,component,helper) {
+        if (helper.isDebug) console.log('fireEvent: START with params ',JSON.stringify(params));
+
+        let evtType = params.type;
+        if (evtType) {
+            if (helper.isDebug) console.log('fireEvent: firing event of type ',evtType);
+            let appEvent = $A.get(evtType);
+
+            let evtParams = params.params;
+            if (evtParams) {
+                if (helper.isDebug) console.log('fireEvent: setting event params');
+                appEvent.setParams(evtParams);
+            }
+            else {
+                if (helper.isDebug) console.log('fireEvent: no param provided');
+            }
+
+            appEvent.fire();
+            if (helper.isDebug) console.log('fireEvent: END OK - Event fired');
+        }
+        else {
+            console.warn("fireEvent: END KO - Missing event type")
+        }
     }
     //,
     // Workspace Tab Event Handling

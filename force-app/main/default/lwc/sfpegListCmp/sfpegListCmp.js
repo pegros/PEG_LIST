@@ -85,7 +85,7 @@ export default class SfpegListCmp extends LightningElement {
     
     // Internal Query Control Parameters
     @track isLoading = false;   // Ongoing Query state  (to control spinner)
-    recordCount = 0;            // Total number of records (fetched separatly in case of pagination mode)
+    recordCount = 0;            // Total number of records (fetched separately in case of pagination mode)
 
     // pagination mode
     lastRecordKey = null;       // last fetched record value (for offset management) 
@@ -239,7 +239,11 @@ export default class SfpegListCmp extends LightningElement {
     //----------------------------------------------------------------      
     connectedCallback() {
         if (this.isDebug) console.log('connected: START');
+        if (this.isDebug) console.log('connected: recordId provided ',this.recordId);
+        if (this.isDebug) console.log('connected: objectApiName provided ',this.objectApiName);
+        if (this.isDebug) console.log('connected: userId provided ',this.userId);
         //this.errorMsg = 'Component initialized.';
+
         if (this.isReady) {
             console.warn('connected: END / already ready');
             return;
@@ -646,7 +650,6 @@ export default class SfpegListCmp extends LightningElement {
                     this.resultList = result || [];
                 }
                 if (this.isDebug) console.log('executeQuery: results updated ', JSON.stringify(this.resultList));
-                if (this.isDebug) console.log('executeQuery: TEST ');
 
                 if (this.isDebug) console.log('executeQuery: hide checkboxes? ', this.hideCheckbox);
                 if (this.hideCheckbox) {
@@ -663,6 +666,11 @@ export default class SfpegListCmp extends LightningElement {
                 this.recordCount = this.resultList.length;
                 this.sortDirection = 'asc';
                 this.sortedBy = null;
+
+                let loadEvt = new CustomEvent('load', { detail: this.resultList });
+                if (this.isDebug) console.log('triggerParentEvt: triggering load event for parent component ', JSON.stringify(loadEvt));
+                this.dispatchEvent(loadEvt);
+
                 if (this.isDebug) console.log('executeQuery: END OK (no pagination)');
             }).catch( error => {
                 if (this.isDebug) console.warn('executeQuery: END / KO (no pagination) ', error);
@@ -927,15 +935,15 @@ export default class SfpegListCmp extends LightningElement {
 
                     if (this.filterScope.fieldName === 'ALL') {
                         if (this.isDebug) console.log('filterRecords: filtering on all fields');
-                        //sfpegJsonUtl.sfpegJsonUtl.isDebug = this.isDebug;
-                        sfpegJsonUtl.sfpegJsonUtl.isDebug = false;
+                        sfpegJsonUtl.sfpegJsonUtl.isDebug = this.isDebugFine;
+                        //sfpegJsonUtl.sfpegJsonUtl.isDebug = false;
                         this.resultList = sfpegJsonUtl.sfpegJsonUtl.filterRecords(this.resultListOrig, this.filterFields.slice(1), this.filterString);
                         sfpegJsonUtl.sfpegJsonUtl.isDebug = false;
                     }
                     else {
                         if (this.isDebug) console.log('filterRecords: filtering on single field ', this.filterScope);
-                        //sfpegJsonUtl.sfpegJsonUtl.isDebug = this.isDebug;
-                        sfpegJsonUtl.sfpegJsonUtl.isDebug = false;
+                        sfpegJsonUtl.sfpegJsonUtl.isDebug = this.isDebugFine;
+                        //sfpegJsonUtl.sfpegJsonUtl.isDebug = false;
                         this.resultList = sfpegJsonUtl.sfpegJsonUtl.filterRecords(this.resultListOrig, [this.filterScope], this.filterString);
                         sfpegJsonUtl.sfpegJsonUtl.isDebug = false;
                     }
@@ -1069,12 +1077,40 @@ export default class SfpegListCmp extends LightningElement {
     handleActionDone(event) {
         if (this.isDebug) console.log('handleActionDone: START with ',JSON.stringify(event.detail));
 
-        if ((event.detail.type) && (event.detail.type === 'refresh')) {
-            console.warn('handleActionDone: refreshing list');
-            this.executeQuery();
+        if (event.detail.type) {
+            if (event.detail.type === 'refresh') {
+                if (this.isDebug) console.log('handleActionDone: refreshing list');
+                this.executeQuery();
+            }
+            else if (event.detail.type === 'filter') {
+                if (this.isDebug) console.log('handleActionDone: setting filter');
+
+                if (event.detail.params) {
+                    this.showFilter =false;
+                    if (this.isDebug) console.log('handleActionDone: closing filter popup if needed');
+
+                    let filterScopeName = event.detail.params.scope || 'ALL';
+                    if (this.isDebug) console.log('handleActionDone: provided filter scope name ',filterScopeName);
+                    this.filterScope = this.filterFields.find(item => item.fieldName === filterScopeName);                
+                    if (this.isDebug) console.log('handleActionDone: filter scope reset',JSON.stringify(this.filterScope));
+                    this.filterFields.forEach(item => item.selected = (item.fieldName === this.filterScope.fieldName));
+                    if (this.isDebug) console.log('handleActionDone: filterFields updated ',JSON.stringify(this.filterFields));
+                    
+                    this.filterString = event.detail.params.string || '';
+                    if (this.isDebug) console.log('handleActionDone: filter string reset ', this.filterString);
+                    this.filterRecords()
+                    .then(() => {
+                        if (this.isDebug) console.log('handleActionDone: list filtered');
+                    });
+                    if (this.isDebug) console.log('handleActionDone: filtering triggered');
+                }
+            }
+            else {
+                console.warn('handleActionDone: missing params on filter action');
+            }
         }
         else {
-            console.warn('handleActionDone: unsupported notification type',event.detail.type);
+            console.warn('handleActionDone: no notification type');
         }
 
         if (this.isDebug) console.log('handleActionDone: END');

@@ -178,7 +178,7 @@ public with sharing class sfpegMerge_CTL {
 
     /***
     * @description  Method to fetch field values details for a given record.
-    *               Replaces LDS whene @wire is not used to fetch User/Record
+    *               Replaces LDS when @wire is not used to fetch User/Record
     *               context data.
     * @param        objectName          API name of the record object
     * @param        recordId            ID of the record
@@ -209,5 +209,109 @@ public with sharing class sfpegMerge_CTL {
         }
         System.debug(LoggingLevel.FINE,'getRecord: END');
         return (Object)sobjList[0];
+    }
+
+    /***
+    * @description  Utility server side method to extract the custom label merge tokens (LBL) in a string
+    *               template and replace them with their user language dependent values.
+    * @param        template    Input string in which tokens must be extracted and replaced
+    * @return       String      Template input string with all label tokens replaced by their values
+    * @exception    AuraHandledException    Raised if any label token is not found.
+    ***/
+    public static String replaceLabelTokens(final String template) {
+        System.debug(LoggingLevel.FINE,'replaceLabelTokens: START with template ' + template);
+
+        //Parsing LBL tokens
+        Pattern lblPattern = Pattern.compile('\\{\\{\\{LBL.\\w+\\}\\}\\}');
+        Matcher lblMatcher = lblPattern.matcher(template);
+        Set<String> lblTokens = new Set<String>();
+        while (lblMatcher.find()) {
+	        System.debug(LoggingLevel.FINE,'replaceLabelTokens: processing match ' + lblMatcher.group(0));
+            String token = lblMatcher.group(0).removeStart('{{{LBL.').removeEnd('}}}');
+            lblTokens.add(token);
+        }
+        System.debug(LoggingLevel.FINE,'replaceLabelTokens: lblTokens extracted ' + lblTokens);
+
+        if (lblTokens.size() > 0) {
+            //Fetching LBL values
+            Map<String, Object> labelMap;
+            if (Test.isRunningTest()) {
+                //Special case as CF pages may not be renedered in a test !
+                labelMap = new Map<String, Object>();
+                for (String iter : lblTokens) {
+                    labelMap.put(iter,iter);
+                }
+            }
+            else {
+                String userLanguage = UserInfo.getLanguage();
+                System.debug('replaceLabelTokens: userLanguage fetched ' + userLanguage);
+
+                PageReference labelPageRef = Page.sfpegMergeLabels_VFP;
+                labelPageRef.getParameters().putAll(new Map<String, String> {
+                    'lang' => userLanguage,
+                    'labels' => JSON.serialize(new List<String>(lblTokens))
+                });
+                labelMap = (Map<String, Object>)JSON.deserializeUntyped((labelPageRef.getContent()).tostring());
+                labelMap.remove('END');
+               System.debug('replaceLabelTokens: custom label values fetched ' + labelMap);
+            }
+
+            //Merging LBL values
+            String mergedTemplate = template;
+            for (String iter : labelMap.keySet()) {
+                System.debug(LoggingLevel.FINE,'replaceLabelTokens: processing token ' + iter);
+                mergedTemplate = mergedTemplate.replaceAll('\\{\\{\\{LBL.' + iter + '\\}\\}\\}',(String)(labelMap.get(iter)));
+            }
+            System.debug('replaceLabelTokens: END / All custom label replaced in template ' + mergedTemplate);
+            return mergedTemplate;
+        }
+        else {
+            System.debug('replaceLabelTokens: END / No custom label to replace ');
+            return template;
+        }
+    }
+
+   /***
+    * @description  Utility server side method to extract the field label merge tokens (FLBL) in a string
+    *               template and replace them with their user language dependent values.
+    * @param        template    Input string in which tokens must be extracted and replaced
+    * @return       String      Template input string with all label tokens replaced by their values
+    * @exception    AuraHandledException    Raised if any label token is not found.
+    ***/
+    public static String replaceFieldLabelTokens(final String template) {
+        System.debug(LoggingLevel.FINE,'replaceFieldLabelTokens: START with template ' + template);
+
+        //Parsing FLBL tokens
+        Pattern lblPattern = Pattern.compile('\\{\\{\\{FLBL.\\w+.\\w+\\}\\}\\}');
+        Matcher lblMatcher = lblPattern.matcher(template);
+        Set<String> lblTokens = new Set<String>();
+        while (lblMatcher.find()) {
+	        System.debug(LoggingLevel.FINE,'replaceFieldLabelTokens: processing match ' + lblMatcher.group(0));
+            String token = lblMatcher.group(0).removeStart('{{{FLBL.').removeEnd('}}}');
+            lblTokens.add(token);
+        }
+        System.debug(LoggingLevel.FINE,'replaceFieldLabelTokens: lblTokens extracted ' + lblTokens);
+
+        //Fetching FLBL values and merging them
+        String mergedTemplate = template;
+        for (String iter : lblTokens) {
+            System.debug(LoggingLevel.FINE,'replaceFieldLabelTokens: processing field label ' + iter);
+
+            String[] iterParts = ((String)iter).split('\\.');
+            System.debug(LoggingLevel.FINE,'replaceFieldLabelTokens: field label parts extracted ' + iterParts);
+
+            Schema.SObjectField iterDesc = Schema.getGlobalDescribe().get(iterParts[0])?.getDescribe().fields.getMap().get(iterParts[1]);
+            System.debug(LoggingLevel.FINE,'replaceFieldLabelTokens: field desc fetched ' + iterDesc);
+            if (iterDesc == null) {
+                System.debug(LoggingLevel.WARN,'replaceFieldLabelTokens: END - Unfound field ' + iter);
+                throw new AuraHandledException('Field label fetch error: ' + iter + ' field not found!');
+            }
+            String iterLabel = iterDesc.getDescribe().getLabel();
+            System.debug(LoggingLevel.FINE,'replaceFieldLabelTokens: iterLabel vallue fetched ' + iterLabel);
+
+            mergedTemplate = mergedTemplate.replaceAll('\\{\\{\\{FLBL.' + iter + '\\}\\}\\}',iterLabel);
+        }
+        System.debug('replaceFieldLabelTokens: END / All field labels replaced in template ' + mergedTemplate);
+        return mergedTemplate;
     }
 }

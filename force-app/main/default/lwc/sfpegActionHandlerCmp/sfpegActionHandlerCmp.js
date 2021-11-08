@@ -113,8 +113,13 @@ export default class SfpegActionHandlerCmp extends LightningElement {
 
         if ((message.action) && (message.action.type)) {
             switch (message.action.type) {
+                case "minimise":
                 case "openTab":
                 case "closeAllTabs":
+                case "refreshTab":
+                case "openFlow":
+                case "openPopup":
+                case "fireEvent":
                     if (this.isDebug) console.log('handleMessage: forwarding action to parentCmp ',message.action.type);
                     let doneEvent = new CustomEvent('done', {
                         "detail": message.action

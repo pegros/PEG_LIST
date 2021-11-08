@@ -6,7 +6,7 @@ Set of configurable/actionable list components to enhance Lightning UX
 Author: [Pierre-Emmanuel Gros](https://github.com/pegros)
 Date: Oct. 2021
 
-This package contains a set of LWC components built as contributions/examples for ongoing Advisory assignments by [Pierre-Emmanuel Gros](https://github.com/pegros) in 2021, porting in LWC and optimising (for end-user performances and easier configuration mutualisation among page layouts) some components previously available in a former Aura component package (known as **PEG Components** not available on GitHub). 
+This package contains a set of LWC components built as contributions/examples for former & ongoing Advisory assignments by [Pierre-Emmanuel Gros](https://github.com/pegros), porting in LWC and optimising (for end-user performances and easier configuration mutualisation among page layouts) some components previously available in a former Aura component package (known as **PEG Components** not available on GitHub). 
 
 
 * * *

@@ -88,6 +88,12 @@
                         <template if:true={showForm}>
                             <lightning-button	variant="neutral"   label={cancelLabel}
                                                 onclick={handleCancel}></lightning-button>
+                            <!--
+                            <template if:true={showSaveNew}>
+                                <lightning-button	variant="neutral"   label={saveNewLabel}
+                                                    onclick={handleSaveNew}></lightning-button>
+                            </template>
+                            -->
                             <lightning-button	variant="brand"     label={saveLabel}
                                                 class="slds-m-left_small"
                                                 onclick={handleSubmit}></lightning-button>

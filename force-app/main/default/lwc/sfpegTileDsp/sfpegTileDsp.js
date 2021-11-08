@@ -31,7 +31,7 @@
 import { LightningElement, api, track} from 'lwc';
 import sfpegJsonUtl from 'c/sfpegJsonUtl';
 
-export default class SfpegCardDsp extends LightningElement {
+export default class SfpegTileDsp extends LightningElement {
     // Main configuration fields
     @api displayType;           // Card display type
     @api configDetails;         // Card display configuration

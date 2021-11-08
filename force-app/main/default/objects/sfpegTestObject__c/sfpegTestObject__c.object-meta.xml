@@ -154,7 +154,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
-    <gender>Masculine</gender>
     <label>sfpegTestObject</label>
     <nameField>
         <label>Name</label>

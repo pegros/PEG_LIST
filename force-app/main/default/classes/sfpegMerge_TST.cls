@@ -215,11 +215,75 @@ public class  sfpegMerge_TST {
 		System.debug('testGetRecord: END'); 
     }
 
+    /***
+    * @description  Test method for the sfpegMerge_CTL class, checking the 
+    *               "replaceLabelTokens" method, including all error cases.
+    * @see  sfpegMerge_CTL
+    ***/
+
+    static TestMethod void testReplaceLabelTokens() {
+        System.debug('testReplaceLabelTokens: START'); 
+        Test.startTest();
+
+        // No token case
+        String template = 'Test String';
+        String mergedTemplate = sfpegMerge_CTL.replaceLabelTokens(template);
+        System.debug('testReplaceLabelTokens: template without token merged ' + mergedTemplate);
+        System.assertEquals(mergedTemplate,template);
+
+        // Multi-token case
+        template = 'Test {{{LBL.TestLabel1}}} and {{{LBL.TestLabel2}}} End';
+        mergedTemplate = sfpegMerge_CTL.replaceLabelTokens(template);
+        System.debug('testReplaceLabelTokens: template with two tokens merged ' + mergedTemplate);
+        System.assert(!mergedTemplate.contains('{{{LBL'),'All LBL tokens have not been merged');
+
+        System.debug('testReplaceLabelTokens: END'); 
+    }
+
+
+    /***
+    * @description  Test method for the sfpegMerge_CTL class, checking the 
+    *               "replaceFieldLabelTokens" method, including all error cases.
+    * @see  sfpegMerge_CTL
+    ***/
+
+    static TestMethod void testReplaceFieldLabelTokens() {
+        System.debug('testReplaceFieldLabelTokens: START'); 
+        Test.startTest();
+
+        // No token case
+        String template = 'Test String';
+        String mergedTemplate = sfpegMerge_CTL.replaceFieldLabelTokens(template);
+        System.debug('testReplaceFieldLabelTokens: template without token merged ' + mergedTemplate);
+        System.assertEquals(mergedTemplate,template);
+
+        // Multi-token case
+        template = 'Test {{{FLBL.Account.Name}}} and {{{FLBL.Opportunity.StageName}}} End';
+        mergedTemplate = sfpegMerge_CTL.replaceFieldLabelTokens(template);
+        System.debug('testReplaceFieldLabelTokens: template with two tokens merged ' + mergedTemplate);
+        System.assert(!mergedTemplate.contains('{{{FLBL'),'All FLBL tokens have not been merged');
+
+        // Unknown field case
+        try {
+            template = 'Test {{{FLBL.Account.unknownField}}} End';
+            mergedTemplate = sfpegMerge_CTL.replaceFieldLabelTokens(template);
+            System.debug(LoggingLevel.Error,'testReplaceFieldLabelTokens: unknown FLBL token not detected' + template);
+            System.assert(false);
+        }
+        catch (Exception e) {
+            System.debug('testReplaceFieldLabelTokens: unknown FLBL token properly detected / ' + e.getMessage());
+            System.assert(true);
+        }
+        System.debug('testReplaceFieldLabelTokens: END'); 
+    }
+
+
+
 
     /***
     * @description  Test method for the sfpegMergeLabel_CTL class, checking the "constructor" and
     *               "getLabelName" methods.
-    *               Theseelements cannot be tested from the sfpegMerge_CTL (LBL token) as VF pages
+    *               These elements cannot be tested from the sfpegMerge_CTL (LBL token) as VF pages
     *               cannot be rendered in such a context.
     * @see  sfpegMerge_CTL
     * @see  sfpegMergeLabel_CTL

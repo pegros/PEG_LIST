@@ -32,6 +32,7 @@ import { LightningElement, api, track } from 'lwc';
 
 import CONFIRM_LABEL    from '@salesforce/label/c.sfpegPopupConfirm';
 import SAVE_LABEL       from '@salesforce/label/c.sfpegPopupSave';
+import SAVE_NEW_LABEL   from '@salesforce/label/c.sfpegPopupSaveNew';
 import CANCEL_LABEL     from '@salesforce/label/c.sfpegPopupCancel';
 
 export default class SfpegPopupDsp extends LightningElement {
@@ -50,6 +51,7 @@ export default class SfpegPopupDsp extends LightningElement {
    
     // Record Form Display parameters
     @track showForm = false;            // Flag to toggle Record Form mode display
+    //@track showSaveNew = false;         // Flag to display a save & new button in creation mode
     doSubmit = false;                   // Flag to let the popup execute the form submit (record creation/modification)
     @track formRecord = {};             // Record data for the Form
     @track formFieldSize = 12;          // Width of a form field (as a subset of 12 columns)
@@ -63,6 +65,7 @@ export default class SfpegPopupDsp extends LightningElement {
     //Button Labels from custom labels
     confirmLabel = CONFIRM_LABEL;
     saveLabel = SAVE_LABEL;
+    saveNewLabel = SAVE_NEW_LABEL;
     cancelLabel = CANCEL_LABEL;
 
     //Custom getters
@@ -160,7 +163,7 @@ export default class SfpegPopupDsp extends LightningElement {
     //###########################################################
     // Asynchronous Edit / Create popup display (depends on presence of ID on record)
     //###########################################################
-    @api showRecordForm(title,message,record,fields,columns,doSubmit) {
+    @api showRecordForm(title,message,record,fields,columns,doSubmit,showSaveNew) {
         if (this.isDebug) console.log('showRecordForm: START with submit? ',doSubmit);
         this.showPopup = true;
         this.doSubmit = doSubmit;
@@ -169,9 +172,12 @@ export default class SfpegPopupDsp extends LightningElement {
         if (record.Id) {
             if (this.isDebug) console.log('showRecordForm: edition mode');
             this.showSpinner = true;
+            //this.showSaveNew = false;
         }
         else {
             if (this.isDebug) console.log('showRecordForm: creation mode');
+            //this.showSaveNew = doSubmit && showSaveNew;
+            //if (this.isDebug) console.log('showRecordForm: showSaveNew set ',showSaveNew);
         }
         this.showConfirmation = false;
         this.showForm = true;
@@ -285,12 +291,16 @@ export default class SfpegPopupDsp extends LightningElement {
         if (this.isDebug) console.log('handleSave: newRecord init ', JSON.stringify(newRecord));
 
         if (this._resolve) {
-            if (this.isDebug) console.log('handleSave: END - calling promise handler');
+            if (this.isDebug) console.log('handleSave: calling promise handler');
             // waiting for refresh / propagation of LDS cache if there is a next action
+            this.showSpinner = true;
             setTimeout(() => {
                 this._resolve();
+                if (this.isDebug) console.log('handleSave: promise handler called');
                 this.resetCmp();
+                if (this.isDebug) console.log('handleSave: END / component reset');
             },2000);
+            if (this.isDebug) console.log('handleSave: waiting');
         }
         else {
             if (this._reject) { 
@@ -304,6 +314,13 @@ export default class SfpegPopupDsp extends LightningElement {
         }
     }
 
+    /*handleSaveNew(event) {
+        if (this.isDebug) console.log('handleSaveNew: START',event);
+
+
+        if (this.isDebug) console.log('handleSaveNew: END');
+    }*/
+
 
     //###########################################################
     // Utilities
@@ -315,15 +332,15 @@ export default class SfpegPopupDsp extends LightningElement {
         if (this.isDebug) console.log('initNewRecord: newRecord init ', JSON.stringify(newRecord));
 
         let inputFields = this.template.querySelectorAll('lightning-input-field');
-        if (this.isDebug) console.log('initNewRecord: inputFields fetched ', JSON.stringify(inputFields));
+        if (this.isDebug) console.log('initNewRecord: inputFields fetched ', inputFields);
         if (inputFields) {
             inputFields.forEach(fieldIter => {
-                if (this.isDebug) console.log('handleSubmit: processing fieldName ', fieldIter.fieldName);
-                if (this.isDebug) console.log('handleSubmit: with value  ', fieldIter.value);
-                if (this.isDebug) console.log('handleSubmit: required?  ', fieldIter.required);
-                if (this.isDebug) console.log('handleSubmit: valid?  ', fieldIter);
-                if ((fieldIter.required) && (!fieldIter.value)) {
-                    console.warn('handleSubmit: missing required field  ', fieldIter.fieldName);
+                if (this.isDebug) console.log('initNewRecord: processing fieldName ', fieldIter.fieldName);
+                if (this.isDebug) console.log('initNewRecord: with value  ', fieldIter.value);
+                if (this.isDebug) console.log('initNewRecord: required?  ', fieldIter.required);
+                if (this.isDebug) console.log('initNewRecord: valid?  ', fieldIter);
+                if ((fieldIter.required) && (fieldIter.value == null)) {
+                    console.warn('initNewRecord: missing required field  ', fieldIter.fieldName);
                     fieldIter.setErrors({'errors':[{'message':'Field is required!'}]});
                     throw (fieldIter.fieldName + ' required field not filled!');
                 }
@@ -334,23 +351,24 @@ export default class SfpegPopupDsp extends LightningElement {
         return newRecord;
     }
 
-    checkRequiredFieldsFilled = function() {
+    /*checkRequiredFieldsFilled = function() {
         if (this.isDebug) console.log('checkRequiredFieldsFilled: START ');
 
         let inputFields = this.template.querySelectorAll('lightning-input-field');
-        if (this.isDebug) console.log('initNewRecord: inputFields fetched ', JSON.stringify(inputFields));
+        if (this.isDebug) console.log('checkRequiredFieldsFilled: inputFields fetched ', JSON.stringify(inputFields));
         if (inputFields) {
             inputFields.forEach(fieldIter => {
-                if (this.isDebug) console.log('handleSubmit: processing fieldName ', fieldIter.fieldName);
-                if (this.isDebug) console.log('handleSubmit: with value  ', fieldIter.value);
+                if (this.isDebug) console.log('checkRequiredFieldsFilled: processing fieldName ', fieldIter.fieldName);
+                if (this.isDebug) console.log('checkRequiredFieldsFilled: with value  ', fieldIter.value);
                 newRecord[fieldIter.fieldName] = fieldIter.value;
             });
         }
         if (this.isDebug) console.log('checkRequiredFieldsFilled: END with newRecord ', JSON.stringify(newRecord));
         return newRecord;
-    }
+    }*/
 
     resetCmp = function() {
+        if (this.isDebug) console.log('resetCmp: START ');
         this.showPopup = false;
         this.showSpinner = false;
         this.showConfirmation = false;
@@ -359,8 +377,10 @@ export default class SfpegPopupDsp extends LightningElement {
         this.popupTitle = '';
         this.popupMessage = '';
         this.editFieldSize = 12;
+        //this.showSaveNew = false;
         this._reject = null;
         this._resolve = null;
+        if (this.isDebug) console.log('resetCmp: END ');
     }
 
 }

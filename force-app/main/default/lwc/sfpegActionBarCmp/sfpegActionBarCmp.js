@@ -34,7 +34,7 @@ import getConfiguration from '@salesforce/apex/sfpegAction_CTL.getConfiguration'
 import executeApex from '@salesforce/apex/sfpegAction_CTL.executeApex';
 import executeDML from '@salesforce/apex/sfpegAction_CTL.executeDML';
 import currentUserId from '@salesforce/user/Id';
-import { getRecord, createRecord, updateRecord, deleteRecord } from 'lightning/uiRecordApi';
+import { getRecord, createRecord, updateRecord, deleteRecord,getRecordNotifyChange } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import sfpegMergeUtl from 'c/sfpegMergeUtl';
 
@@ -83,6 +83,22 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         if (this.isDebug) console.log('setRecordList: _recordList updated ', this._recordList);
         if (this.isDebug) console.log('setRecordList: END set ');
     }
+    
+    //----------------------------------------------------------------
+    // Record Context (e.g. to provide default additional context) 
+    //----------------------------------------------------------------
+    _parentContext = {};
+    // Implementation with setter to handle context changes.
+    @api
+    get parentContext() {
+        return this._parentContext;
+    }
+    set parentContext(value) {
+        if (this.isDebug) console.log('setParentContext: START set ');
+        this._parentContext = value;
+        if (this.isDebug) console.log('setParentContext: _parentContext updated ', this._parentContext);
+        if (this.isDebug) console.log('setParentContext: END set ');
+    }
 
     //----------------------------------------------------------------
     // Internal Initialization Parameters
@@ -100,7 +116,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     @api userId = currentUserId;// ID of current User
     @track userFields = null;   // List of Field API Names for current User (if any) required as Query Input
 
-    @api configData = null;     // Configuration data used in merge tokens (typically record IDs for base
+    //@api configData = null;     // Configuration data used in merge tokens (typically record IDs for base
                                 // elements such as reports, articles, recordTypes...)
 
     // Internal Display Parameter
@@ -565,6 +581,10 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             case 'massDML':
                 if (this.isDebug) console.log('processAction: processing mass DML action');
                 this.triggerMassDML(action.params);
+                break;
+            case 'reload':
+                if (this.isDebug) console.log('processAction: processing record LDSD reload action');
+                this.triggerReload(action.params);
                 break;
             case 'done':
                 if (this.isDebug) console.log('processAction: processing parent component notification (on done)');
@@ -1041,6 +1061,19 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         else {
             console.warn('triggerMassDML: END / no record to process');
         }
+    }
+
+    triggerReload = function(reloadAction,context) {
+        if (this.isDebug) console.log('triggerReload: START with ',JSON.stringify(reloadAction));
+
+        if ((!reloadAction) || (!reloadAction.recordId))  {
+            console.warn('triggerReload: END KO / Missing recordId property');
+            throw "Missing recordId property in reload operation params!";
+        }
+
+        getRecordNotifyChange([{recordId: reloadAction.recordId}]);
+
+        if (this.isDebug) console.log('triggerReload: END');
     }
 
     triggerApex = function(apexAction) {

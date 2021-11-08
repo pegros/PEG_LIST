@@ -161,6 +161,9 @@
                 
                 <!-- Error Message display -->
                 <template if:true={hasErrorMsg}>
+                    <c-sfpeg-warning-dsp message={errorMsg}>
+                    </c-sfpeg-warning-dsp>
+                    <!--
                     <div class="slds-card__body slds-card__body_inner cardContent slds-var-p-vertical_medium slds-media slds-media_center">
                             <div    class="slds-media__figure">
                                 <lightning-icon icon-name="utility:warning"
@@ -168,12 +171,12 @@
                                                 variant="error">
                                 </lightning-icon>
                             </div>
-                            <!-- slds-text-title_bold -->
                             <div    class="slds-media__body slds-text-color_error"
                                     style="word-wrap: break-word !important;">
                                 {errorMsg}
                             </div>
                     </div>
+                    -->
                 </template>
 
                 <!-- Results Display -->
@@ -226,12 +229,12 @@
                             <lightning-layout   multiple-rows="true"    horizontal-align="end" >
                                 <template for:each={resultList} for:item="iter">
                                     <lightning-layout-item  key={iter.Id}  size={tileSize} >
-                                        <c-sfpeg-card-dsp   display-type={configDetails.type}
+                                        <c-sfpeg-tile-dsp   display-type={configDetails.type}
                                                             config-details={configDetails.display}
                                                             record-data={iter}
                                                             is-debug={isDebugFine}
                                                             onrowaction={handleRowAction}>
-                                        </c-sfpeg-card-dsp>
+                                        </c-sfpeg-tile-dsp>
                                     </lightning-layout-item>
                                 </template>
                             </lightning-layout>

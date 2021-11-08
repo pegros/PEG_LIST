@@ -6,6 +6,8 @@
 
     <targets>
         <target>lightning__RecordPage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
     </targets>
 
     <targetConfigs>
@@ -34,6 +36,44 @@
                         default="false"
                         description="Flag to show debug information for all sub-components."/>
 
+        </targetConfig>
+
+        
+        <targetConfig targets="lightningCommunity__Default">
+             
+            <property   name="configName"
+                        label="KPI List Configuration"
+                        type="String"
+                        datasource="apex://sfpegKpiListSelector_CTL"
+                        description="(Developer)Name of the KPI List Configuration record to be used (see sfpegKpiList__mdt)."/>
+            
+            <property   name="wrapperClass"
+                        label="Wrapping CSS Class"
+                        type="String"
+                        default="slds-box slds-box_x-small smds-theme_default"
+                        description="CSS Classes for the wrapping card div"/>
+           
+            <property   name="isDebug"
+                        label="Debug?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information."/>
+            <property   name="isDebugFine"
+                        label="Debug (fine) ?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information for all sub-components."/>
+
+            <property   name="objectApiName"
+                        label="Object API Name"
+                        type="String"
+                        default="{!objectApiName}"
+                        description="API Name of Current Object."/>
+            <property   name="recordId"
+                        label="Record ID"
+                        type="String"
+                        default="{!recordId}"
+                        description="ID of current Record"/>
         </targetConfig>
     </targetConfigs>
 
