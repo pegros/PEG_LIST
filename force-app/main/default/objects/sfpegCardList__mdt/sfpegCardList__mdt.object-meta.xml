@@ -3,5 +3,5 @@
     <description>Configuration of the sfpegCardListCmp component, both in terms of records and layouts to be displayed in a list.</description>
     <label>sfpegCardList</label>
     <pluralLabel>sfpegCardLists</pluralLabel>
-    <visibility>Protected</visibility>
+    <visibility>Public</visibility>
 </CustomObject>
