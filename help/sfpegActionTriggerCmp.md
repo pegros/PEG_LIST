@@ -23,7 +23,7 @@ It has no extensive configuration, with only 3 basic properties:
 
 ## Technical Details
 
-It relies on a hidden LWC **[sfpegActionBarCmp](/force-app/main/default/lwc/sfpegActionBarCmp/sfpegActionBarCmp.md)**
+It relies on a hidden LWC **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**
 component to register/contextualise a set of available actions and triggers
 only the one configured. A same **sfpegAction** custom metadata record may thus be shared by multiple **sfpegActiontriggerCmp**
 instances, each one using one specific action registered within it.

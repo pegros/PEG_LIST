@@ -4,7 +4,7 @@ This Aura component is a Lightning component to be used as an utility item withi
 a Lightning App configuration.
 
 It enables to display an action menu (based on the
-[sfpegActionHandlerCmp](/force-app/main/default/lwc/sfpegActionHandlerCmp/sfpegActionHandlerCmp.md)
+[sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md)
 component) and handle a whole series of Aura specific action types not supported by the LWC framework.
 
 They may be invoked directly from the **sfpegActionUtilityCmp** component or called from an action bar 
@@ -13,7 +13,7 @@ action to the utility bar component).
 
 # Specific Action Types
 
-Compared to the [sfpegActionHandlerCmp](/force-app/main/default/lwc/sfpegActionHandlerCmp/sfpegActionHandlerCmp.md) LWC component,
+Compared to the [sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md) LWC component,
 this Aura component enables to support the following additional action types :
 * _**openPopup**_ to support dynamic Aura custom component instantiation within a popup managed via the
 ![Overlay Library](https://developer.salesforce.com/docs/component-library/bundle/lightning:overlayLibrary/documentation)

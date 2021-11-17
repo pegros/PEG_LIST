@@ -8,13 +8,13 @@ This LWC component is dedicated to the utility bar and enables to execute action
 * its primary purpose is to execute _navigate_ actions from the utility bar, which
 automatically enforces the Navigation Rules configured for the console App
 instead of systematically opening the new page as a subtab of the current main tab
-* it is also used to forward actions to the Aura **[sfpegActionUtilityCmp](/force-app/main/default/lwc/sfpegActionUtilityCmp/sfpegActionUtilityCmp.md)**
+* it is also used to forward actions to the Aura **[sfpegActionUtilityCmp](/help/sfpegActionUtilityCmp.md)**
 component providing additional action types only supported in Aura.
 
 As a baseline, it also enables to display a vertical action menu from the utility bar. 
 
 ## Configuration
-In order to invoke an action in this component from any **[sfpegActionBarCmp](/force-app/main/default/lwc/sfpegActionBarCmp/sfpegActionBarCmp.md)**
+In order to invoke an action in this component from any **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**
 component, the _**utility**_ action type should be used. The _params_ property of this action should then include the
 actual configuration of the actual action to be executed from the utility bar.
 
@@ -50,4 +50,4 @@ It relies on a LWC **sfpegActionBarCmp** component to display a vertical menu ac
 
 The Aura **sfpegActionUtilityCmp** component includes a **sfpegActionHandlerCmp** component and provides 
 additional Aura supported action types. When configuring the utility items of an App, only one of these
-components should be included.
+components should thus be included.
