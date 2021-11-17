@@ -5,7 +5,6 @@
 Component providing a set of enhance Lightning UX
 
 
-
 ### Action Configuration (**sfpegAction__mdt)**
 
 **pegAction__mdt** provides the configuration of the **sfActionBarCmp** components (buttons & menus in an action bar, with underlying actions triggered).
@@ -322,3 +321,238 @@ Each button or menu item has an “*action*” property to specify one of the fo
             }
         }
     }
+
+
+
+
+    "action": {
+        "type": "dmlForm",
+        "params": {
+            "title": "Closing the Task",
+            "message": "Please select a task close reason.",
+            "record": {
+                "ObjectApiName": "Task",
+                "Id": "{{{ROW.Id}}}",
+                "Status": "Cancelled"
+            },
+            "formRecord": { "ObjectApiName": "TST_TaskProxy__c" },
+            "formFields": [{ "name": "Reason__c", "required": true }]
+        }
+    }
+}
+```
+
+
+
+* _**apexForm**_ : PLANNED
+    * Same behaviour as the ldsForm but with the ability to fetch/update data via Apex calls instead of LDS (e.g. to perform callouts to external systems).
+
+
+
+* _**massForm**_ to open an edit form in a popup leveraging the standard [lightning-record-edit-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-edit-form/documentation) base component and apply the corresponding changes via a mass DML update on the list of record provided by a parent component.
+    * e.g. the **sfpegListCmp** provides the set of selected records as input (when selection is enabled on this component)
+    * The configuration is similar to the **ldsForm** action, the main difference being that the output of the LDS form displayed is cloned and applied to all records selected.
+    * The “*removeRT*”  flag enables to avoid applying to the selected records the Record Type defined in the “record” property (which may be useful to control picklist values in the displayed form)
+
+```
+{
+    "name": "closeForm", "label": "Close", "iconName": "utility:close",
+    "action": {
+        "type": "massForm",
+        "params": {
+            "title": "Close the Actions",
+            "message": "Please fill in the following information",
+            "removeRT": true,
+            "columns": 2,
+            "record": {
+                "ObjectApiName": "TST_Action__c",
+                "RecordTypeId": "RT.TST_Action__c.RT1",
+                "Done__c": true
+            },
+            "fields": [
+                { "name": "Reason__c", "required": true},
+                { "name": "Done__c", "disabled": true }
+            ],
+            "next": {
+                "type": "done",
+                "params": {
+                    "type": "refresh"
+                }
+            }
+        }
+    }
+}
+```
+
+
+
+* **massDML** to execute a predefined mass operation via DML (update or delete) on the selected records
+    * A confirmation popup is displayed, the header “*title*” and “*message*” of which may be customised by dedicated properties.
+    * The “*bypassConfirm*” property enables to bypass this ste and directly execute the DML.
+    * For the “*update*” operation, the “*record*” property must be defined with the set of field values to be applied on all the selected records. The generated DML contains clones of this JSON object with the “Id” property set from the value available on each selected record.
+
+```
+{
+    "name": "close", "label": "Close", "iconName": "utility:close",
+    "action": {
+        "type": "massDML",
+        "params": {
+            "operation": "update",
+            "title": "Close the Tasks",
+            "message": "Please confirm the closing of the selected tasks",
+            "record": {
+                "Status": "Completed"
+            },
+            "next": {
+                "type": "done",
+                "params": {
+                    "type": "refresh"
+                }
+            }
+        }
+    }
+},
+{
+    "name": "delete", "label": "Delete", "iconName": "utility:delete",
+    "action": {
+        "type": "massDML",
+        "params": {
+            "operation": "delete",
+            "title": "Delete the Tasks",
+            "message": "Please confirm the deletion of the selected Tasks",
+            "next": {
+                "type": "done",
+                "params": {
+                    "type": "refresh"
+                }
+            }
+        }
+    }
+}
+```
+
+
+
+* **massApex** : PLANNED
+    * Same behaviour as the massDML but with the ability to call an Apex logic instead of simple DMLs.
+
+
+
+* _**done**_ to trigger an action on a parent component.
+    * This is typically used to trigger a refresh on the parent component after another operation has been executed (e.g. refresh of the **sfpegListCmp** displayed records after a record creation/update/deletion)
+    * Such a behaviour is usually specified within the “*next*” property of an action.
+    * In the example below, the “*refresh*” action type is actually provided by the **sfpegListCmp** parent component containing the action bar.
+
+```
+...
+    "next": {
+        "type": "done",
+        "params": {
+            "type": "refresh"
+        }
+    }
+...
+```
+
+
+
+* _**toast**_ to display a simple toast message, e.g. once another operation is complete.
+    * It relies on the standard [platform-show-toast-event](https://developer.salesforce.com/docs/component-library/bundle/lightning-platform-show-toast-event/documentation)event.
+
+```
+{
+    "name": "warn", "label": "Warn",
+    "action": {
+        "type": "toast",
+        "params": {
+            "title": "Beware {{{USR.Name}}}!",
+            "message": "There is a problem with {{{RCD.Name}}}.",
+            "variant": "warning"
+        }
+    }
+}
+```
+
+
+
+* _**apex**_ to execute a custom operation implemented in a custom Apex class
+    * This Apex class should implement the **sfpegAction_SVC** virtual class.
+
+```
+{
+    "name": "apexAction", "label": "apexAction",
+    "action": {
+        "type": "apex",
+        "params": {
+            "name": "TST_UserAction_SVC",
+            "params": {
+                "Id": "{{{GEN.userId}}}"
+            }
+        }
+    }
+}
+```
+
+    * There is also a way to group multiple logics within a single Apex class, in which case a “method” parameter can be specified after the class name
+
+```
+{
+    "name": "apexMethod", "label": "apexMethod",
+    "action": {
+        "type": "apex",
+        "params": {
+            "name": "TST_UserAction_SVC.TestMethod",
+            "params": "TestString"
+        }
+    }
+}
+```
+
+
+
+* _**utility**_ to notify the **sfpegActionHandlerCmp** utility bar component and let it execute an operation.
+    * This is typically useful when navigating to a record when wishing to enforce the console tab configuration instead of the default console behaviour (opens target in a subtab of current main tab)
+    * It also enables to trigger some specific console related actions implemented only in the **sfpegActionUtilityCmp** Aura component.
+    * It relies on the **sfpegAction** message channel
+
+```
+{
+    "name": "reportXXX",
+    "iconName":"utility:metrics", "label":"{{{LBL.TST_ReportXXX}}}",
+    "action": {
+        "type": "utility",
+        "params": {
+            "type":"navigation",
+            "params": {
+                "type": "standard__recordPage",
+                "attributes": {
+                    "recordId":"{{{RPT.ReportXXX}}}",
+                    "objectApiName":"Report",
+                    "actionName":"view"
+                }
+            }
+        }
+    }
+}
+```
+
+
+
+* _**action**_ to notify external LWC components in the same tab (via the [Lightning Message Service](https://developer.salesforce.com/docs/component-library/bundle/lightning-message-service/documentation) in default scope) with any parameters required, enabling to trigger any custom browser side LWC logic via the **sfActionBarCmp** component.
+    * this may be helpful to e.g. display a complex custom form popup.
+    * It relies on the **sfpegCustomAction** message channel
+
+
+
+* _**notify**_ to notify **sfActionBarCmp** component instances to execute an action.
+    * This is typically used to ask other LWC components embedding the **sfActionBarCmp** component to refresh themselves once an action has been executed.
+    * It relies on the **sfpegCustomNotification** message channel and leverages the “*Notification Channels*” attribute of the metadata record.
+
+EXAMPLE TO ADD
+
+The “*Notification Channels*” attribute is to be set only if notify **action** types are used to filter which actions should be actually executed by the Action Bar component instance.
+
+* It is a JSON list of strings containing the labels of the channels used within **sfpegCustomNotification** message channel events.
+* When a value is set, the Action Bar registers to these events.
+
+EXAMPLE TO ADD

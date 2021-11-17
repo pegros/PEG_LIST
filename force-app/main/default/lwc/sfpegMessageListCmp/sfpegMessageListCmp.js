@@ -354,8 +354,9 @@ export default class SfpegMessageListCmp extends LightningElement {
                 let currentKey = 0;
                 if (this.isDebug) console.log('finalizeMessages: evaluating conditions ');
                 rawMessages.forEach(message => {
+                    if (this.isDebug) console.log('finalizeMessages: processing message ',message);
                     let variantConfig = MSG_VARIANTS[(message.variant || 'base')] || MSG_VARIANTS.base;
-                    if (this.isDebug) console.log('finalizeMessages: variantConfig ');
+                    if (this.isDebug) console.log('finalizeMessages: variantConfig ',variantConfig);
 
                     message._key = currentKey++;
                     message._msgWrapClass = (message.size ? ' slds-size_' + message.size + '-of-12 ' : ' slds-shrink-none slds-grow ') + ' slds-col  slds-grid_vertical-stretch msgWrapper';

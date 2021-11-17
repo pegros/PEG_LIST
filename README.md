@@ -1,8 +1,6 @@
 # sfpegListComponents
 Set of configurable/actionable list components to enhance Lightning UX
 
-![SF PEG Components!](/media/sfpegLogo.png) 
-
 Author: [Pierre-Emmanuel Gros](https://github.com/pegros)
 Date: Oct. 2021
 
@@ -56,7 +54,7 @@ Although the main purpose of the package is to provide a set of LWC components f
 
 5 main LWC components are available for use in Lightning App Builder
 
-* **sfpegListCmp**  displays a contextualised and actionable list of records in 3 main formats (data table, data tree or tile list), data being retrieved via SOQL or Apex.
+* **[sfpegListCmp](/force-app/main/default/lwc/sfpegListCmp/sfpegListCmp.md)** displays a contextualised and actionable list of records in 3 main formats (data table, data tree or tile list), data being retrieved via SOQL or Apex.
 
 ![List as tiles!](/media/sfpegListTiles.png) 
 ![List as cards!](/media/sfpegListCards.png)
@@ -64,31 +62,46 @@ Although the main purpose of the package is to provide a set of LWC components f
 ![List as tree grid!](/media/sfpegListTree.png) 
 
 
-* **sfpegMessageListCmp** displays a conditional, contextualised and actionable list of end-user messages with customisable styles.
+* **[sfpegMessageListCmp](/force-app/main/default/lwc/sfpegMessageListCmp/sfpegMessageListCmp.md)** displays a conditional, contextualised and actionable list of end-user messages with customisable styles.
 
 ![List of messages!](/media/sfpegMessages.png)
 
 
-* **sfpegKpiListCmp** displays an actionable list of KPI field values in a structured and  graphical way.
+* **[sfpegKpiListCmp](/force-app/main/default/lwc/sfpegKpiListCmp/sfpegKpiListCmp.md)** displays an actionable list of KPI field values in a structured and  graphical way.
 
 ![List of KPIs!](/media/sfpegKpis.png)
 
 
-* **sfpegProfileCmp** displays an actionable graphical summary of a record, with various lists of fields
+* **[sfpegProfileCmp](/force-app/main/default/lwc/sfpegProfileCmp/sfpegProfileCmp.md)** displays an actionable graphical summary of a record, with various lists of fields
 
 ![Complete Profile!](/media/sfpegProfile.png) 
 ![Profile with only details!](/media/sfpegProfileDetails.png)
 ![Profile with variant!](/media/sfpegProfileInverse.png) 
 
-* **sfpegActionBarCmp** displays an button/menu bar component enabling to trigger a wide variety of  actions, integrated within the previous list components but also available for standalone use in Lightning pages.
+
+* **[sfpegCardCmp](/force-app/main/default/lwc/sfpegCardCmp/sfpegCardCmp.md)** displays a structured card, with a custom
+set of fields / sections fetched/displayed via LDS (including edit capability), for the current or related (i.e. via lookups) record.
+
+![Cards on different records!](/media/sfpegCard.png) 
+
+
+*  **[sfpegCardListCmp](/force-app/main/default/lwc/sfpegCardListCmp/sfpegCardListCmp.md)** enables to fetch a list of records
+(via a SOQL/Apex query) and display a *sfpegCardCmp* for each one.
+
+![Cards List!](/media/sfpegCardList.png) 
+
+
+* **[sfpegActionBarCmp](/force-app/main/default/lwc/sfpegActionBarCmp.md)** displays an button/menu bar component enabling to
+trigger a wide variety of  actions, integrated within the previous list components but also available for standalone use
+in Lightning pages.
 
 ![Action bar!](/media/sfpegActionBar.png) 
 
 
 2  additional components are available for use in the Lightning Utility bar
 
-* **sfpegActionHandlerCmp** (LWC) is primarily the same as the **sfActionBarCmp** but handles messages triggered by other components to execute actions from the utility bar instead of within tab (e.g. to enforce the console configuration when opening a page).
-*  **sfpegActionUtilityCmp** (Aura) is an Aura wrapper of **sfpegActionHandlerCmp** to handle a few additional actions & utility bar specific behaviours currently not possible from LWC : automatic closing of the utility upon action Trigger, console tab operations (close all tabs, close tab and open another one...), custom/flow popup open...
+* **[sfpegActionHandlerCmp](/force-app/main/default/lwc/sfpegActionHandlerCmp/sfpegActionHandlerCmp.md)** (LWC) is primarily the same as the **sfActionBarCmp** but handles messages triggered by other components to execute actions from the utility bar instead of within tab (e.g. to enforce the console configuration when opening a page).
+*  **[sfpegActionUtilityCmp](/force-app/main/default/lwc/sfpegActionUtilityCmp/sfpegActionUtilityCmp.md)** (Aura) is an Aura wrapper of **sfpegActionHandlerCmp** to handle a few additional actions & utility bar specific behaviours currently not possible from LWC : automatic closing of the utility upon action Trigger, console tab operations (close all tabs, close tab and open another one...), custom/flow popup open...
 
 [Image: Screenshot 2021-09-08 at 13.02.08.png]
 A last special LWC component (**sfpegActionTriggerCmp**) is also available to be included in Lightning page layouts to trigger a specific action automatically upon instantiation. Leveraging conditional display, it enables to enforce the user to execute a certain operation when opening the page (e.g. opening an Edit popup or a flow). 
