@@ -1,5 +1,5 @@
 ---
-# sfpegMergeUtl Utility
+# sfpegProfileCmp Component
 ---
 
 ## Introduction

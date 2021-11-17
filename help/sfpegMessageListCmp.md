@@ -1,5 +1,5 @@
 ---
-# sfpegMergeUtl Utility
+# sfpegMessageListCmp Component
 ---
 
 ## Introduction

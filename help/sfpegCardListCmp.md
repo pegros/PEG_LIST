@@ -1,5 +1,5 @@
 ---
-# sfpegMergeUtl Utility
+# sfpegCardListCmp Component
 ---
 
 ## Introduction
