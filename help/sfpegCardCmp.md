@@ -4,6 +4,12 @@
 
 ## Introduction
 
+The **sfpegCardCmp** component displays a structured card, with a custom
+set of fields / sections fetched/displayed via LDS (including edit capability), for the current or related (i.e. via lookups) record.
+
+![Cards on different records!](/media/sfpegCard.png) 
+
+
 
 Card Configuration (*sfpegCard__mdt)*
 

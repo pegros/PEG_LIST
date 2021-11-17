@@ -1,8 +1,14 @@
 ---
 # sfpegActionBarCmp Component
 ---
+
 ## Introduction
-Component providing a set of enhance Lightning UX
+
+The **sfpegActionBarCmp** component displays an button/menu bar component enabling to
+trigger a wide variety of  actions, integrated within the previous list components but also available for standalone use
+in Lightning pages.
+
+![Action bar!](/media/sfpegActionBar.png) 
 
 
 ### Action Configuration (**sfpegAction__mdt)**

@@ -1,4 +1,17 @@
+---
 # sfpegActionUtilityCmp component
+---
+
+## Introduction
+
+The **sfpegActionUtilityCmp** component is an Aura wrapper of the **[sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md)**
+utility bar component to handle a few additional actions & utility bar specific behaviours currently not possible in LWC :
+automatic closing of the utility upon action Trigger, console tab operations (close all tabs, close tab and open another one...),
+custom/flow popup open...
+
+![Action utility!](/media/sfpegActionUtility.png) 
+
+
 
 This Aura component is a Lightning component to be used as an utility item within
 a Lightning App configuration.

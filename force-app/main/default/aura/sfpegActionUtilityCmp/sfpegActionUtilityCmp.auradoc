@@ -8,45 +8,10 @@
 				actions from the Utility bar.</p>
 			<p>It completely relies on the <code>&lt;c:sfpegActionHandlerCmp&gt;</code>  LWC
 				component and simply adds support for some actions requiring features provided
-				by the standard <code>lightning:workspaceApi</code> and <code>lightning:utilityBarAPI</code>
-				base components and not available yet in LWC.</p>
-			<p>Configuration of the component is identical to this LWC component, but three
-				new action types are supported:</p>
-			<ul>
-				<li><code>minimize</code> to automatically minimize the utility bar popup window
-					displaying the menu.</li>
-				<li><code>openTab</code> to force the closing of a tab and the opening of a new
-					one from the utility bar (typically to force the opening of a record according
-					to the console configuration, i.e. as main tab or subtab of its parent record).</li>
-				<li><code>closeAllTabs</code> to force the closing of all active tabs including/
-					excluding the currently focused one (pinned tabs excepted).</li>
-			</ul>
-			<br/>
-		</div>
-
-		<div class="slds-m-top_large">
-			<h4>Minimize Configuration</h4>
-			<p>The <code>minimize</code> action type enables to force the closing 
-				of the current utility popup window after having triggered an action</p>
-			<p>It is typically configured as a <code>next</code> attribute for an
-				action included in the main menu, as follows:</p>
-<pre>...
-	"next": {
-		"type": "minimize"
-	}
-...</pre>
-			<br/>
-		</div>
-
-		<div class="slds-m-top_large">
-			<h4>OpenTab Configuration</h4>
-			<p>tbc...</p>
-			<br/>
-		</div>
-
-		<div class="slds-m-top_large">
-			<h4>CloseAllTabs Configuration</h4>
-			<p>tbc...</p>
+				by the Aura framework, such as the standard <code>lightning:workspaceApi</code>,
+				<code>lightning:utilityBarAPI</code>... base components and not available yet in LWC.</p>
+			<p>Please refer to the <a href="https://github.com/pegros/PEG_LIST/">
+				online documentation</a> on GitHub for further details.</p>
 			<br/>
 		</div>
 

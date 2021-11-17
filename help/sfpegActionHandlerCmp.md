@@ -4,6 +4,11 @@
 
 ## Introduction
 
+The **sfpegActionHandlerCmp** component is bascially the same as the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** 
+but includes some specific behaviours specific to the utility bar.
+
+![Action utility!](/media/sfpegActionUtility.png) 
+
 This LWC component is dedicated to the utility bar and enables to execute actions from this context.
 * its primary purpose is to execute _navigate_ actions from the utility bar, which
 automatically enforces the Navigation Rules configured for the console App
@@ -12,6 +17,7 @@ instead of systematically opening the new page as a subtab of the current main t
 component providing additional action types only supported in Aura.
 
 As a baseline, it also enables to display a vertical action menu from the utility bar. 
+
 
 ## Configuration
 In order to invoke an action in this component from any **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**
