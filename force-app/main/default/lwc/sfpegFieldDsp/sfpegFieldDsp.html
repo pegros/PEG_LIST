@@ -40,6 +40,13 @@
         </lightning-formatted-date-time>
     </template>
 
+    <template if:true={isRichText}>
+        <div>
+        <lightning-formatted-rich-text value={fieldValue} title={fieldLabel}>
+        </lightning-formatted-rich-text>
+        </div>
+    </template>
+
     <template if:true={isDefault}>
         <lightning-formatted-text value={fieldValue} title={fieldLabel}>
         </lightning-formatted-text>

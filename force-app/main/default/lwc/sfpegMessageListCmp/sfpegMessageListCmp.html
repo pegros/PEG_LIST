@@ -12,7 +12,7 @@
                     </lightning-icon>
                 </div>
                 <div    class="slds-media__body slds-text-color_error"
-                        style="word-wrap: break-word !important;">
+                        style="word-wrap: break-word !important;" >
                     {errorMsg}
                 </div>
             </div>
@@ -30,6 +30,8 @@
                                         <c-sfpeg-icon-dsp   icon-name={iterMessage.iconName}
                                                             icon-size={iterMessage.iconSize}
                                                             icon-variant={iterMessage.iconVariant}
+                                                            icon-value={iterMessage.iconValue}
+                                                            icon-title={iterMessage.iconTitle}
                                                             is-debug={isDebugFine} >
                                         </c-sfpeg-icon-dsp>
                                     </div>
@@ -39,6 +41,16 @@
                                         <div class="slds-text-heading_small">
                                             <lightning-formatted-text   value={iterMessage.header}>
                                             </lightning-formatted-text>
+                                        </div>
+                                    </template>
+                                    <template if:true={iterMessage.progress}>
+                                        <div class="slds-m-vertical_xx-small">
+                                            <lightning-progress-bar value={iterMessage.progress.value}
+                                                                    size={iterMessage.progress.size}
+                                                                    variant={iterMessage.progress.variant}
+                                                                    class={iterMessage.progress.class}
+                                                                    title={iterMessage.progress.title}>
+                                            </lightning-progress-bar>
                                         </div>
                                     </template>
                                     <template if:true={iterMessage.message}>

@@ -1,18 +1,43 @@
 <template>
 
     <div    name={actionName}  class={iconClass}    onclick={handleIconAction}>
-        <template if:false={isResourceIcon}>
-            <lightning-icon icon-name={iconName}    name={actionName}
-                            size={iconSize}         title={iconTitle}
-                            variant={iconVariant}>
+        <!-- Standard Icon Case -->
+        <template if:true={isStandardIcon}>
+            <lightning-icon icon-name={iconName}
+                            size={iconSize}
+                            variant={iconVariant}
+                            title={iconTitle}>
             </lightning-icon>
+            <!-- name={actionName}-->
         </template>
+
+        <!-- Icon from Static Resource Case -->
         <template if:true={isResourceIcon}>
-            <lightning-icon src={iconSrc}       name={cmpName}
-                            size={iconSize}     title={iconTitle}
-                            variant={iconVariant} >
+            <lightning-icon src={iconSrc}
+                            size={iconSize}
+                            variant={iconVariant} 
+                            title={iconTitle}>
             </lightning-icon>
-            <!-- class={iconClass}   onclick={handleIconAction}-->
+            <!-- name={cmpName} class={iconClass}   onclick={handleIconAction}-->
         </template>
+
+        <!-- Dynamic Icon Case -->
+        <template if:true={isDynamicIcon}>
+            <lightning-dynamic-icon type={iconType}
+                                    alternative-text={iconType}
+                                    option={iconValue}
+                                    title={iconTitle} >
+            </lightning-dynamic-icon>
+        </template>
+
+        <!-- Progress Ring Case -->
+        <template if:true={isProgressRing}>
+            <lightning-progress-ring    size={iconSize}     
+                                        variant={iconVariant} 
+                                        value={iconValue}       
+                                        title={iconTitle}>
+            </lightning-progress-ring>
+        </template>
+
     </div>
 </template>

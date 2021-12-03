@@ -112,14 +112,15 @@ const sfpegJsonUtl = {
     //#########################################################
     flattenJsonObject : (jsonObject,jsonChildren) => {
         if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: START', jsonObject);
-        
+        if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: jsonChildren provided',JSON.stringify(jsonChildren));
+
         for (let fieldName in jsonObject) {
             if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: analysing fieldName',fieldName);
             
-           if (typeof jsonObject[fieldName] == 'object'){
-            if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: processing subObject', jsonObject[fieldName]);
+            if (typeof jsonObject[fieldName] == 'object'){
+                if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: processing subObject', jsonObject[fieldName]);
                
-               if ((jsonObject[fieldName]).constructor === [].constructor) {
+                if ((jsonObject[fieldName]).constructor === [].constructor) {
                     if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: flattening list',fieldName);
                     sfpegJsonUtl.flattenJsonList(jsonObject[fieldName],jsonChildren);
                     if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: subList after flatten step 1', jsonObject[fieldName]);
@@ -129,13 +130,17 @@ const sfpegJsonUtl = {
                    
                     if (    (jsonChildren)  &&  (jsonChildren.includes(fieldName))  ) {
                         if (jsonObject[fieldName].length > 0) {
-                            if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: replacing list field by _children',fieldName);
-                            jsonObject._children = jsonObject[fieldName];
+                            if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: replacing list field by _children ',fieldName);
+                            jsonObject['_children'] = jsonObject[fieldName];
+                            if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: list field replaced  by _children ',jsonObject._children);
+                            jsonObject[fieldName] = null;
+                            delete jsonObject[fieldName];
+                            if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: _children after delete ',jsonObject['_children']);
                         }
                         else {
                             if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: removing empty list field',fieldName);
+                            delete jsonObject[fieldName];
                         }
-                        delete jsonObject[fieldName];
                     }
                     else {
                         if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: list field not in children',jsonChildren);
@@ -143,19 +148,23 @@ const sfpegJsonUtl = {
                 }
                 else {
                     if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: flattening subObject');
-                    sfpegJsonUtl.flattenJsonObject(jsonObject[fieldName],null);
-                    if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: subObject after flatten step 1', jsonObject[fieldName]);
+                    sfpegJsonUtl.flattenJsonObject(jsonObject[fieldName],jsonChildren);
+                    if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: subObject after flatten step 1', JSON.stringify(jsonObject[fieldName]));
                
+                    let removeField = true;
+                    if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: analysing fields of object field ', fieldName);
+                    if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: with value ', JSON.stringify(jsonObject[fieldName]));
                     for (let subFieldName in jsonObject[fieldName]) {
                         if (typeof jsonObject[fieldName][subFieldName] == 'object'){
-                            if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: removing object sub-field',subFieldName);
-                            //if (subFieldName == '' ) recordItem._children = recordItem[gridFieldName];
-                            //_children working
-                            /*if ((jsonChildren) && (jsonChildren.contains(subFieldName))) {
-                                if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: replacing object sub-field by _children',subFieldName);
-                                jsonObject[fieldName]['_children'] = jsonObject[fieldName][subFieldName];
-                                delete jsonObject[fieldName][subFieldName];
-                            }*/
+                            if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: keeping field because of object sub-field ',subFieldName);
+                            removeField = false;
+                                //if (subFieldName == '' ) recordItem._children = recordItem[gridFieldName];
+                                //_children working
+                                /*if ((jsonChildren) && (jsonChildren.contains(subFieldName))) {
+                                    if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: replacing object sub-field by _children',subFieldName);
+                                    jsonObject[fieldName]['_children'] = jsonObject[fieldName][subFieldName];
+                                    delete jsonObject[fieldName][subFieldName];
+                                }*/
                         }
                         else {
                             if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: moving non-object sub-field',subFieldName);
@@ -164,7 +173,14 @@ const sfpegJsonUtl = {
                             delete jsonObject[fieldName][subFieldName];
                         }
                     }
-                    delete jsonObject[fieldName];
+                    if (removeField) {
+                        if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: removing field',fieldName);
+                        delete jsonObject[fieldName];
+                    }
+                    else {
+                        if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: keeping field ',fieldName);
+                        if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: with value ',JSON.stringify(jsonObject[fieldName]));
+                    }
                 }
                 if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: subObject after flatten step 2',jsonObject[fieldName]);
             }
@@ -176,11 +192,12 @@ const sfpegJsonUtl = {
                 if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: ignoring standard field',fieldName);
             }
         }
-        if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: END', jsonObject);
+        if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: END', JSON.stringify(jsonObject));
     },
 
     flattenJsonList : (jsonList,jsonChildren) => {
         if (sfpegJsonUtl.isDebug) console.log('flattenJsonList: START',jsonList);
+        if (sfpegJsonUtl.isDebug) console.log('flattenJsonList: jsonChildren provided',JSON.stringify(jsonChildren));
         jsonList.forEach(function(listItem){
             if (sfpegJsonUtl.isDebug) console.log('flattenJsonList: analysing recordItem',listItem);
             sfpegJsonUtl.flattenJsonObject(listItem,jsonChildren);

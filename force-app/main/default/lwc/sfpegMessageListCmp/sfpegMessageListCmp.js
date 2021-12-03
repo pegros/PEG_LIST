@@ -365,6 +365,7 @@ export default class SfpegMessageListCmp extends LightningElement {
                     message.iconName = message.iconName || variantConfig.iconName;
                     message.iconSize = message.iconSize || variantConfig.iconSize || 'small';
                     message.iconVariant = message.iconVariant || variantConfig.iconVariant;
+                    message.iconValue = message.iconValue;
                     message.textClass =  "slds-media__body " + variantConfig.textVariant;
                 });
                 this.displayedMessages = rawMessages;

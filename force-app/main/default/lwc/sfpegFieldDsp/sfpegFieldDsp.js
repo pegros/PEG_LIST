@@ -82,6 +82,9 @@ export default class SfpegFieldDsp extends LightningElement {
     get isDateLocal() {
         return (this.fieldType) && (this.fieldType === "date-local");
     }
+    get isRichText() {
+        return (this.fieldType) && (this.fieldType === "richText");
+    }
     get isDefault() {
         return (this.fieldType == null) || (this.fieldType === "text");
     }

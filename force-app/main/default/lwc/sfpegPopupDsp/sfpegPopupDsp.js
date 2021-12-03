@@ -239,39 +239,45 @@ export default class SfpegPopupDsp extends LightningElement {
         if (this.isDebug) console.log('handleSubmit: event ', event);
         if (this.isDebug) console.log('handleSubmit: submit details ', JSON.stringify(event.detail));
 
-        if (this.doSubmit) {
-            if (this.isDebug) console.log('handleSubmit: submitting form');
-            this.showSpinner = true;
-            let editForm = this.template.querySelector('lightning-record-edit-form');
-            editForm.submit();
-            if (this.isDebug) console.log('handleSubmit: END / form submitted');
-        }
-        else {
-            if (this.isDebug) console.log('handleSubmit: preventing submit and returning only input data');
+        if (this.checkRequiredFieldsFilled()) {
+            if (this.isDebug) console.log('handleSubmit: all required field set ');
+            if (this.doSubmit) {
+                if (this.isDebug) console.log('handleSubmit: submitting form');
+                this.showSpinner = true;
+                let editForm = this.template.querySelector('lightning-record-edit-form');
+                editForm.submit();
+                if (this.isDebug) console.log('handleSubmit: END / form submitted');
+            }
+            else {
+                if (this.isDebug) console.log('handleSubmit: preventing submit and returning only input data');
             
-            try {
-                let newRecord = this.initNewRecord();
-                if (this.isDebug) console.log('handleSubmit: newRecord daat fetched ', JSON.stringify(newRecord));
+                try {
+                    let newRecord = this.initNewRecord();
+                    if (this.isDebug) console.log('handleSubmit: newRecord daat fetched ', JSON.stringify(newRecord));
             
-                if (this._resolve) {
-                    if (this.isDebug) console.log('handleSubmit: END - calling promise handler');
-                    this._resolve(newRecord);
-                    this.resetCmp();
-                }
-                else {
-                    if (this._reject) { 
-                        console.warn('handleSubmit: END - no promise resolve handler available');
-                        this._reject('Missing promise resolve handler');
+                    if (this._resolve) {
+                        if (this.isDebug) console.log('handleSubmit: END - calling promise handler');
+                        this._resolve(newRecord);
+                        this.resetCmp();
                     }
                     else {
-                        console.warn('handleSubmit: END - no promise resolve nor reject handler available');
+                        if (this._reject) { 
+                            console.warn('handleSubmit: END - no promise resolve handler available');
+                            this._reject('Missing promise resolve handler');
+                        }
+                        else {
+                            console.warn('handleSubmit: END - no promise resolve nor reject handler available');
+                        }
+                        this.resetCmp();
                     }
-                    this.resetCmp();
                 }
-            }
-            catch(error) {
-                console.warn('handleSubmit: END - Submission error ',error);
-            }
+                catch(error) {
+                    console.warn('handleSubmit: END - Submission error ',error);
+                }
+            } 
+        }
+        else {
+            if (this.isDebug) console.log('handleSubmit: END / KO Missing required field(s)');
         }
     }
 
@@ -286,31 +292,37 @@ export default class SfpegPopupDsp extends LightningElement {
         if (this.isDebug) console.log('handleSave: save details ', JSON.stringify(event.detail));
         if (this.isDebug) console.log('handleSave: formRecord ', JSON.stringify(this.formRecord));
 
-        let newRecord = this.initNewRecord();
-        if (!newRecord.Id) newRecord.Id = event.detail.id;
-        if (this.isDebug) console.log('handleSave: newRecord init ', JSON.stringify(newRecord));
+        try {
+            let newRecord = this.initNewRecord();
+            if (!newRecord.Id) newRecord.Id = event.detail.id;
+            if (this.isDebug) console.log('handleSave: newRecord init ', JSON.stringify(newRecord));
 
-        if (this._resolve) {
-            if (this.isDebug) console.log('handleSave: calling promise handler');
-            // waiting for refresh / propagation of LDS cache if there is a next action
-            this.showSpinner = true;
-            setTimeout(() => {
-                this._resolve();
-                if (this.isDebug) console.log('handleSave: promise handler called');
-                this.resetCmp();
-                if (this.isDebug) console.log('handleSave: END / component reset');
-            },2000);
-            if (this.isDebug) console.log('handleSave: waiting');
-        }
-        else {
-            if (this._reject) { 
-                console.warn('handleSave: END - no promise resolve handler available');
-                this._reject('Missing promise resolve handler');
+            if (this._resolve) {
+                if (this.isDebug) console.log('handleSave: calling promise handler');
+                // waiting for refresh / propagation of LDS cache if there is a next action
+                this.showSpinner = true;
+                setTimeout(() => {
+                    this._resolve();
+                    if (this.isDebug) console.log('handleSave: promise handler called');
+                    this.resetCmp();
+                    if (this.isDebug) console.log('handleSave: END / component reset');
+                },2000);
+                if (this.isDebug) console.log('handleSave: waiting');
             }
             else {
-                console.warn('handleSave: END - no promise resolve nor reject handler available');
+                if (this._reject) { 
+                    console.warn('handleSave: END - no promise resolve handler available');
+                    this._reject('Missing promise resolve handler');
+                }
+                else {
+                    console.warn('handleSave: END - no promise resolve nor reject handler available');
+                }
+                this.resetCmp();
             }
-            this.resetCmp();
+        }
+        catch (error) {
+            console.warn('handleSave: error raised whil saving ', JSON.stringify(error));
+            this.showSpinner = false;
         }
     }
 
@@ -351,21 +363,33 @@ export default class SfpegPopupDsp extends LightningElement {
         return newRecord;
     }
 
-    /*checkRequiredFieldsFilled = function() {
+    checkRequiredFieldsFilled = function() {
         if (this.isDebug) console.log('checkRequiredFieldsFilled: START ');
 
         let inputFields = this.template.querySelectorAll('lightning-input-field');
         if (this.isDebug) console.log('checkRequiredFieldsFilled: inputFields fetched ', JSON.stringify(inputFields));
+
+        let isOK = true;
         if (inputFields) {
             inputFields.forEach(fieldIter => {
                 if (this.isDebug) console.log('checkRequiredFieldsFilled: processing fieldName ', fieldIter.fieldName);
                 if (this.isDebug) console.log('checkRequiredFieldsFilled: with value  ', fieldIter.value);
-                newRecord[fieldIter.fieldName] = fieldIter.value;
+                if (this.isDebug) console.log('checkRequiredFieldsFilled: required?  ', fieldIter.required);
+                //if (this.isDebug) console.log('checkRequiredFieldsFilled: valid?  ', fieldIter);
+                if (this.isDebug) console.log('checkRequiredFieldsFilled: null value ?  ', (fieldIter.value == null) );
+                if (this.isDebug) console.log('checkRequiredFieldsFilled: empty value ?  ', (fieldIter.value === ''));
+                if ((fieldIter.required) && ((fieldIter.value == null) || (fieldIter.value === ''))) {
+                    // handle value removal of required input field & boolean inputs
+                    // Boolean fields appear always as required !
+                    console.warn('checkRequiredFieldsFilled: missing required field  ', fieldIter.fieldName);
+                    isOK = false;
+                    fieldIter.setErrors({'errors':[{'message':'Field is required!'}]});
+                }
             });
         }
-        if (this.isDebug) console.log('checkRequiredFieldsFilled: END with newRecord ', JSON.stringify(newRecord));
-        return newRecord;
-    }*/
+        if (this.isDebug) console.log('checkRequiredFieldsFilled: END with isOK ', isOK);
+        return isOK;
+    }
 
     resetCmp = function() {
         if (this.isDebug) console.log('resetCmp: START ');

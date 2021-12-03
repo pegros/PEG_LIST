@@ -46,7 +46,8 @@ export default class SfpegIconDsp extends LightningElement {
                         // static resource.
     @api iconSize;      // Size of the image
     @api iconVariant;   // Variant of the icon (for utility ones)
-    @api iconTitle;     // Title on the icon
+    @api iconTitle='';  // Title on the icon
+    @api iconValue;     // Current progress value / stage (for dynamic icons,, such as ring, )
     @api actionName;    // Action name (e.g. to be provided in an onclick triggered)
     @api isDebug;       // Show debug logs
 
@@ -54,9 +55,20 @@ export default class SfpegIconDsp extends LightningElement {
     @track isResourceIcon = false;  // Indicates that the iconName is leveraging the custom SVG static resource
     @track iconSrc;                 // Source if the custom SVG to display (with name + size)
     @track iconClass;               // CSS class to apply
+    @track isDynamicIcon = false;   // Indicates that the iconName is a type of lightning:dynamicIcon 
+    @track iconType;                // Type of lightning:dynamicIcon to display
+    @track isProgressRing = false;  // Indicates that the iconName is a lightning:progressRing
 
     //Widget Labels & Titles from custom labels
     customIconsRsc = CUSTOM_ICONS; // Static resource for custom SVG Icons
+
+    //----------------------------------------------------------------
+    // Custom Getters
+    //----------------------------------------------------------------
+    get isStandardIcon () {
+        if (this.isDebug) console.log('isStandardIcon: returning ', !(this.isResourceIcon || this.isDynamicIcon || this.isProgressRing));
+        return !(this.isResourceIcon || this.isDynamicIcon || this.isProgressRing);
+    }
 
     //----------------------------------------------------------------
     // Component initialisation  
@@ -66,16 +78,36 @@ export default class SfpegIconDsp extends LightningElement {
 
         this.iconSize = this.iconSize || 'small';
         if (this.isDebug) console.log('connected: iconSize set ', this.iconSize);
+        this.iconTitle = this.iconTitle || '';
+        if (this.isDebug) console.log('connected: iconTitle set ', this.iconTitle);
         
-        if ((this.iconName) && (this.iconName.includes('resource:'))) {
-            this.isResourceIcon = true;
-            this.iconSrc = this.customIconsRsc + '#' + this.iconName.substring(9) + '-' + this.iconSize;
-            if (this.isDebug) console.log('connected: setting custom icon src ',this.iconSrc);
-            if (this.iconVariant === "inverse") {
-                this.iconClass = "slds-icon_container slds-theme_default";
-                if (this.isDebug) console.log('connected: setting inverse icon class ',this.iconClass);
+        if (this.iconName) {
+            if (this.iconName.includes('resource:')) {
+                this.isResourceIcon = true;
+                this.iconSrc = this.customIconsRsc + '#' + this.iconName.substring(9) + '-' + this.iconSize;
+                if (this.isDebug) console.log('connected: setting custom icon src ',this.iconSrc);
+                if (this.iconVariant === "inverse") {
+                    this.iconClass = "slds-icon_container slds-theme_default";
+                    if (this.isDebug) console.log('connected: setting inverse icon class ',this.iconClass);
+                }
+            }
+            else if (this.iconName.includes('dynamic:')) {
+                this.iconType = this.iconName.substring(8);
+                if (this.isDebug) console.log('connected: configuring dynamic type ',this.iconType);
+                if (this.iconType === 'progress') {
+                    if (this.isDebug) console.log('connected: setting progress ring with value ', this.iconValue);
+                    this.isProgressRing = true;
+                }
+                else {
+                    if (this.isDebug) console.log('connected: setting dynamic icon with option ', this.iconValue);
+                    this.isDynamicIcon = true;
+                }
             }
         }
+        else {
+            console.warn('connected: missing iconName');
+        }
+
         if (this.actionName) {
             this.iconClass = 'kpiAction';
             if (this.isDebug) console.log('connected: setting custom action class ',this.iconClass);

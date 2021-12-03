@@ -58,10 +58,11 @@ export default class SfpegTileDsp extends LightningElement {
     @track cardIcon = null;      // Displayed icon name (if any)
     @track cardIconSize = 'small'; // Displayed icon size (if any)
     @track cardIconVariant;     // Displayed icon size (if any)
+    @track cardIconValue;       // Display Icon value (for dynamic icons)
     @track cardTitle = null;    // Displayed title (if any)
     @track cardTitleLabel = null // Displayed title on hover label
     @track cardData = [];       // Displayed field data (if any)
-    @track cardMenu = [];     // Displayed menu (if any) - includes evaluation of disabled property
+    @track cardMenu = [];       // Displayed menu (if any) - includes evaluation of disabled property
 
     // Custom getter
     get isCard() {
@@ -143,16 +144,20 @@ export default class SfpegTileDsp extends LightningElement {
             this.cardIconSize = this.configDetails.icon.size || 'small';
             this.cardIconVariant = this.configDetails.icon.variant;
             if (this.configDetails.icon.name) {
-                console.log('resetDisplayData: icon label');
+                if (this.isDebug) console.log('resetDisplayData: icon label');
                 this.cardIcon = this.configDetails.icon.name;
             }
             else if (this.configDetails.icon.fieldName) {
-                console.log('resetDisplayData: icon field');
+                if (this.isDebug) console.log('resetDisplayData: icon field');
                 this.cardIcon = this._recordData[this.configDetails.icon.fieldName];
             }
             else {
                 console.warn('connected: END / wrong icon configuration');
                 return;
+            }
+            if ((this.configDetails.icon.value) && (this.configDetails.icon.value.fieldName)) {
+                if (this.isDebug) console.log('resetDisplayData: setting icon value');
+                this.cardIconValue = this._recordData[this.configDetails.icon.value.fieldName];
             }
         }
         if (this.isDebug) console.log('resetDisplayData: card icon init', this.cardIcon);
@@ -164,17 +169,51 @@ export default class SfpegTileDsp extends LightningElement {
             sfpegJsonUtl.sfpegJsonUtl.isDebug = this.isDebug;
             this.cardData = [];
             this.configDetails.columns.forEach(item => {
-                if ((item.fieldName !== titleFieldName) && (this._recordData[item.fieldName] != null)) {
-                    this.cardData.push({
-                        label: item.label,
-                        value: this._recordData[item.fieldName],
-                        //value: sfpegJsonUtl.sfpegJsonUtl.formatField(this._recordData[item.fieldName],item),
-                        type: item.type || 'text',
-                        name: item.fieldName
-                    });
+                if (item.fieldName !== titleFieldName) {
+                    if (this.isDebug) console.log('resetDisplayData: procesing item ', item);
+                    if (this._recordData[item.fieldName] != null) {
+                        if (this.isDebug) console.log('resetDisplayData: registering standard field ', item.fieldName);
+                        this.cardData.push({
+                            label: item.label,
+                            value: this._recordData[item.fieldName],
+                            //value: sfpegJsonUtl.sfpegJsonUtl.formatField(this._recordData[item.fieldName],item),
+                            type: item.type || 'text',
+                            name: item.fieldName
+                        });
+                    }
+                    /*
+                    else if ((item.fieldName).includes('.0.')) {
+                        if (this.isDebug) console.log('resetDisplayData: registering list first record field ', item.fieldName);
+                        let fieldPath = (item.fieldName).split('.');
+                        if (this.isDebug) console.log('resetDisplayData: fieldPath set ', fieldPath);
+
+                        let fieldValue = this._recordData;
+                        fieldPath.forEach( iter => {
+                            if (this.isDebug) console.log('resetDisplayData: processingg iter ', iter);
+                            if (fieldValue) {
+                                fieldValue = fieldValue[iter];
+                            }
+                            if (this.isDebug) console.log('resetDisplayData: fieldValue updated ', fieldValue);
+                        });
+                        if (fieldValue) {
+                            this.cardData.push({
+                                label: item.label,
+                                value: fieldValue,
+                                type: item.type || 'text',
+                                name: item.fieldName
+                            });
+                        }
+                        else {
+                            if (this.isDebug) console.log('resetDisplayData: empty fieldValue ');
+                        }
+                    }
+                    */
+                    else {
+                        if (this.isDebug) console.log('resetDisplayData: ignoring empty field ', item.fieldName);
+                    }
                 }
                 else {
-                    if (this.isDebug) console.log('resetDisplayData: ignoring empty or title field ', item.fieldName);
+                    if (this.isDebug) console.log('resetDisplayData: ignoring title field ', item.fieldName);
                 }
             });
             if (this.isDebug) console.log('resetDisplayData: card data init', this.cardData);  
@@ -184,36 +223,36 @@ export default class SfpegTileDsp extends LightningElement {
         }
 
         // Card Menu initialisation
-        console.log('resetDisplayData: menu provided ', JSON.stringify(this.configDetails.menu));
+        if (this.isDebug) console.log('resetDisplayData: menu provided ', JSON.stringify(this.configDetails.menu));
         if (this.configDetails.menu) {
             if (this.configDetails.isDynamicMenu) {                
-                console.log('resetDisplayData: evaluating dynamic menu ');
+                if (this.isDebug) console.log('resetDisplayData: evaluating dynamic menu ');
                 let newMenu = [];
                 (this.configDetails.menu).forEach(iterItem => {
-                    console.log('resetDisplayData: processing item ',iterItem.label);
+                    if (this.isDebug) console.log('resetDisplayData: processing item ',iterItem.label);
                     let newItem = {...iterItem};
                     if (iterItem.disabled) {
                         if (iterItem.disabled.fieldName) {
-                            console.log('resetDisplayData: setting dynamic disabled value ');
+                            if (this.isDebug) console.log('resetDisplayData: setting dynamic disabled value ');
                             newItem.disabled = this._recordData[(iterItem.disabled.fieldName)];
                         }
                         else {
-                            console.log('resetDisplayData: setting static disabled value ');
+                            if (this.isDebug) console.log('resetDisplayData: setting static disabled value ');
                             newItem.disabled = eval(iterItem.disabled);
                         }
                     }
                     newMenu.push(newItem);
                 });
                 this.cardMenu = newMenu;
-                console.log('resetDisplayData: dynamic menu evaluated ',JSON.stringify(this.cardMenu));
+                if (this.isDebug) console.log('resetDisplayData: dynamic menu evaluated ',JSON.stringify(this.cardMenu));
             }
             else {
-                console.log('resetDisplayData: using configured static menu as-is');
+                if (this.isDebug) console.log('resetDisplayData: using configured static menu as-is');
                 this.cardMenu = this.configDetails.menu;
             }
         }
         else {
-            console.log('resetDisplayData: no card menu');
+            console.warn('resetDisplayData: no card menu');
         }
 
 
