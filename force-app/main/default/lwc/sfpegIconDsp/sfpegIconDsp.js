@@ -47,7 +47,17 @@ export default class SfpegIconDsp extends LightningElement {
     @api iconSize;      // Size of the image
     @api iconVariant;   // Variant of the icon (for utility ones)
     @api iconTitle='';  // Title on the icon
-    @api iconValue;     // Current progress value / stage (for dynamic icons,, such as ring, )
+    @api
+    get iconValue() {
+        return this._recordData;
+    }
+    set iconValue(value) {
+        if (this.isDebug) console.log('setIconValue: START set for ',value);
+        //this.setAttribute('recordData', value);
+        this._iconValue = value;
+        if (this.isDebug) console.log('setIconValue: END set ');
+    }
+    @track _iconValue;  // Current progress value / stage (for dynamic icons,, such as ring, )
     @api actionName;    // Action name (e.g. to be provided in an onclick triggered)
     @api isDebug;       // Show debug logs
 
@@ -75,7 +85,7 @@ export default class SfpegIconDsp extends LightningElement {
     //----------------------------------------------------------------      
     connectedCallback() {
         if (this.isDebug) console.log('connected: START for ', this.iconName);
-
+ 
         this.iconSize = this.iconSize || 'small';
         if (this.isDebug) console.log('connected: iconSize set ', this.iconSize);
         this.iconTitle = this.iconTitle || '';
@@ -113,6 +123,12 @@ export default class SfpegIconDsp extends LightningElement {
             if (this.isDebug) console.log('connected: setting custom action class ',this.iconClass);
         }
         if (this.isDebug) console.log('connected: END ');
+    }
+
+    renderedCallback() {
+        if (this.isDebug) console.log('rendered: START for ', this.iconName);
+        if (this.isDebug) console.log('rendered: with value ', this._iconValue);
+        if (this.isDebug) console.log('rendered: END ');
     }
 
     //----------------------------------------------------------------

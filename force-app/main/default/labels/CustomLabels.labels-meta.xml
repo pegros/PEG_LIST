@@ -217,6 +217,22 @@
         <value>Processing operation</value>
     </labels>
     <labels>
+        <fullName>sfpegActionExecutionError</fullName>
+        <categories>PEG Component LWC Action Execution Error Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegActionExecutionError</shortDescription>
+        <value>Processing failure!</value>
+    </labels>
+    <labels>
+        <fullName>sfpegActionNoRecordError</fullName>
+        <categories>PEG Component LWC Action Execution Error Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegActionNoRecordError</shortDescription>
+        <value>No record to process!</value>
+    </labels>
+    <labels>
         <fullName>sfpegCardSave</fullName>
         <categories>PEG Component LWC Form Button Label</categories>
         <language>en_US</language>

@@ -14,19 +14,19 @@ The following snapshots displays a standalone button bar example comnbining acti
 
 ## Global Action Configuration (**sfpegAction__mdt)**
 
-**pegAction__mdt** provides the configuration of the **sfActionBarCmp** components (buttons & menus in an action bar, with underlying actions triggered).
+**sfpegAction__mdt** provides the configuration of the **sfpegActionBarCmp** components (buttons & menus in an action bar, with underlying actions triggered).
 
 The action bar basically consists in a single list of buttons and menus (within a [lightning-button-group](https://developer.salesforce.com/docs/component-library/bundle/lightning-button-group/documentation)container).
 * A button contains a single action configuration
 * A menu contains a drop-down list of multiple action configuration items. 
 
-[Standlone Action Bar Example](/media/sfpegActionBarExample.png)
-Display of a **sfActionBarCmp** component within a page (with 1 button followed by 2 menus).
-[Standalone Action Bar Configuration](/media/sfpegActionBarConfiguration.png)
-Configuration of the **sfActionBarCmp** component in the App Builder
+![Standlone Action Bar Example!](/media/sfpegActionBarExample.png)
+Display of a **sfpegActionBarCmp** component within a page (with 1 button followed by 2 menus).
+![Standalone Action Bar Configuration!](/media/sfpegActionBarConfiguration.png)
+Configuration of the **sfpegActionBarCmp** component in the App Builder
 
 Most of its configuration  is done via the _Actions_ attribute of the metadata record, upon which context merge (see **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** component) is applied/refreshed within each use case.
-[Standalone Action Bar Configuration](/media/sfpegActionMdtonfiguration.png)
+![Standalone Action Bar Configuration!](/media/sfpegActionMdtonfiguration.png)
 
 Hereafter is a typical configuration for a standalone mix of buttons and menus, containing first a menu with 3 options leading to a report, a dashboard and a folder, then 2 buttons to create Accounts via a Flow (launched within a addressable Lightning component) or a standard creation page.
 ```
@@ -276,10 +276,10 @@ Two Action Types are available to execute direct record operation (create, updat
     "name": "activate", "label": "Activate Relation", "iconName": "utility:edit",
     "action": {
         "type": "LDS",
-        "title": "Updating Row State",
-        "message": "Please confirm.",
         "params": {
             "type": "update",
+            "title": "Updating Row State",
+            "message": "Please confirm.",
             "params": {
                 "fields": {
                     "Id": "{{{ROW.Id}}}",
@@ -293,10 +293,10 @@ Two Action Types are available to execute direct record operation (create, updat
     "name": "delete", "label": "Remove Relation", "iconName": "utility:delete",
     "action": {
         "type": "LDS",
-        "title": "Deleting Record",
-        "message": "Please confirm.",
         "params": {
             "type": "delete",
+            "title": "Deleting Record",
+            "message": "Please confirm.",
             "params": "{{{ROW.Id}}}"
         }
     }
@@ -365,7 +365,7 @@ Two Action Types are available to execute direct record operation (create, updat
 Two Action Types are available to execute record operation (create, update) via a popup form, either via the
 Lightning Data Service (LDS, preferrable) or via direct database operaion (DML, for non LDS supported objects). 
 
-[Standalone Action Bar Configuration](/media/sfpegActionBarFormPopup.png)
+![Standalone Action Bar Configuration!](/media/sfpegActionBarFormPopup.png)
 
 * **ldsForm** opens a popup to create / edit a record leveraging the standard lightning-record-edit-form
 (https://developer.salesforce.com/docs/component-library/bundle/lightning-record-edit-form/documentation) base

@@ -22,7 +22,7 @@
             <property   name="wrapperClass"
                         label="Wrapping CSS Class"
                         type="String"
-                        default="slds-box slds-box_x-small smds-theme_default"
+                        default="slds-box slds-box_x-small slds-theme_default"
                         description="CSS Classes for the wrapping card div"/>
            
             <property   name="isDebug"

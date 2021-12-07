@@ -123,15 +123,17 @@ export default class SfpegKpiListCmp extends LightningElement {
 
                                 (iterGrp.kpis).forEach(iterKpi => {
                                     if (this.isDebug) console.log('connected: processing kpi ',JSON.stringify(iterKpi));
-                                    iterKpi.iconSize = iterKpi.iconSize || 'small';
-                                    if (iterKpi.iconName) {
-                                        if (iterKpi.iconName.includes('resource:')) {
-                                            iterKpi.isResourceIcon = true;
-                                            iterKpi.iconSrc = this.customIconsRsc + '#' + iterKpi.iconName.substring(9) + '-' + iterKpi.iconSize;
-                                        }
-                                        else {
-                                            iterKpi.isResourceIcon = false;
-                                        } 
+                                    if (iterKpi.icon) {
+                                        iterKpi.icon.size = iterKpi.icon.size || 'small';
+                                        /*if (iterKpi.iconName) {
+                                            if (iterKpi.iconName.includes('resource:')) {
+                                                iterKpi.isResourceIcon = true;
+                                                iterKpi.iconSrc = this.customIconsRsc + '#' + iterKpi.iconName.substring(9) + '-' + iterKpi.iconSize;
+                                            }
+                                            else {
+                                                iterKpi.isResourceIcon = false;
+                                            } 
+                                        }*/
                                     }
                                     iterKpi.kpiClass =  "slds-media__figure" + (iterKpi.action ? ' kpiAction' : '');
                                     iterKpi.kpiAction =  (iterKpi.action ? iterGrp.actions + '-' +  iterKpi.action : '');
@@ -165,10 +167,128 @@ export default class SfpegKpiListCmp extends LightningElement {
             if (this.isDebug) console.log('connected: request sent');
         }
     }
+
+    renderedCallback(){
+        if (this.isDebug) console.log('renderered: START');
+        if (this.isDebug) console.log('renderered: END');
+    }
     
     //----------------------------------------------------------------
     // Event Handlers 
     //----------------------------------------------------------------      
+    handleLoad(event) {
+        if (this.isDebug) console.log('handleLoad: START');
+        if (this.isDebug) console.log('handleLoad: event ',event);
+        if (this.isDebug) console.log('handleLoad: event details ',JSON.stringify(event.detail));
+        let recordValues = ((event.detail.records)[this.recordId]).fields;
+        if (this.isDebug) console.log('handleLoad: recordFieldValues fetched ',JSON.stringify(recordValues));
+
+        let iconNameFields = this.template.querySelectorAll('.iconNameField');
+        if (this.isDebug) console.log('handleLoad: iconNameFields fetched ',iconNameFields);
+        let iconVariantFields = this.template.querySelectorAll('.iconVariantField');
+        if (this.isDebug) console.log('handleLoad: iconVariantFields fetched ',iconVariantFields);
+        let iconValueFields = this.template.querySelectorAll('.iconValueField');
+        if (this.isDebug) console.log('handleLoad: iconValueFields fetched ',iconValueFields);
+        //if (this.isDebug) console.log('handleLoad: number ',iconValueFields.length);
+        if (!((iconNameFields) || (iconVariantFields) || (iconValueFields))) {
+            if (this.isDebug) console.log('handleLoad: END / no dynamic icon name/variant/value');
+            return;
+        }
+        
+        let iconComponents = this.template.querySelectorAll('c-sfpeg-icon-dsp');
+        if (this.isDebug) console.log('handleLoad: iconComponents ',iconComponents);
+        
+        try {
+            iconComponents.forEach(iconIter => {
+                if (this.isDebug) console.log('handleLoad: processing icon element ',iconIter);
+                if (this.isDebug) console.log('handleLoad: icon name field ',iconIter.dataset.icon);
+                if (this.isDebug) console.log('handleLoad: icon value field ',iconIter.dataset.value);
+                if (this.isDebug) console.log('handleLoad: icon variant field ',iconIter.dataset.variant);
+
+                if (iconIter.dataset.icon) {
+                    if ((recordValues[iconIter.dataset.icon]) && ((recordValues[iconIter.dataset.icon]).value)) {
+                        if (this.isDebug) console.log('handleLoad: setting dynamic icon name ', (recordValues[iconIter.dataset.icon]).value);
+                        iconIter.iconName = (recordValues[iconIter.dataset.icon]).value;
+                    }
+                    else {
+                        if (this.isDebug) console.log('handleLoad: dynamic icon name not yet available');
+                    }
+                }
+                else {
+                    if (this.isDebug) console.log('handleLoad: static icon name ', iconIter.iconName);
+                }
+
+                if (iconIter.dataset.variant) {
+                    if ((recordValues[iconIter.dataset.variant]) && ((recordValues[iconIter.dataset.variant]).value)) {
+                        if (this.isDebug) console.log('handleLoad: setting dynamic icon variant ', (recordValues[iconIter.dataset.variant]).value);
+                        iconIter.iconVariant = (recordValues[iconIter.dataset.variant]).value;
+                    }
+                    else {
+                        if (this.isDebug) console.log('handleLoad: dynamic icon variant not yet available');
+                    }
+                }
+                else {
+                    if (this.isDebug) console.log('handleLoad: static icon variant ', iconIter.iconVariant);
+                }
+
+                if (iconIter.dataset.value) {
+                    if ((recordValues[iconIter.dataset.value]) && ((recordValues[iconIter.dataset.value]).value)) {
+                        if (this.isDebug) console.log('handleLoad: setting dynamic icon value ', (recordValues[iconIter.dataset.value]).value);
+                        iconIter.iconValue = (recordValues[iconIter.dataset.value]).value;
+                    }
+                    else {
+                        if (this.isDebug) console.log('handleLoad: dynamic icon value not yet available');
+                    }
+                }
+                else {
+                    if (this.isDebug) console.log('handleLoad: static icon value ', iconIter.iconValue);
+                }
+            });
+        }
+        catch(error) {
+            console.warn('handleLoad: failure raised ',JSON.stringify(error));
+        }
+        /*
+        iconValueFields.forEach(valueItem => {
+            if (this.isDebug) console.log('handleLoad: processing icon value name ',valueItem.fieldName);
+            if (this.isDebug) console.log('handleLoad: recordFieldValues recalled ',JSON.stringify(recordValues));
+            if (this.isDebug) console.log('handleLoad: field value recalled ',JSON.stringify(recordValues[valueItem.fieldName]));
+
+            try {
+                if ((recordValues[valueItem.fieldName]) && ((recordValues[valueItem.fieldName]).value)) {
+                    if (this.isDebug) console.log('handleLoad: data available for icon value field ', (recordValues[valueItem.fieldName]).value);
+
+                    let itemValue = (recordValues[valueItem.fieldName]).value;
+                    if (this.isDebug) console.log('handleLoad: itemValue fetched ',itemValue);
+            
+                    iconComponents.forEach(cmpIter => {
+                        if (this.isDebug) console.log('handleLoad: processing display icon ',cmpIter.id);
+                        if (this.isDebug) console.log('handleLoad: component ',cmpIter);
+                        if (this.isDebug) console.log('handleLoad: component dataset ',cmpIter.dataset);
+                        if (this.isDebug) console.log('handleLoad: icon name ',cmpIter.dataset.icon);
+                        if (this.isDebug) console.log('handleLoad: icon value ',cmpIter.dataset.value);
+                        if (this.isDebug) console.log('handleLoad: icon variant ',cmpIter.dataset.variant);
+
+                        if ((cmpIter.id).startsWith(valueItem.fieldName)) {
+                            if (this.isDebug) console.log('handleLoad: updating value for matching field');
+                            cmpIter.iconValue = itemValue;
+                        };
+                    });
+                }
+                else {
+                    if (this.isDebug) console.log('handleLoad: no data for icon value field  ');
+                }
+            }
+            catch(error) {
+                console.warn('handleLoad: failure raised ',JSON.stringify(error));
+            }
+        });
+        if (this.isDebug) console.log('handleLoad: all icon value fields processed');
+        */
+
+        if (this.isDebug) console.log('handleLoad: END / dynamic icon name/variant/value possibly updated');
+    }
+
     handleKpiAction(event) {
         if (this.isDebug) console.log('handleKpiAction: START');
         /*if (this.isDebug) console.log('handleKpiAction: event',event);

@@ -55,6 +55,8 @@ import DEFAULT_MASS_POPUP_MESSAGE   from '@salesforce/label/c.sfpegActionDefault
 import DEFAULT_CONFIRM_MESSAGE  from '@salesforce/label/c.sfpegActionDefaultConfirmMessage';
 import DEFAULT_APEX_HEADER      from '@salesforce/label/c.sfpegActionDefaultApexHeader';
 import EXECUTION_MESSAGE        from '@salesforce/label/c.sfpegActionExecutionMessage';
+import EXECUTION_ERROR          from '@salesforce/label/c.sfpegActionExecutionError';
+import NO_RECORD_ERROR          from '@salesforce/label/c.sfpegActionNoRecordError';
 
 var ACTION_CONFIGS = {};
 
@@ -658,6 +660,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
 
         if (!targetUrl.url) {
             console.warn('triggerOpenURL: END KO / missing url field in OpenURL params');
+            this.showError({message: 'Missing url property in OpenURL action!'});
             throw "Missing url field in OpenURL params!";
         }
 
@@ -703,6 +706,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
 
         if ((!operation.type) || (!operation.params)) {
             console.warn('triggerLDS: END KO / Missing type and/or params properties');
+            this.showError({message: 'Missing type and/or params properties in LDS action!'});
             throw "Missing type and/or params properties in LDS params!";
         }
 
@@ -755,6 +759,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             }
         }).catch( error => {
             this.displayMsg = JSON.stringify(error);
+            this.showError({message: error});
             popupUtil.stopSpinner();
             console.warn('triggerLDS: END KO / Issue when processing operation ',JSON.stringify(error));
         });
@@ -766,6 +771,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
 
         if ((!operation.params) || (!operation.params.operation)) {
             console.warn('triggerDML: END KO / Missing params and/or params.operation properties');
+            this.showError({message: 'Missing params and/or params.operation properties in DML action!'});
             throw "Missing params and/or params.operation properties in DML params!";
         }
 
@@ -803,6 +809,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         })
         .catch((error) => {
             this.displayMsg = JSON.stringify(error);
+            this.showError({message: error});
             popupUtil.stopSpinner();
             if (this.isDebug) console.log('triggerDML: END / Issue when processing operation: ' , JSON.stringify(error));
         });
@@ -838,6 +845,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
 
         if ((!formAction.record) || (!formAction.fields)) {
             console.warn('triggerLdsForm: END KO / Missing record and/or fields properties');
+            this.showError({message: 'Missing record and/or fields properties in LdsForm action!'});
             throw "Missing record and/or fields properties in ldsForm params!";
         }
 
@@ -859,6 +867,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         })
         .catch((error) => {
             this.displayMsg = JSON.stringify(error);
+            this.showError({message: error});
             if (this.isDebug) console.log('triggerLdsForm: END / Issue when processing operation: ' , JSON.stringify(error));
         });
         if (this.isDebug) console.log('triggerLdsForm: popup displayed');
@@ -869,6 +878,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
 
         if ((!formAction.formRecord) || (!formAction.formFields) || (!formAction.record))  {
             console.warn('triggerDmlForm: END KO / Missing formRecord, formFields and/or record properties');
+            this.showError({message: 'Missing formRecord, formFields and/or record properties in DmlForm action!'});
             throw "Missing formRecord, formFields and/or record properties in dmlForm params!";
         }
 
@@ -922,7 +932,8 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         })
         .catch((error) => {
             this.displayMsg = JSON.stringify(error);
-            if (this.isDebug) console.log('triggerDmlForm: END - Issue when processing operatio: ' , JSON.stringify(error));
+            this.showError({message: error});
+            console.warn('triggerDmlForm: END - Issue when processing operation: ' , JSON.stringify(error));
         });
         if (this.isDebug) console.log('triggerDmlForm: popup displayed');
     }
@@ -976,6 +987,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             if (this.isDebug) console.log('triggerMassForm: form popup displayed');
         }
         else {
+            this.showError({message: NO_RECORD_ERROR},'warning');
             console.warn('triggerMassForm: END / no record to process');
         }
     }
@@ -985,6 +997,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
 
         if (!dmlAction.operation)  {
             console.warn('triggerDmlForm: END KO / Missing operation property');
+            this.showError({message: 'Missing operation property in MassDML action!'});
             throw "Missing operation property in massDML params!";
         }
 
@@ -1053,12 +1066,14 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                 }
             }).catch((error) => {
                 this.displayMsg = JSON.stringify(error);
+                this.showError({message: error});
                 popupUtil.stopSpinner();
                 console.warn('triggerMassDML: END KO / execution error: ' , JSON.stringify(error));
             });
             if (this.isDebug) console.log('triggerMassDML: confirmation popup displayed');
         }
         else {
+            this.showError({message: NO_RECORD_ERROR},'warning');
             console.warn('triggerMassDML: END / no record to process');
         }
     }
@@ -1081,6 +1096,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
 
         if ((!apexAction.name) || (!apexAction.params)) {
             console.warn('triggerApex: END KO / Missing name and/or params properties');
+            this.showError({message: 'Missing name and/or params properties in Apex action!'});
             throw "Missing name and/or params properties in apex params!";
         }
 
@@ -1118,13 +1134,15 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             }
         })
         .catch((error) => {
-            console.warn('triggerApex: END / Issue when processing operation: ', JSON.stringify(error));
+            this.displayMsg = JSON.stringify(error);
+            this.showError({message: error});
             popupUtil.stopSpinner();
-            this.triggerToast({
+            console.warn('triggerApex: END KO / execution error: ' , JSON.stringify(error));
+            /*this.triggerToast({
                 title : apexAction.label || DEFAULT_APEX_HEADER,
                 message: error.body.message,
                 variant: 'error'
-            }, null);
+            }, null);*/
         });
         if (this.isDebug) console.log('triggerApex: confirmation popup displayed');
     }
@@ -1160,6 +1178,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         }
         else {
             this.displayMsg = "Missing channel in custom action configuration!";
+            this.showError({message: 'Missing channel property in custom action!'});
             console.warn('triggerCustomAction: END KO / Missing channel in action');
         }
     }
@@ -1182,168 +1201,50 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         }
         else {
             this.displayMsg = "Missing channel in custom notification configuration!";
+            this.showError({message: 'Missing channel property in custom notification!'});
             console.warn('triggerCustomNotification: END KO / Missing channel in action');
         }
     }
 
-    // Context Merge Utilities (OBSOLETE --> migrated to merge and action components)
-    /*
-    mergeActionContext = function(action, context) {
-        if (this.isDebug) console.log('mergeParams: START');
+    //----------------------------------------------------------------
+    // Utilities
+    //----------------------------------------------------------------
 
-        sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
-        sfpegMergeUtl.sfpegMergeUtl.mergeTokens(this.configDetails.actions,this.configDetails.input,this.userId,this.userData,this.objectApiName,this.recordId,this.recordData,null)
-        .then( value => {
-            if (this.isDebug) console.log('doMerge: context merged within configuration ',value);
-            this.configDetails.actionList = JSON.parse(value)
-            if (this.isDebug) console.log('doMerge: END configuration updated', JSON.stringify(this.configDetails.actionList));
-        }).catch( error => {
-            if (this.isDebug) console.warn('doMerge: KO ',error);
-            this.displayMsg = JSON.stringify(error);
-        }).finally( () => {
-            sfpegMergeUtl.sfpegMergeUtl.isDebug = false;
-            this.isReady = true;
-        });
-    }
-    
-    mergeParams = function(params, context) {
-        if (this.isDebug) console.log('mergeParams: START');
+    // Error Handling Utilities
+    showError = function(error,severity) {
+        if (this.isDebug) console.log('showError: START');
 
-        let mergedParams = params;
-        let paramsStr = JSON.stringify(params);
-        if (paramsStr.includes('{{{')) {
-            if (this.isDebug) console.log('mergeParams: parsing tokens');
-
-            let tokens = this.parseString(paramsStr);
-            if (this.isDebug) console.log('mergeParams: tokens parsed',tokens);
-
-            paramsStr = this.mergeString(paramsStr,tokens,context);
-            if (this.isDebug) console.log('mergeParams: paramsStr merged',paramsStr);
-
-            mergedParams = JSON.parse(paramsStr);
-            if (this.isDebug) console.log('mergeParams: END / mergedParams reparsed ',mergedParams);
+        let errorMessage = {
+            title: EXECUTION_ERROR,
+            variant: severity || 'error',
+            message : this.parseError(error)
         }
-        else {
-            if (this.isDebug) console.log('mergeParams: END / no merge required',mergedParams);
-        }
-        return mergedParams;
-    }
+        if (this.isDebug) console.log('showError: errorMessage prepared ', JSON.stringify(errorMessage));
 
-    parseString = function(templateString) {
-        if (this.isDebug) console.log('parseString: START with templateString ',templateString);
+        this.triggerToast(errorMessage);
+        if (this.isDebug) console.log('showError: END / toast triggered');
+    } 
 
-        // eslint-disable-next-line no-useless-escape
-        let regexp = /\{\{\{([\.\w-_]*)\}\}\}/gi;
-        //console.log('parseString: regexp', regexp);
-        let mergeKeys = templateString.match(regexp);
-        if (this.isDebug) console.log('parseString: mergeKeys extracted ', mergeKeys);
+    parseError = function (error) {
+        if (this.isDebug) console.log('parseError: START with ', JSON.stringify(error));
 
-        if (! mergeKeys) {
-            console.warn('parseString: END / no mergeKeys found');
-            return [];
-        }
+        const msgRegex = /"message":"[^"]+"/gi;
+        let msgList = (JSON.stringify(error)).match(msgRegex);
+        if (this.isDebug) console.log('parseError: messages extracted ', msgList);
 
-        let mergeFields = [];
-        mergeKeys.forEach(mergeKey => {
-            if (this.isDebug) console.log('parseString: processing mergeKey',mergeKey);
-            let mergeField = ((mergeKey.replace(/\{|\}/gi,'')).trim());
-            if (this.isDebug) console.log('parseString: mergeField extracted', mergeField);
-            let splitIndex = mergeField.indexOf('.');
-            mergeFields.push({
-                "token":mergeKey,
-                "domain": mergeField.slice(0, splitIndex),
-                "field": mergeField.slice(splitIndex +1)
+        let errorMessage = ''; 
+        if (msgList) {
+            msgList.forEach(msgIter => {
+                //if (this.isDebug) console.log('parseError: processing msgIter ', msgIter);
+                errorMessage = errorMessage + msgIter.substr(11,msgIter.length - 12) + ' ';
+                //if (this.isDebug) console.log('parseError: errorMessage updated ', errorMessage);
             });
-        });
-
-        if (this.isDebug) console.log('parseString: END / returning ',mergeFields);
-        return mergeFields;
-    }
-
-    mergeString = function(templateString,tokens,context) {
-        if (this.isDebug) console.log('mergeString: START with templateString ',templateString);
-        if (this.isDebug) console.log('mergeString: context provided ',JSON.stringify(context));
-        if (this.isDebug) console.log('mergeString: recordData init ',JSON.stringify(this.recordData));
-        if (this.isDebug) console.log('mergeString: userData init ',JSON.stringify(this.userData));
-
-        let mergedString = templateString;
-        tokens.forEach(token => {
-            if (this.isDebug) console.log('mergeString: processing token ',token);
-
-            let tokenKey = token['token'];
-            let tokenValue = null;
-            switch (token['domain']) {
-                case 'RCD': 
-                    //if (this.recordData) tokenValue = this.recordData.data.fields[token['field']].value;
-                    if (this.recordData) tokenValue = this.getValue(this.recordData.data.fields,token['field']);
-                    break;
-                case 'ROW':
-                    if (context) tokenValue = context[token['field']];
-                    break;
-                case 'USR':
-                    //if (this.userData) tokenValue = this.userData.data.fields[token['field']].value;
-                    if (this.userData) tokenValue = this.getValue(this.userData.data.fields,token['field']);
-                    break;
-                case 'GEN': 
-                    switch (token['field']) {
-                        case "objectApiName":
-                            tokenValue = this.objectApiName;
-                            break;
-                        case "recordId": 
-                            tokenValue = this.recordId;
-                            break;
-                        case "userId": 
-                            tokenValue =  this.userId;
-                            break;
-                        default:
-                            console.warn('mergeString: unsupported GEN field ',token['field']);
-                    }
-                    break;
-                default:
-                    if (this.isDebug) console.log('mergeString: current configData ',JSON.stringify(this.configData));
-                    if (this.configData) tokenValue = (this.configData[token['domain']])[token['field']];            
-            }
-            if (this.isDebug) console.log('mergeString: tokenValue extracted ',tokenValue);
-            
-            if (tokenValue != null) {
-                let tokenRegex = new RegExp(tokenKey, 'g');
-                mergedString = mergedString.replace(tokenRegex,tokenValue);
-                if (this.isDebug) console.log('mergeString: mergedString updated ',mergedString);
-            }
-            else {
-                console.warn('mergeString: no value available for token ', tokenKey);
-                let tokenRegex = new RegExp(tokenKey, 'g');
-                mergedString = mergedString.replace(tokenRegex,'');
-            }
-        });
-        if (this.isDebug) console.log('mergeString: END with mergedString ',mergedString);
-        return mergedString;
-    }
-    
-    getValue = function (record,field) {
-        if (this.isDebug) console.log('getValue: START with field ',field);
-        if (this.isDebug) console.log('getValue: record provided ',record);
-
-        if ((field) && (record)) {
-            if (field.includes('.')) {
-                if (this.isDebug) console.log('getValue: processing relation field ');
-                let index = field.indexOf('.');
-                if (this.isDebug) console.log('getValue: index of 1st relation ',index);
-                let relationField = field.substring(0,index);
-                if (this.isDebug) console.log('getValue: relationField extracted ',relationField);
-                let subFields = field.substring(index+1);
-                if (this.isDebug) console.log('getValue: END - fetching next field in relation ',subFields);
-                return this.getValue(record[relationField].value.fields,subFields);
-            }
-            else {
-                if (this.isDebug) console.log('getValue: END - returning simple field ',record[field].value);
-                return record[field].value;
-            }
+            //if (this.isDebug) console.log('parseError: errorMessage finalized ', errorMessage);
+            errorMessage = errorMessage.slice(0,-1);
         }
-        else {
-            console.warn('getValue: END - No field name or record provided');
-            return null;
-        }
+
+        if (this.isDebug) console.log("parseError: END with", errorMessage);
+        return errorMessage;
     }
-    */
+
 }

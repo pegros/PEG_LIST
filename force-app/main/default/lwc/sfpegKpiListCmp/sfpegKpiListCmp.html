@@ -21,7 +21,8 @@
         <!-- Main zone with actions -->
         <template if:true={isReady}>
         <lightning-record-view-form record-id={recordId}
-                                    object-api-name={objectApiName}>
+                                    object-api-name={objectApiName}
+                                    onload={handleLoad}>
             <div class="slds-grid slds-grid_align-spread slds-wrap  slds-grid_vertical-align-start slds-gutters_xx-small slds-grid_pull-padded-xx-small gridContainer">
                 
                 <!-- KPI Group Display -->
@@ -75,12 +76,39 @@
                                     <div    class="slds-col slds-shrink-none slds-grow slds-var-p-around_x-small kpiWrapper"
                                             key={iterKpi.name} >
                                         <div    class="slds-media slds-media_small slds-media_center ">
-                                            <div class="slds-media__figure">
-                                                <c-sfpeg-icon-dsp   icon-name={iterKpi.iconName}    action-name={iterKpi.kpiAction}
-                                                                    size={iterKpi.iconSize}         title={iterKpi.title}
-                                                                    onaction={handleKpiAction}      is-debug={isDebugFine}>
-                                                </c-sfpeg-icon-dsp>
-                                            </div>
+                                            <template if:true={iterKpi.icon}>
+                                                <div class="slds-media__figure">
+                                                    <c-sfpeg-icon-dsp   icon-name={iterKpi.icon.name}       title={iterKpi.title}
+                                                                        size={iterKpi.icon.size}            icon-variant={iterKpi.icon.variant}
+                                                                        icon-value={iterKpi.icon.value}          
+                                                                        data-icon={iterKpi.icon.fieldName}  data-variant={iterKpi.icon.variantField}
+                                                                        data-value={iterKpi.icon.valueField}
+                                                                        action-name={iterKpi.kpiAction}     onaction={handleKpiAction}
+                                                                        is-debug={isDebugFine}>
+                                                    </c-sfpeg-icon-dsp>
+                                                    <template if:true={iterKpi.icon.fieldName}>
+                                                        <div class="slds-hide">
+                                                            <lightning-output-field	field-name={iterKpi.icon.fieldName} 
+                                                                                    class="iconNameField" >
+                                                            </lightning-output-field>
+                                                    </div>
+                                                    </template>
+                                                    <template if:true={iterKpi.icon.variantField}>
+                                                        <div class="slds-hide">
+                                                            <lightning-output-field	field-name={iterKpi.icon.valueField} 
+                                                                                    class="iconVariantField" >
+                                                            </lightning-output-field>
+                                                        </div>
+                                                    </template>
+                                                    <template if:true={iterKpi.icon.valueField}>
+                                                        <div class="slds-hide">
+                                                            <lightning-output-field	field-name={iterKpi.iconValue} 
+                                                                                    class="iconValueField" >
+                                                            </lightning-output-field>
+                                                        </div>
+                                                    </template>
+                                                </div>
+                                            </template>
                                             <div    class="slds-media__body"
                                                     name={iterKpi.name}   title={iterKpi.title}> 
                                                 <template if:true={iterKpi.label}>

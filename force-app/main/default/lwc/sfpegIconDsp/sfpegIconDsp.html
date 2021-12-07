@@ -25,7 +25,7 @@
         <template if:true={isDynamicIcon}>
             <lightning-dynamic-icon type={iconType}
                                     alternative-text={iconType}
-                                    option={iconValue}
+                                    option={_iconValue}
                                     title={iconTitle} >
             </lightning-dynamic-icon>
         </template>
@@ -34,7 +34,7 @@
         <template if:true={isProgressRing}>
             <lightning-progress-ring    size={iconSize}     
                                         variant={iconVariant} 
-                                        value={iconValue}       
+                                        value={_iconValue}       
                                         title={iconTitle}>
             </lightning-progress-ring>
         </template>
