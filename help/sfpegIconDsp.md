@@ -19,6 +19,7 @@ This component is used in the following components:
 * **[sfpegMessageListCmp](/help/sfpegMessageListCmp.md)**
 * **[sfpegKpiListCmp](/help/sfpegKpiListCmp.md)**
 
+
 ## Display Configuration Options
 
 The following display parameters may be set on a **sfpegIconDsp** component
@@ -39,12 +40,22 @@ The following display parameters may be set on a **sfpegIconDsp** component
 </c-sfpeg-icon-dsp>
 ```
 
-As icon names
+As icon names, the following options are supported
+* **SLDS icons** such as `utility:check`, `custom:custom12`, `standard:account`...,
+_iconVariant_ property being available only for `utility` ones
+* **custom icons** as `resource:<iconName>` where each `<iconName>` should reference
+(with its size) a SVG icon sprite in the **sfpegIcons** static resource (see further below)
+* **dynamic icons** either `utility:score`, `utility:strength` or `utility:trend` with a
+required _iconValue_ (corresponding to the _option_ of the underlying **lightning-dynamic-icon**)
+but no _iconSize_ nor _iconVariant_ properties
+* dynamic **progress rings** as `utility:progress` with a
+required _iconValue_ and optional _iconSize_ and _iconVariant_ properties.
+
 
 ## Action Configuration
 
 If the _actionName_ property in set of the component, an _action_ LWC event is triggered each time the
-user clicks on the icon. Te CSS is then adapted to highlight that the iccon is clickable.
+user clicks on the icon. The CSS is then adapted to highlight that the icon is clickable.
 
 Such an event should be handled by setting the _onaction_ handler on the component.
 
@@ -55,13 +66,14 @@ Such an event should be handled by setting the _onaction_ handler on the compone
 </c-sfpeg-icon-dsp>
 ```
 
+
 ## Static Resources for Custom Icons
 
 The **sfpegIcons** static resource contains all the custom SVG icons usable in the other components via the _resource:xxxx_ syntax. If new icons are required, new SVG definitions may be added in the static resource for the new icon in all target sizes 
 
 In the following example, the resource:total icon is defined in both medium and small formats.
-* the id of the sprite is built following the _<iconName>-<iconSize>_ format
-* In order to reuse an original SVG defined in other sizes, a transformation is applied to scale and translate the original SVG directives for a proper display. The general viewBox is in a _0 0 100 100_ configuration and target sizes for medium and small sizes are respectively _32px_ and _24px_.
+* the id of the sprite is built following the `<iconName>-<iconSize>` format
+* In order to reuse an original SVG defined in other sizes, a transformation is applied to scale and translate the original SVG directives for a proper display. The general viewBox is in a `0 0 100 100` configuration and target sizes for medium and small sizes are respectively _32px_ and _24px_.
 * The stroke color has to be explicitely specified (as it is not inherited from the containers) and the stroke-width may also be adapted to the size.
 
 ```
@@ -77,4 +89,4 @@ In the following example, the resource:total icon is defined in both medium and 
 </g>
 ```
 
-Please refer to the standard [lightning-icon](https://developer.salesforce.com/docs/component-library/bundle/lightning-icon/documentation) ccomponent for more details about how custom icons work.
+Please refer to the standard [lightning-icon](https://developer.salesforce.com/docs/component-library/bundle/lightning-icon/documentation) component for more details about how custom icons work.
