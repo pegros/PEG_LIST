@@ -8,33 +8,34 @@ The **sfpegKpiListCmp** component displays an actionable list of KPI field value
 
 ![List of KPIs!](/media/sfpegKpis.png)
 
-
-## Global KPI List Configuration (**sfpegKpiList__mdt)**
-
-**sfpegKpiList__mdt** custom metadata records provide the main configurations for the **sfpegKpiListCmp** components (content and display of groups of individual KPI widgets), **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** action configuration records being possibly referenced in them if group or KPI level actions are needed.
-
 A **sfpegKpiListCmp** basically displays :
 * a list of KPI groups having their own header (orange zone) containing optional icons, titles and a actions
 * a sublist of KPI display widgets (e.g. blue zone) displaying an icon (possibly dynamic), a main KPI (in bold), a main KPI label (above) and a set of details (on the right of the main KPI).
 
 ![KPI List Layout!](/media/sfpegKpiLayout.png)
 
-This component exclusively relies on the [lightning-view-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-view-form/documentation) standard component to fetch all 
+**sfpegKpiList__mdt** custom metadata records provide the main configurations for the this component, **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** action configuration records being possibly
+referenced in them if group or KPI level actions are needed.
+
+The **sfpegKpiListCmp** component exclusively relies on the [lightning-view-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-view-form/documentation) standard component to fetch all 
 necessary data to display KPI values and icons. This requires all data to be defined on accessible 
 (possibly formula) fields of the current record to be displayed or fetched via [lightning-output-field](https://developer.salesforce.com/docs/component-library/bundle/lightning-output-field/documentation) standard components.
 
 It also relies on the **[sfpegIconDsp](/help/sfpegIconDsp.md)** component to display KPI icons and
 supports most if not all of its display options (including action trigger).
 
+## Component Configuration
+
 Configuration is quite straigthforward in the App Builder, basically requiring to select a 
-**sfpegKpiList__mdt** record and setting some additional display parameters (e.g. warpping CSS class).
+**sfpegKpiList__mdt** record and setting some additional display parameters (e.g. CSS classes
+for the wrapping div).
 
 ![KPI List App Builder Configuration!](/media/sfpegKpiConfiguration.png)
 
 In the **sfpegKpiList__mdt** custom metadata record, most of the confguration relies in the _DisplayConfig_ property, containing a list of KPI group configurations, each one consisting in:
 * a _header_ with
     * _label_ and _icon_ properties to display in the header title
-    * a _size_ property to control the width of the component (in sub-units of a 12 column grid)
+    * a _size_ property to control the width of the group container withiin the component (in sub-units of a 12 column grid)
     * an optional _actions_ property to display a set of actions (with the name of an applicable 
     **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** custom metadata record)
 * a list of _kpis_ configuration items containing
@@ -52,7 +53,7 @@ In the **sfpegKpiList__mdt** custom metadata record, most of the confguration re
     a list of record field API names).
 
 
-## Full Configuration Example (**sfpegKpiList__mdt)**
+## Full Configuration Example
 
 To implement a layout the one below, the following configuration actions should be applied
 ![KPI List Example!](/media/sfpegKpiListExample.png)
@@ -95,7 +96,7 @@ To implement a layout the one below, the following configuration actions should 
       "icon":{
         "fieldName":"RatioIcon__c",
         "variantField":"RatioVariant__c",
-        "size":"large"},
+        "size":"small"},
       "title": "Views"
     },
     {
@@ -104,7 +105,7 @@ To implement a layout the one below, the following configuration actions should 
       "icon":{
         "name":"utility:record",
         "variantField":"RatioVariant__c",
-        "size":"large"},
+        "size":"medium"},
       "title": "Views"
     }]
   }]

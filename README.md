@@ -114,7 +114,7 @@ There are 5 LWC display components used by the App Builder ones:
 
 * **sfpegCardDsp** displays a record card (for the **sfpegListCmp** in tile mode)
 * **sfpegFieldDsp** displays a field with the proper lightning-formatted-XXX according to its type (for the **sfpegCardDsp)**
-* **sfpegIconDsp** displays an lightning-icon 
+* **[sfpegIconDsp](/help/sfpegIconDsp.md)** displays an lightning-icon 
 * **sfpegPopupDsp** to display various pop ups, leveraging promises to await user interaction result
 * **sfpegWarningDsp** to display error messages
 
@@ -122,7 +122,7 @@ A single Aura display component is used by other Aura components:
 
 * **sfpegFlowDsp** displays a Flow within a modal popup triggered by the **sfpegActionUtilityCmp** utility component
 
-The **sfpegActionBarCmp** component is also included in most other App Builder components to display an action bar.
+The **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component is also included in most other App Builder components to display an action bar.
 
 
 ### Utility Components
@@ -130,10 +130,10 @@ The **sfpegActionBarCmp** component is also included in most other App Builder c
 There are 3 LWC utility components used by the App Builder ones:
 
 * **sfpegJsonUtl** to execute various operations on JSON objects and lists (flattening, hierarchy init for lightning-datatree component, sorting, filtering, formatting...)
-* **sfpegMergeUtl** to manage context merge within text variables, extracting tokens, fetching/caching required data and replacing tokens by data.
+* **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** to manage context merge within text variables, extracting tokens, fetching/caching required data and replacing tokens by data.
 * **sfpegCsvUtl** to generate and download a CSV file out of JSON list
 
-The **sfpegActionBarCmp** component is also included in all other App Builder components to provide the customisable action execution utility. It may be explicitely displayed or not.
+The **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component is also included in all other App Builder components to provide the customisable action execution utility. It may be explicitely displayed or not.
 
 
 ### LWC Message Channels
@@ -181,31 +181,29 @@ To implement custom Apex logic, 2 virtual service classes are available:
 ### Custom Metadata
 
 6 Custom Metadata are defined to store base configuration for the main App Builder components.
-
-* **sfpegAction__mdt** provides the configuration of the **sfActionBarCmp** components (standalone or embedded within other components)
-* **sfpegConfiguration__mdt** provides configuration for custom merge tokens to be supported by the **sfpegMergeUtl** utility component (to retrieve and merge Salesforce IDs for specific Object records, such as Dashboards, Reports, Knowledge Articles...)
-* **sfpegKpiList__mdt** provides configuration for the  **sfpegKpiListCmp** components (basically the list of fields and how they should be displayed)
-* **sfpegList__mdt** provides the configuration for the **sfpegListCmp**  components (context data required, data request to execute via SOQL / Apex, how list results should be displayed)
-* **sfpegMessage__mdt** provides the configuration for the **sfpegMessageListCmp**  components (list of messages with display style, activation conditions and actions)
-* **sfpegProfileCmp__mdt** provides the configuration for the **sfpegProfileCmp** components (basically what is displayed in their banners, avatars, titles, detail fields, actions)
+* **sfpegAction__mdt** provides the configuration of the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** components (standalone or embedded within other components)
+* **sfpegConfiguration__mdt** provides configuration for custom merge tokens to be supported by the 
+**[sfpegMergeUtl](/help/sfpegMergeUtl.md)** utility component (to retrieve and merge Salesforce IDs for specific Object records, such as Dashboards, Reports, Knowledge Articles...)
+* **sfpegKpiList__mdt** provides configuration for the **[sfpegKpiListCmp](/help/sfpegKpiListCmp.md)** components (basically the list of fields and how they should be displayed)
+* **sfpegList__mdt** provides the configuration for the **[sfpegListCmp](/help/sfpegListCmp.md)**  components (context data required, data request to execute via SOQL / Apex, how list results should be displayed)
+* **sfpegMessage__mdt** provides the configuration for the **[sfpegMessageListCmp](/help/sfpegMessageListCmp.md)** components (list of messages with display style, activation conditions and actions)
+* **sfpegProfileCmp__mdt** provides the configuration for the **[sfpegProfileCmp](/help/sfpegProfileCmp.md)** components (basically what is displayed in their banners, avatars, titles, detail fields, actions)
 
 
 All custom metadata objects include the following common fields:
+* _description_ to document the usage of each configuration record
+* _scope_ to define the pages for which the configuration record is applicable, i.e. a set of comma separated strings
+    * _GLOBAL_ keyword  (for all pages),
+    * _RECORDS_ keyword (for all record pages)
+    * _<ObjectApiName>_ (for a specific Salesforce Object) 
 
-* ***description*** to document the usage of each configuration record
-* ***scope*** to define the pages for which the configuration record is applicable, i.e. a set of comma separated strings
-    * “GLOBAL” keyword  (for all pages),
-    * “RECORDS” keyword (for all record pages)
-    * *<ObjectApiName>* (for a specific Salesforce Object) 
 
-
-For each custom metadata, some useful default (or test) records are included (prefixed with 
+For each custom metadata, some useful default (or test) records are included (prefixed with _sfpeg_)
 
 
 ### Static Resources
 
-3 static resources are included to provide graphical details for the **sfpegIconDsp** and the **sfpegProfileCmp** components**:**
-
+3 static resources are included to provide graphical details for the **[sfpegIconDsp](/help/sfpegIconDsp.md)** and the **[sfpegProfileCmp](/help/sfpegProfileCmp.md)** components:
 * **sfpegIcons** is a SVG sprite file providing the definition of various icons (in various sizes) to be used as custom icons within the **sfpegIconDsp** component**.**
 * **sfpegBanners** is a zip archive containing the set of .png or .jpg files to be used as banner background within the **sfpegProfileCmp** component**.**
 * **sfpegAvatars** is a zip archive containing the set of .png or .jpg files to be used as avater image within the **sfpegProfileCmp** component**.**
@@ -242,19 +240,18 @@ Configuration is done at 2 levels:
 * via custom metadata records, respectively to provide detailed configuration of the components (e.g. layouts, queries & actions to be used in the components), often containing complex JSON configuration stored in richtext fields.
 
 Such an approach enables to easily reuse the same detailed configuration in multiple Lightning page layouts and enables a more efficient local configuration caching (for better performances)
-[Image: Screenshot 2021-09-15 at 11.33.23.png]*Example of the **sfpegListCmp** component configuration in the App Builder, referencing 2 custom metadata records (orange zones) respectively for the data fetch/display configuration and for the header actions.*
+[Image: Screenshot 2021-09-15 at 11.33.23.png]*Example of the **[sfpegListCmp](/help/sfpegListCmp.md)** component configuration in the App Builder, referencing 2 custom metadata records (orange zones) respectively for the data fetch/display configuration and for the header actions.*
 
 In the main of metadata records, context merge tokens may be used to dynamically set some values based on the applicable record(s) and user. See the **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** for more details about the applicable syntax and all the possible tokens.
 
-“*Debug xxx ?”* properties enable to display some configuration information within the component and activate the debug logs within the browser console.
-* “*Debug ?*” applies only to the current component
-* “*Debug (fine) ?*” applies to all sub-components used  within the component (e.g. the action bar or the merge utility).
+_Debug xxx ?_ properties enable to display some configuration information within the component and activate the debug logs within the browser console.
+* _Debug ?_ applies only to the current component
+* _Debug (fine) ?_ applies to all sub-components used  within the component (e.g. the action bar or the merge utility).
 
 
 Please refer to the help pages of the different components for details about how to configure each of them.
 
-In addition to what is already available in the help page of each component, a few interesting configuration/customisation examples
-are provided **[here](/help/sfpegExamples.md)**.
+In addition to what is already available in the help page of each component, a few interesting configuration/customisation examples are provided **[here](/help/sfpegExamples.md)**.
 
 
 * * *
@@ -299,17 +296,16 @@ Lightning Data Service (via `@wire` methods or `lightning-record-form` component
 
 ### Lightning Message Service Based Communication
 
-In order to integrate the action framework with custom LWC components, the[Lightning Message Service](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.use_message_channel) has been leveraged to support bi-directional communication between components in this package and custom external logic.
+In order to integrate the action framework with custom LWC components, the [Lightning Message Service](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.use_message_channel) has been leveraged to support bi-directional communication between components in this package and custom external logic.
 This mechanism relies on a set of “*message channels*“ for inbound / outbound communication with the package components.
 
-This mechanism is also used internally to communicate from a tab component to the utility **sfpegActionHandlerCmp** component via “*utility*” actions and may be used to propagate “*refresh*” requests to multiple **sfpegListCmp** in a tab after an update action via “*notify*” actions.
+This mechanism is also used internally to communicate from a tab component to the utility **sfpegActionHandlerCmp** component via _utility_ actions and may be used to propagate _refresh_ requests to multiple **[sfpegListCmp](/help/sfpegListCmp.md)**  in a tab after an update action via _notify_ actions.
 
 
 ### Apex Extensibility
 
-In order to extend the standard capabilities made available in the package, an extension framework (via virtual classes and` forname()` class instantiation) has been implemented to let developers implement and integrate additional custom Apex logic.
+In order to extend the standard capabilities made available in the package, an extension framework (via virtual classes and `forname()` class instantiation) has been implemented to let developers implement and integrate additional custom Apex logic.
 
 This applies to the following features:
-
 * actions (see **sfpegAction** configuration) leveraging the **sfpegAction_SVC** virtual class
 * list queries (see **sfpegList** configuration) leveraging the **sfpegListQuery_SVC** virtual class
