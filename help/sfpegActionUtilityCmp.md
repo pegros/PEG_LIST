@@ -24,7 +24,8 @@ They may be invoked directly from the **sfpegActionUtilityCmp** component or cal
 (**sfpegActionBarCmp** component) within a tab leveraging the **utility** action type (to forward the 
 action to the utility bar component). 
 
-# Specific Action Types
+
+## Specific Action Types
 
 Compared to the [sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md) LWC component,
 this Aura component enables to support the following additional action types :
@@ -43,9 +44,9 @@ component and the
 The last action type relies on the **sfpegFlowDsp** Aura component to display a Flow within a modal popup.
 
 
-# Configuration Examples
+## Configuration Examples
 
-## Console Actions
+### Console Actions
 
 Multiple action types are implemented based on the ![workspace API](https://developer.salesforce.com/docs/component-library/bundle/lightning:workspaceAPI/documentation) and are especially targeted at console mode usage (although they are compatible
 with standard mode):
@@ -55,13 +56,13 @@ with standard mode):
 
 Based on 
 
-## Utility Actions
+### Utility Actions
 The **minimize** action type
 
-## Popup Actions
+### Popup Actions
 The **openPopup** and **openFlow** action types 
 
-## App Event Actions
+### App Event Actions
 The **fireEvent** action type
 
 * , minimize, openPopup, openFlow** on the Aura **sfpegActionUtilityCmp** utility component
