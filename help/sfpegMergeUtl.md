@@ -62,9 +62,12 @@ In this example, roles may be referenced in creation actions with the `{{{ROLE.<
 * _Query_ should provide the SOQL query template to be used by the **sfpegMergeUtl** component to fetch the values (the list of field values requested being automatically added after the `in` keyword).
 
 
-## Special Label Tokens
+## Server Side Merge Logic for Label Tokens
 
-In the **sfpegListCmp** component, some token merge logic (leveraging the **sfpegMerge_CTL** class)
-takes place on server side when fetching the configuration metadata. This applies to **LBL** and
-**FLBL** (for object field labels, as `FLBL.ObjectName.FieldName`) tokens in the display cconfiguration
-to localise column labels to the end-user language.
+In the **[sfpegListCmp](/help/sfpegListCmp.md)**  and 
+**[sfpegKpiListCmp](/help/sfpegKpiListCmp.md)** components, some token merge logic
+(leveraging the **sfpegMerge_CTL** class) takes place on server side when fetching the
+configuration metadata.
+
+This applies to **LBL** and **FLBL** (for object field labels, as `FLBL.ObjectName.FieldName`) tokens
+in their display configurations to localise column labels to the end-user language.

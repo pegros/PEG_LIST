@@ -24,6 +24,10 @@ necessary data to display KPI values and icons. This requires all data to be def
 It also relies on the **[sfpegIconDsp](/help/sfpegIconDsp.md)** component to display KPI icons and
 supports most if not all of its display options (including action trigger).
 
+**LBL** and **FLBL** merge tokens may be used to translate labels used in the configurations, see
+dedicated section in **[sfpegMergeUtl](/help/sfpegMergeUtl.md)**.
+
+
 ## Component Configuration
 
 Configuration is quite straigthforward in the App Builder, basically requiring to select a 
@@ -127,7 +131,7 @@ should be a valid action _name_ of the referenced action configuration.
       "params":{
         "type": "standard__recordPage",
         "attributes": {
-          "recordId": "{{{ROW.Article__c}}}",
+          "recordId": "{{{RCD.Article__c}}}",
           "actionName": "view"
         }
       }
@@ -138,3 +142,4 @@ should be a valid action _name_ of the referenced action configuration.
 
 * drag and drop the *SF PEG KPI List* component and select the proper *sfpegKpiList* record in the cconfiguration dropdown (here newsKpis).
 ![KPI List App Builder Configuration!](/media/sfpegKpiConfiguration.png)
+
