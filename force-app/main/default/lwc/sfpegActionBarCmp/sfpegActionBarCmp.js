@@ -435,10 +435,33 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             throw "Cannot execute action due to initialisation failure!";
         }
 
-        let action = (this.configDetails.actionList).find(item => {
+        /*let action = (this.configDetails.actionList).find(item => {
             if (this.isDebug) console.log('executeBarAction: analysing ', JSON.stringify(item));
             return item.name === actionName;
+        });*/
+        // Replaced to be able to call action on menu entries
+        let action = null;
+        (this.configDetails.actionList).forEach(item => {
+            if (this.isDebug) console.log('executeBarAction: analysing ', JSON.stringify(item));
+            if (item.items) {
+                if (this.isDebug) console.log('executeBarAction: processing menu entries ');
+                (item.items).forEach(menuItem => {
+                    if (this.isDebug) console.log('executeBarAction: processing menu entry ',JSON.stringify(menuItem));
+                    if (menuItem.name === actionName) {
+                        if (this.isDebug) console.log('executeBarAction: action found');
+                        action = menuItem;
+                    }
+                });
+            }
+            else {
+                if (this.isDebug) console.log('executeBarAction: processing button entry');
+                if (item.name === actionName) {
+                    if (this.isDebug) console.log('executeBarAction: action found');
+                    action = item;
+                }
+            }
         });
+
         if (action) {
             if (this.isDebug) console.log('executeBarAction: launching action',JSON.stringify(action));
 
