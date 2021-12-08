@@ -56,6 +56,7 @@ public with sharing class sfpegList_CTL {
                                             FROM sfpegList__mdt
                                             WHERE DeveloperName =  :name];
         if ((configs == null) || (configs.size() != 1)) {
+            System.debug(LoggingLevel.ERROR,'getConfiguration: END KO / configuration not found with name ' + name');
             throw new AuraHandledException('Configuration not found with name ' + name);
         }
 

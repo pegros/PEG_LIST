@@ -35,6 +35,9 @@ public with sharing class sfpegKpiList_CTL {
     /***
     * @description  Simple method to fetch configuration details for a KPI List component.
     *               It provides the display configuration as well as the actions available.
+    *               Custom and field label tokens are automatically replaced by their
+    *               values in the DisplayConfig__c field (depending on the user language),
+    *               leveraging the replaceLabelTokens() method of the sfpegMerge_CTL class.
     * @param        name    DeveloperName of the KPI List configuration record
     * @return       Object  sfpegKpiList__mdt record with DisplayConfig__c, 
     *               MasterLabel fields filled in.
@@ -48,7 +51,26 @@ public with sharing class sfpegKpiList_CTL {
                                             FROM sfpegKpiList__mdt
                                             WHERE DeveloperName =  :name];
         if ((configs == null) || (configs.size() != 1)) {
+            System.debug(LoggingLevel.ERROR,'getConfiguration: END KO / configuration not found with name ' + name');
             throw new AuraHandledException('Configuration not found with name ' + name);
+        }
+
+        if ((configs[0].DisplayConfig__c).contains('{{{LBL.')) {
+            System.debug(LoggingLevel.FINE,'getConfiguration: extracting/replacing custom labels in display config');
+            configs[0].DisplayConfig__c = sfpegMerge_CTL.replaceLabelTokens(configs[0].DisplayConfig__c);
+            System.debug(LoggingLevel.FINE,'getConfiguration: custom labels replaced in display config');
+        }
+        else {
+            System.debug(LoggingLevel.FINE,'getConfiguration: no custom label in display config');
+        }
+
+        if ((configs[0].DisplayConfig__c).contains('{{{FLBL.')) {
+            System.debug(LoggingLevel.FINE,'getConfiguration: extracting/replacing field labels in display config');
+            configs[0].DisplayConfig__c = sfpegMerge_CTL.replaceFieldLabelTokens(configs[0].DisplayConfig__c);
+            System.debug(LoggingLevel.FINE,'getConfiguration: field labels replaced in display config');
+        }
+        else {
+            System.debug(LoggingLevel.FINE,'getConfiguration: no field label in display config');
         }
         //System.debug(LoggingLevel.FINEST,'getConfiguration: END with configuration name ' + configs[0]);
         System.debug(LoggingLevel.FINE,'getConfiguration: END ' + configs[0].MasterLabel);
