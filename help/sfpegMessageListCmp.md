@@ -16,12 +16,14 @@ It relies on the **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** utility component t
 the messages via merge tokens and on the **[sfpegIconDsp](/help/sfpegIconDsp.md)** display component
 to display a wide range of static or dynamic icons.
 
+It also uses the standard [lightning-progress-indicator](https://developer.salesforce.com/docs/component-library/bundle/lightning-progress-indicator/documentation) and [lightning-progress-bar](https://developer.salesforce.com/docs/component-library/bundle/lightning-progress-bar/documentation) components to respectively display a progress indicator (/path) and bar.
 
 ## Component Configuration
 
 The **sfpegMessage__mdt** custom metadata provides the configuration for the components (list of 
 messages with display style, activation conditions and actions). Each message consists in:
 * a title contextualised text (blue zone)
+* an optional progress bar or indicator (not shown here, between title and message)
 * an optional contextualised message text (green zone)
 * a optional (possibly dynamic) icon (red zone)
 * an optional action button (orange zone)
@@ -38,6 +40,7 @@ _successLight_)
 * some additional properties to override the default variant settings (_iconName_, _iconSize_,
 _iconVariant_, _iconValue_)
 * a possible fixed _size_ in number of columns within a 12 column grid (12 meaning 100% of the width, no size letting the message grow according to its content)
+* an optional _path_ or _progress_ property to display a progress bar / indicator between header and message
 * an optional action button via an _action_ property containing at least  the _name_ of an action (registered in the **[sfpegAction](/help/sfpegActionBarCmp.md)** custom metadata record referenced via the _Message Actions_ attribute) and a _label_ or _iconName_
 * optional display conditions via the _isHidden_ property which may include formulas evaluated at runtime by the component (no need to define custom formula fields on the User or current Object).
 
@@ -66,6 +69,16 @@ the _Message Display_  of the custom metadata record should be configured as fol
         "message":"Current value is {{{RCD.Views__c}}}",
         "iconSize":"large",
         "action":{"name":"edit","title":"EDIT","iconName":"utility:edit"},
+        "path": {
+            "value": "{{{RCD.Status__c}}}", "title": "Current value is {{{RCD.Status__c}}}",
+            "type": "base", "variant":"shaded",
+            "steps": [
+                {"label":"Draft","value":"Draft"},
+                {"label":"Under Review","value":"Under Review"},
+                {"label":"Live","value":"Live"},
+                {"label":"Archived","value":"Archived"}
+            ]
+        },  
         "size":12
     },
     {

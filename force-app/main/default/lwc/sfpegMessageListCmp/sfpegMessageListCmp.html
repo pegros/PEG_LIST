@@ -43,6 +43,22 @@
                                             </lightning-formatted-text>
                                         </div>
                                     </template>
+                                    <template if:true={iterMessage.path}>
+                                        <div class="slds-m-vertical_xx-small">
+                                            <lightning-progress-indicator   current-step={iterMessage.path.value}
+                                                                            has-error={iterMessage.path.hasError}
+                                                                            type={iterMessage.path.type}
+                                                                            variant={iterMessage.path.variant}
+                                                                            title={iterMessage.path.title}>
+                                                <template for:each={iterMessage.path.steps} for:item="iterStep">
+                                                    <lightning-progress-step    key={iterStep.value}
+                                                                                label={iterStep.label}
+                                                                                value={iterStep.value} >
+                                                    </lightning-progress-step>
+                                                </template>
+                                            </lightning-progress-indicator>
+                                        </div>
+                                    </template>
                                     <template if:true={iterMessage.progress}>
                                         <div class="slds-m-vertical_xx-small">
                                             <lightning-progress-bar value={iterMessage.progress.value}
