@@ -132,6 +132,7 @@
                                 <template if:false={it.value.iconName}>
                                     <lightning-button-menu  key={it.value.name}
                                                             menu-alignment={it.value.align}
+                                                            icon-name={it.value.iconName}
                                                             variant={it.value.variant}
                                                             label={it.value.label}
                                                             onselect={handleMenuSelect} >
@@ -270,6 +271,7 @@
                                     <lightning-button-menu  key={it.value.name}
                                                             menu-alignment={it.value.align}
                                                             variant={it.value.variant}
+                                                            icon-size={it.value.iconSize}
                                                             label={it.value.label}
                                                             onselect={handleMenuSelect} >
                                         <template for:each={it.value.items} for:item="menuIter">
