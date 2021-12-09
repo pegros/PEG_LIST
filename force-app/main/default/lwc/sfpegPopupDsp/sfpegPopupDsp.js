@@ -122,7 +122,7 @@ export default class SfpegPopupDsp extends LightningElement {
         if (this.isDebug) console.log('handleClose: START');
         if (this._reject) {
             if (this.isDebug) console.log('handleClose: END - calling promise handler');
-            this._reject('Popup closed by user');
+            this._reject({noToast: true, message:'Popup closed by user'});
         }
         else {
             if (this.isDebug) console.log('handleClose: END - no reject handler available');
@@ -134,7 +134,7 @@ export default class SfpegPopupDsp extends LightningElement {
         if (this.isDebug) console.log('handleCancel: START');
         if (this._reject) {
             if (this.isDebug) console.log('handleCancel: END - calling promise handler');
-            this._reject('Action cancelled by user');
+            this._reject({noToast: true, message:'Action cancelled by user'});
         }
         else {
             console.warn('handleCancel: END - no reject handler available');
@@ -151,7 +151,7 @@ export default class SfpegPopupDsp extends LightningElement {
         else {
             if (this._reject) { 
                 console.warn('handleConfirm: END - no promise resolve handler available');
-                this._reject('Missing promise resolve handler');
+                this._reject({message:'Missing promise resolve handler'});
             }
             else {
                 console.warn('handleConfirm: END - no promise resolve nor reject handlers available');

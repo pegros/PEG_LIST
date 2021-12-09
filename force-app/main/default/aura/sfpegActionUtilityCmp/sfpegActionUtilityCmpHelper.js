@@ -58,6 +58,7 @@
     processAction: function(action, component, helper) {
         if (helper.isDebug) console.log('processAction: START');
 
+        let isLocalAction = true;
         if (helper.isDebug) console.log('processAction: action type provided ',action.type);
         switch (action.type) {
             case 'minimize':
@@ -89,9 +90,19 @@
                 helper.fireEvent(action.params,component,helper);
                 break;
             default:
-                console.warn('processAction: Unsupported action type ',action.type);
+                if (helper.isDebug) console.log('processAction: invoking action on action bar ',action.type);
+                isLocalAction = false;
+                helper.callActionBar(action, component, helper);
         }
-        if (helper.isDebug) console.log('processAction: END');
+
+        if ((isLocalAction) && (action.next)) {
+            if (this.isDebug) console.log('processAction: chained action to trigger',JSON.stringify(action.next));
+            helper.processAction(action.next,component, helper);
+            if (this.isDebug) console.log('processAction: END / chained action triggered');
+        }
+        else {
+            if (this.isDebug) console.log('processAction: END / no chained action to trigger');
+        }
     },
     minimize: function(component,helper) {
         if (helper.isDebug) console.log('minimize: START');
@@ -248,7 +259,8 @@
             })
             .then(function() {
                 if (helper.isDebug) console.log('refreshTab: END / current tab refreshed ');
-            }).catch(function(error){
+            })
+            .catch(function(error){
             	console.warn('refreshTab: END KO / refreshTab error ',JSON.stringify(error));  
         	});
         	if (helper.isDebug) console.log('refreshTab: temporary end');
@@ -275,19 +287,28 @@
 
                     let overlayLib = component.find("overlayLib");
                     overlayLib.showCustomModal({
-                           header: params.header,
-                           body: flowCmp, 
-                           showCloseButton: true,
-                           cssClass: params.class || 'slds-modal slds-fade-in-open slds-slide-down-cancel slds-modal_large',
-                           closeCallback: function() {
-                               if (params.doRefresh) {
-                                   $A.get('e.force:refreshView').fire();
-                                   if (helper.isDebug) console.log('openFlow: END / refresh fired');
-                               }
-                               else {
-                                if (helper.isDebug) console.log('openFlow: END / no refresh fired');
-                               }
-                           }
+                            header: params.header,
+                            body: flowCmp, 
+                            showCloseButton: true,
+                            cssClass: params.class || 'slds-modal slds-fade-in-open slds-slide-down-cancel slds-modal_large',
+                            closeCallback: function() {
+                                if (helper.isDebug) console.log('openFlow: popup closed');
+                                if (params.next) {
+                                    if (helper.isDebug) console.log('openFlow: chained action to trigger',JSON.stringify(params.next));
+                                    helper.processAction(params.next,component, helper);
+                                    if (helper.isDebug) console.log('openFlow: chained action triggered');
+                                }
+                                else {
+                                    if (helper.isDebug) console.log('openFlow: no chained action to trigger');
+                                }
+                                if (params.doRefresh) {
+                                    $A.get('e.force:refreshView').fire();
+                                    if (helper.isDebug) console.log('openFlow: END / refresh fired');
+                                }
+                                else {
+                                    if (helper.isDebug) console.log('openFlow: END / no refresh fired');
+                                }
+                            }
                     });
                     if (helper.isDebug) console.log('openFlow: showCustomModal done');
                 }
@@ -314,14 +335,23 @@
                            showCloseButton: true,
                            cssClass: content.class || 'slds-modal slds-fade-in-open slds-slide-down-cancel',
                            closeCallback: function() {
-                               if (params.doRefresh) {
-                                   $A.get('e.force:refreshView').fire();
-                                   if (helper.isDebug) console.log('openPopup: END / refresh fired');
-                               }
-                               else {
-                                if (helper.isDebug) console.log('openPopup: END / no refresh fired');
-                               }
-                           }
+                                if (helper.isDebug) console.log('openPopup: popup closed');
+                                if (params.next) {
+                                    if (helper.isDebug) console.log('openPopup: chained action to trigger',JSON.stringify(params.next));
+                                    helper.processAction(params.next,component, helper);
+                                    if (helper.isDebug) console.log('openPopup: chained action triggered');
+                                }
+                                else {
+                                    if (helper.isDebug) console.log('openPopup: no chained action to trigger');
+                                }
+                                if (params.doRefresh) {
+                                    $A.get('e.force:refreshView').fire();
+                                    if (helper.isDebug) console.log('openPopup: END / refresh fired');
+                                }
+                                else {
+                                    if (helper.isDebug) console.log('openPopup: END / no refresh fired');
+                                }
+                            }
                   });
                   if (helper.isDebug) console.log('openPopup: showCustomModal done');
               }
@@ -355,6 +385,14 @@
         else {
             console.warn("fireEvent: END KO - Missing event type")
         }
+    },
+    callActionBar : function(action,component,helper) {
+        if (helper.isDebug) console.log('callActionBar: START');
+            
+        let actionBar = component.find("actionBar");
+        actionBar.executeAction(action,null);
+        
+        if (helper.isDebug) console.log('callActionBar: END');
     }
     //,
     // Workspace Tab Event Handling

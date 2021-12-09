@@ -45,6 +45,7 @@
 
     <!-- Main vertical Action Menu display -->
     <c:sfpegActionHandlerCmp
+            aura:id="actionBar"
             barClass="{#v.barClass}"
             configName="{#v.configName}"
             userId="{!v.userId}"

@@ -93,7 +93,33 @@ export default class SfpegActionHandlerCmp extends LightningElement {
     }
 
 
-    // Handler for action 
+    //----------------------------------------------------------------
+    // Interface actions
+    //----------------------------------------------------------------
+    // Parent action execution service (for Action Utility Aura parent component, no merge done)
+    @api executeAction(action,context) {
+        if (this.isDebug) console.log('executeAction: START', JSON.stringify(action));
+        if (this.isDebug) console.log('executeAction: with context ', JSON.stringify(context));
+
+        let actionBar = this.template.querySelector('c-sfpeg-action-bar-cmp');
+        console.log('executeAction: actionBar fetched ',actionBar);
+
+        try {
+            if (this.isDebug) console.log('executeAction: triggering action');
+            actionBar.processAction(action,context);
+            if (this.isDebug) console.log('executeAction: END / action triggered');
+        }
+        catch (error) {
+            console.warn('executeAction: END KO / action execution failed!', JSON.stringify(error));
+        }
+    }
+
+
+    //----------------------------------------------------------------
+    // Handler for actions 
+    //----------------------------------------------------------------
+
+    // Handler for done  event from own action menu
     handleActionDone(event) {
         if (this.isDebug) console.log('handleActionDone: START with event ',JSON.stringify(event.detail));
         this.lastMessage = JSON.stringify(event.detail);
@@ -103,8 +129,10 @@ export default class SfpegActionHandlerCmp extends LightningElement {
         });
         if (this.isDebug) console.log('handleActionDone: doneEvent init',JSON.stringify(doneEvent));   
         this.dispatchEvent(doneEvent);
+        if (this.isDebug) console.log('handleActionDone: doneEvent dispatched'); 
+
         if (this.isDebug) console.log('handleActionDone: END / doneEvent dispatched'); 
-    }   
+    }
 
     // Handler for message received by component
     handleMessage(message) {
@@ -151,8 +179,11 @@ export default class SfpegActionHandlerCmp extends LightningElement {
         }        
     }
 
+    //----------------------------------------------------------------
     // Notification subscription 
+    //----------------------------------------------------------------
     // Encapsulate logic for Lightning message service subscribe and unsubsubscribe
+
     subscribeToMessageChannel() {
         if (!this.subscription) {
             this.subscription = subscribe(

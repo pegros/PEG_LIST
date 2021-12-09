@@ -782,7 +782,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             }
         }).catch( error => {
             this.displayMsg = JSON.stringify(error);
-            this.showError({message: error});
+            this.showError(error);
             popupUtil.stopSpinner();
             console.warn('triggerLDS: END KO / Issue when processing operation ',JSON.stringify(error));
         });
@@ -832,7 +832,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         })
         .catch((error) => {
             this.displayMsg = JSON.stringify(error);
-            this.showError({message: error});
+            this.showError(error);
             popupUtil.stopSpinner();
             if (this.isDebug) console.log('triggerDML: END / Issue when processing operation: ' , JSON.stringify(error));
         });
@@ -890,7 +890,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         })
         .catch((error) => {
             this.displayMsg = JSON.stringify(error);
-            this.showError({message: error});
+            this.showError(error);
             if (this.isDebug) console.log('triggerLdsForm: END / Issue when processing operation: ' , JSON.stringify(error));
         });
         if (this.isDebug) console.log('triggerLdsForm: popup displayed');
@@ -955,7 +955,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         })
         .catch((error) => {
             this.displayMsg = JSON.stringify(error);
-            this.showError({message: error});
+            this.showError(error);
             console.warn('triggerDmlForm: END - Issue when processing operation: ' , JSON.stringify(error));
         });
         if (this.isDebug) console.log('triggerDmlForm: popup displayed');
@@ -1089,7 +1089,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                 }
             }).catch((error) => {
                 this.displayMsg = JSON.stringify(error);
-                this.showError({message: error});
+                this.showError(error);
                 popupUtil.stopSpinner();
                 console.warn('triggerMassDML: END KO / execution error: ' , JSON.stringify(error));
             });
@@ -1158,7 +1158,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         })
         .catch((error) => {
             this.displayMsg = JSON.stringify(error);
-            this.showError({message: error});
+            this.showError(error);
             popupUtil.stopSpinner();
             console.warn('triggerApex: END KO / execution error: ' , JSON.stringify(error));
             /*this.triggerToast({
@@ -1236,6 +1236,11 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     // Error Handling Utilities
     showError = function(error,severity) {
         if (this.isDebug) console.log('showError: START');
+
+        if ((!error) || (error.noToast)) {
+            if (this.isDebug) console.log('showError: END / no toast triggered');
+            return;
+        }
 
         let errorMessage = {
             title: EXECUTION_ERROR,
