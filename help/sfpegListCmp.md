@@ -23,7 +23,7 @@ However, most of the configuration lies in two custom metadata referenced record
 * a *sfpegList__mdt* record for the data fetch & display
 * a  *sfpegAction__mdt* record for the custom header actions (see dedicated section for details)
 
-![List App Builder Configuration!](/media/sfpegListConfiguration.jpg)
+![List App Builder Configuration!](/media/sfpegListConfiguration.png)
 
 
 The *sfpegList__mdt* custom metadata records basically configure:
