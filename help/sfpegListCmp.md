@@ -63,13 +63,11 @@ The *sfpegList__mdt* custom metadata records basically configure:
         * within the “action” sub-property of the “title” property for the “TileList” and “CardList” display modes
     * Beware that conditional activation of actions does not work for “action” entries in the  “DataTable” and “TreeGrid” columns (i.e. only for “button” ones), while they properly work in the menu for the “TileList” and “CardList” modes.
 
-<p align="center">
 ![Main List Metadata Record!](/media/sfpegListConfigMeta.png)<br/>
 Main *sfpegList* record
 
 ![Row Action Metadata Record!](/media/sfpegListConfigMetaAction.png)<br/>
 Referenced *sfpegAction* record for row level actions
-</p>
 
 ## Special Paginated Use Cases
 
