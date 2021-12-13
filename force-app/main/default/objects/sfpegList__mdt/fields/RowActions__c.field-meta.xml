@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>RowActions__c</fullName>
-    <defaultValue>&apos;[{&quot;name&quot;:&quot;open&quot;,&quot;action&quot;:{&quot;type&quot;:&quot;open&quot;}},{&quot;name&quot;:&quot;edit&quot;,&quot;action&quot;:{&quot;type&quot;:&quot;edit&quot;}}]&apos;</defaultValue>
+    <defaultValue>&apos;sfpegOpenEdit&apos;</defaultValue>
     <description>JSON configuration of the Actions available on each Row (see sfpegAction metadata for details)</description>
     <externalId>false</externalId>
     <fieldManageability>SubscriberControlled</fieldManageability>
@@ -9,5 +9,5 @@
     <label>Row Actions</label>
     <length>100000</length>
     <type>LongTextArea</type>
-    <visibleLines>5</visibleLines>
+    <visibleLines>1</visibleLines>
 </CustomField>

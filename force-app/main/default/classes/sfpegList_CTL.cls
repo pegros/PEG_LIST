@@ -56,7 +56,7 @@ public with sharing class sfpegList_CTL {
                                             FROM sfpegList__mdt
                                             WHERE DeveloperName =  :name];
         if ((configs == null) || (configs.size() != 1)) {
-            System.debug(LoggingLevel.ERROR,'getConfiguration: END KO / configuration not found with name ' + name');
+            System.debug(LoggingLevel.ERROR,'getConfiguration: END KO / configuration not found with name ' + name);
             throw new AuraHandledException('Configuration not found with name ' + name);
         }
 
@@ -86,6 +86,8 @@ public with sharing class sfpegList_CTL {
     /***
     * @description  Standard method to fetch the list of records corresponding to a 
     *               preconfigured sfpegList__mdt query record in a specific context.
+    *               SOQL, SOSL, SAQL and Apex query types are supported.
+    *               All records are merge in a single list in case of SOSL.
     * @param    name    Dev Name of the Query configuration record to execute
     * @param    input   Context Object record containing all the input data expected
     *                   by the query (based on its QueryInput__c field value)
@@ -128,6 +130,71 @@ public with sharing class sfpegList_CTL {
             catch(Exception error) {
                 System.debug(LoggingLevel.WARN,'getData: END / KO - ' + error.getMessage());
                 throw new AuraHandledException('Apex Query failure: ' + error.getMessage());
+            }
+        }
+        else if (query.QueryType__c == 'SOSL') {
+            System.debug(LoggingLevel.FINE,'getData: executing SOSL query ' + query.QuerySOQL__c);
+            String mergedQuery = mergeQuery(query.QuerySOQL__c, (Map<Object,Object>) input);
+            System.debug(LoggingLevel.FINE,'getData: SOSL query merged ' + mergedQuery);
+
+            try {
+                System.debug('getData: triggering SOSL mergedQuery');
+                List<List<sObject>> soslResults = Search.query(mergedQuery);
+                System.debug('getData: SOSL results received' + soslResults);
+
+                List<Object> soslMergedList = new List<Object>();
+                for (List<sObject> iter : soslResults) {
+                    if (iter.size() > 0) {
+                        Schema.DescribeSObjectResult objectDesc = ((iter[0]).getSObjectType()).getDescribe();
+                        System.debug('getData: registering results for object type ' + objectDesc);
+                        String objectName = objectDesc.getName();
+                        String objectLabel = objectDesc.getLabel();
+                        String objectIcon = 'standard:' +  objectName.toLowerCase();
+                        if (objectDesc.isCustom()) {
+                            objectIcon = 'custom:' + getCustomObjectIcon(objectName);
+                        }
+                        List<Object> iterList = (List<Object>) (JSON.deserializeUntyped(JSON.serialize(iter)));
+                        for (Object iterObj : iterList) {
+                            Map<String,Object> iterMap = ((Map<String,Object>)iterObj);
+                            iterMap.put('ObjectApiName',objectName);
+                            iterMap.put('ObjectLabel', objectLabel);
+                            iterMap.put('ObjectIcon', objectIcon);
+                            iterMap.remove('attributes');
+                        }
+                        soslMergedList.addAll(iterList);
+                    }
+                }
+                System.debug('getData: END / SOSL results merged ' + soslMergedList);
+                return (list<Object>) soslMergedList;
+            }
+            catch (Exception error) {
+                System.debug(LoggingLevel.WARN,'getData: END / KO - ' + error.getMessage());
+                throw new AuraHandledException('SOQL Query failure: ' + error.getMessage());
+            }
+        }
+        else if (query.QueryType__c == 'SAQL') {
+            System.debug(LoggingLevel.FINE,'getData: executing SAQL query ' + query.QuerySOQL__c);
+
+            String mergedQuery = mergeQuery(query.QuerySOQL__c, (Map<Object,Object>) input);
+            System.debug(LoggingLevel.FINE,'getData: SAQL query merged ' + mergedQuery);
+
+            try {
+                System.debug('getData: triggering SAQL mergedQuery');
+                ConnectApi.LiteralJson saqlResult =  ConnectApi.Wave.executeQuery(mergedQuery);
+		        System.debug('getData: SAQL results received ' + saqlResult);
+		        System.debug('getData: SAQL JSON received ' + saqlResult.json);
+
+                Map<String,Object> saqlResultObject = (Map<String,Object>) (JSON.deserializeUntyped(saqlResult.json));
+		        System.debug('getData: SAQL results received ' + saqlResultObject);
+                saqlResultObject = (Map<String,Object>) (saqlResultObject.get('results'));
+		        System.debug('getData: SAQL "results" extracted ' + saqlResultObject);
+                List<Object> saqlResultList = (List<Object>) (saqlResultObject.get('records'));
+		        System.debug('getData: END / SAQL results "records" extracted ' + saqlResultList);
+                return saqlResultList;
+            }
+            catch (Exception error) {
+                System.debug(LoggingLevel.WARN,'getData: END / KO - ' + error.getMessage());
+                throw new AuraHandledException('SAQL Query failure: ' + error.getMessage());
             }
         }
         else {
@@ -187,8 +254,8 @@ public with sharing class sfpegList_CTL {
             }
         }
         else {
-            System.debug(LoggingLevel.WARN,'getCount: END / KO - Unsupported Configuration type' + query.QueryType__c);
-            throw new AuraHandledException('Unsupported Configuration type ' + query.QueryType__c + ' for config ' + name);
+            System.debug(LoggingLevel.WARN,'getCount: END / KO - Unsupported Paginated Configuration type' + query.QueryType__c);
+            throw new AuraHandledException('Unsupported Paginated Configuration type ' + query.QueryType__c + ' for config ' + name);
         }
     }   
 
@@ -257,8 +324,8 @@ public with sharing class sfpegList_CTL {
             }
         }
         else {
-            System.debug(LoggingLevel.WARN,'getCount: END / KO - Unsupported Configuration type' + query.QueryType__c);
-            throw new AuraHandledException('Unsupported Configuration type ' + query.QueryType__c + ' for config ' + name);
+            System.debug(LoggingLevel.WARN,'getCount: END / KO - Unsupported Paginated Configuration type' + query.QueryType__c);
+            throw new AuraHandledException('Unsupported Paginated Configuration type ' + query.QueryType__c + ' for config ' + name);
         }
     }
 
@@ -400,6 +467,57 @@ public with sharing class sfpegList_CTL {
 
         System.debug('initPagination: END returning  ' + returnMap);
         return returnMap;
+    }
+
+
+    /***
+    * @description  Private utility method to fetch the SLDS icon name related to a custom SObject.
+    *               It parses all tabs incuded in all apps to try and find the SLDS svg icon name
+    *               associated to teh custom object tab. 
+    *               The object tab should be included at least in one of the apps to become avvailable.
+    *               A default 'custom9' value is returned by default. 
+    * @param        objectName  API Name of the SObject
+    * @return       String      customXX name of the SLDS icon related 
+    * @exception    none
+    ***/
+    @TestVisible
+    private static String getCustomObjectIcon(final String objectName) {
+        System.debug('getCustomObjectIcon: START with object ' + objectName);
+
+        String objectIcon = 'custom9';
+        List<Schema.DescribeTabSetResult> tabSetDesc = Schema.describeTabs();
+        for (Schema.DescribeTabSetResult iter : tabSetDesc) {
+            System.debug('getCustomObjectIcon: processing App ' + iter.getLabel());
+            List<Schema.DescribeTabResult> iterTabs = iter.getTabs();
+            for (Schema.DescribeTabResult iterTab : iterTabs) {
+                if (iterTab.isCustom()) {
+	    	        System.debug('getCustomObjectIcon: processing Tab ' + iterTab.getSObjectName()); 
+                    if (iterTab.getSObjectName() == objectName) {
+                        System.debug('getCustomObjectIcon: fetching icon ID');
+                        List<Schema.DescribeIconResult> iterIcons = iterTab.getIcons();
+                        for (Schema.DescribeIconResult iterIcon : iterIcons) {
+	        		        //System.debug('getData: ' + ' # ' + iterIcon.getContentType()); 
+                            if (iterIcon.getContentType() == 'image/svg+xml') {
+                                Integer lastSlash = (iterIcon.getUrl()).lastIndexOf('/') + 1;
+                                Integer lastDot = (iterIcon.getUrl()).lastIndexOf('.');
+                                objectIcon = (iterIcon.getUrl()).mid(lastSlash, lastDot - lastSlash);
+
+			    		        System.debug('getCustomObjectIcon: END / icon Name found ' + objectIcon);
+                                return objectIcon;
+                            }
+                        }
+                    }
+                    else {
+    	    	        System.debug('getCustomObjectIcon: ignored (different object)');
+                    } 
+                }
+                else {
+                    System.debug('getCustomObjectIcon: ignored (standard object)');
+                } 
+            }
+        }
+        System.debug('getCustomObjectIcon: END / object icon not found, returning default ' + objectIcon);
+        return objectIcon;
     }
 
 }

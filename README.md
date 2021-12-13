@@ -1,4 +1,7 @@
-# sfpegListComponents
+---
+# SFPEG LIST Components
+---
+
 Set of configurable/actionable list components to enhance Lightning UX
 
 Author: [Pierre-Emmanuel Gros](https://github.com/pegros)

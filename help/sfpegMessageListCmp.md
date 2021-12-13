@@ -28,7 +28,7 @@ messages with display style, activation conditions and actions). Each message co
 * a optional (possibly dynamic) icon (red zone)
 * an optional action button (orange zone)
 
-![Message List Layout!](/media/sfpegMessageLayout.png)
+![Message List Layout!](/media/sfpegMessageLayout.jpg)
 
 As a baseline, a message list is configured in the _Message Display_ attribute of a **sfpegMessage** 
 custom metadata record attribute as a JSON list of message configuration items, each consisting in:
