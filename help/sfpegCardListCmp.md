@@ -10,9 +10,10 @@ component for each one.
 
 ![Cards List!](/media/sfpegCardList.png) 
 
-TO BE CONTINUED
 
-*pegCardList__mdt* provides the configuration of the *sfpegCardListCmp* components (targeted records, card configuration to apply).
+## Configuration
+
+The **pegCardList__mdt** custom metadata provides the configuration of the **sfpegCardListCmp*$ components (targeted records, card configuration to apply).
 
 From the App Builder, the main configuration records may be selected (Card List & Header Actions) as well as various display options.
 [Image: Screenshot 2021-11-10 at 18.41.08.png]In the *sfpegCardList__mdt* custom metadata record, multiple fields are available to configure

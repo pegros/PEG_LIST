@@ -182,5 +182,7 @@ The **fireEvent** action type
 ]
 ```
 
+## Configuration Examples
+
 TO BE CONTINUED
 openTab + refreshTab in the roadmap

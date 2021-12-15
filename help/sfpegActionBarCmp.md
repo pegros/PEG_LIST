@@ -684,3 +684,62 @@ The “*Notification Channels*” attribute is to be set only if notify **action
 * When a value is set, the Action Bar registers to these events.
 
 EXAMPLE TO ADD
+
+
+## Additional Examples
+
+### Flow Action Launch (leveraging the PEG_FlowEmbed_CMP addressable component, see FLW package)
+
+![Flow Tab Open Action!](/media/sfpegActionFlowLaunch)
+
+In this example, a **sfpegListCmp** component is  used to display a set of promoted ongoing Tasks related to the current record and directly, from a drop-down menu,
+* open a Flow in a new tab to execute the Flow corresponding to the displayed Task
+* trigger a **dmlForm** action to set a close reason before closing the task.
+
+The configuration of the action to open the Flow is provided hereafter.
+```
+{
+    "name": "Action", 
+    "label": "Action", "iconName": "utility:success",
+    "action": {
+        "type": "navigation",
+        "params": {
+            "type": "standard__component",
+            "attributes": { "componentName": "c__PEG_FlowEmbed_CMP" },
+            "state": {
+                "c__flow": "{{{ROW.TECH_Processus__c}}}",
+                "c__recordId": "{{{ROW.Id}}}",
+                "c__target": "recordId",
+                "c__label": "Execution de tâche"
+            }
+        }
+    }
+}
+```
+
+
+FYI, the configuration of the “*close*” action is the following:
+```
+{
+    "name": "abandon",
+    "action": {
+        "type": "dmlForm",
+        "params": {
+            "title": "Abandon de tâche NBA",
+            "message": "Veuillez sélectionner un motif de clôture.",
+            "formRecord": { "ObjectApiName": "TECH_TaskProxy__c" },
+            "formFields": [{ "name": "Motif__c", "required": true }],
+            "record": {
+                "ObjectApiName": "Task",
+                "Id": "{{{ROW.Id}}}",
+                "Status": "Annulée"
+            },
+            "next": { "type": "done", "params": { "type": "refresh" } }
+        }
+    }
+}
+```
+
+### OpenURL Action with Rework 
+
+see [Apex List Retrieval and OpenURL Action with Rework](/help/sfpegListCmp.md#Apex-List-Retrieval-and-OpenURL-Action-with Rework )

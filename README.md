@@ -254,8 +254,6 @@ _Debug xxx ?_ properties enable to display some configuration information within
 
 Please refer to the help pages of the different components for details about how to configure each of them.
 
-In addition to what is already available in the help page of each component, a few interesting configuration/customisation examples are provided **[here](/help/sfpegExamples.md)**.
-
 
 * * *
 
