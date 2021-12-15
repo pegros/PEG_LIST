@@ -94,12 +94,12 @@ In that example, the **sfpegListCmp** component is configured in _DataTable_ mod
 an Apex Class to fetch metadata about the different attributes of a given SObject.
 It is displayed in a Knowledge Article and leverages a custom field identifying a given SObject.
 
-![Object Attributes List!](/media/sfpegListAttributes.png)
+![Object Attributes List!](/media/sfpegListObjectAttributes.png)
 
 The Query is configured as an Apex fetch, with a class fetches leveraging the
 **Schema.describe()** methods to provide the proper information.
 
-![Object Attributes List Metadata!](/media/sfpegListAttributesMeta.png)
+![Object Attributes List Metadata!](/media/sfpegListObjectAttributesMeta.png)
 
 The display is configured as follows:
 ```

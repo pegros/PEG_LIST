@@ -2,34 +2,41 @@
 # SFPEG LIST Components
 ---
 
-Set of configurable/actionable list components to enhance Lightning UX
+## Introduction
 
-Author: [Pierre-Emmanuel Gros](https://github.com/pegros)
-Date: Oct. 2021
+This package contains a set of LWC components primarily dedicated to the display of custom lists of information
+(related records, KPIs, messages, fields...). They are based on some common powerful features required to easily
+customise the end-user experience (context information merge, action framework, apex logic extension).
 
-This package contains a set of LWC components built as contributions/examples for former & ongoing Advisory assignments by [Pierre-Emmanuel Gros](https://github.com/pegros), porting in LWC and optimising (for end-user performances and easier configuration mutualisation among page layouts) some components previously available in a former Aura component package (known as **PEG Components** not available on GitHub). 
+These components were built as contributions/examples for former & ongoing Advisory assignments by 
+[Pierre-Emmanuel Gros](https://github.com/pegros), porting in LWC and optimising (for end-user performances 
+and easier configuration mutualisation among page layouts) some components previously available in a former 
+Aura component package (known as **PEG Components** not available on GitHub). 
 
+They heavily rely on standard Lightning framework features such as the Lightning Data Service (LDS) 
+or the Lightning Message Service (LMS) and try to apply as much as possible the standard Design System (SLDS). 
+The goal was to make them appear as much as possible as standard native Salesforce platform components 
+but override usual limitations of the standard platform.
 
-* * *
+Experience Cloud is now supported and requires the Object API Name and the Record ID to be explicitly
+set w<hen configuring the components within Experience Cloud pages.
 
-### Component Scope
+They are not available for Flow Designer but another package with components explicitly dedicated to
+these use cases is available (see [PEG_FLW](https://github.com/pegros/PEG_FLW) package).
 
-These components are primarily dedicated to displaying custom lists of information (related records, KPIs, messages, fields...) but are based on some common powerful features required to easily customise the end-user experience (context information merge, action framework, apex logic extension).
-
-They heavily rely on standard Lightning framework features such as the Lightning Data Service (LDS) or the Lightning Message Service (LMS) and try to apply as much as possible the standard Design System (SLDS). The goal was to make them appear as much as possible as standard native Salesforce platform components but override usual limitations of the standard platform.
-
-Experience Cloud is currently not supported but this is in the roadmap and happens mainly for testing reasons than actual technical constraints. Adding support for these usage cases should be relatively easy.
-
-They are not available for Flow Designer but another package with components explicitly dedicated to these use cases is available (see [PEG_FLW](https://github.com/pegros/PEG_FLW) package).
-
-As much attention as possible has been paid to internationalisation requirements (at least languages), leveraging standard mechanisms to translate labels, field names, picklist values...
+As much attention as possible has been paid to internationalisation requirements (at least languages),
+leveraging standard mechanisms to translate labels, field names, picklist values...
 
 
 ### Objectives of the Document
 
-As LWC does not provide embedded documentation for the components, this readme file provides an overview of the different elements available within this project, as well as configuration guidelines and examples for the different App Builder components.
+As LWC does not provide embedded documentation for the components, this readme file provides an overview
+of the different elements available within this project, as well as configuration guidelines and examples
+for the different App Builder components.
 
-Most component may also be embedded in other custom LWC components as well but these use cases are currently not documented here for the time being. You may however look at the source code to see how to reuse some of them (main action bar component, or display or utility ones) or reach out to the author for more informations.
+Most component may also be embedded in other custom LWC components as well but these use cases are currently
+not documented here for the time being. You may however look at the source code to see how to reuse some of them
+(main action bar component, or display or utility ones) or reach out to the author for more informations.
 
 
 ### Package Availability
