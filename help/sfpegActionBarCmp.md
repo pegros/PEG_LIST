@@ -742,4 +742,4 @@ FYI, the configuration of the “*close*” action is the following:
 
 ### OpenURL Action with Rework 
 
-see [Apex List Retrieval and OpenURL Action with Rework](/help/sfpegListCmp.md#Apex-List-Retrieval-and-OpenURL-Action-with Rework )
+see [Apex List Retrieval and OpenURL Action with Rework](/help/sfpegListCmp.md#Apex-List-Retrieval-and-OpenURL-Action-with Rework)
