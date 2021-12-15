@@ -22,7 +22,7 @@ The **pegCard__mdt** custom Metedata provides the configuration of the **sfpegCa
 
 From the App Builder, the main configuration records may be selected (Card Content & Header Actions) as well as various display options.
 
-![Record Card Configuration!](/media/RecordCardConfiguration.png)
+![Record Card Configuration!](/media/sfpegCardConfiguration.png)
 
 Within the custom metadata, each card element has its own configuration field:
 
@@ -30,7 +30,7 @@ Within the custom metadata, each card element has its own configuration field:
     * When the card is for the current record, both fields should remain empty (the component then automatically uses the standard LWC recordId and objectApiName variables)
     * Otherwise the “TargetObject” should contain the API name of the object displayed in the card and “TargetIdField” should contain the lookup field providing the ID of the target record on the current record. 
 
-![Record Card Metadata!](/media/RecordCardMeta.png)
+![Record Card Metadata!](/media/sfpegCardMeta.png)
 
 * the Configuration provides the main display options as a JSON object containing the following attributes:
     * the main “size” property defines the default size (in portion of 12) for each field
