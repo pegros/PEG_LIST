@@ -26,7 +26,7 @@
                      are not applied when buttons are instantiated in sub component  -->
                 <template if:true={isVertical}>
                     <ul class="">
-                    <template iterator:it={configDetails.actionList}>
+                    <template iterator:it={actionList}>
                         <li key={it.value.name} class="slds-m-around_xx-small">
                         <!-- Button -->
                         <template if:false={it.value.items}>
@@ -164,7 +164,7 @@
                 <!-- Horizontal Display -->
                 <template if:false={isVertical}>
                     <lightning-button-group>
-                    <template iterator:it={configDetails.actionList}>
+                    <template iterator:it={actionList}>
                         <!-- Button -->
                         <template if:false={it.value.items}>
                             <template if:true={it.value.label}>

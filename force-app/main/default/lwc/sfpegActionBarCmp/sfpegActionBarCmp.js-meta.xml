@@ -31,6 +31,11 @@
                         type="Boolean"
                         default="false"
                         description="Flag to show debug information."/>
+            <property   name="isDebugFine"
+                        label="Debug (fine) ?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information for all sub-components."/>
         </targetConfig>
 
         <targetConfig targets="lightningCommunity__Default">
@@ -51,6 +56,11 @@
                         type="Boolean"
                         default="false"
                         description="Flag to show debug information."/>
+            <property   name="isDebugFine"
+                        label="Debug (fine) ?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information for all sub-components."/>
 
             <property   name="objectApiName"
                         label="Object API Name"

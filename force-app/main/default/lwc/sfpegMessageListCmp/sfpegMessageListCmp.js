@@ -138,6 +138,17 @@ export default class SfpegMessageListCmp extends LightningElement {
 
 
     //----------------------------------------------------------------
+    // Custom Getters
+    //----------------------------------------------------------------
+
+    get hasActions() {
+        if (this.isDebug) console.log('hasActions: START');
+        let result = (this.configDetails) && (this.configDetails.actions);
+        if (this.isDebug) console.log('hasActions: END with ', result);
+        return result;
+    }
+
+    //----------------------------------------------------------------
     // Component Initialization
     //----------------------------------------------------------------
     connectedCallback(){
@@ -194,6 +205,18 @@ export default class SfpegMessageListCmp extends LightningElement {
         }
     }
 
+    /*
+    renderedCallback(){
+        if (this.isDebug) console.log('rendered: START');
+
+        if (this.isDebug) console.log('rendered: recordId ', this.recordId);
+        if (this.isDebug) console.log('rendered: recordData ',JSON.stringify(this.recordData));
+        if (this.isDebug) console.log('rendered: displayedMessages ',JSON.stringify(this.displayedMessages));
+
+        if (this.isDebug) console.log('rendered: END');
+    }
+    */
+   
     //----------------------------------------------------------------
     // Contextual Data Fetch via LDS
     //----------------------------------------------------------------

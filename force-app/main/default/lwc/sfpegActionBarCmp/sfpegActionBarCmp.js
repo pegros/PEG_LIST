@@ -69,6 +69,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     @api isVertical = false;    // Flag to display the action bar vertically
     @api configName;            // DeveloperName fo the sfpegAction__mdt record to be used
     @api isDebug = false;       // Debug mode activation
+    @api isDebugFine = false;   // Merge Debug mode activation
 
     //----------------------------------------------------------------
     // Record List Context (for mass operations) 
@@ -106,7 +107,8 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     // Internal Initialization Parameters
     //----------------------------------------------------------------
     @track isReady = false;     // Initialization state of the component (to control spinner)
-    @track configDetails = null;// Global configuration of the component
+    @track configDetails = null;// Global applicable action configuration
+    @track actionList = [];     // Contextualised action list
     
     // Internal Query Control Parameters
     @track isExecuting = false; // Ongoing Action state  (to control spinner)
@@ -114,9 +116,11 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     @api objectApiName;         // Object API Name for current page record (if any)
     @api recordId;              // ID of current page record (if any)
     @track recordFields = null; // List of Field API Names for current page record (if any) required as Query Input
+    recordData;                 // Record Data fetched via LDS
 
     @api userId = currentUserId;// ID of current User
     @track userFields = null;   // List of Field API Names for current User (if any) required as Query Input
+    userData;                   // Current User Data fetched via LDS
 
     //@api configData = null;     // Configuration data used in merge tokens (typically record IDs for base
                                 // elements such as reports, articles, recordTypes...)
@@ -148,7 +152,8 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     get helptext () {
         let helpString = 'Configuration ' + this.configName
                         + ((this.configDetails == null) ? ' not loaded.' :
-                          ' loaded with ' + (this.configDetails.actionList?.length || 0) + ' main action(s). ');
+                          ' loaded with ' + (this.actionList?.length || 0) + ' main action(s). ')
+                        + '(Record ID : ' + this.recordId  + ')';
         return helpString;
     }
     get buttonGroupClass() {
@@ -163,6 +168,8 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     //----------------------------------------------------------------
     connectedCallback() {
         if (this.isDebug) console.log('connected: START');
+        if (this.isDebug) console.log('connected: recordId ',this.recordId);
+
         //this.errorMsg = 'Component initialized.';
         if (this.isReady) {
             console.warn('connected: END / already ready');
@@ -189,6 +196,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             getConfiguration({name: this.configName})
             .then( result => {
                 if (this.isDebug) console.log('connected: configuration received  ',result);
+                sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
                 try {
                     ACTION_CONFIGS[this.configName] = {
                         "label"     :   result.MasterLabel,
@@ -222,6 +230,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
 
     disconnectedCallback() {
         if (this.isDebug) console.log('disconnected: START');
+        if (this.isDebug) console.log('disconnected: recordId ',this.recordId);
 
         if (this.notificationSubscription) {
             if (this.isDebug) console.log('disconnected: unsubscribing notification channels');
@@ -233,6 +242,15 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         }
 
         if (this.isDebug) console.log('disconnected: END');
+    }
+
+    renderedCallback(){
+        if (this.isDebug) console.log('rendered: START');
+
+        if (this.isDebug) console.log('rendered: recordId ', this.recordId);
+        if (this.isDebug) console.log('rendered: configDetails ',JSON.stringify(this.configDetails));
+
+        if (this.isDebug) console.log('rendered: END');
     }
 
     //----------------------------------------------------------------
@@ -247,9 +265,8 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         if (data) {
             if (this.isDebug) console.log('wiredRecord: data fetch OK ', JSON.stringify(data));
 
-            sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebug;
+            sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
             this.recordData = sfpegMergeUtl.sfpegMergeUtl.convertLdsData(data,this.configDetails.input.RCD);
-            sfpegMergeUtl.sfpegMergeUtl.isDebug = false;
             if (this.isDebug) console.log('wiredRecord: END / recordData updated ', JSON.stringify(this.recordData));
 
             //if ((this.configDetails.input.USR) && (!this.userData)) {
@@ -268,7 +285,6 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         else {
             if (this.isDebug) console.log('wiredRecord: END N/A');
         }
-        
     };
 
     // Current User 
@@ -280,9 +296,8 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         if (data) {
             if (this.isDebug) console.log('wiredUser: data fetch OK', JSON.stringify(data));
 
-            sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebug;
+            sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
             this.userData = sfpegMergeUtl.sfpegMergeUtl.convertLdsData(data,this.configDetails.input.USR);
-            sfpegMergeUtl.sfpegMergeUtl.isDebug = false;
             if (this.isDebug) console.log('wiredUser: END / userData updated ', JSON.stringify(this.userData));
 
             //if ((this.configDetails.input.RCD) && (!this.recordData)) {
@@ -309,6 +324,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     //Configuration finalisation
     finalizeConfig = function() {
         if (this.isDebug) console.log('finalizeConfig: START');
+        if (this.isDebug) console.log('finalizeConfig: recordId ',this.recordId);
 
         try {
             // Subscription management
@@ -391,13 +407,14 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     // Configuration data merge
     doMerge = function(){
         if (this.isDebug) console.log('doMerge: START with ',this.configDetails.actions);
+        if (this.isDebug) console.log('doMerge: recordId ',this.recordId);
 
-        sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebug;
+        sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
         sfpegMergeUtl.sfpegMergeUtl.mergeTokens(this.configDetails.actions,this.configDetails.input,this.userId,this.userData,this.objectApiName,this.recordId,this.recordData,null)
         .then( value => {
             if (this.isDebug) console.log('doMerge: context merged within configuration ',value);
-            this.configDetails.actionList = JSON.parse(value)
-            if (this.isDebug) console.log('doMerge: configuration updated', JSON.stringify(this.configDetails.actionList));
+            this.actionList = JSON.parse(value)
+            if (this.isDebug) console.log('doMerge: configuration updated', JSON.stringify(this.actionList));
             let readyEvt = new CustomEvent('ready', null);
             if (this.isDebug) console.log('triggerParentEvt: END / triggering readyEvt', JSON.stringify(readyEvt));
             this.dispatchEvent(readyEvt);
@@ -405,7 +422,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             console.warn('doMerge: KO ',error);
             this.displayMsg = JSON.stringify(error);
         }).finally( () => {
-            sfpegMergeUtl.sfpegMergeUtl.isDebug = false;
+            //sfpegMergeUtl.sfpegMergeUtl.isDebug = false;
             this.isReady = true;
         });
 
@@ -430,7 +447,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         if (this.isDebug) console.log('executeBarAction: configName fetched ', this.configName);
         if (this.isDebug) console.log('executeBarAction: configDetails fetched ', JSON.stringify(this.configDetails));
         
-        if (!this.configDetails.actionList) {
+        if (!this.actionList) {
             console.warn('executeBarAction: END KO / Action initialisation failed');
             throw "Cannot execute action due to initialisation failure!";
         }
@@ -441,7 +458,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         });*/
         // Replaced to be able to call action on menu entries
         let action = null;
-        (this.configDetails.actionList).forEach(item => {
+        (this.actionList).forEach(item => {
             if (this.isDebug) console.log('executeBarAction: analysing ', JSON.stringify(item));
             if (item.items) {
                 if (this.isDebug) console.log('executeBarAction: processing menu entries ');
@@ -534,6 +551,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
 
     handleButtonClick(event){
         if (this.isDebug) console.log('handleButtonClick: START with ',JSON.stringify(event.target.value));
+        if (this.isDebug) console.log('handleButtonClick: recordId ',this.recordId);
         //this.executeAction(event.target.value.action);
         this.processAction(event.target.value.action,null);
         if (this.isDebug) console.log('handleButtonClick: END');
@@ -541,6 +559,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
 
     handleMenuSelect(event){
         if (this.isDebug) console.log('handleMenuSelect: START with ',JSON.stringify(event.detail));
+        if (this.isDebug) console.log('handleMenuSelect: recordId ',this.recordId);
         //this.executeAction(event.detail.value.action);
         this.processAction(event.detail.value.action,null);
         if (this.isDebug) console.log('handleMenuSelect: END');
@@ -550,6 +569,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     processAction = function(action,context) {
         // context is kept in the signature only for the "open" and "edit" action
         if (this.isDebug) console.log('processAction: START');
+        if (this.isDebug) console.log('processAction: recordId ',this.recordId);
         if (this.isDebug) console.log('processAction: action triggered ',JSON.stringify(action));
         if (this.isDebug) console.log('processAction: context provided ',JSON.stringify(context));
 
