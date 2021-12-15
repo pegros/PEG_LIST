@@ -148,7 +148,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     get helptext () {
         let helpString = 'Configuration ' + this.configName
                         + ((this.configDetails == null) ? ' not loaded.' :
-                          ' loaded with ' + (this.configDetails.actionList?.length || 0) + ' main action(s)');
+                          ' loaded with ' + (this.configDetails.actionList?.length || 0) + ' main action(s). ');
         return helpString;
     }
     get buttonGroupClass() {

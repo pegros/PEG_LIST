@@ -10,8 +10,19 @@
 
     <template if:true={isDebug}>
         <div class="slds-box slds-m-around_xx-small">
-            <p class="slds-m-bottom_xx-small">Handle messages? {doSubscribe}</p>
-            <p class="slds-line-clamp_large" title={lastMessage}>Last Message:<br/> {lastMessage}</p>
+            <dl class="slds-dl_horizontal slds-text-align_left">
+                <dt class="slds-dl_horizontal__label slds-truncate">Handle messages?:</dt>
+                <dd class="slds-dl_horizontal__detail">{doSubscribe}</dd>
+                <dt class="slds-dl_horizontal__label slds-truncate">Last Message:</dt>
+                <dd class="slds-dl_horizontal__detail">{lastMessage}</dd>
+                <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+                <dd class="slds-dl_horizontal__detail">
+                    <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegActionHandlerCmp.md"
+                                                label="See Help on GitHub"
+                                                target="_blank">
+                    </lightning-formatted-url>
+                </dd>
+            </dl>
         </div>
     </template>
 

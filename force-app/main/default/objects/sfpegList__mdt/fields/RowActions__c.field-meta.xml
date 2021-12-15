@@ -9,5 +9,5 @@
     <label>Row Actions</label>
     <length>100000</length>
     <type>LongTextArea</type>
-    <visibleLines>1</visibleLines>
+    <visibleLines>2</visibleLines>
 </CustomField>

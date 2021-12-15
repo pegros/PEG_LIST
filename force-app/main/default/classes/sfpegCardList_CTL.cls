@@ -50,7 +50,7 @@ public with sharing class sfpegCardList_CTL {
                                                 from sfpegCardList__mdt
                                                 where DeveloperName =  :name    ];
         if ((configs == null) || (configs.size() != 1)) {
-            System.debug(LoggingLevel.ERROR,'getConfiguration: END - Missing/wrong configuration');
+            System.debug(LoggingLevel.ERROR,'getConfiguration: END - Missing/wrong configuration ' + name);
             throw new AuraHandledException('Configuration not found with name ' + name);
         }
         //System.debug(LoggingLevel.FINEST,'getConfiguration: END with configuration name ' + configs[0]);

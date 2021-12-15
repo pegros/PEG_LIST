@@ -113,5 +113,23 @@
                                     is-debug={isDebugFine}>
             </c-sfpeg-action-bar-cmp>
         </template>
+
+        <!-- Debug Information Display -->
+        <template if:true={isDebug}>
+            <div class="slds-box slds-theme_default slds-m-top_small"  >
+                <dl class="slds-dl_horizontal">
+                    <dt class="slds-dl_horizontal__label slds-truncate">Configuration:</dt>
+                    <dd class="slds-dl_horizontal__detail">{configName}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+                    <dd class="slds-dl_horizontal__detail">
+                        <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegMessageListCmp.md"
+                                                    label="See Help on GitHub"
+                                                    target="_blank">
+                        </lightning-formatted-url>
+                    </dd>
+                </dl>
+            </div>
+        </template>
+
     </div>
 </template>
