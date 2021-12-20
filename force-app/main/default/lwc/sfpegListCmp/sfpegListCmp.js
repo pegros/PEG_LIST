@@ -190,7 +190,7 @@ export default class SfpegListCmp extends LightningElement {
     get showPagination() {
         //if (this.isDebug) console.log('showPagination: showPagination? ', this.configDetails.query.doPagination);
         return (    (this.configDetails.query.doPagination)
-                &&  ((this.resultList || []).length < (this.recordCount || 0)) );
+                &&  ((this.resultListOrig || this.resultList || []).length < (this.recordCount || 0)) );
         //return ((this.configDetails.query.doPagination));
     }
 
