@@ -1,0 +1,87 @@
+<aura:documentation>
+    <aura:description>
+        <div class="slds-m-top_large">
+            <h4>Overview</h4>
+            <p>The <code>sfpegListViewCmp</code> component enables to display the
+                <code>sfpegListCmp</code> LWC component within a dedicated independent tab.
+                Among others, it enables to mimic the "view all" footer action on related 
+                lists from within this LWC component</p>
+
+            <p>This adressable Lightning component takes the following variables as input
+                (to be set in the URL):</p>
+            <ul>
+                <li><code>c__list</code>: Developer name of the <code>sfpegList__mdt</code> 
+                    custom metadata record to be used to fetch the and display the records.</li>
+                <li><code>c__actions</code>: Developer name of the <code>sfpegAction__mdt</code>
+                    custom metadata record to be used as header actions</li>
+                <li><code>c__label</code>: Label to be set on the adressable component tab</li>
+                <li><code>c__title</code>: Title to be set on the card wrapping the list</li>
+                <li><code>c__icon</code>: Icon name (SLDS) to be set on the card wrapping the list</li>
+                <li><code>c__recordId</code>: Id of the record to be provided as input to the list query</li>
+                <li><code>c__objectApiName</code>: API Name of the record to be provided as input to the list query</li>
+                <li><code>c__isDebug</code>: Flag to set the component in debug mode</li>
+            </ul>
+            <p>Please refer to the <a href="https://github.com/pegros/PEG_LIST/">
+                online documentation</a> on GitHub for further details about the sfpeg components.</p>
+            <br/>
+        </div>
+
+        <div class="slds-m-top_large">
+            <h4>Configuration Example</h4>
+            <p>A typical action to open the <code>sfpegListViewCmp</code> component may
+                be easily configured in an <code>sfpegAction__mdt</code> custom metadata
+                record as follows:</p>
+                
+<pre>[{
+    "name": "OpenList", "label": "Open List","title":"Open List in other Tab",
+    "action": {
+        "type":"navigation",
+        "params": {
+            "type": "standard__component",
+            "attributes": {
+                "componentName": "c__sfpegListViewCmp"
+            },
+            "state": {
+                "c__list": "TSTsListPage",
+                "c__actions": "TSTsListHeader",
+                "c__label": "TSTsList",
+                "c__title": "List of TST records",
+                "c__icon": "standard:account",
+                "c__recordId": "{{{GEN.recordId}}}",
+                "c__objectApiName": "{{{GEN.objectApiName}}}",
+                "c__isDebug": true
+            }
+        }
+    }
+}]</pre>
+        <br/>
+    </div>   
+        
+    <div class="slds-m-top_large">
+        <h4>Legal Notice</h4>
+        <p>Author: P-E GROS / Dec 2021</p>
+        <br/>
+        <p>MIT License</p>
+        <br/>
+        <p>Copyright (c) 2021 pegros</p>
+        <br/>
+        <p> Permission is hereby granted, free of charge, to any person obtaining a copy
+            of this software and associated documentation files (the "Software"), to deal
+            in the Software without restriction, including without limitation the rights
+            to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+            copies of the Software, and to permit persons to whom the Software is
+            furnished to do so, subject to the following conditions:</p>
+        <br/>
+        <p> The above copyright notice and this permission notice shall be included in all
+            copies or substantial portions of the Software.</p>
+        <br/>
+        <p> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+            OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+            SOFTWARE.</p>
+    </div>
+    </aura:description>
+</aura:documentation>

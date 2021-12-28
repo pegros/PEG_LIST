@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SF PEG Record Display</masterLabel>
+
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+
+            <property   name="configName"
+                        label="Display Configuration"
+                        type="String"
+                        datasource="apex://sfpegRecordDisplaySelector_CTL"
+                        description="(Developer)Name of the Record Detail Configuration record to be used (see sfpegRecordDetail__mdt)."/>
+
+            <property   name="actionConfigName"
+                        label="Action Configuration"
+                        type="String"
+                        datasource="apex://sfpegActionSelector_CTL"
+                        description="(Developer)Name of the Action Configuration record to be used for header actions (see sfpegAction__mdt)."/>
+
+            <property   name="cardClass"
+                        label="Wrapping CSS"
+                        type="String"
+                        default="slds-theme_default" 
+                        description="CSS classes to set on the wrapping component div"/>
+
+            <property   name="useLDS"
+                        label="User LDS?"
+                        type="Boolean"
+                        description="Use LDS instead of SOQL for record data fetch (for supported objects)."/>
+
+            <property   name="isDebug"
+                        label="Debug?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information."/>
+            <property   name="isDebugFine"
+                        label="Debug (fine) ?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information for all sub-components."/>
+
+        </targetConfig>
+
+
+        <targetConfig targets="lightningCommunity__Default">
+
+            <property   name="configName"
+                        label="Display Configuration"
+                        type="String"
+                        datasource="apex://sfpegRecordDisplaySelector_CTL"
+                        description="(Developer)Name of the Record Detail Configuration record to be used (see sfpegRecordDetail__mdt)."/>
+
+            <property   name="actionConfigName"
+                        label="Action Configuration"
+                        type="String"
+                        datasource="apex://sfpegActionSelector_CTL"
+                        description="(Developer)Name of the Action Configuration record to be used for header actions (see sfpegAction__mdt)."/>
+
+            <property   name="cardClass"
+                        label="Wrapping CSS"
+                        type="String"
+                        default="slds-theme_default" 
+                        description="CSS classes to set on the wrapping component div"/>
+
+            <property   name="useLDS"
+                        label="Use LDS?"
+                        type="Boolean"
+                        description="Use LDS instead of SOQL for record data fetch (for supported objects)."/>
+
+            <property   name="isDebug"
+                        label="Debug?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information."/>
+            <property   name="isDebugFine"
+                        label="Debug (fine) ?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information for all sub-components."/>
+
+            <property   name="objectApiName"
+                        label="Object API Name"
+                        type="String"
+                        default="{!objectApiName}"
+                        description="API Name of Current Object."/>
+            <property   name="recordId"
+                        label="Record ID"
+                        type="String"
+                        default="{!recordId}"
+                        description="ID of current Record"/>
+        </targetConfig>
+
+    </targetConfigs>
+</LightningComponentBundle>

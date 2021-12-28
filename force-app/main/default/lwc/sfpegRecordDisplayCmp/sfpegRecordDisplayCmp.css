@@ -1,0 +1,12 @@
+.cardHeader {
+    --sds-c-card-footer-text-align: left;
+}
+.footerContent {
+    /*background-color:  var(--lwc-colorBackgroundAlt);
+    --sds-c-card-color-background:  var(--lwc-colorBackgroundAlt);*/
+    padding-top: var(--lwc-varSpacingVerticalMedium);
+    padding-bottom: var(--lwc-varSpacingVerticalMedium);
+    padding-left: var(--lwc-varSpacingVerticalMedium);
+    padding-right: var(--lwc-varSpacingVerticalMedium);
+    width:100%;
+}

@@ -65,11 +65,11 @@ export default class SfpegListCmp extends LightningElement {
     @api cardIcon;              // Icon of the wrapping Card
     @api cardClass;             // CSS Classes for the wrapping card div
     @api buttonSize = 'small';  // Size of the standard header buttons (to align with custom header actions)
-    @api configName;            // DeveloperName fo the sfpegList__mdt record to be used
+    @api configName;            // DeveloperName of the sfpegList__mdt record to be used
     @api showCount = 'right';   // Items Count display
     @api showSearch = false;    // Flag to show Filter action in header.
     @api showExport = false;    // Flag to show Export action in header.
-    @api actionConfigName;      // DeveloperName fo the sfpegAction__mdt record to be used for header actions
+    @api actionConfigName;      // DeveloperName of the sfpegAction__mdt record to be used for header actions
     @api isDebug = false;       // Debug mode activation
     @api isDebugFine = false;   // Debug mode activation for all subcomponents.
     @api displayHeight = 0;     // Max-height of the content Div (0 meaning no limit)

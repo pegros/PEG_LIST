@@ -1,0 +1,69 @@
+<aura:component implements="lightning:isUrlAddressable" 
+                access="global"
+                description="Addressable component to display a sfpegListCmp LWC component within a standalone tab.">
+            
+    <!-- Component external Parameters -->
+    <aura:attribute name="list"         type="String"
+                    access="global"
+                    description="Developer name of the sfpegList__mdt 
+                    custom metadata record to be used to fetch the and display the records." />
+    <aura:attribute name="actions"      type="String"
+                    access="global"
+                    description="Developer name of the sfpegAction__mdt 
+                    custom metadata record to be used as header actions." />
+    <aura:attribute name="label"        type="String"
+                    access="global"     default="List"
+                    description="Label to be set on the adressable component tab." />
+    <aura:attribute name="title"        type="String"
+                    access="global"
+                    description="Title to be set on the card wrapping the list." />
+    <aura:attribute name="icon"         type="String"
+                    access="global"
+                    description="Icon name (see SLDS) to be set on the card wrapping the list." />
+    <aura:attribute name="recordId"     type="String"
+                    access="global"
+                    description="Id of the record to be provided as input to the list query." />
+    <aura:attribute name="objectApiName"    type="String"
+                    access="global"
+                    description="API Name of the record to be provided as input to the list query." />
+    <aura:attribute name="isDebug"      type="Boolean"
+                    access="global"     default="false"
+                    description="Activates debug mode." />
+
+    <!-- component Internal properties -->
+    <aura:attribute name="errorMsg"     type="String"
+                    access="private"
+                    description="Error message in ccase of initialization problem." />
+    <aura:attribute name="context"      type="String"
+                    access="private"    
+                    description="Init Context (to optimise rerendering loops)." />
+
+    <!-- Component Initialisation -->    
+    <aura:handler   name="init" value="{!this}" action="{!c.doInit}"
+                    description="Init of component : parsing and reset of attributes." />
+
+    <aura:handler   event="aura:doneRendering" action="{!c.doneRendering}"
+                    description="End of rendering" />
+
+    <!-- Utilities -->
+    <lightning:workspaceAPI aura:id="workspaceUtil"/>
+    <lightning:navigation   aura:id="navService"/>
+
+    <!-- Component Display -->
+    <div >
+        <aura:if isTrue="{!v.errorMsg.length > 0}">
+            <c:sfpegWarningDsp  message="{!v.errorMsg}"
+                                variant="error">
+            </c:sfpegWarningDsp>
+        <aura:set attribute="else">
+            <c:sfpegListCmp cardTitle="{!v.title}"      cardIcon="{!v.icon}"
+                            configName="{!v.list}"      actionConfigName="{!v.actions}"
+                            showCount="right"           showSearch="true"
+                            showExport="false"
+                            isDebug="{!v.isDebug}"      isDebugFine="{!v.isDebug}"
+                            recordId="{!v.recordId}"    objectApiName="{!v.objectApiName}">
+            </c:sfpegListCmp>
+        </aura:set>
+        </aura:if>
+    </div>
+</aura:component>	

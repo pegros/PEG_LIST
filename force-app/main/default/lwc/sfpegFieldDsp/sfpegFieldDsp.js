@@ -36,7 +36,7 @@ import sfpegJsonUtl from 'c/sfpegJsonUtl';
 export default class SfpegFieldDsp extends LightningElement {
  
     @api fieldType = 'text';
-    @api fieldLabel;
+    @api fieldLabel = '';
 
     _fieldValue = {};
     // Implementation with setter to ensure proper update of display data upon fieldValue change.

@@ -72,6 +72,14 @@
         <apexClass>sfpegProfile_CTL</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>sfpegRecordDisplaySelector_CTL</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>sfpegRecordDisplay_CTL</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>sfpegAction__mdt</name>
@@ -103,6 +111,10 @@
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>sfpegProfile__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>sfpegRecordDisplay__mdt</name>
     </customMetadataTypeAccesses>
     <description>Permission Set providing access rights to all Apex classes required to use the components</description>
     <hasActivationRequired>false</hasActivationRequired>

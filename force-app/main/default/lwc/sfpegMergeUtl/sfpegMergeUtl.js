@@ -186,7 +186,7 @@ const sfpegMergeUtl = {
 
         let resultData = {};
         resultData[domain]={};
-        let recordFields = [];
+        let recordFields = new Set();
         (tokenDomain.tokens).forEach(iterField => {
             //recordFields.push(recordObject + '.' + iterField.field);
             if ((recordData) && (recordData[iterField.field])) {
@@ -199,23 +199,23 @@ const sfpegMergeUtl = {
             }
             else {
                 if (sfpegMergeUtl.isDebug) console.log('getRecordData: registrating field for fetch ',iterField.field);
-                recordFields.push(iterField.field);
+                recordFields.add(iterField.field);
             }
         });
-        if (sfpegMergeUtl.isDebug) console.log('getRecordData: recordFields init ',JSON.stringify(recordFields));
+        if (sfpegMergeUtl.isDebug) console.log('getRecordData: recordFields init ', JSON.stringify(Array.from(recordFields)));
         if (sfpegMergeUtl.isDebug) console.log('getRecordData: resultData init ', JSON.stringify(resultData));
 
         if (sfpegMergeUtl.isDebug) console.log('getRecordData: END returning promise');
         return new Promise((resolve,reject) => {
-            if (recordFields.length > 0) {
-                if (sfpegMergeUtl.isDebug) console.log('getRecordData: processing tokens');
+            if (recordFields.size > 0) {
+                if (sfpegMergeUtl.isDebug) console.log('getRecordData: fetching recordFields ');
                 
-                getRecord({ "objectName": objectName,  "recordId": recordId, "fieldNames": recordFields })
+                getRecord({ "objectName": objectName,  "recordId": recordId, "fieldNames": Array.from(recordFields) })
                 .then((resValues) => {
                     if (sfpegMergeUtl.isDebug) console.log('getRecordData: Record data received ',resValues);
                     (recordFields).forEach(iterField => {
                         if (sfpegMergeUtl.isDebug) console.log('getRecordData: setting field ',iterField);
-                        (resultData[domain])[(iterField.field)] = sfpegMergeUtl.getSoqlValue(resValues, iterField.field);
+                        (resultData[domain])[(iterField)] = sfpegMergeUtl.getSoqlValue(resValues, iterField);
                     });            
                     if (sfpegMergeUtl.isDebug) console.log('getRecordData: END returning data after fetch ',JSON.stringify(resultData));
                     resolve(resultData);

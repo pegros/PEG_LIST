@@ -1,10 +1,10 @@
 /***
-* @description Lightning controller for the App Builder to provide the list of 
-*              Record Profile configurations registered in the sfpegProfile__mdt custom
-*              metadat and available on the current Object type, for use in a configuration
-*              attribute data source (to display a picklist).
-* @author      P-E GROS
-* @date        August 2021
+* @description  Lightning controller for the App Builder to provide the list of 
+*               Record Display configurations registered in the sfpegRecordDisplay__mdt 
+*               custom metadata and available on the current Object type, for use in a
+*               configuration attribute data source (to display a picklist).
+* @author       P-E GROS
+* @date         Dec 2021
 *
 * Legal Notice
 * 
@@ -31,7 +31,7 @@
 * SOFTWARE.
 ***/
 
-global with sharing class sfpegProfileSelector_CTL extends VisualEditor.DynamicPickList {
+global with sharing class sfpegRecordDisplaySelector_CTL extends VisualEditor.DynamicPickList {
 
     /***
     * @description Context of the Lightning page calling the picklist controller.
@@ -45,7 +45,7 @@ global with sharing class sfpegProfileSelector_CTL extends VisualEditor.DynamicP
     * @exception   none really specific.
     ***/    
     
-    global sfpegProfileSelector_CTL(VisualEditor.DesignTimePageContext pageContext) {
+    global sfpegRecordDisplaySelector_CTL(VisualEditor.DesignTimePageContext pageContext) {
         System.debug(LoggingLevel.FINEST,'Constructor START with page context ' + pageContext);
         System.debug(LoggingLevel.FINEST,'Constructor entityName ' + pageContext.entityName);
         this.pageContext = pageContext;
@@ -76,28 +76,29 @@ global with sharing class sfpegProfileSelector_CTL extends VisualEditor.DynamicP
         picklistValues.addRow(new VisualEditor.DataRow('---','N/A'));
         System.debug(LoggingLevel.FINEST,'getValues: picklistValues init ' + picklistValues);
     
+    
         System.debug(LoggingLevel.FINEST,'getValues: entity name fetched ' + pageContext.entityName);
-        Map<ID,sfpegProfile__mdt> profiles = new Map<ID,sfpegProfile__mdt>();
+        Map<ID,sfpegRecordDisplay__mdt> configurations = new Map<ID,sfpegRecordDisplay__mdt>();
         if (! String.isEmpty(pageContext.entityName)) {
-            System.debug(LoggingLevel.FINEST,'getValues: fetching Record and object specific profiles');
-            profiles.putAll(new Map<ID,sfpegProfile__mdt>(
+            System.debug(LoggingLevel.FINEST,'getValues: fetching Record and object specific queries');
+            configurations.putAll(new Map<ID,sfpegRecordDisplay__mdt>(
                 [   select MasterLabel,  DeveloperName
-                    from sfpegProfile__mdt 
+                    from sfpegRecordDisplay__mdt 
                     where Scope__c LIKE '%RECORDS%']));
             String entityPattern = '%' + pageContext.entityName + '%';
-            profiles.putAll(new Map<ID,sfpegProfile__mdt>(
+            configurations.putAll(new Map<ID,sfpegRecordDisplay__mdt>(
                 [   select MasterLabel,  DeveloperName
-                    from sfpegProfile__mdt 
+                    from sfpegRecordDisplay__mdt 
                     where Scope__c LIKE :entityPattern]));
         }
-        System.debug(LoggingLevel.FINEST,'getValues: profiles initialized ' + profiles);
+        System.debug(LoggingLevel.FINEST,'getValues: configurations initialized ' + configurations);
     
-        for (ID iter : profiles.keySet()){
-            sfpegProfile__mdt profileIter = profiles.get(iter);
-            System.debug(LoggingLevel.FINEST,'getValues: processing profile ' + profileIter);
+        for (ID iter : configurations.keySet()){
+            sfpegRecordDisplay__mdt configIter = configurations.get(iter);
+            System.debug(LoggingLevel.FINEST,'getValues: processing query ' + configIter);
             picklistValues.addRow(new VisualEditor.DataRow(
-                profileIter.MasterLabel,
-                profileIter.DeveloperName));
+                configIter.MasterLabel,
+                configIter.DeveloperName));
         }
         System.debug(LoggingLevel.FINEST,'getValues: picklistValues completed ' + picklistValues);
         System.debug(LoggingLevel.FINE,'getValues: END with #Items ' + picklistValues.size());
