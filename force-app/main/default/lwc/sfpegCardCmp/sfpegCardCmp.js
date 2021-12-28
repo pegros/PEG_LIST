@@ -172,32 +172,6 @@ export default class SfpegCardDsp extends LightningElement {
             return;
         }
 
-        /*
-        if (!this.formObjectApiName) {
-            this.formObjectApiName = this.objectApiName
-            if (this.isDebug) console.log('connected: formObjectApiName set to objectApiName ', this.formObjectApiName);
-        }
-        else {
-            if (this.isDebug) console.log('connected: using provided formObjectApiName ', this.formObjectApiName);
-        }
-        if (!this.formRecordId) {
-            if (!this.formRecordIdField) {
-                this.formRecordId = this.recordId;
-                if (this.isDebug) console.log('connected: formRecordId set to recordId ', this.formRecordId);
-            }
-            else {
-                if (this.isDebug) console.log('connected: fetching form record ID from field');
-                let idField = this.objectApiName + '.' + this.formRecordIdField;
-                if (this.isDebug) console.log('connected: idField initialized ',idField);
-                this.recordFields = [].push(idField);
-                if (this.isDebug) console.log('connected: recordFields set ', this.recordFields);
-            }
-        }
-        else {
-            if (this.isDebug) console.log('connected: using provided formRecordId ', this.formRecordId);
-        }
-        */
-
         if (this.isDebug) console.log('connected: config name fetched ', this.configName);
         if (CARD_CONFIGS[this.configName]) {
             if (this.isDebug) console.log('connected: configuration already available');
@@ -240,6 +214,17 @@ export default class SfpegCardDsp extends LightningElement {
                     if (this.isDebug) console.log('connected: fields reworked ',JSON.stringify(this.configDetails.fields));
 
                     ((this.configDetails).sections).forEach( iterSection => {
+                        if (iterSection.isCollapsible) {
+                            iterSection.isCollapsed = iterSection.isCollapsed || false;
+                            iterSection.class = (iterSection.isCollapsed ? "slds-section" : "slds-section slds-is-open");
+                        }
+                        else {
+                            iterSection.class = "slds-section slds-is-open";
+                        }
+                        if (this.isDebug) console.log('connected: class reworked ', iterSection.class);
+                        if (this.isDebug) console.log('connected: isCollapsible reworked ', iterSection.isCollapsible);
+                        if (this.isDebug) console.log('connected: isCollapsed reworked ', iterSection.isCollapsed);
+
                         if (iterSection.fields) {
                             (iterSection.fields).forEach(iterField => {
                                 iterField.size = iterField.size || iterSection.size || this.configDetails.size;
@@ -380,5 +365,25 @@ export default class SfpegCardDsp extends LightningElement {
         this.isEditMode = false;
         if (this.isDebug) console.log('handleFormSuccess: END / edit mode reset to ',this.isEditMode);
     }
-    
+ 
+    // Section expand / collapse 
+    handleExpandCollapse(event){
+        if (this.isDebug) console.log('handleExpandCollapse: START ');
+
+        let sectionLabel = event.srcElement.dataset.name;
+        if (this.isDebug) console.log('handleExpandCollapse: processing section ',sectionLabel);
+
+        let sectionData = this.configDetails.sections.find( item => item.label === sectionLabel);
+        if (this.isDebug) console.log('handleExpandCollapse: section found ',JSON.stringify(sectionData));
+
+        sectionData.isCollapsed = !(sectionData.isCollapsed);
+        if (this.isDebug) console.log('handleExpandCollapse: isCollapsed updated ',sectionData.isCollapsed);
+
+        sectionData.class = (sectionData.isCollapsed ? "slds-section" : "slds-section slds-is-open");
+        if (this.isDebug) console.log('handleExpandCollapse: class updated ',sectionData.class);
+
+        /*let sectionCmp = this.template.querySelector('div[data-name=' + sectionData.label +']');
+        if (this.isDebug) console.log('handleExpandCollapse: sectionCmp found ',sectionCmp);*/
+        if (this.isDebug) console.log('handleExpandCollapse: END ');
+    }
 }

@@ -33,13 +33,16 @@ Within the custom metadata, each card element has its own configuration field:
 ![Record Card Metadata!](/media/sfpegCardMeta.png)
 
 * the Configuration provides the main display options as a JSON object containing the following attributes:
-    * the main “size” property defines the default size (in portion of 12) for each field
+    * the main _size_ property defines the default size (in portion of 12) for each field
     * “fields” is a JSON list of field configurations for the set of fields displayed just below the card header
-        * for each field, the “name” attribute must be provided, with also “disabled”, “required” and “size“ optional ones to override the default behaviour. 
+        * for each field, the _name_ attribute must be provided, with also _disabled_, _required_ 
+        and _size_ optional ones to override the default behaviour. 
     * “sections” is a JSON list of section configurations for the various sections displayed afterwards in the card
-        * Each section has a “label“ (possibly coming from a Custom Label leveraging the  {{{LBL.xxx}}} merge syntax) and may define a default field ”size“ 
-        * It then has its own list of “fields”
-
+        * Each section has a _label_ (possibly coming from a Custom Label leveraging the  {{{LBL.xxx}}}
+        merge syntax) and may define a default field _size_ 
+        * It then has its own list of _fields_
+        * Eacch section may also be set to collapsible and collapsed by default (via _isCollapsible_ and
+        _isCollapsed_ boolean properties)
 ```
 {
   "size":12,
@@ -56,6 +59,8 @@ Within the custom metadata, each card element has its own configuration field:
       ]
     },
     { "label":"Configuration", "size":"6",
+      "isCollapsible":true,
+      "isCollapsed":true,
       "fields":[
        {"name":"Icon__c"}
       ]

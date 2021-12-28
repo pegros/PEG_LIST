@@ -109,11 +109,23 @@
 
                             <!-- Sections -->
                             <template for:each={configDetails.sections} for:item="iterSection">
-                                <div class="slds-section slds-is-open" key={iterSection.name} >
-                     		        <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_x-small">
+                                <!--<div class="slds-section slds-is-open" key={iterSection.name} >-->
+                                <div class={iterSection.class} key={iterSection.label} data-name={iterSection.label} >
+                                    <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_x-small">
+                                        <template if:true={iterSection.isCollapsible}>
+                                            <lightning-button-stateful  class="expandCollapse"
+                                                                        variant="text"
+                                                                        selected={iterSection.isCollapsed}
+                                                                        icon-name-when-off="utility:chevrondown"
+                                                                        icon-name-when-on="utility:chevronright"
+                                                                        onclick={handleExpandCollapse}
+                                                                        data-name={iterSection.label} >
+                                            </lightning-button-stateful>
+                                        </template>
                                         <span>{iterSection.label}</span>
                                     </h3>
                                     <!--   horizontal-align="end"  -->
+                                    <div class="slds-section__content">
                                     <lightning-layout   multiple-rows="true"  >
                                         <template for:each={iterSection.fields} for:item="iterSectionField">
                                             <lightning-layout-item  key={iterSectionField.name}  size={iterSectionField.size}  alignment-bump="right">
@@ -122,6 +134,7 @@
                                             </lightning-layout-item>
                                         </template>
                                     </lightning-layout>
+                                    </div>
                                 </div>
                             </template>
                         </lightning-record-view-form>
@@ -150,12 +163,13 @@
 
                             <!-- Sections -->
                             <template for:each={configDetails.sections} for:item="iterSection">
-                                <div class="slds-section slds-is-open" key={iterSection.name} >
-                     		        <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_x-small">
+                                <div class="slds-section slds-is-open" key={iterSection.label} >
+                                    <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_x-small">
                                         <span>{iterSection.label}</span>
                                     </h3>
-                                    <!--   horizontal-align="end" -->
-                                    <lightning-layout   multiple-rows="true"   >
+                                    <!--   horizontal-align="end"  -->
+                                    <div class="slds-section__content">
+                                    <lightning-layout   multiple-rows="true">
                                         <template for:each={iterSection.fields} for:item="iterSectionField">
                                             <lightning-layout-item  key={iterSectionField.name}  size={iterSectionField.size} alignment-bump="right" >
                                                 <lightning-input-field  field-name={iterSectionField.name} 
@@ -165,6 +179,7 @@
                                             </lightning-layout-item>
                                         </template>
                                     </lightning-layout>
+                                    </div>
                                 </div>
                             </template>
 

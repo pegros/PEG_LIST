@@ -4,31 +4,49 @@
 
 ## Introduction
 
-The **sfpegActionBarCmp** component displays an button/menu bar component enabling to
-trigger a wide variety of actions, integrated within the various components of the **SF PEG LIST**
-package but also available for standalone use in Lightning pages.
+The **sfpegActionBarCmp** component displays a button/menu bar component enabling to
+trigger a wide variety of actions, integrated within the various components of
+the **[SF PEG LIST](https://github.com/pegros/PEG_LIST)** package but also available
+for standalone use in Lightning pages.
 
-The following snapshots displays a standalone button bar example comnbining actions and menu items. 
+The following snapshot displays a standalone button bar example combining actions
+and menu items. 
+
 ![Action bar!](/media/sfpegActionBar.png) 
 
 
-## Global Action Configuration (**sfpegAction__mdt)**
+## Component / Action Set Configuration (**sfpegAction__mdt**)
 
-**sfpegAction__mdt** provides the configuration of the **sfpegActionBarCmp** components (buttons & menus in an action bar, with underlying actions triggered).
-
-The action bar basically consists in a single list of buttons and menus (within a [lightning-button-group](https://developer.salesforce.com/docs/component-library/bundle/lightning-button-group/documentation)container).
+The action bar basically consists in a single list of buttons and menus (within a [lightning-button-group](https://developer.salesforce.com/docs/component-library/bundle/lightning-button-group/documentation) container).
 * A button contains a single action configuration
 * A menu contains a drop-down list of multiple action configuration items. 
 
-![Standlone Action Bar Example!](/media/sfpegActionBarExample.png)
+![Standlone Action Bar Example!](/media/sfpegActionMenu.png)
+
 Display of a **sfpegActionBarCmp** component within a page (with 1 button followed by 2 menus).
-![Standalone Action Bar Configuration!](/media/sfpegActionBarConfiguration.png)
+
+![Standalone Action Bar Configuration!](/media/sfpegActionConfiguration.png)
+
 Configuration of the **sfpegActionBarCmp** component in the App Builder
 
-Most of its configuration  is done via the _Actions_ attribute of the metadata record, upon which context merge (see **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** component) is applied/refreshed within each use case.
-![Standalone Action Bar Configuration!](/media/sfpegActionMdtonfiguration.png)
 
-Hereafter is a typical configuration for a standalone mix of buttons and menus, containing first a menu with 3 options leading to a report, a dashboard and a folder, then 2 buttons to create Accounts via a Flow (launched within a addressable Lightning component) or a standard creation page.
+The **sfpegAction__mdt** custom metadata provides most of the configuration of the **sfpegActionBarCmp**
+components (buttons & menus in an action bar, with underlying actions triggered).
+
+Its most important property is the _Actions_ one, which provides all the required information to 
+properly display and execute a set of actions.
+
+Context merge is systematically applied upon load/refresh (see **[sfpegMergeUtl](/help/sfpegMergeUtl.md)**
+component) to adapt the set of actions to the display environment.
+
+![Standalone Action Bar Metadata!](/media/sfpegActionConfigMeta.png)
+
+
+Hereafter is a typical configuration for a standalone mix of buttons and menus,
+containing first a menu with 3 options leading to a report, a dashboard and a folder,
+then 2 buttons to create Accounts via a Flow (launched within an addressable Aura
+Lightning component) or via a standard creation page.
+
 ```
 [
     {
@@ -127,10 +145,12 @@ Hereafter is a typical configuration for a standalone mix of buttons and menus, 
 ]
 ```
 
-For buttons, at least _iconName_ or _label_ should be specified, whereas for menu items, _label_ is mandatory and _iconName_ optional.
+
+For buttons, at least _iconName_ or _label_ should be specified, whereas for menu items,
+_label_ is mandatory and _iconName_ optional.
 
 Multiple other display properties are available:
-*  _variant_ to change the display style (see [lightning-button](https://developer.salesforce.com/docs/component-library/bundle/lightning-button/specification) for possible values).
+* _variant_ to change the display style (see [lightning-button](https://developer.salesforce.com/docs/component-library/bundle/lightning-button/specification) for possible values).
 * _iconPosition_ to set the icon on the left or right of the label
 * _iconSize_ to act on the button icon size (see [lightning-button-icon](https://developer.salesforce.com/docs/component-library/bundle/lightning-button-icon/specification) or [button-menu](https://developer.salesforce.com/docs/component-library/bundle/lightning-button-menu/specification) for info)
 
@@ -362,14 +382,15 @@ Two Action Types are available to execute direct record operation (create, updat
 
 ### Form Action Types (**ldsForm** and **dmlForm**)
 
-Two Action Types are available to execute record operation (create, update) via a popup form, either via the
-Lightning Data Service (LDS, preferrable) or via direct database operaion (DML, for non LDS supported objects). 
+Two Action Types are available to execute record operation (create, update) via a popup form,
+either via the Lightning Data Service (LDS, preferrable) or via direct database operation
+(DML, for non LDS supported objects). 
 
-![Standalone Action Bar Configuration!](/media/sfpegActionBarFormPopup.png)
+![Standalone Action Bar Configuration!](/media/sfpegActionPopup.png)
 
-* **ldsForm** opens a popup to create / edit a record leveraging the standard lightning-record-edit-form
-(https://developer.salesforce.com/docs/component-library/bundle/lightning-record-edit-form/documentation) base
-component (updates being then made via LDS)
+* **ldsForm** opens a popup to create / edit a record leveraging the standard
+[lightning-record-edit-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-edit-form/documentation)
+base component (updates being then made via LDS)
     * _title_ and _message_ properties enable to change the corresponding text elements in the top part of the
     displayed popup.
     * _columns_ property defines how many fields are displayed per line in the popup form,
@@ -410,8 +431,8 @@ component (updates being then made via LDS)
 }
 ```
 
-* **dmlForm** implements the same behaviour but enables to execute the update via a DML call (useful for object
-types not supported by LDS, such as Task & Event)
+* **dmlForm** implements the same behaviour but enables to execute the update via a DML call
+(useful for object types not supported by LDS, such as Task & Event)
     * In such a case, the popup form works with the “formRecord” and “formFields” instead of _record_ and
     _fields_ and the LDS standard submission is replaced by a DML on the _record_.
     * All output form field values are applied on the “record” before the DML (with the same API name unless
@@ -439,7 +460,8 @@ types not supported by LDS, such as Task & Event)
 ```
 
 * **apexForm** : PLANNED
-    * Same behaviour as the ldsForm but with the ability to fetch/update data via Apex calls instead of LDS (e.g. to perform callouts to external systems).
+    * Same behaviour as the ldsForm but with the ability to fetch/update data via Apex calls
+    instead of LDS (e.g. to perform callouts to external systems).
 
 
 ### Mass Actions (**massForm** and **massDML**)
@@ -450,7 +472,10 @@ directly or via a first popup form.
 They are not available for standalone **sfpegActionBarCmp** usage but only when a parent Lightning component, such as
 **sfpegListCmp** provides a list of (selected) records.
 
-* **massForm** opens an edit form in a popup leveraging the standard [lightning-record-edit-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-edit-form/documentation) base component and apply the corresponding changes via a mass DML update on the list of record provided by a parent component.
+* **massForm** opens an edit form in a popup leveraging the standard
+[lightning-record-edit-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-edit-form/documentation)
+base component and apply the corresponding changes via a mass DML update on the list of record
+provided by a parent component.
     * e.g. the **sfpegListCmp** provides the set of selected records as input (when selection is enabled on this component)
     * The configuration is similar to the **ldsForm** action, the main difference being that the output of the LDS form displayed is cloned and applied to all records selected.
     * The _removeRT_ flag enables to avoid applying to the selected records the Record Type defined in the “record” property (which may be useful to control picklist values in the displayed form)
@@ -535,12 +560,47 @@ They are not available for standalone **sfpegActionBarCmp** usage but only when 
     * Same behaviour as the **massDML** but with the ability to call an Apex logic instead of simple DMLs.
 
 
+### Record Data LDS Reload (**reload**)
+
+The **reload** action type enables to trigger a LDS reload of a single record
+* This is typically useful to refresh the LDS cache data of a record modified via Apex or DML (via the “next” property).
+* It relies on the standard [getRecordNotifyChange](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/reference_get_record_notify) method.
+
+```
+{
+  "name": "Assign2me", "label": "Assign2me",
+    "action": {
+      "type": "DML",
+      "params": {
+        "title": "Please confirm update",
+        "message": "Assigning current record to current User",
+        "params": {
+          "operation": "update",
+          "records": [{
+            "ObjectApiName": "{{{GEN.objectApiName}}}",
+            "Id": "{{{GEN.recordId}}}",
+            "OwnerId": "{{{GEN.userId}}}"
+          }]
+       },
+       "next": {
+         "type":"reload",
+         "params":{"recordId":"{{{GEN.recordId}}}"}
+       }
+    }
+  }
+}
+```
+
+
 ### Parent Actions (**done**) 
-The **done** actio, type enables to trigger an action on a parent component.
-    * This is typically used to trigger a _refresh_ on the parent component once another operation has
-    been executed (e.g. refresh of the **sfpegListCmp** displayed records after a record creation/update/deletion)
-    * Such a behaviour is usually specified within the _next_ property of an action.
-    * In the example below, the _refresh_ action type is actually provided by the **sfpegListCmp** parent component containing the action bar.
+
+The **done** action type enables to trigger an action on a parent component.
+* This is typically used to trigger a _refresh_ on the parent component once another operation has
+been executed (e.g. refresh of the **[sfpegListCmp](/help.sfpegListCmp.md)** displayed records
+after a record creation/update/deletion)
+* Such a behaviour is usually specified within the _next_ property of an action.
+* In the example below, the _refresh_ action type is actually provided by the
+**[sfpegListCmp](/help.sfpegListCmp.md)** parent component containing the action bar.
 ```
     "next": {
         "type": "done",
@@ -568,11 +628,11 @@ The **toast** action type enables to display a simple toast message, e.g. once a
 }
 ```
 
-### Custom ***apex*** Actions
+### Custom **apex** Actions
 
 The **apex** action type enables to execute any operation implemented in a custom Apex class.
-    * This Apex class should implement the **sfpegAction_SVC** virtual class.
-    * The _params_ are then provided as input to the configured Apex class.
+* This Apex class should implement the **sfpegAction_SVC** virtual class.
+* The _params_ are then provided as input to the configured Apex class.
 ```
 {
     "name": "apexAction", "label": "apexAction",
@@ -588,8 +648,8 @@ The **apex** action type enables to execute any operation implemented in a custo
 }
 ```
 
-    * There is also a way to group multiple logics within a single Apex class,
-    in which case a “method” parameter can be specified after the class name.
+There is also a way to group various logic within a single Apex class,
+in which case a “method” parameter can be specified after the class name.
 ```
 {
     "name": "apexMethod", "label": "apexMethod",
@@ -608,8 +668,10 @@ The **apex** action type enables to execute any operation implemented in a custo
 
 ### Notification Actions (**utility**, **action** and **notify**)
 
-Three Action Types are available to relay actions to other components leveraging the the [Lightning Message Service]
-(https://developer.salesforce.com/docs/component-library/bundle/lightning-message-service/documentation) in default scope. 
+Three Action Types are available to relay actions to other components leveraging the the
+[Lightning Message Service]
+(https://developer.salesforce.com/docs/component-library/bundle/lightning-message-service/documentation) 
+in default scope. 
 
 * **utility** enables to notify the **sfpegActionHandlerCmp** utility bar component and let it execute an operation.
     * This is typically useful when navigating to a record when wishing to enforce the console tab configuration instead of the default console behaviour (opens target in a subtab of current main tab)
@@ -646,9 +708,11 @@ enabling to trigger any custom browser side LWC logic via the **sfActionBarCmp**
     * This is typically used to ask other LWC components embedding the **sfActionBarCmp** component to refresh 
     themselves once an action has been executed.
     * It relies on the **sfpegCustomNotification** message channel and leverages the _Notification Channels_ 
-    attribute
-    of the metadata record.
-    * e.g. the following example triggers a “refresh” action on all **sfpegListCmp** instances having header actions configured to listen to the “RefreshList” channel. 
+    attribute of the metadata record.
+    * the target components need to set the _Notification Channel_ fields of the **sfpegAction** records they use
+    (for the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** components they embed)
+    * e.g. the following example triggers a _refresh_ action on all **[sfpegListCmp](/help/sfpegListCmp.md)**
+    instances having header actions configured to listen to the _RefreshList_ channel. 
 ```
 {
   "label": "Refresh", "name": "refresh",qfd
@@ -664,26 +728,16 @@ enabling to trigger any custom browser side LWC logic via the **sfActionBarCmp**
   }
 }
 ```
-    * the target components need to set the _Notification Channel_ fields of the **sfpegAction** records they use
-    (for the **sfpegActionBarCmp** components they embed)
 
-
-The “Notification Channels” attribute is to be set only if notify *action* types are used to filter which actions should be actually executed by the Action Bar component instance.
-
-* It is a JSON list of strings containing the labels of the channels used within *sfpegCustomNotification* message channel events.
+The _Notification Channels_ attribute is to be set only if **notify** action types are used to filter
+which actions should be actually executed by the Action Bar component instance.
+* It is a JSON list of strings containing the labels of the channels used within
+**sfpegCustomNotification** message channel events.
 * When a value is set, the Action Bar registers to these events.
-* e.g. for an action header bar, the following text should be provided to register to the custom “RefreshList” channel
+* e.g. for an action header bar, the following text should be provided to register to the custom _RefreshList_ channel
 
-[Image: Screenshot 2021-11-23 at 11.52.36.png]
+![Action Notification Registration!](/media/sfpegActionNotifConfig.png)
 
-EXAMPLE TO ADD
-
-The “*Notification Channels*” attribute is to be set only if notify **action** types are used to filter which actions should be actually executed by the Action Bar component instance.
-
-* It is a JSON list of strings containing the labels of the channels used within **sfpegCustomNotification** message channel events.
-* When a value is set, the Action Bar registers to these events.
-
-EXAMPLE TO ADD
 
 
 ## Additional Examples
