@@ -200,13 +200,13 @@
         if (isConsole) {
             // ### CONSOLE MODE ###
             if (helper.isDebug) console.log('openTab: operating in console mode');
-            
+
             let workspaceUtil = component.find("workspaceUtil");
             let openParams = (targetId ? {recordId: targetId} : {pageReference : targetPage});
             openParams.focus= true;
             openParams.overrideNavRules= false;
             if (helper.isDebug) console.log('openTab: openParams prepared',JSON.stringify(openParams));
-           
+
             workspaceUtil.openTab(openParams)
             .then(function(newTabId){
                 if (helper.isDebug) console.log('openTab: new tab opened ',newTabId);
@@ -215,19 +215,19 @@
                 if (sourceId) {
                     if (helper.isDebug) console.log('openTab: closing old tab ',sourceId);
                     workspaceUtil.closeTab({tabId: sourceId})
-            		.then(function(status){
-                		if (helper.isDebug) console.log('openTab: END / previous tab closed ',status);
-            		}).catch(function(error){
-            			console.warn('openTab: END / closeTab error ',JSON.stringify(error));  
-        			});
+                    .then(function(status){
+                        if (helper.isDebug) console.log('openTab: END / previous tab closed ',status);
+                    }).catch(function(error){
+                        console.warn('openTab: END / closeTab error ',JSON.stringify(error));  
+                    });
                 }
                 else {
                     if (helper.isDebug) console.log('openTab: END / no old tab to close ');
                 }
             }).catch(function(error){
             	console.warn('openTab: END / openTab error ',JSON.stringify(error));  
-        	});
-        	if (helper.isDebug) console.log('openTab: temporary end');
+            });
+            if (helper.isDebug) console.log('openTab: temporary end');
         }
         else {
             // ### STANDARD MODE ###

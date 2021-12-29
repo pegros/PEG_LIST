@@ -14,10 +14,21 @@ and menu items.
 
 ![Action bar!](/media/sfpegActionBar.png) 
 
+It offers a wide range of actions, from basic navigation requests (e.g. to open a
+related record) to more complex ones (such as mass actions with form popup user interaction).
 
-## Component / Action Set Configuration (**sfpegAction__mdt**)
+The underlying **sfpegAction__mdt** custom metadata is also used in other
+**[SF PEG LIST](https://github.com/pegros/PEG_LIST)** package components to
+define row level actions, in which case its display properties become irrelevant.
 
-The action bar basically consists in a single list of buttons and menus (within a [lightning-button-group](https://developer.salesforce.com/docs/component-library/bundle/lightning-button-group/documentation) container).
+
+## Component Configuration
+
+### Global Layout
+
+The action bar basically consists in a single list of buttons and menus (within a
+[lightning-button-group](https://developer.salesforce.com/docs/component-library/bundle/lightning-button-group/documentation) 
+container).
 * A button contains a single action configuration
 * A menu contains a drop-down list of multiple action configuration items. 
 
@@ -25,16 +36,30 @@ The action bar basically consists in a single list of buttons and menus (within 
 
 Display of a **sfpegActionBarCmp** component within a page (with 1 button followed by 2 menus).
 
+### App Builder Configuration
+
+In the App Builder, the configuration of the **sfpegActionBarCmp** component basically
+consists in selecting one of the available **sfpegAction__mdt** custom metadata record
+containing the details of the buttons and menus to display.
+
 ![Standalone Action Bar Configuration!](/media/sfpegActionConfiguration.png)
 
-Configuration of the **sfpegActionBarCmp** component in the App Builder
+Additional properties enable to control the CSS of the wrapping div and activate debug mode.
+Via the CSS, it is possible to control the background if the component and the position of the
+[lightning-button-group](https://developer.salesforce.com/docs/component-library/bundle/lightning-button-group/documentation).
+They are set to `slds-theme_shade slds-grid slds-grid_align-end` by default but may
+easily be overriden.
 
+Only **sfpegAction__mdt** custom metadata record applicable to the page _scope_ may be selected
+in the dropdown displayed for the _Action configuration_ property (see configuration principles in
+[SF PEG LIST](https://github.com/pegros/PEG_LIST) introduction).
+
+
+### Metadata Configuration
 
 The **sfpegAction__mdt** custom metadata provides most of the configuration of the **sfpegActionBarCmp**
-components (buttons & menus in an action bar, with underlying actions triggered).
-
-Its most important property is the _Actions_ one, which provides all the required information to 
-properly display and execute a set of actions.
+components (buttons & menus in an action bar, with underlying actions triggered). Its most important property
+is _Actions_ which provides all the required information to properly display and execute a set of actions.
 
 Context merge is systematically applied upon load/refresh (see **[sfpegMergeUtl](/help/sfpegMergeUtl.md)**
 component) to adapt the set of actions to the display environment.
@@ -145,7 +170,6 @@ Lightning component) or via a standard creation page.
 ]
 ```
 
-
 For buttons, at least _iconName_ or _label_ should be specified, whereas for menu items,
 _label_ is mandatory and _iconName_ optional.
 
@@ -202,6 +226,7 @@ It is also possible to dynamically activate/disable buttons and menu items via t
 ```
 
 At last, there is a main _action_ property for each button or menu item, which enabless to specify the actual action to be executed when clicking/selecting the item, the action being chosen among a set of possible action types described hereafter.
+
 
 ## Available Action Types
 
@@ -380,7 +405,7 @@ Two Action Types are available to execute direct record operation (create, updat
 }
 ```
 
-### Form Action Types (**ldsForm** and **dmlForm**)
+### **Form** Action Types (**ldsForm** and **dmlForm**)
 
 Two Action Types are available to execute record operation (create, update) via a popup form,
 either via the Lightning Data Service (LDS, preferrable) or via direct database operation
@@ -464,7 +489,7 @@ base component (updates being then made via LDS)
     instead of LDS (e.g. to perform callouts to external systems).
 
 
-### Mass Actions (**massForm** and **massDML**)
+### **Mass** Action Types (**massForm** and **massDML**)
 
 Two Action Types are available to execute operations (create, update, delete) on a selection of records, either
 directly or via a first popup form.
@@ -560,7 +585,7 @@ provided by a parent component.
     * Same behaviour as the **massDML** but with the ability to call an Apex logic instead of simple DMLs.
 
 
-### Record Data LDS Reload (**reload**)
+### Record Data LDS **Reload** Type (**reload**)
 
 The **reload** action type enables to trigger a LDS reload of a single record
 * This is typically useful to refresh the LDS cache data of a record modified via Apex or DML (via the “next” property).
@@ -592,7 +617,7 @@ The **reload** action type enables to trigger a LDS reload of a single record
 ```
 
 
-### Parent Actions (**done**) 
+### Parent Action Trigger Type (**done**) 
 
 The **done** action type enables to trigger an action on a parent component.
 * This is typically used to trigger a _refresh_ on the parent component once another operation has
@@ -628,7 +653,7 @@ The **toast** action type enables to display a simple toast message, e.g. once a
 }
 ```
 
-### Custom **apex** Actions
+### Custom **apex** Action Type
 
 The **apex** action type enables to execute any operation implemented in a custom Apex class.
 * This Apex class should implement the **sfpegAction_SVC** virtual class.
@@ -666,7 +691,7 @@ in which case a “method” parameter can be specified after the class name.
 ```
 
 
-### Notification Actions (**utility**, **action** and **notify**)
+### **Notification** Action Types (**utility**, **action** and **notify**)
 
 Three Action Types are available to relay actions to other components leveraging the the
 [Lightning Message Service]
@@ -740,13 +765,14 @@ which actions should be actually executed by the Action Bar component instance.
 
 
 
-## Additional Examples
+## Configuration Examples
 
 ### Flow Action Launch (leveraging the PEG_FlowEmbed_CMP addressable component, see FLW package)
 
-![Flow Tab Open Action!](/media/sfpegActionFlowLaunch)
+![Flow Tab Open Action!](/media/sfpegActionFlowLaunch.png)
 
-In this example, a **sfpegListCmp** component is  used to display a set of promoted ongoing Tasks related to the current record and directly, from a drop-down menu,
+In this example, a **sfpegListCmp** component is  used to display a set of promoted ongoing Tasks
+related to the current record and directly, from a drop-down menu,
 * open a Flow in a new tab to execute the Flow corresponding to the displayed Task
 * trigger a **dmlForm** action to set a close reason before closing the task.
 

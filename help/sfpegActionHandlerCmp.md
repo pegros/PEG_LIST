@@ -19,12 +19,34 @@ component providing additional action types only supported in Aura.
 As a baseline, it also enables to display a vertical action menu from the utility bar. 
 
 
-## Configuration
-In order to invoke an action in this component from any **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**
-component, the _**utility**_ action type should be used. The _params_ property of this action should then include the
-actual configuration of the actual action to be executed from the utility bar.
+## Component Configuration
 
-In the following example, the action enables to open a report within a main tab of a console App.
+When configuring a Lightning App, the **sfpegActionHandlerCmp** component may be added within the 
+**Utilities** of the app. It basically requires to select one of the available **sfpegAction__mdt** 
+custom metadata records to define the set of actions to be displayed in the utility bar.
+
+Such a configuration remains optional, only _utility_ action types (see herefafter) being handled by
+the component by default. Please opt for automatic component launch in the App Builder, in order to
+properly support this feature even before having opened the action menu in the utility bar.
+
+
+## Configuration Examples
+
+### Interoperation with Tab Actions (via _utility_ action type)
+
+In order to invoke an action in the **sfpegActionHandlerCmp** component from any
+**[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component (standalone or embedded in another
+component of the **[SF PEG LIST](https://github.com/pegros/PEG_LIST)**  package),
+the _**utility**_ action type should be used.
+
+The _params_ property of this action should then include the configuration of the actual action
+to be executed from the utility bar.
+
+In the following example, the action configured for the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** 
+component of a record tab page enables to open a report within a main tab of a console App instead
+of a subtab of the current record. The _navigation_ action is first transmitted to the
+**sfpegActionHandlerCmp** component in the utility bar via a _utility_ action before being executed from there.
+
 ```
 {
     "name": "reportXXX",
@@ -52,8 +74,10 @@ In the following example, the action enables to open a report within a main tab 
 The **sfpegActionHandlerCmp** component subscribes to the custom **sfpegAction** LWC Message Channel to
 receive action requests from **sfpegActionBarCmp** components within the tabs/pages.
 
-It relies on a LWC **sfpegActionBarCmp** component to display a vertical menu accessible from the utility bar.
+It relies on a LWC **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component to display a vertical
+menu accessible from the utility bar.
 
-The Aura **sfpegActionUtilityCmp** component includes a **sfpegActionHandlerCmp** component and provides 
-additional Aura supported action types. When configuring the utility items of an App, only one of these
-components should thus be included.
+It is included in the Aura **[sfpegActionUtilityCmp](/help/sfpegActionUtilityCmp.md)** component
+and provides then additional Aura supported action types. When configuring the utility items of an App,
+only one of these two components (**sfpegActionUtilityCmp** or **sfpegActionHandlerCmp**) should thus be
+included.
