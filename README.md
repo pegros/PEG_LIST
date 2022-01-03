@@ -67,39 +67,47 @@ Although the main purpose of the package is to provide a set of LWC components f
 A main set of LWC components is available for use in Lightning App Builder:
 
 * **[sfpegListCmp](/help/sfpegListCmp.md)** displays a contextualised and actionable list of records in 3 main formats (data table, data tree or tile list), data being retrieved via SOQL or Apex.
+
 ![List as tiles!](/media/sfpegListTiles.png) 
 ![List as cards!](/media/sfpegListCards.png)
 ![List as data table!](/media/sfpegListTable.png) 
 ![List as tree grid!](/media/sfpegListTree.png) 
 
 * **[sfpegMessageListCmp](/help/sfpegMessageListCmp.md)** displays a conditional, contextualised and actionable list of end-user messages with customisable styles.
+
 ![List of messages!](/media/sfpegMessages.png)
 ![List of messages with dynamic icons!](/media/sfpegMessageExample.png)
 
 * **[sfpegKpiListCmp](/help/sfpegKpiListCmp.md)** displays an actionable list of KPI field values in a structured and  graphical way.
+
 ![List of KPIs!](/media/sfpegKpis.png)
 
 * **[sfpegProfileCmp](/help/sfpegProfileCmp.md)** displays an actionable graphical summary of a record, with various lists of fields
+
 ![Complete Profile!](/media/sfpegProfile.png) 
 ![Profile with only details!](/media/sfpegProfileDetails.png)
 ![Profile with variant!](/media/sfpegProfileInverse.png) 
 
 * **[sfpegCardCmp](/help/sfpegCardCmp.md)** displays a structured card, with a custom
 set of fields / sections fetched/displayed via LDS (including edit capability), for the current or related (i.e. via lookups) record.
+
 ![Cards on different records!](/media/sfpegCard.png) 
 
 * **[sfpegCardListCmp](/help/sfpegCardListCmp.md)** enables to fetch a list of records
 (via a SOQL/Apex query) and display a **[sfpegCardCmp](/help/sfpegCardCmp.md)** for each one.
+
 ![Cards List!](/media/sfpegCardList.png) 
 
 * **[sfpegRecordDisplayCmp](/help/sfpegRecordDisplayCmp.md)** displays data abouyt the current record
 in a structured way (headline section + sub-tabs), data being fetched either via LDS or SOQL
 (e.g. for Kbnowledge articles).
-![Action bar!](/media/sfpegRecordDisplay.png) 
+
+![Reccord Display!](/media/sfpegRecordDisplay.png) 
 
 * **[sfpegActionBarCmp](/help/sfpegActionBar.md)** displays an button/menu bar component enabling to
 trigger a wide variety of  actions, integrated within the previous list components but also available
 for standalone use in Lightning pages.
+
 ![Action bar!](/media/sfpegActionBar.png) 
 
 * ***[sfpegActionTriggerCmp](/help/sfpegActionTriggerCmp.md)**) has no actual display but enables 
@@ -361,7 +369,7 @@ queries & actions to be used in the components), often containing complex JSON c
 Such an approach enables to easily reuse the same detailed configuration in multiple Lightning page layouts and
 enables a more efficient local configuration caching (for better performances)
 
-![List App Builder Configuration Example!](/media/sfpegListConfiguratiopn.png)
+![List App Builder Configuration Example!](/media/sfpegListConfiguration.png)
 
 Example of the **[sfpegListCmp](/help/sfpegListCmp.md)** component configuration in the App Builder, referencing 2 custom metadata records (orange zones) respectively for the data fetch/display configuration and for the header actions.
 
