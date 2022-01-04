@@ -38,6 +38,9 @@ As LWC does not provide embedded documentation for the components, this readme f
 dedicated sub-pages providing detailed information about their configurations and various implementation examples.
 This applies to the different App Builder components, but some more technical ones are also described (e.g. merge utility).
 
+For the few Aura components, you may have a look at their standard _.auradoc_ and for Apex classes a
+_@ApexDoc_ like approach (with `@description`... tags) has been used.
+
 Most components may also be embedded in other custom LWC components but these use cases are currently
 not documented for the time being. You may however look at the source code to see how to reuse some of them
 (main action bar component, or display or utility ones) or reach out to the author for more informations.
@@ -50,9 +53,7 @@ Periodic upgrades will be posted depending on fixes/evolutions implemented as pa
 For now, all commits are made exclusively by the author.
 
 You may easily deploy it to your Org via a simple SFDX deploy command from the project folder.
-```
-sfdx force:source:deploy -u <yourOrgAlias> -w 10 --verbose -p force-app
-```
+> sfdx force:source:deploy -u <yourOrgAlias> -w 10 --verbose -p force-app
 
 
 * * *
@@ -66,51 +67,48 @@ Although the main purpose of the package is to provide a set of LWC components f
 
 A main set of LWC components is available for use in Lightning App Builder:
 
-* **[sfpegListCmp](/help/sfpegListCmp.md)** displays a contextualised and actionable list of records in 3 main formats (data table, data tree or tile list), data being retrieved via SOQL or Apex.
-
+* **[sfpegListCmp](/help/sfpegListCmp.md)** displays a contextualised and actionable list of records in 3 main formats
+(data table, data tree or tile list), data being retrieved via SOQL, Apex...<br/>
 ![List as tiles!](/media/sfpegListTiles.png) 
 ![List as cards!](/media/sfpegListCards.png)
 ![List as data table!](/media/sfpegListTable.png) 
 ![List as tree grid!](/media/sfpegListTree.png) 
 
-* **[sfpegMessageListCmp](/help/sfpegMessageListCmp.md)** displays a conditional, contextualised and actionable list of end-user messages with customisable styles.
-
+* **[sfpegMessageListCmp](/help/sfpegMessageListCmp.md)** displays a conditional, contextualised and actionable list
+of end-user messages with customisable styles.<br/>
 ![List of messages!](/media/sfpegMessages.png)
 ![List of messages with dynamic icons!](/media/sfpegMessageExample.png)
 
-* **[sfpegKpiListCmp](/help/sfpegKpiListCmp.md)** displays an actionable list of KPI field values in a structured and  graphical way.
-
+* **[sfpegKpiListCmp](/help/sfpegKpiListCmp.md)** displays an actionable list of KPI field values in a structured and
+graphical way.<br/>
 ![List of KPIs!](/media/sfpegKpis.png)
 
-* **[sfpegProfileCmp](/help/sfpegProfileCmp.md)** displays an actionable graphical summary of a record, with various lists of fields
-
+* **[sfpegProfileCmp](/help/sfpegProfileCmp.md)** displays an actionable graphical summary of a record, with various
+lists of fields<br/>
 ![Complete Profile!](/media/sfpegProfile.png) 
 ![Profile with only details!](/media/sfpegProfileDetails.png)
 ![Profile with variant!](/media/sfpegProfileInverse.png) 
 
 * **[sfpegCardCmp](/help/sfpegCardCmp.md)** displays a structured card, with a custom
-set of fields / sections fetched/displayed via LDS (including edit capability), for the current or related (i.e. via lookups) record.
-
+set of fields / sections fetched/displayed via LDS (including edit capability), for the current or related
+(i.e. via lookups) record.<br/>
 ![Cards on different records!](/media/sfpegCard.png) 
 
 * **[sfpegCardListCmp](/help/sfpegCardListCmp.md)** enables to fetch a list of records
-(via a SOQL/Apex query) and display a **[sfpegCardCmp](/help/sfpegCardCmp.md)** for each one.
-
+(via a SOQL, Apex... query) and display a **[sfpegCardCmp](/help/sfpegCardCmp.md)** for each one.<br/>
 ![Cards List!](/media/sfpegCardList.png) 
 
 * **[sfpegRecordDisplayCmp](/help/sfpegRecordDisplayCmp.md)** displays data abouyt the current record
 in a structured way (headline section + sub-tabs), data being fetched either via LDS or SOQL
-(e.g. for Kbnowledge articles).
-
+(e.g. for Kbnowledge articles).<br/>
 ![Reccord Display!](/media/sfpegRecordDisplay.png) 
 
 * **[sfpegActionBarCmp](/help/sfpegActionBar.md)** displays an button/menu bar component enabling to
 trigger a wide variety of  actions, integrated within the previous list components but also available
-for standalone use in Lightning pages.
-
+for standalone use in Lightning pages.<br/>
 ![Action bar!](/media/sfpegActionBar.png) 
 
-* ***[sfpegActionTriggerCmp](/help/sfpegActionTriggerCmp.md)**) has no actual display but enables 
+* **[sfpegActionTriggerCmp](/help/sfpegActionTriggerCmp.md)** has no actual display but enables 
 to trigger a specific action automatically upon instantiation (e.g. leveraging conditional
 display, it enables to enforce the user to execute a certain operation, such as opening an Edit popup,
 when opening the page). 
@@ -316,16 +314,12 @@ For each custom metadata, some useful default (or test) records are included (pr
 
 3 static resources are included to provide graphical details for the **[sfpegIconDsp](/help/sfpegIconDsp.md)**
 and the **[sfpegProfileCmp](/help/sfpegProfileCmp.md)** components:
-
 * **sfpegIcons** is a SVG sprite file providing the definition of various icons (in various sizes)
 to be used as custom icons within the **sfpegIconDsp** component.
-
 * **sfpegBanners** is a zip archive containing the set of .png or .jpg files to be used as banner
 background within the **sfpegProfileCmp** component.
-
 * **sfpegAvatars** is a zip archive containing the set of .png or .jpg files to be used as avatar
 image within the **sfpegProfileCmp** component.
-
 
 _Note_: For all these resources, a base set of items is provided, which may be extended.
 
@@ -346,11 +340,8 @@ This object has 2 record types.
 ### Permission Sets
 
 2 Permission sets are included:
-
 * **sfpegListUsage** for standard end-users (to give them access to all necessary controller classes and VF page)
-
 * **sfpegListTest** for apex test (dynamically given to the running user to be able to properly execute the tests)
-
 
 
 * * *
@@ -358,10 +349,8 @@ This object has 2 record types.
 ## Component Configuration
 
 Configuration is done at 2 levels:
-
 * in the **App Builder**, to set simple high level configuration elements (such as card title & icon, debug mode activation...)
 and select one of the available detailed configuration records (see below)
-
 * via **custom metadata** records, respectively to provide detailed configuration of the components (e.g. layouts,
 queries & actions to be used in the components), often containing complex JSON configuration stored in richtext fields.
 
@@ -369,9 +358,8 @@ queries & actions to be used in the components), often containing complex JSON c
 Such an approach enables to easily reuse the same detailed configuration in multiple Lightning page layouts and
 enables a more efficient local configuration caching (for better performances)
 
-![List App Builder Configuration Example!](/media/sfpegListConfiguration.png)
-
-Example of the **[sfpegListCmp](/help/sfpegListCmp.md)** component configuration in the App Builder, referencing 2 custom metadata records (orange zones) respectively for the data fetch/display configuration and for the header actions.
+![List App Builder Configuration Example!](/media/sfpegListConfiguration.png)<br/>
+_Example of the **[sfpegListCmp](/help/sfpegListCmp.md)** component configuration in the App Builder, referencing 2 custom metadata records (orange zones) respectively for the data fetch/display configuration and for the header actions_
 
 
 ### Configuration Contextualisation
@@ -385,9 +373,9 @@ about the applicable syntax and all the possible tokens.
 
 All custom metadata objects include a _scope_ property_ to define the pages for which the configuration record
 is applicable, i.e. a set of comma separated strings
-    * _GLOBAL_ keyword  (for all pages),
-    * _RECORDS_ keyword (for all record pages)
-    * _<ObjectApiName>_ (for a specific Salesforce Object) 
+* _GLOBAL_ keyword  (for all pages),
+* _RECORDS_ keyword (for all record pages)
+* _<ObjectApiName>_ (for a specific Salesforce Object) 
 
 This value is then taken into account by the **Datasource** Apex controllers to let the users only choose
 the appropriate records when cconfiguring a component in the App Builder.
@@ -410,30 +398,35 @@ On server side, all controllers have Apex debug logs implemented at various leve
 
 ## Technical Details
 
-Hereafter are provided various technical details about the way the components have been implemented, which may help better understand their behaviours.
+Hereafter are provided various technical details about the way the components have been implemented,
+which may help better understand their behaviours.
 
 
 ### Aura vs LWC
 
 Most of the logic is implemented in LWC components.
 
-However, in order to be able to leverage some interesting APIs or components not yet available in LWC (workspaceAPI, overlayApi, utilityBarApi, flow...) or some behaviours not supported by LWC (dynamic component instantiation via `$A.createComponent()`), some logic still had to be implemented in the legacy Aura technology for various action types.
+However, in order to be able to leverage some interesting APIs or components not yet available in LWC
+(workspaceAPI, overlayApi, utilityBarApi, flow...) or some behaviours not supported by LWC
+(dynamic component instantiation via `$A.createComponent()`), some logic still had to be implemented
+in the legacy Aura technology for various action types.
 
-All this custom Aura logic has been centralised in the **sfpegActionUtilityCmp** component and its supporting **sfpegFlowDsp** component.
+All this custom Aura logic has been centralised in the **[sfpegActionUtilityCmp](/help/sfpegActionUtilityCmp.md)**
+component and its supporting **sfpegFlowDsp** component.
 
 
 ### Local Initialisation Cache of Configuration
 
 In order to optimise initialisation time of the different components, a 2 stage approach has been used:
+* cacheable AuraEnabled Apex methods have been used to fetch custom metadata records
+(leveraging the standard Lightning cache)
+* any fetched / parsed configuration is also stored in a static map variable per component
+(enabling to execute the initialisation only once and only fetch the missing elements or initialise the specific items)
 
-* cacheable AuraEnabled Apex methods have been used to fetch custom metadata records (leveraging the standard Lightning cache)
-* any fetched / parsed configuration is also stored in a static map variable per component (enabling to execute the initialisation only once and only fetch the missing elements or initialise the specific items)
-
-This approach enables to dramatically reduce initialisation times when the same configuration is used in multiple pages. E.g. when opening Account pages
-
+This approach enables to dramatically reduce initialisation times when the same configuration is used in multiple pages.
+E.g. when opening Account pages
 * the configuration is loaded first then all contextual data requested when opening the first Account page 
 * the configuration is reused and contextual data directly fetched when opening the later Account pages.
-
 
 
 ### Lightning Data Service vs DMLs
@@ -442,15 +435,11 @@ Lightning Data Service (via
 **[@wire](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/data_wire_service_about)** methods or
 **[lightning-record-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-form/documentation)**
 components) is heavily used in the components to execute actions or fetch/display record data.
-
 * It is used also to display input forms for mass actions (as temporary creation forms),
 although no LDS operation is actually executed, mass operations being done via DMLs.
-
 * This works perfectly for all objects supported by LDS, usual exceptions being Task, Event and Knowledge
 for which DML actions are always required (unless opening the standard creation / edit pages)
-
 * LDS updates are very useful as they automatically propagate to other components and avoid reloading/refreshing the page.
-
 
 
 ### Lightning Message Service Based Communication
@@ -473,7 +462,5 @@ In order to extend the standard capabilities made available in the package, an e
 implement and integrate additional custom Apex logic.
 
 This applies to the following features:
-
 * actions (see **sfpegAction__mdt** configuration) leveraging the **sfpegAction_SVC** virtual class
-
 * list queries (see **sfpegList__mdt** configuration) leveraging the **sfpegListQuery_SVC** virtual class
