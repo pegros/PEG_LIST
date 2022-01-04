@@ -22,10 +22,11 @@ It has no extensive configuration, with only 3 basic properties:
 * _Action Name_  chosen among the button/menu item names available within the selected _Action Configuration_
 * _Debug?_ to activate debug information and logs
 
+![Action Trigger Configuration!](/media/sfpegActionTriggerConfig.png) 
+
 
 ## Technical Details
 
-It relies on a hidden LWC **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component to register/contextualisea set
+It relies on a hidden LWC **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component to register/contextualise a set
 of available actions and triggers only the one configured. A same **sfpegAction** custom metadata record may thus be shared
 by multiple **sfpegActiontriggerCmp** instances, each one using one specific action registered within it.
-

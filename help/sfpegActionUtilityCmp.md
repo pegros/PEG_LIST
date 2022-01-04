@@ -54,8 +54,7 @@ The **openPopup** action type provides dynamic Aura component instantiation with
 [Overlay Library](https://developer.salesforce.com/docs/component-library/bundle/lightning:overlayLibrary/documentation).
 
 From a **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component, the following action configuration enables to
-open a custom _TST_Component_ Aura component in a Popup.
-
+open a custom _TST_Component_ Aura component in a Popup.<br/>
 ```
 {
     "name": "Component", "label":"Component",
@@ -74,7 +73,7 @@ open a custom _TST_Component_ Aura component in a Popup.
 }
 ```
 
-LWC dynamic instantiation is (currently?) not supported and this acction type only works with Aura ones!
+_Note_: LWC dynamic instantiation is (currently?) not supported and this acction type only works with Aura ones!
 
 
 ### **openFlow** Action Type
@@ -85,8 +84,7 @@ component and the
 [Overlay Library](https://developer.salesforce.com/docs/component-library/bundle/lightning:overlayLibrary/documentation).
 
 From a **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component, the following action configuration enables to
-launch a _TEST_TST_Flow_ Flow in a Popup.
-
+launch a _TEST_TST_Flow_ Flow in a Popup.<br/>
 ```
 {
     "name": "Flow", "label":"Flow",
@@ -117,8 +115,7 @@ This is a typical utility bar menu action, two options being available:
 In any case, pinned tabs are ignored and never closed.
 
 From a **sfpegActionUtilityCmp** component, the following action configuration 
-provides the two options.
-
+provides the two options.<br/>
 ```
 {
     "label":"Close Tabs", "name":"closeAllTabs",
@@ -159,7 +156,7 @@ It relies on the [workspace API](https://developer.salesforce.com/docs/component
 to determine if the current appliccation is in console mode and execute the various tab navigation and tab
 management operations.
 
-TO BE COMPLETED
+***TO BE COMPLETED***
 
 
 ### **refreshTab** Action Type
@@ -171,8 +168,7 @@ Depending on the application mode (console or standard), it leverages different 
 * via a simple `$A.get('e.force:refreshView').fire()` statement when in standard mode
 * via the `refreshTab()` method of the 
 [workspace API](https://developer.salesforce.com/docs/component-library/bundle/lightning:workspaceAPI/documentation)
-when in console mode.
-
+when in console mode.<br/>
 ```
     ...
     "next": {
@@ -187,8 +183,7 @@ when in console mode.
 The **minimize** action type is mostly used as a _next_ property of another action type to automatically close
 the utility bar menu of the **sfpegActionUtilityCmp** component once this action has been triggered.
 
-It leverages the [utilityBar API](https://developer.salesforce.com/docs/component-library/bundle/lightning:utilityBarAPI/documentation) to execute the action.
-
+It leverages the [utilityBar API](https://developer.salesforce.com/docs/component-library/bundle/lightning:utilityBarAPI/documentation) to execute the action.<br/>
 ```
     ...
     "next": {
@@ -205,7 +200,7 @@ _Note_: please see the **closeTabs** action type for a more complete example.
 The **fireEvent** action type enables to trigger any standard or custom Aura Application Event (e.g. when 
 navigation actions are not enough).
 
-It simply executes a standard `[$A.get(xxx).fire()](https://developer.salesforce.com/docs/atlas.en-us.lightning.meta/lightning/ref_jsapi_event_fire.htm)` statement to trigger the event of the specified _type_ with the provided _params_.
+It simply executes a standard [`$A.get(xxx).fire()`](https://developer.salesforce.com/docs/atlas.en-us.lightning.meta/lightning/ref_jsapi_event_fire.htm) statement to trigger the event of the specified _type_ with the provided _params_.
 
 From a **[sfpegListCmp](/help/sfpegListCmp.md)** component displaying a list of files, the following row action
 configuration enables to fire a standard Lightning
@@ -239,4 +234,24 @@ in such a case.
 
 ### Popup with Notification back to original Component
 
-TO BE CONTINUED
+***TO BE CONTINUED***
+
+
+
+## Technical Details
+
+The **sfpegActionUtilityCmp** component is a pure Aura wrapper of the LWC
+**[sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md)** utility bar component
+and simply implements a set of Aura specific action types. All its configuration
+is done in the child **sfpegActionHandlerCmp** component.
+
+The specific action type names are known from child **sfpegActionHandlerCmp**
+component, which automatically pushes them to its parent component via a _done_
+event.
+
+Most of these specific action types support _next_ properties which may be
+executed by the child **sfpegActionHandlerCmp** component.
+
+Even if initially meant for the utility bar, the **sfpegActionUtilityCmp** Aura component
+may be also used in the footer of a community template to provide the same features in this
+technical context.

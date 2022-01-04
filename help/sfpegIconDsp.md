@@ -8,10 +8,14 @@ The **sfpegIconDsp** component is a pure display and interaction components enab
 to easily display various types of icons while masking the underlying technical
 implementation variations.
 
-It mainly relies on the standard [lightning-icon](https://developer.salesforce.com/docs/component-library/bundle/lightning-icon/documentation) component to display standard [SLDS icons](https://www.lightningdesignsystem.com/icons/) or custom SVG icons from the **sfpegIcons** static resource if the _resource:_ prefix is used in the
+It mainly relies on the standard [lightning-icon](https://developer.salesforce.com/docs/component-library/bundle/lightning-icon/documentation) component to display standard [SLDS icons](https://www.lightningdesignsystem.com/icons/) or custom SVG icons from the **sfpegIcons** static resource if the `resource:` prefix is used in the
 icon name.
 
-If the _dynamic:_ prefix is used, it may also use the [lightning-dynamic-icon](https://developer.salesforce.com/docs/component-library/bundle/lightning-dynamic-icon/documentation) standard component (in score, strength or trend types, e.g. as _dynamic:score_) or the [lightning-progress-ring](https://developer.salesforce.com/docs/component-library/bundle/lightning-progress-ring/documentation) one (if _dynamic:progress_ name is used).
+If the _dynamic:_ prefix is used, it may also use the
+[lightning-dynamic-icon](https://developer.salesforce.com/docs/component-library/bundle/lightning-dynamic-icon/documentation)
+standard component (in _score_, _strength_ or _trend_ types, e.g. as `dynamic:score`) or the
+[lightning-progress-ring](https://developer.salesforce.com/docs/component-library/bundle/lightning-progress-ring/documentation)
+one (if `dynamic:progress` name is used).
 In such a case, a _iconValue_ property should be set to control the actual display state of the icon/progress bar.
  
 This component is used in the following components:
@@ -57,8 +61,7 @@ required _iconValue_ and optional _iconSize_ and _iconVariant_ properties.
 If the _actionName_ property in set of the component, an _action_ LWC event is triggered each time the
 user clicks on the icon. The CSS is then adapted to highlight that the icon is clickable.
 
-Such an event should be handled by setting the _onaction_ handler on the component.
-
+Such an event should be handled by setting the _onaction_ handler on the component.<br/>
 ```
 <c-sfpeg-icon-dsp   icon-name={iconName}
                     action-name={iconAction}
@@ -69,11 +72,11 @@ Such an event should be handled by setting the _onaction_ handler on the compone
 
 ## Static Resources for Custom Icons
 
-The **sfpegIcons** static resource contains all the custom SVG icons usable in the other components via the _resource:xxxx_ syntax. If new icons are required, new SVG definitions may be added in the static resource for the new icon in all target sizes 
+The **sfpegIcons** static resource contains all the custom SVG icons usable in the other components via the `resource:xxxx` syntax. If new icons are required, new SVG definitions may be added in the static resource for the new icon in all target sizes 
 
 In the following example, the resource:total icon is defined in both medium and small formats.
 * the id of the sprite is built following the `<iconName>-<iconSize>` format
-* In order to reuse an original SVG defined in other sizes, a transformation is applied to scale and translate the original SVG directives for a proper display. The general viewBox is in a `0 0 100 100` configuration and target sizes for medium and small sizes are respectively _32px_ and _24px_.
+* In order to reuse an original SVG defined in other sizes, a transformation is applied to scale and translate the original SVG directives for a proper display. The general viewBox is in a `0 0 100 100` configuration and target sizes for medium and small sizes are respectively `32px` and `24px`.
 * The stroke color has to be explicitely specified (as it is not inherited from the containers) and the stroke-width may also be adapted to the size.
 
 ```

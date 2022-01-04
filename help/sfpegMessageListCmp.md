@@ -6,11 +6,11 @@
 
 The **sfpegMessageListCmp** component displays a conditional, contextualised and actionable list of end-user messages with customisable styles.
 
-![List of messages!](/media/sfpegMessages.png)
+![List of messages](/media/sfpegMessages.png)
 
 It may even be used to keep track of process progress via dynamic icons and progress bar.
 
-![List of messages with dynamic icons!](/media/sfpegMessageExample.png)
+![List of messages with dynamic icons](/media/sfpegMessageExample.png)
 
 It relies on the **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** utility component to contextualise
 the messages via merge tokens and on the **[sfpegIconDsp](/help/sfpegIconDsp.md)** display component

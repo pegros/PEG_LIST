@@ -4,27 +4,79 @@
 
 ## Introduction
 
-The **sfpegCardListCmp** component enables to fetch a list of records
-(via a SOQL/Apex query) and displays a **[sfpegCardCmp](/help/sfpegCardCmp.md)** 
-component for each one.
+The **sfpegCardListCmp** component enables to fetch a list of records (via a SOQL/Apex... query) and display
+a summary card for each one.
 
-![Cards List!](/media/sfpegCardList.png) 
+It relies on the **[sfpegListCmp](/help/sfpegListCmp.md)** component to fetch the records and the
+**[sfpegCardCmp](/help/sfpegCardCmp.md)** to display them.
+
+It enables to handle cases where direct display of record details is required for a small set of records related
+to the current one
+* display being adapted to the each record situation (status, record type, object API name)
+* direct edit being possible on each record
 
 
 ## Configuration
 
-The **pegCardList__mdt** custom metadata provides the configuration of the **sfpegCardListCmp*$ components (targeted records, card configuration to apply).
+### Global Layout
 
-From the App Builder, the main configuration records may be selected (Card List & Header Actions) as well as various display options.
-[Image: Screenshot 2021-11-10 at 18.41.08.png]In the *sfpegCardList__mdt* custom metadata record, multiple fields are available to configure
+The **sfpegCardListCmp** basically consists in :
+* a wrapping **[lightning-card](https://developer.salesforce.com/docs/component-library/bundle/lightning-card/documentation)** 
+with a title, icon and set of header actions (via the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component)
+* containing a list of **[sfpegCardCmp](/help/sfpegCardCmp.md)**
 
-* how to fetch the targets displayed in the card list
-    * leveraging a sfpegList record to execute the query
-    * defining which field of the query result is to be used as Id and card title for each target record (Id by default)
-    * providing either a fixed value or a field name (in the query result) to set the object API name and card icon of each target record 
-* how to display each  target
-    * providing either a fixed value or a field name (in the query result) to define the *sfpegCard* custom metadata record to be used for card display
-    * doing the same for header actions of each card (with a *sfpegAction* custom metadata record name)
-    * card context is reserved for future use (to set the parent context in the card actions)
+![Cards List](/media/sfpegCardList.png) 
 
-[Image: Screenshot 2021-11-10 at 18.39.28.png]
+
+### App Builder Configuration
+
+In the App Builder, the configuration of the **sfpegCardListCmp** component consists in 
+* setting the card title and icon (and CSS)
+* setting the CSS and size for each **[sfpegCardCmp](/help/sfpegCardCmp.md)** displayed
+* selecting one of the available **sfpegCardList__mdt** custom metadata record configuring
+how record list is fetched and how they are displayed
+* selecting one of the available **sfpegAction__mdt** custom metadata record containing the 
+configuration of the header action button bar (see the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component for details)
+* setting various behaviour options (_Read-Only_, _Button Size_, _Show #Records?_, _Show Refresh?_...)
+
+![Record Card List Configuration](/media/sfpegCardListConfig.png)
+
+
+### Metadata Configuration
+
+The **pegCardList__mdt** custom metadata provides the configuration of the **sfpegCardListCmp** components
+(targeted records, card configuration to apply).<br/>
+![Record Card List Metadata Configuration](/media/sfpegCardListMeta.png)
+
+A first set of properties defines how to fetch the targets displayed in the card list
+* _Query_ provides the query to execute (as a valid **sfpegList__mdt** custom metadata record name,
+see **[sfpegListCmp](/help/sfpegListCmp.md)** for details)
+* _Record ID Field_ indicates which field of the query result is to be used as record Id (`Id` by default)
+
+A second set of proerties defines how to display each record card
+* _Record Name Field_ indicates which field of the query result is to be used as record card title
+(`Name` by default)
+* _Icon Name Field_ indicates which field of the query result is to be used as record card icon name 
+(for dynamic icons), while _Icon Name_ provides a fixed/default value for it 
+* _Object Name Field_ and _Object Name_ similarly setting the Object API Name for each record card
+* _Card Config Field_ and _Card Config_ similarly setting the **sfpegCard__mdt** name to apply for each record card
+* _Card Actions Field_ and _Card Actions_ similarly setting the **sfpegAction__mdt** name to apply for the
+header actions of each record card
+
+_Note_: _Card Context_ is currently reserved for future use (to set the root record context in each record card for
+their header actions)
+
+
+## Configuration Examples
+
+***TO BE CCONTINUED***
+
+
+## Technical Details
+
+This component relies on the **[sfpegCardCmp](/help/sfpegCardCmp.md)** to display a card for each fetched record.
+It as this component relies on the standard
+[record-view-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-view-form/documentation)
+base component to fetch and display record data, data load may become inefficient when the record list
+becomes too large.
+> The **sfpegCardList** component should therefore be used carefully on small record list sizes to mitigate performance impacts.

@@ -5,9 +5,8 @@
 ## Introduction
 
 The **sfpegActionHandlerCmp** component is bascially the same as the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** 
-but includes some specific behaviours specific to the utility bar.
-
-![Action utility!](/media/sfpegActionUtility.png) 
+but includes some specific behaviours specific to the utility bar.<br/>
+![Action utility](/media/sfpegActionUtility.png) 
 
 This LWC component is dedicated to the utility bar and enables to execute actions from this context.
 * its primary purpose is to execute _navigate_ actions from the utility bar, which
@@ -36,8 +35,8 @@ properly support this feature even before having opened the action menu in the u
 
 In order to invoke an action in the **sfpegActionHandlerCmp** component from any
 **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component (standalone or embedded in another
-component of the **[SF PEG LIST](https://github.com/pegros/PEG_LIST)**  package),
-the _**utility**_ action type should be used.
+component of the **[PEG_LIST](https://github.com/pegros/PEG_LIST)**  package),
+the _utility_ action type should be used.
 
 The _params_ property of this action should then include the configuration of the actual action
 to be executed from the utility bar.

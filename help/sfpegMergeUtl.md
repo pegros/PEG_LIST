@@ -48,13 +48,11 @@ This base set of token types may be extended by leveraging the **sfpegConfigurat
 * **DBD** for Dashboard IDs  (the merge token being then `DBD.DeveloperName`)
 * **FLD** for Folder IDs  (the merge token being then `FLD.DeveloperName`)
 
-Specific Org records may then be added to the configuration (e.g. the Knowledge Articles or FSC Reciprocal Roles in the example below).
+Specific Org records may then be added to the configuration (e.g. the Knowledge Articles or FSC Reciprocal Roles in the example below).<br/>
+![Custom Merge Tokens List](/media/sfpegMergeConfiguration.png)
 
-![Custom Merge Tokens List!](/media/sfpegMergeConfiguration.png)
-
-The configuration of it is quite simple.
-
-![Custom Merge Token Configuration!](/media/sfpegMergeConfigExample.png)
+The configuration of it is quite simple.<br/>
+![Custom Merge Token Configuration](/media/sfpegMergeConfigExample.png)
 
 In this example, roles may be referenced in creation actions with the `{{{ROLE.<SourceSystemId__c>}}}` keyword.
 * _Name_ should contain the token prefix (here `ROLE`).
