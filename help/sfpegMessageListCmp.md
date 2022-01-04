@@ -4,61 +4,84 @@
 
 ## Introduction
 
-The **sfpegMessageListCmp** component displays a conditional, contextualised and actionable list of end-user messages with customisable styles.
+The **sfpegMessageListCmp** component displays a conditional, contextualised and actionable list
+of end-user messages with customisable styles.
 
+It may be used to display conditional contextual warnings or information messages, with a possible
+call-to-action via a dedicated action button.<br/>
 ![List of messages](/media/sfpegMessages.png)
 
-It may even be used to keep track of process progress via dynamic icons and progress bar.
-
+It may be also used to highlight a gradation in a KPI and track the progress of a process,
+via dynamic icons and embedded progress bar.<br/>
 ![List of messages with dynamic icons](/media/sfpegMessageExample.png)
-
-It relies on the **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** utility component to contextualise
-the messages via merge tokens and on the **[sfpegIconDsp](/help/sfpegIconDsp.md)** display component
-to display a wide range of static or dynamic icons.
-
-It also uses the standard [lightning-progress-indicator](https://developer.salesforce.com/docs/component-library/bundle/lightning-progress-indicator/documentation) and [lightning-progress-bar](https://developer.salesforce.com/docs/component-library/bundle/lightning-progress-bar/documentation) components to respectively display a progress indicator (/path) and bar.
 
 
 ## Component Configuration
 
-The **sfpegMessage__mdt** custom metadata provides the configuration for the components (list of 
-messages with display style, activation conditions and actions). Each message consists in:
+### Global Layout
+
+The **sfpegMessageListCmp** component displays a variable list of messages (depending on
+conditions evaluated within the component), each message consisting in:
 * a title contextualised text (blue zone)
-* an optional progress bar or indicator (not shown here, between title and message)
+* an optional progress bar or progress indicator (not shown here, between title and message)
 * an optional contextualised message text (green zone)
-* a optional (possibly dynamic) icon (red zone)
+* a optional (and possibly dynamic) icon (red zone)
 * an optional action button (orange zone)
 
-![Message List Layout!](/media/sfpegMessageLayout.jpg)
+![Message List Layout](/media/sfpegMessageLayout.jpg)
 
-As a baseline, a message list is configured in the _Message Display_ attribute of a **sfpegMessage** 
-custom metadata record attribute as a JSON list of message configuration items, each consisting in:
-* a _header_ property containing the main message to display 
-* a _message_ property containing additional detailed information about the  message
-* a _variant_ property to set the style to apply to the message (i.e. one of the following ones:
-_base_, _notif_, _info_, _infoLight_, _warning_, _warningLight_, _error_, _errorLight_, _success_,
-_successLight_)
-* some additional properties to override the default variant settings (_iconName_, _iconSize_,
-_iconVariant_, _iconValue_)
-* a possible fixed _size_ in number of columns within a 12 column grid (12 meaning 100% of the width, no size letting the message grow according to its content)
-* an optional _path_ or _progress_ property to display a progress bar / indicator between header and message
-* an optional action button via an _action_ property containing at least  the _name_ of an action (registered in the **[sfpegAction](/help/sfpegActionBarCmp.md)** custom metadata record referenced via the _Message Actions_ attribute) and a _label_ or _iconName_
-* optional display conditions via the _isHidden_ property which may include formulas evaluated at runtime by the component (no need to define custom formula fields on the User or current Object).
 
-![Message List Configuration!](/media/sfpegMessageConfigMeta.png)
+### App Builder Configuration
 
-If actions are used in the message list, a ***pegAction** custom metadata record name must be specified in the _Message Actions_ attribute. This record should contain all the actions possibly triggered by the message list.
+In the App Builder, the configuration of the **sfpegMessageListCmp** component is pretty simple
+and mainly relies on selecting an applicable **sfpegMessage__mdt** custom metadata configuration
+record in the _Message Configuration_ property.<br/>
+![App Builder Message List Configuration](/media/sfpegMessageConfig.png)
 
-This component leverages the **sfpegIconDsp** base component to display icons. Custom SVG icons or dynamic pnes may then be referenced within the message configuration in additional to all standard SLDS ones.
+Additional properties enables to fine tune its display
+* setting a CSS for the wrapping div (leveraging standard SLDS classes)
+* activating debug mode
+
+
+### Metadata Configuration
+
+The **sfpegMessage__mdt** custom metadata provides most if not all configuration items for 
+the **sfpegMessageListCmp** components.
+
+Its main property is _Message Display_ which contains a JSON list of message definitions.<br/>
+![Message List Configuration](/media/sfpegMessageConfigMeta.png)
+
+Each message definition is a JSON object with the following properties:
+* _header_: main rich text message to display 
+* _message_: additional rich text message information
+* _variant_: global style to apply to the message
+    * i.e. _base_, _notif_, _info_, _infoLight_, _warning_, _warningLight_, _error_, _errorLight_, _success_, _successLight_)
+    * variant settings being possibly overriden by explicit specific properties, such as _iconName_, _iconSize_,_iconVariant_, _iconValue_
+* _size_ (optional): width of the message as part of a 12 column grid (12 meaning 100% of the width, no size letting the message grow dynamically according to its content)
+* _path_ or _progress_ (optional): activates the display of a progress bar / indicator between header and message
+    * see examples below for details, configuration being based on the standard Lightning base component displayed
+* _action_ (optional): activates the display of an action button via a JSON action definition containing:
+    * the _name_ of one action registered in the **sfpegAction__mdt** referenced in the main _Message Actions_ property
+    * a _label_ or _iconName_ for the button
+* _isHidden_ (optional): display condition for message, which should have a boolean value but may be defined as a Javascript formula evaluated at runtime by the component (no need to define custom formula fields on the User or current Object).
+
+If actions are used in the message list (via the _action_ message property), a ***pegAction__mdt** custom metadata record name must be specified in the _Message Actions_ property.
+* This record should contain all the actions possibly triggered by the message list.
+* see **[sfpegAction](/help/sfpegActionBarCmp.md)** for details about available actions
+
+_Notes_: 
+* Context merge is systematically applied to the _query input_ property upon initial load/refresh (see **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** component) to adapt the query context to the display environment.
+* This component leverages the **[sfpegIconDsp](/help/sfpegIconDsp.md)** component to display icons. Custom SVG icons or dynamic ones may thus be referenced within the message configuration in addition to all standard SLDS ones.
+
 
 ## Configuration Example
 
-For the following example
+### Message with Dynamic Icons
 
-![List of messages with dynamic icons!](/media/sfpegMessageExample.png)
+For the following example<br/>
+![List of messages with dynamic icons](/media/sfpegMessageExample.png)
 
-the _Message Display_  of the custom metadata record should be configured as follows:
-
+the _Message Display_ property of the custom metadata record should be configured as follows:
 ```
 [
     {
@@ -115,3 +138,14 @@ the _Message Display_  of the custom metadata record should be configured as fol
     }
 ]
 ```
+
+## Technical Details
+
+It relies on the **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** utility component to contextualise
+the messages via _merge tokens_ and on the **[sfpegIconDsp](/help/sfpegIconDsp.md)** display component
+to display a wide range of static or dynamic icons.
+
+It also uses the standard
+[lightning-progress-indicator](https://developer.salesforce.com/docs/component-library/bundle/lightning-progress-indicator/documentation) and
+[lightning-progress-bar](https://developer.salesforce.com/docs/component-library/bundle/lightning-progress-bar/documentation)
+base components to respectively display a progress indicator (steps or path) and progress bar.
