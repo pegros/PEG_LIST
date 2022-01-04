@@ -70,7 +70,7 @@ If actions are used in the message list (via the _action_ message property), a *
 * see **[sfpegAction](/help/sfpegActionBarCmp.md)** for details about available actions
 
 _Notes_: 
-* Context merge is systematically applied to the _query input_ property upon initial load/refresh (see **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** component) to adapt the query context to the display environment.
+* Context merge is systematically applied to the _Message Display_ property upon initial load/refresh (see **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** component) to adapt the messages / display conditions to the display environment.
 * This component leverages the **[sfpegIconDsp](/help/sfpegIconDsp.md)** component to display icons. Custom SVG icons or dynamic ones may thus be referenced within the message configuration in addition to all standard SLDS ones.
 
 
@@ -78,7 +78,7 @@ _Notes_:
 
 ### Message with Dynamic Icons
 
-For the following example<br/>
+For the following example,<br/>
 ![List of messages with dynamic icons](/media/sfpegMessageExample.png)
 
 the _Message Display_ property of the custom metadata record should be configured as follows:
@@ -138,6 +138,12 @@ the _Message Display_ property of the custom metadata record should be configure
     }
 ]
 ```
+
+_Note_: the _value_ progress or path widget and the _iconValue_ of a dynamic icon may be computed
+via a formula field but should follow the format expected by the underlying Lightning base component.
+See technical section for links to the appropriate sub-component used to get more detailed information.
+Beware that some values are text ones and others numbers.
+
 
 ## Technical Details
 
