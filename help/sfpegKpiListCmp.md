@@ -6,7 +6,7 @@
 
 The **sfpegKpiListCmp** component displays an actionable list of KPI field values in a structured and  graphical way.
 
-![List of KPIs!](/media/sfpegKpis.png)
+![List of KPIs](/media/sfpegKpis.png)
 
 A **sfpegKpiListCmp** basically displays :
 * a list of KPI groups having their own header (orange zone) containing optional icons, titles and a actions

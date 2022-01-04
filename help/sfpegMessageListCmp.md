@@ -18,6 +18,7 @@ to display a wide range of static or dynamic icons.
 
 It also uses the standard [lightning-progress-indicator](https://developer.salesforce.com/docs/component-library/bundle/lightning-progress-indicator/documentation) and [lightning-progress-bar](https://developer.salesforce.com/docs/component-library/bundle/lightning-progress-bar/documentation) components to respectively display a progress indicator (/path) and bar.
 
+
 ## Component Configuration
 
 The **sfpegMessage__mdt** custom metadata provides the configuration for the components (list of 
