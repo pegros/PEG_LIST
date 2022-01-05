@@ -60,11 +60,11 @@ You may easily deploy it to your Org via a simple SFDX deploy command from the p
 
 ## Package Overview
 
-The **PEG_LIST** package provides a whole series of LWC components for the App Builder, as
-well as some Aura ones. They are summarized hereafter with links to their dedicated
+The **PEG_LIST** package provides a whole set of LWC components for the App Builder, as
+well as some Aura ones. They are summarized hereafter by use case with links to their dedicated
 description pages.
 
-All these components rely on a whole set of metadata also included in the package, the detail
+All these components rely on various supporting metadata also included in the package, the detail
 of which is provided [here](/help/sfpegComponentList.md).
 
 
@@ -121,8 +121,11 @@ set of fields / sections fetched/displayed via LDS (including edit capability), 
 
 * **[sfpegRecordDisplayCmp](/help/sfpegRecordDisplayCmp.md)** displays data abouyt the current record
 in a structured way (headline section + sub-tabs), data being fetched either via LDS or SOQL
-(e.g. for Kbnowledge articles).<br/>
-![Reccord Display!](/media/sfpegRecordDisplay.png) 
+(e.g. for Kbnowledge articles).
+
+<p align="center" >
+<img src="/media/sfpegRecordDisplay.png"     alt="Record Display"  />
+</p>
 
 * **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** displays an button/menu bar component enabling to
 trigger a wide variety of  actions, integrated within the previous list components but also available
@@ -183,8 +186,10 @@ queries & actions to be used in the components), often containing complex JSON c
 Such an approach enables to easily reuse the same detailed configuration in multiple Lightning page layouts and
 enables a more efficient local configuration caching (for better performances)
 
-![List App Builder Configuration Example!](/media/sfpegListConfiguration.png)<br/>
+![List App Builder Configuration Example!](/media/sfpegListConfiguration.png)
+<p align="center" >
 _Example of the **[sfpegListCmp](/help/sfpegListCmp.md)** component configuration in the App Builder, referencing 2 custom metadata records (orange zones) respectively for the data fetch/display configuration and for the header actions_
+</p>
 
 
 ### Configuration Contextualisation
