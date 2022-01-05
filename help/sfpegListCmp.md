@@ -24,12 +24,6 @@ from a UX perspective
 automatically fetched upon instantiation, a _load more_ button being displayed in the component's footer as long
 as this total count has not been loaded)
 
-In order to offer these features, it heavily relies on two other **[PEG_LIST](https://github.com/pegros/PEG_LIST)**
-LWC components:
-* **[sfpegActionBarCmp](/help/sfpegActionBar.md)** for the header and row actions
-* **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** for the data fetch contextualisation (leveraging a wide variety of
-_merge tokens_)
-
 ---
 
 ## Component Configuration
@@ -340,3 +334,11 @@ This component heavily relies on the standard
 base components to display data in _DataTable_ and _DataTree_ modes.
 A lot of their configuration elements may therefore be set within the _Display Configuration_ property of the 
 **sfpegList__mdt** custom metadata, both at root, _menu_ and _columns_ levels.
+
+It also relies on the following **[PEG_LIST](https://github.com/pegros/PEG_LIST)** components:
+* **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** for the data fetch contextualisation (leveraging a wide variety of
+_merge tokens_)
+* **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** for header and row actions
+* **sfpegTileDsp** for record tile display (thus also **[sfpegIconDsp](/help/sfpegIconDsp.md)** for tile icons)
+* **sfpegCsvUtl** for CSV list export
+* **sfpegJsonUtl** for various JSON operations (e.g. data _flattening_)
