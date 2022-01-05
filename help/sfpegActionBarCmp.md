@@ -21,6 +21,7 @@ The underlying **sfpegAction__mdt** custom metadata is also used in other
 **[SF PEG LIST](https://github.com/pegros/PEG_LIST)** package components to
 define row level actions, in which case its display properties become irrelevant.
 
+---
 
 ## Component Configuration
 
@@ -227,6 +228,7 @@ It is also possible to dynamically activate/disable buttons and menu items via t
 
 At last, there is a main _action_ property for each button or menu item, which enabless to specify the actual action to be executed when clicking/selecting the item, the action being chosen among a set of possible action types described hereafter.
 
+---
 
 ## Available Action Types
 
@@ -763,7 +765,7 @@ which actions should be actually executed by the Action Bar component instance.
 
 ![Action Notification Registration!](/media/sfpegActionNotifConfig.png)
 
-
+---
 
 ## Configuration Examples
 
@@ -823,3 +825,9 @@ FYI, the configuration of the “*close*” action is the following:
 ### OpenURL Action with Rework 
 
 see [Apex List Retrieval and OpenURL Action with Rework](/help/sfpegListCmp.md)
+
+---
+
+## Technical Details
+
+***TO BE CONTINUED***

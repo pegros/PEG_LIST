@@ -15,6 +15,8 @@ Such a grouping is optional and a single list of KPIs may be used.<br/>
 Actions may be defined per group and activated on a per KPI basis (the icon next to the main KPI
 becomes actionable), e.g. to redirect the user to a related list or a filtered report.
 
+For each KPI, custom or dynamic icons may be chose, leveraging the features offered by the **[sfpegIconDsp](/help/sfpegIconDsp.md)** display component.
+
 For performance purposes, the **sfpegKpiListCmp** component exclusively relies on the standard
 [lightning-view-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-view-form/documentation)
 base component to fetch all necessary data to display KPI values and icons.
@@ -22,6 +24,7 @@ This requires all data to be defined on accessible (possibly formula) fields of 
 to be displayed or fetched via standard
 [lightning-output-field](https://developer.salesforce.com/docs/component-library/bundle/lightning-output-field/documentation) base components.
 
+---
 
 ## Component Configuration
 
@@ -70,6 +73,7 @@ of KPI group definitions, each one consisting in:
 _Note_: **LBL** and **FLBL** merge tokens may be used to translate labels used in the configurations, see
 dedicated section in **[sfpegMergeUtl](/help/sfpegMergeUtl.md)**.
 
+---
 
 ## Additional Examples
 
@@ -159,6 +163,7 @@ should be a valid action _name_ of the referenced action configuration.
 * drag and drop the **SF PEG KPI List** component and select the proper **sfpegKpiList__mdt** record in the configuration dropdown (here `newsKpis`).
 ![KPI List App Builder Configuration](/media/sfpegKpiConfiguration.png)
 
+---
 
 ## Technical Details
 

@@ -16,6 +16,7 @@ conditional display of content.
 One key feature is also its ability to use SOQL instead of Lightning Data Service (LDS) to fetch the displayed
 record information (for objects not supported by LDS yet).
 
+---
 
 ## Component Configuration
 
@@ -73,11 +74,13 @@ For the displayed example, the configuration is the following.
 }
 ```
 
+---
 
 ## Configuration Examples
 
-to be continued...
+***TO BE CONTINUED***
 
+---
 
 ## Technical Details
 

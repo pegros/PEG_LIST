@@ -37,11 +37,13 @@ They may be invoked directly from the **sfpegActionUtilityCmp** component menu o
 _utility_ action type (to forward the action to the utility bar component,
 see **[sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md)** for details). 
 
+---
 
 ## Component Configuration
 
 Its configuration is identical to the **[sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md)** one.
 
+---
 
 ## Specific Action Types
 
@@ -229,6 +231,7 @@ _Note_: this is especially useful in communities, as the file preview is (still)
 LWC [navigation service](https://developer.salesforce.com/docs/component-library/bundle/lightning-navigation/documentation)
 in such a case.
 
+---
 
 ## Configuration Examples
 
@@ -236,7 +239,7 @@ in such a case.
 
 ***TO BE CONTINUED***
 
-
+---
 
 ## Technical Details
 

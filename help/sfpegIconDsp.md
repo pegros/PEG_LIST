@@ -23,6 +23,7 @@ This component is used in the following components:
 * **[sfpegMessageListCmp](/help/sfpegMessageListCmp.md)**
 * **[sfpegKpiListCmp](/help/sfpegKpiListCmp.md)**
 
+---
 
 ## Display Configuration Options
 
@@ -55,6 +56,7 @@ but no _iconSize_ nor _iconVariant_ properties
 * dynamic **progress rings** as `utility:progress` with a
 required _iconValue_ and optional _iconSize_ and _iconVariant_ properties.
 
+---
 
 ## Action Configuration
 
@@ -69,6 +71,7 @@ Such an event should be handled by setting the _onaction_ handler on the compone
 </c-sfpeg-icon-dsp>
 ```
 
+---
 
 ## Static Resources for Custom Icons
 

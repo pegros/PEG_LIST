@@ -13,6 +13,7 @@ related list components from within this LWC component.
 It also enables to expand a **[sfpegListCmp](/help/sfpegListCmp.md)** component displayed in
 a record page layout section (often 2/3 or less of the page width) into a full width page.
 
+---
 
 ## Component Configuration
 
@@ -36,6 +37,7 @@ As an [adressable](https://developer.salesforce.com/docs/component-library/bundl
     * *c__objectApiName*: Object API Name of the record to be provided as input to the list query
     * *c__isDebug*: flag to set the component in debug mode
 
+---
 
 ## Configuration Example
 
@@ -65,6 +67,8 @@ custom metadata record (e.g. for **[sfpegListCmp](/help/sfpegListCmp.md)** compo
     }
 }]
 ```
+
+---
 
 ## Technical Details
 

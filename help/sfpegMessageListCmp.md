@@ -15,6 +15,7 @@ It may be also used to highlight a gradation in a KPI and track the progress of 
 via dynamic icons and embedded progress bar.<br/>
 ![List of messages with dynamic icons](/media/sfpegMessageExample.png)
 
+---
 
 ## Component Configuration
 
@@ -73,6 +74,7 @@ _Notes_:
 * Context merge is systematically applied to the _Message Display_ property upon initial load/refresh (see **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** component) to adapt the messages / display conditions to the display environment.
 * This component leverages the **[sfpegIconDsp](/help/sfpegIconDsp.md)** component to display icons. Custom SVG icons or dynamic ones may thus be referenced within the message configuration in addition to all standard SLDS ones.
 
+---
 
 ## Configuration Example
 
@@ -144,6 +146,7 @@ via a formula field but should follow the format expected by the underlying Ligh
 See technical section for links to the appropriate sub-component used to get more detailed information.
 Beware that some values are text ones and others numbers.
 
+---
 
 ## Technical Details
 

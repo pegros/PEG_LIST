@@ -30,6 +30,7 @@ LWC components:
 * **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** for the data fetch contextualisation (leveraging a wide variety of
 _merge tokens_)
 
+---
 
 ## Component Configuration
 
@@ -215,6 +216,7 @@ Hereafter is an example of a mass update form with a refresh after update.
 }
 ```
 
+---
 
 ## Configuration Examples
 
@@ -327,6 +329,8 @@ The _TreeGrid_ layout configuration looks as follows:<br/>
     ]
 }
 ```
+
+---
 
 ## Technical Details
 

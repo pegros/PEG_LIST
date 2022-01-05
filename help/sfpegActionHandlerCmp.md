@@ -17,6 +17,7 @@ component providing additional action types only supported in Aura.
 
 As a baseline, it also enables to display a vertical action menu from the utility bar. 
 
+---
 
 ## Component Configuration
 
@@ -28,6 +29,7 @@ Such a configuration remains optional, only _utility_ action types (see herefaft
 the component by default. Please opt for automatic component launch in the App Builder, in order to
 properly support this feature even before having opened the action menu in the utility bar.
 
+---
 
 ## Configuration Examples
 
@@ -67,6 +69,8 @@ of a subtab of the current record. The _navigation_ action is first transmitted 
     }
 }
 ```
+
+---
 
 ## Technical Details
 

@@ -16,6 +16,7 @@ It basically provides:
 The component enables to switch between _view_ and _edit_ modes via an _edit_
 button. _Read-Only_ mode is therefore possible by deactivating this button.
 
+---
 
 ## Component Configuration
 
@@ -103,11 +104,13 @@ definition objects
 }
 ```
 
+---
 
 ## Configuration Examples
 
 ***TO BE CONTINUED***
 
+---
 
 ## Technical Details
 

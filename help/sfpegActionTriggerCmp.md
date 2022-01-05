@@ -14,6 +14,7 @@ fill the missing fields may be automatically displayed to the user when opening 
 Unless in debug mode, this component displays nothing on the page, but it consumes some margin space by default and should
 therefore be preferably located at the bottom of a page layout.  
 
+---
 
 ## Component Configuration
 
@@ -24,6 +25,7 @@ It has no extensive configuration, with only 3 basic properties:
 
 ![Action Trigger Configuration!](/media/sfpegActionTriggerConfig.png) 
 
+---
 
 ## Technical Details
 

@@ -15,8 +15,9 @@ to the current one
 * display being adapted to the each record situation (status, record type, object API name)
 * direct edit being possible on each record
 
+---
 
-## Configuration
+## Component Configuration
 
 ### Global Layout
 
@@ -66,11 +67,13 @@ header actions of each record card
 _Note_: _Card Context_ is currently reserved for future use (to set the root record context in each record card for
 their header actions)
 
+---
 
 ## Configuration Examples
 
 ***TO BE CCONTINUED***
 
+---
 
 ## Technical Details
 

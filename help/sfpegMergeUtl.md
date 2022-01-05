@@ -40,6 +40,7 @@ As a baseline, the ** component provides the following set of token types:
 * **VFP.pageName** to get the full URL of a VF page, i.e. with the security token
     * This is required when the target page has CSRF protection activated
 
+---
 
 ## Merge Tokens Extension
 
@@ -59,6 +60,7 @@ In this example, roles may be referenced in creation actions with the `{{{ROLE.<
 * _Field_ should indicate which field identifies the token value in the merge syntax for the considered token prefix (here `SourceSystemId__c`).
 * _Query_ should provide the SOQL query template to be used by the **sfpegMergeUtl** component to fetch the values (the list of field values requested being automatically added after the `in` keyword).
 
+---
 
 ## Server Side Merge Logic for Label Tokens
 
