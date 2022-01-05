@@ -44,7 +44,7 @@ the following display widgets:
 * an optional banner background image (blue zone)
 * an optional avatar image (black zone)
 * an optional header content (orange zone), with a top badge, a title and a set of detail fields below
-* an optional action bar (grey zone)
+* an optional action bar (grey zone) which may be actually located next to the header title
 * an optional detailed content section (red zone) containing a set of detail fields with various possible layout variants
 
 ![Profile Component Layout](/media/sfpegProfileLayout.png) 
@@ -58,6 +58,8 @@ appropriate **sfpegProfile__mdt** custom metadata record in the _Profile Configu
 
 Various styling options are also available, such as _Wrapping CSS_, _Display Size_, _Padding Size_,
 _Action Alignment_, _Inverse Mode?_ (for text color).
+
+_Note_: one of the possible valeus for the _Action Alignment_ property enables to set the action bar within the header section next to the title. This is useful to optimise vertical screen consumption.
 
 
 ### Metadata Configuration
