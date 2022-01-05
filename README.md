@@ -75,7 +75,7 @@ A main set of LWC components is available for use in Lightning App Builder:
 * **[sfpegListCmp](/help/sfpegListCmp.md)** displays a contextualised and actionable list of records in 3 main formats
 (data table, data tree or tile list), data being retrieved via SOQL, Apex...
 
-<p style="align:center;" title="List as tiles">
+<p align="center" title="List as tiles">
 <img src="/media/sfpegListTiles.png" alt="List as tiles"  />
 </p>
 
