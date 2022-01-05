@@ -24,7 +24,7 @@
                         default="slds-card slds-card_boundary"
                         description="CSS Classes for the main wrapping card div"/>
             <property   name="cardClass"
-                        label="Card CSS Class"
+                        label="Sub-Card CSS Class"
                         type="String"
                         default="slds-card slds-card_boundary slds-var-m-around_xx-small "
                         description="CSS Classes for each card of the list"/>
