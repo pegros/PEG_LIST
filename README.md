@@ -76,7 +76,7 @@ A main set of LWC components is available for use in Lightning App Builder:
 (data table, data tree or tile list), data being retrieved via SOQL, Apex...
 
 <p align="center">
-<img src="/media/sfpegListTiles.png"    alt="List as Tiles"  />
+<img src="/media/sfpegListTiles.png"    alt="List as Tiles"     title="List as Tiles" />
 <img src="/media/sfpegListCards.png"    alt="List as Tile Cards"  />
 <img src="/media/sfpegListTable.png"    alt="List as Data Table"  />
 <img src="/media/sfpegListTree.png"     alt="List as Tree Grid"  />
