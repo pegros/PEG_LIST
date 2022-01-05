@@ -76,32 +76,32 @@ A main set of LWC components is available for use in Lightning App Builder:
 (data table, data tree or tile list), data being retrieved via SOQL, Apex...
 
 <p align="center">
-<img src="/media/sfpegListTiles.png"    alt="List as Tiles"     title="List as Tiles" />
-<img src="/media/sfpegListCards.png"    alt="List as Tile Cards"  />
-<img src="/media/sfpegListTable.png"    alt="List as Data Table"  />
-<img src="/media/sfpegListTree.png"     alt="List as Tree Grid"  />
+<img src="/media/sfpegListTiles.png"    alt="List as Tiles"         title="List as Tiles" />
+<img src="/media/sfpegListCards.png"    alt="List as Tile Cards"    title="List as Tile Cards"/>
+<img src="/media/sfpegListTable.png"    alt="List as Data Table"    title="List as Data Table"/>
+<img src="/media/sfpegListTree.png"     alt="List as Tree Grid"     title="List as Tree Grid"/>
 </p>
 
 * **[sfpegMessageListCmp](/help/sfpegMessageListCmp.md)** displays a conditional, contextualised and actionable list
 of end-user messages with customisable styles.
 
 <p align="center" >
-<img src="/media/sfpegMessages.png"       alt="List of Messages"  />
-<img src="/media/sfpegMessageExample.png" alt="List as Messages with Dynamic widgets"  />
+<img src="/media/sfpegMessages.png"       alt="Message List Variants"           title="Message List Variants"/>
+<img src="/media/sfpegMessageExample.png" alt="Message List Dynamic Widgets"    title="Message List Dynamic Widgets"/>
 </p>
 
 * **[sfpegKpiListCmp](/help/sfpegKpiListCmp.md)** displays an actionable list of KPI field values in a structured and
 graphical way.
 
 <p align="center" >
-<img src="/media/sfpegKpis.png"     alt="List of KPIs"  />
+<img src="/media/sfpegKpis.png" alt="List of KPIs"  title="List of KPIs"/>
 </p>
 
 * **[sfpegProfileCmp](/help/sfpegProfileCmp.md)** displays an actionable graphical summary of a record, with various
 lists of fields
 
 <p align="center" >
-<img src="/media/sfpegProfile.png"          alt="Full Profile"  />
+<img src="/media/sfpegProfile.png"  alt="Full Profile"  title="Full Profile"/>
 </p>
 
 * **[sfpegCardCmp](/help/sfpegCardCmp.md)** displays a structured card, with a custom
@@ -109,14 +109,14 @@ set of fields / sections fetched/displayed via LDS (including edit capability), 
 (i.e. via lookups) record.
 
 <p align="center" >
-<img src="/media/sfpegCard.png"     alt="Cards on main and related records"  />
+<img src="/media/sfpegCard.png" alt="Cards on main and related records"  title="Cards on main and related records"/>
 </p>
 
 * **[sfpegCardListCmp](/help/sfpegCardListCmp.md)** enables to fetch a list of records
 (via a SOQL, Apex... query) and display a **[sfpegCardCmp](/help/sfpegCardCmp.md)** for each one.
 
 <p align="center" >
-<img src="/media/sfpegCardList.png"     alt="Card List"  />
+<img src="/media/sfpegCardList.png" alt="Card List" title="Card List" />
 </p>
 
 * **[sfpegRecordDisplayCmp](/help/sfpegRecordDisplayCmp.md)** displays data abouyt the current record
@@ -124,7 +124,7 @@ in a structured way (headline section + sub-tabs), data being fetched either via
 (e.g. for Kbnowledge articles).
 
 <p align="center" >
-<img src="/media/sfpegRecordDisplay.png"     alt="Record Display"  />
+<img src="/media/sfpegRecordDisplay.png"    alt="Record Display"    title="Structured Record Display" />
 </p>
 
 * **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** displays an button/menu bar component enabling to
@@ -132,7 +132,7 @@ trigger a wide variety of  actions, integrated within the previous list componen
 for standalone use in Lightning pages.
 
 <p align="center" >
-<img src="/media/sfpegActionBar.png"     alt="Standalone action bar"  />
+<img src="/media/sfpegActionBar.png"    alt="Action bar"    title="Standalone action bar"/>
 </p>
 
 * **[sfpegActionTriggerCmp](/help/sfpegActionTriggerCmp.md)** has no actual display but enables 
@@ -157,7 +157,7 @@ trigger, console tab operations (close all tabs, close tab and open another one.
 custom/flow popup open... (_Note_: this component may be used in Community page footer as well)
 
 <p align="center" >
-<img src="/media/sfpegActionUtility.png"     alt="Action Utility in Utility Bar"  />
+<img src="/media/sfpegActionUtility.png"    alt="Action Utility"    title="Action Utility in Utility Bar" />
 </p>
 
 
@@ -169,8 +169,9 @@ There is a single Aura Addressable component available for use in navigation act
 the list opened via the _see all_ action on standard related lists).
 
 <p align="center" >
-<img src="/media/sfpegListView.png"     alt="Independent List View"  />
+<img src="/media/sfpegListView.png" alt="List View" title="Independent List View" />
 </p>
+
 
 * * *
 
