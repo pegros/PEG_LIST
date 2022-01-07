@@ -44,10 +44,33 @@ As a baseline, the ** component provides the following set of token types:
 
 ## Merge Tokens Extension
 
-This base set of token types may be extended by leveraging the **sfpegConfiguration** custom metadata. These records enable to easily retrieve and merge Salesforce IDs for specific Object records, facilitating the deployment of Salesforce configuration artefacts between environments. By default a set of predefined metadata records is provided : 
+This base set of token types may be extended by leveraging the **sfpegConfiguration** custom metadata.
+These records enable to easily retrieve and merge Salesforce IDs for specific Object records,
+facilitating the deployment of Salesforce configuration artefacts between environments.
+By default a set of predefined metadata records is provided : 
 * **RPT** for report IDs (the merge token being then `RPT.DeveloperName`)
 * **DBD** for Dashboard IDs  (the merge token being then `DBD.DeveloperName`)
 * **FLD** for Folder IDs  (the merge token being then `FLD.DeveloperName`)
+
+E.g. when configuring an action to navigate to the `LeadOpportunityDashboard` dashboard,
+the **DBD** token base may be used as follows (see also **[sfpegActionBarCmp](/help/sfpegListCmp.md)**).
+```
+{
+    "label": "Leads & Opportunities",
+    "iconName": "utility:high_velocity_sales",
+    "action": {
+        "type": "navigation",
+        "params": {
+            "type": "standard__recordPage",
+            "attributes": {
+                "recordId": "{{{DBD.LeadOpportunityDashboard}}}",
+                "objectApiName": "Dashboard",
+                "actionName": "view"
+            }
+        }
+    }
+}
+```
 
 Specific Org records may then be added to the configuration (e.g. the Knowledge Articles or FSC Reciprocal Roles in the example below).<br/>
 ![Custom Merge Tokens List](/media/sfpegMergeConfiguration.png)
@@ -59,6 +82,7 @@ In this example, roles may be referenced in creation actions with the `{{{ROLE.<
 * _Name_ should contain the token prefix (here `ROLE`).
 * _Field_ should indicate which field identifies the token value in the merge syntax for the considered token prefix (here `SourceSystemId__c`).
 * _Query_ should provide the SOQL query template to be used by the **sfpegMergeUtl** component to fetch the values (the list of field values requested being automatically added after the `in` keyword).
+
 
 ---
 
