@@ -611,6 +611,10 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                 if (this.isDebug) console.log('processAction: processing DML action');
                 this.triggerDML(action.params);
                 break;
+            case 'showDetails':
+                if (this.isDebug) console.log('processAction: showing details popup');
+                this.triggerShowDetails(action.params);
+                break;
             case 'ldsForm':     // convergent create/edit type (record ID in record data decides the mode)
                 if (this.isDebug) console.log('processAction: processing Create/Edit LDS popup action');
                 this.triggerLdsForm(action.params);
@@ -881,6 +885,39 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
 
         this.dispatchEvent(toastEvt);
         if (this.isDebug) console.log('triggerToast: END');
+    }
+
+    triggerShowDetails = function(recordDetails) {
+        if (this.isDebug) console.log('triggerShowDetails: START with ',JSON.stringify(recordDetails));
+
+        if ((!recordDetails) || (!recordDetails.fields)) {
+            console.warn('triggerShowDetails: END KO / Missing fields property');
+            this.showError({message: 'Missing fields property in showDetails action!'});
+            throw "Missing fields property in showDetails action!";
+        }
+
+        let popupUtil = this.template.querySelector('c-sfpeg-popup-dsp');
+        if (this.isDebug) console.log('triggerShowDetails: popupUtil fetched ', popupUtil);
+
+        popupUtil.showRecordDetails(    recordDetails.title || DEFAULT_POPUP_HEADER, recordDetails.message,
+                                        recordDetails.fields , recordDetails.columns)
+        .then(() => {
+            if (this.isDebug) console.log('triggerShowDetails: END - display closed');
+            if (recordDetails.next) {
+                if (this.isDebug) console.log('triggerShowDetails: chained action to trigger',JSON.stringify(recordDetails.next));
+                this.processAction(recordDetails.next,null);
+                if (this.isDebug) console.log('triggerShowDetails: chained action triggered');
+            }
+            else {
+                if (this.isDebug) console.log('triggerShowDetails: no chained action to trigger');
+            }
+        })
+        .catch((error) => {
+            this.displayMsg = JSON.stringify(error);
+            this.showError(error);
+            if (this.isDebug) console.log('triggerShowDetails: END / Issue when processing operation: ' , JSON.stringify(error));
+        });
+        if (this.isDebug) console.log('triggerShowDetails: popup displayed');
     }
 
     triggerLdsForm = function(formAction) {

@@ -529,6 +529,30 @@ const sfpegMergeUtl = {
                 if (sfpegMergeUtl.isDebug) console.log('mergeTokens: token data finalized ',JSON.stringify(tokenData));
 
                 let mergeResult = sfpegMergeUtl.setTokenValues(templateString, tokenMap, tokenData);
+                if (sfpegMergeUtl.isDebug) console.log('mergeTokens: merge done ',mergeResult);
+
+                if (mergeResult.includes('ESCAPE(((')) {
+                    if (this.isDebug) console.log('mergeTokens: escaping required ');
+
+                    let escapeMatches = [...mergeResult.matchAll(/ESCAPE(\(\(\()(.*?)(\)\)\))/g)];
+                    if (this.isDebug) console.log('mergeTokens: escapeMatches found ',escapeMatches);
+    
+                    escapeMatches.forEach(matchIter => {
+                        if (this.isDebug) console.log('mergeTokens: processing matchIter ',matchIter);
+                        //if (this.isDebug) console.log('mergeTokens: match considered ',matchIter[0]);
+                        //if (this.isDebug) console.log('mergeTokens: value considered ',matchIter[2]);
+                        //if (this.isDebug) console.log('mergeTokens: submatches ',[...(matchIter[2]).matchAll(/"/g)]);
+                        let newMatchValue = (matchIter[2]).replace(/"/g,'\\"');
+                        if (this.isDebug) console.log('mergeTokens: newMatchValue ', newMatchValue);
+                        mergeResult = mergeResult.replace(matchIter[0],newMatchValue);
+                        //if (this.isDebug) console.log('mergeTokens: mergeResult updated ', mergeResult);
+                    });
+                    if (this.isDebug) console.log('finalizeDisplay: mergeResult escaped');
+                }
+                else {
+                    if (this.isDebug) console.log('finalizeDisplay: no escaping required ');
+                }
+
                 if (sfpegMergeUtl.isDebug) console.log('mergeTokens: END OK - returning ',mergeResult);
                 resolve(mergeResult);
             }).catch((error) => {

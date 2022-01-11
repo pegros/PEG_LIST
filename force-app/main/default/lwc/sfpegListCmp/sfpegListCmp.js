@@ -175,14 +175,23 @@ export default class SfpegListCmp extends LightningElement {
         return (this.configDetails ? this.configDetails.type : "Not set");
     }
     get contentClass() {
+        let returnClass = 'slds-card__body cardContent';
+        if ((this.isCollapsible) && (this.isCollapsed)) {
+            returnClass = returnClass + " slds-is-collapsed";
+        }
+        else if ((this.configDetails) && (this.configDetails.type.includes('List'))) {
+            returnClass = returnClass + ' slds-var-p-around_small'
+                        + (((this.displayHeight) &&  (this.displayHeight !== '0')) ? ' slds-scrollable_y' : '');
+        }
+        if (this.isDebug) console.log('contentClass: value init ', returnClass);
+        return returnClass;
+        /*
         return 'slds-card__body cardContent'
             + (this.isCollapsible ? (this.isCollapsed ? " slds-is-collapsed" : " slds-is-expanded") : "")
             + (((this.configDetails) && (this.configDetails.type.includes('List')))
                 ? ' slds-var-p-around_small'
-                    + (((this.displayHeight) &&  (this.displayHeight !== '0'))
-                    ? ' slds-scrollable_y'
-                    : '')
-                : '');
+                    + (((this.displayHeight) &&  (this.displayHeight !== '0')) ? ' slds-scrollable_y' : '')
+                : '');*/
     }
     get contentStyle() {
         return (((this.displayHeight) &&  (this.displayHeight !== '0')) ? 'height: ' + this.displayHeight + ';' : '');

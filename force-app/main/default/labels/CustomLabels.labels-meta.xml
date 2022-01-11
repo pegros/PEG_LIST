@@ -137,6 +137,14 @@
         <value>Cancel</value>
     </labels>
     <labels>
+        <fullName>sfpegPopupClose</fullName>
+        <categories>PEG Component LWC Action Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegPopupClose</shortDescription>
+        <value>Close</value>
+    </labels>
+    <labels>
         <fullName>sfpegActionDefaultCreateHeader</fullName>
         <categories>PEG Component LWC Default Action Header Header</categories>
         <language>en_US</language>

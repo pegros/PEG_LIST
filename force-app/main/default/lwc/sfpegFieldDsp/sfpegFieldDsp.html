@@ -35,6 +35,13 @@
         </lightning-formatted-date-time>
     </template>
 
+    <template if:true={isDateTime}>
+        <lightning-formatted-date-time  value={fieldValue} title={fieldLabel}
+                                        year="numeric" month="numeric" day="numeric"
+                                        hour="2-digit" minute="2-digit" >
+        </lightning-formatted-date-time>
+    </template>
+
     <template if:true={isDateLocal}>
         <lightning-formatted-date-time value={fieldValue} title={fieldLabel}>
         </lightning-formatted-date-time>

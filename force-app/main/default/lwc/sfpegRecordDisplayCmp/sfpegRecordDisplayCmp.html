@@ -17,6 +17,16 @@
                 </c-sfpeg-action-bar-cmp>
             </lightning-button-group>
 
+            <template if:false={useLDS}>
+                <lightning-button-group slot="actions">
+                    <lightning-button-icon  icon-name="utility:refresh"     size={buttonSize}
+                                            variant="border-filled"
+                                            alternative-text={refreshTitle} title={refreshTitle}
+                                            onclick={handleRefresh}>
+                    </lightning-button-icon>
+                </lightning-button-group>
+            </template>
+
             <!-- Debug information display -->
             <template if:true={isDebug}>
                 <div slot="footer" class="footerContent"  >
@@ -51,9 +61,13 @@
                         <lightning-layout-item  size={iterField.size}
                                                 flexibility="auto"
                                                 key={iterField.label}
-                                                padding="horizontal-small" >
+                                                padding="horizontal-small" 
+                                                class="slds-m-bottom_x-small" >
+                            <template if:true={iterField.label}>
+                                <p class="slds-text-title">{iterField.label}</p>
+                            </template>
                             <c-sfpeg-field-dsp  field-type={iterField.type}
-                                                field-label={iterField.label}
+                                                field-label={iterField.title}
                                                 field-value={iterField.value}>
                             </c-sfpeg-field-dsp>
                         </lightning-layout-item>
@@ -63,7 +77,7 @@
         
             <!-- Tabs Display -->
             <template if:true={hasTabData}>
-                <lightning-tabset class="slds-p-horizontal_small slds-m-top_x-small">
+                <lightning-tabset class="slds-p-horizontal_small">
                     <template for:each={tabList} for:item="iterTab">  
                         <lightning-tab label={iterTab.label} key={iterTab._key}>
 
@@ -73,9 +87,13 @@
                                     <lightning-layout-item  size={iterTabField.size}
                                                             flexibility="auto"
                                                             key={iterTabField.label}
-                                                            padding="horizontal-small" >
+                                                            padding="horizontal-small" 
+                                                            class="slds-m-bottom_x-small" >
+                                        <template if:true={iterTabField.label}>
+                                            <p class="slds-text-title">{iterTabField.label}</p>
+                                        </template>
                                         <c-sfpeg-field-dsp  field-type={iterTabField.type}
-                                                            field-label={iterTabField.label}
+                                                            field-label={iterTabField.title}
                                                             field-value={iterTabField.value}>
                                         </c-sfpeg-field-dsp>
                                     </lightning-layout-item>
@@ -84,7 +102,7 @@
 
                             <template if:true={iterTab.list}>
                                 <c-sfpeg-list-cmp   card-title={iterTab.list.title} card-icon={iterTab.list.icon}
-                                                    card-class="slds-card slds-card_boundary slds-m-top_x-small"
+                                                    card-class="slds-card slds-card_boundary slds-m-top_xx-small"
                                                     config-name={iterTab.list.name} action-config-name={iterTab.list.actions}
                                                     show-search=true
                                                     is-debug={isDebugFine}          is-debug-fine={isDebugFine}

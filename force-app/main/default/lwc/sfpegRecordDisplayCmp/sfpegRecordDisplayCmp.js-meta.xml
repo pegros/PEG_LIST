@@ -30,9 +30,15 @@
                         type="String"
                         default="slds-theme_default" 
                         description="CSS classes to set on the wrapping component div"/>
+            <property   name="buttonSize"
+                        label="Button Size"
+                        type="String"
+                        datasource="x-small,small,medium"
+                        default="small"
+                        description="Size of the standard header buttons (to align with custom header actions)"/>
 
             <property   name="useLDS"
-                        label="User LDS?"
+                        label="Use LDS?"
                         type="Boolean"
                         description="Use LDS instead of SOQL for record data fetch (for supported objects)."/>
 
@@ -69,6 +75,12 @@
                         type="String"
                         default="slds-theme_default" 
                         description="CSS classes to set on the wrapping component div"/>
+            <property   name="buttonSize"
+                        label="Button Size"
+                        type="String"
+                        datasource="x-small,small,medium"
+                        default="small"
+                        description="Size of the standard header buttons (to align with custom header actions)"/>
 
             <property   name="useLDS"
                         label="Use LDS?"

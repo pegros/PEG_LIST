@@ -71,6 +71,27 @@
                         </div>
                     </template>
 
+                    <!-- Record Details Display -->
+                    <template if:true={showDetails}>
+                        <div class="slds-form slds-grid slds-gutters slds-wrap fullWidth">
+                            <template for:each={recordData} for:item="iter">
+                                <div class={detailFieldClass} key={iter.label} >
+                                    <label  class="slds-form-element__label slds-truncate tableLabel"
+                                            title={iter.label}>
+                                        {iter.label}
+                                    </label>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static slds-text-body_small">
+                                            <c-sfpeg-field-dsp  field-type={iter.type}
+                                                                field-label={iter.label}
+                                                                field-value={iter.value}>
+                                            </c-sfpeg-field-dsp>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
                 </div>
 
                 <!-- Footer display-->
@@ -97,6 +118,11 @@
                             <lightning-button	variant="brand"     label={saveLabel}
                                                 class="slds-m-left_small"
                                                 onclick={handleSubmit}></lightning-button>
+                        </template>
+                        <!-- Detail Close Buttons-->
+                        <template if:true={showDetails}>
+                            <lightning-button   variant="neutral"   label={closeLabel}
+                                                onclick={handleClose} ></lightning-button>
                         </template>
                     </footer>
                 </template>

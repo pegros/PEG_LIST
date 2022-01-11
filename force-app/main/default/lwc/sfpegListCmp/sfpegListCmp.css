@@ -43,4 +43,5 @@
 }
 .expandCollapse {
     --sds-c-button-color-background : transparent !important;
+    --sds-c-button-line-height : 0px !important;
 } 

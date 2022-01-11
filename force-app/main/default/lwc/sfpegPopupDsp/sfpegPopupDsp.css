@@ -17,3 +17,12 @@
 .popupForm {
     min-height: 33vh !important; /* to handle picklist fields expanding below the footer ! */
 }
+.fullWidth {
+    width:100% !important;
+}
+.tableLabel {
+    margin-bottom: 0px !important;
+    padding-top: 1px !important;
+    padding-right: 0px !important;
+    /*width: 100% !important;*/
+}

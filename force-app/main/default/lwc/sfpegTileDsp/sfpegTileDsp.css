@@ -14,3 +14,76 @@
 .fullWidth {
     width:100% !important;
 }
+.expandCollapse{
+    --sds-c-button-line-height : 0px !important;
+}
+.leftBorder {
+    /*border-left-width: var(--lwc-borderRadiusMedium) !important;
+    border-left-style: thick !important;
+    border-left-color: var(--lwc-colorBorderBrand) !important;*/
+    /*border-left-width: 5px !important;
+    border-left-style: solid !important;
+    border-left-color: red !important;*/
+    /* xx-small, x-small, small, medium, or large */
+    position: relative;
+}
+.leftBorder-xx-small::after {
+    /*16px*/
+    content: '';
+    position: absolute;
+    top: 18px;
+    /*bottom: 5px;*/
+    left: 6px;
+    height: calc(100% - 18px);
+    border-left-width: var(--lwc-borderRadiusSmall) !important;
+    border-left-style: solid !important;
+    border-left-color: var(--lwc-colorBorderButtonDefault) !important;
+}
+.leftBorder-x-small::after {
+    /*20px*/
+    content: '';
+    position: absolute;
+    top: 20px;
+    /*bottom: 5px;*/
+    left: 7px;
+    height: calc(100% - 20px);
+    border-left-width: var(--lwc-borderRadiusSmall) !important;
+    border-left-style: solid !important;
+    border-left-color: var(--lwc-colorBorderButtonDefault) !important;
+}
+.leftBorder-small::after {
+    /*24px*/
+    content: '';
+    position: absolute;
+    top: 27px;
+    /*bottom: 5px;*/
+    left: 10px;
+    height: calc(100% - 27px);
+    border-left-width: var(--lwc-borderRadiusMedium) !important;
+    border-left-style: solid !important;
+    border-left-color: var(--lwc-colorBorderButtonDefault) !important;
+}
+.leftBorder-medium::after {
+    /*36px*/
+    content: '';
+    position: absolute;
+    top: 35px;
+    /*bottom: 5px;*/
+    left: 14px;
+    height: calc(100% - 35px);
+    border-left-width: var(--lwc-borderRadiusMedium) !important;
+    border-left-style: solid !important;
+    border-left-color: var(--lwc-colorBorderButtonDefault) !important;
+}
+.leftBorder-large::after {
+    /*48px*/
+    content: '';
+    position: absolute;
+    top: 50px;
+    /*bottom: 5px;*/
+    left: 20px;
+    height: calc(100% - 50px);
+    border-left-width: var(--lwc-borderRadiusLarge) !important;
+    border-left-style: solid !important;
+    border-left-color: var(--lwc-colorBorderButtonDefault) !important;
+}

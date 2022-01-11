@@ -2,8 +2,9 @@
 
     <template if:true={isReady}>
 
-        <div class="slds-box slds-box_x-small slds-var-m-around_small ">
+        <div class={wrapperClass} >
             <div class="slds-media">
+                <!-- Global Tile wrapper -->
                 <template if:true={hasIcon}>
                     <div class="slds-media__figure">
                         <c-sfpeg-icon-dsp   icon-name={cardIcon}
@@ -17,7 +18,7 @@
                 </template>
 
                 <div class="slds-media__body">
-                    <!-- slds-hyphenate -->
+                    <!-- Tile Header -->
                     <div class="slds-media slds-media_center">
                         <div class="slds-media__body">
                             <div class="slds-truncate" title={cardTitleLabel} >
@@ -64,49 +65,92 @@
                         </template>
                     </div>
 
+                    <!-- Tile Content -->
                     <div class="slds-media slds-var-m-bottom_xx-small slds-var-m-top_xx-small">
-                        <template if:true={isTile}>
-                            <ul class="slds-list_horizontal slds-has-dividers_left slds-listbox slds-listbox_horizontal">      
-                                <template for:each={cardData} for:item="iter">
-                                    <li key={iter.name}
-                                        title={iter.label}
-                                        class="slds-item slds-text-body_small">
-                                        <!--{iter.value}-->
-                                        <c-sfpeg-field-dsp  field-type={iter.type}
-                                                            field-label={iter.label}
-                                                            field-value={iter.value}>
-                                        </c-sfpeg-field-dsp>
-                                    </li>
-                                </template>
-                            </ul>
+                        <!-- expand/collapse Icon display -->
+                        <template if:true={cardDetails}>
+                            <div class="slds-media__figure">
+                                <lightning-button-stateful  class="expandCollapse"
+                                                            variant="text"
+                                                            selected={isExpanded}
+                                                            icon-name-when-off="utility:chevronright"
+                                                            icon-name-when-on="utility:chevrondown"
+                                                            onclick={handleExpandCollapse}>
+                                </lightning-button-stateful>
+                            </div>
                         </template>
 
-                        <template if:true={isCard}>
-                            <div class="slds-form slds-grid slds-gutters slds-wrap fullWidth">
-                                <template for:each={cardData} for:item="iter">
-                                    <div class={fieldClass} key={iter.name} > <!-- key={iter.label} -->
-                                        <label  class="slds-form-element__label slds-truncate tableLabel"
-                                                title={iter.label}>
-                                            {iter.label} <!--{iter._isDuplicate}-->
-                                        </label>
-                                        <div class="slds-form-element__control">
-                                            <div class="slds-form-element__static slds-text-body_small">
-                                                <!--{iter.value}-->
+                        <div class="slds-media__body">
+                            <!-- Main Content fields -->
+                            <div class="slds-media">
+                                <!-- Main content as field list -->
+                                <template if:true={isTile}>
+                                    <ul class="slds-list_horizontal slds-has-dividers_left slds-listbox slds-listbox_horizontal">      
+                                        <template for:each={cardData} for:item="iter">
+                                            <li key={iter.name}
+                                                title={iter.label}
+                                                class="slds-item slds-text-body_small">
                                                 <c-sfpeg-field-dsp  field-type={iter.type}
                                                                     field-label={iter.label}
                                                                     field-value={iter.value}>
                                                 </c-sfpeg-field-dsp>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </template>
+
+                                <!-- Main content as field form -->
+                                <template if:true={isCard}>
+                                    <div class="slds-form slds-grid slds-gutters slds-wrap fullWidth">
+                                        <template for:each={cardData} for:item="iter">
+                                            <div class={fieldClass} key={iter.name} >
+                                                <label  class="slds-form-element__label slds-truncate tableLabel"
+                                                    title={iter.label}>
+                                                    {iter.label}
+                                                </label>
+                                                <div class="slds-form-element__control">
+                                                    <div class="slds-form-element__static slds-text-body_small">
+                                                        <c-sfpeg-field-dsp  field-type={iter.type}
+                                                                            field-label={iter.label}
+                                                                            field-value={iter.value}>
+                                                        </c-sfpeg-field-dsp>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </template>
                                     </div>
                                 </template>
                             </div>
-                        </template>
+
+                            <!-- Tile Expanded details (always displayed as form)-->
+                            <template if:true={isExpanded}>
+                                <div class="slds-media slds-var-m-top_xx-small">
+                                    <div class="slds-form slds-grid slds-gutters slds-wrap fullWidth">
+                                        <template for:each={cardDetails} for:item="iter">
+                                            <div class={fieldClass} key={iter.name} >
+                                                <label  class="slds-form-element__label slds-truncate tableLabel"
+                                                        title={iter.label}>
+                                                        {iter.label} 
+                                                </label>
+                                                <div class="slds-form-element__control">
+                                                    <div class="slds-form-element__static slds-text-body_small">
+                                                        <c-sfpeg-field-dsp  field-type={iter.type}
+                                                                            field-label={iter.label}
+                                                                            field-value={iter.value}>
+                                                        </c-sfpeg-field-dsp>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        
     </template>
     
 </template>

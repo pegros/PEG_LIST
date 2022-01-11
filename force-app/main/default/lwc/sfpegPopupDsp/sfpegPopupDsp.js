@@ -34,6 +34,8 @@ import CONFIRM_LABEL    from '@salesforce/label/c.sfpegPopupConfirm';
 import SAVE_LABEL       from '@salesforce/label/c.sfpegPopupSave';
 import SAVE_NEW_LABEL   from '@salesforce/label/c.sfpegPopupSaveNew';
 import CANCEL_LABEL     from '@salesforce/label/c.sfpegPopupCancel';
+import CLOSE_LABEL      from '@salesforce/label/c.sfpegPopupClose';
+
 
 export default class SfpegPopupDsp extends LightningElement {
 
@@ -58,6 +60,12 @@ export default class SfpegPopupDsp extends LightningElement {
     @track formFields = [];             // Main list of fields displayed in the form
     @track formHiddenFields = [];       // List of fields included but hidden in the form (to enforce field values)
     
+    // Record Details Display parameters
+    @track showDetails = false;         // Flag to toggle Record Details mode display
+    @track detailConfig = null;         // Tile configuration to apply
+    @track recordData = null;           // Record Data to display
+    @track detailFieldClass;            // CSS to apply to each field display (to control the number of columns)
+
     // Promise handling
     _resolve = null;
     _reject =  null;
@@ -67,14 +75,16 @@ export default class SfpegPopupDsp extends LightningElement {
     saveLabel = SAVE_LABEL;
     saveNewLabel = SAVE_NEW_LABEL;
     cancelLabel = CANCEL_LABEL;
+    closeLabel = CLOSE_LABEL;
 
     //Custom getters
     get showClose() {
-        return this.showConfirmation;
+        return (this.showConfirmation || this.showDetails);
     }
     get showFooter() {
-        return this.showConfirmation || this.showForm;
+        return this.showConfirmation || this.showForm || this.showDetails;
     }
+    
 
     //###########################################################
     // Synchronous spinner popup display
@@ -97,6 +107,34 @@ export default class SfpegPopupDsp extends LightningElement {
     }
 
     
+    //###########################################################
+    // Record Details popup display
+    //###########################################################
+    @api showRecordDetails(title,message,fields,columns) {
+        if (this.isDebug) console.log('showRecordDetails: START with ',title);
+        if (this.isDebug) console.log('showRecordDetails: message provided ',message);
+        if (this.isDebug) console.log('showRecordDetails: fields provided ',JSON.stringify(fields));
+        if (this.isDebug) console.log('showRecordDetails: columns provided ',columns);
+        if (this.isDebug) console.log('showRecordDetails: END');
+
+        this.showPopup = true;
+        this.showDetails = true;
+        this.popupTitle = title;
+        this.popupMessage = message;
+        this.recordData = fields;
+
+        this.detailFieldClass = "slds-col slds-form-element slds-size_1-of-" + (columns || 1) +  " slds-form-element_stacked" ;
+        if (this.isDebug) console.log('showDetails: detailFieldClass init ',this.detailFieldClass);
+
+        if (this.isDebug) console.log('showDetails: END');
+        return new Promise( (resolve,reject) => {
+            if (this.isDebug) console.log('showRecordDetails: promise START');
+            this._resolve = resolve;
+            this._reject = reject;
+            if (this.isDebug) console.log('showRecordDetails: promise END');
+        });
+    }
+
 
     //###########################################################
     // Asynchronous Confimation popup display
@@ -120,8 +158,18 @@ export default class SfpegPopupDsp extends LightningElement {
 
     handleClose(event){
         if (this.isDebug) console.log('handleClose: START');
-        if (this._reject) {
-            if (this.isDebug) console.log('handleClose: END - calling promise handler');
+
+        if (this.showDetails) {
+            if (this._resolve) {
+                if (this.isDebug) console.log('handleClose: END - calling resolve handler');
+                this._resolve({message:'Popup closed by user'});
+            }
+            else {
+                if (this.isDebug) console.log('handleClose: END - no resolve handler available');
+            }
+        }
+        else if (this._reject) {
+            if (this.isDebug) console.log('handleClose: END - calling reject handler');
             this._reject({noToast: true, message:'Popup closed by user'});
         }
         else {
@@ -400,7 +448,10 @@ export default class SfpegPopupDsp extends LightningElement {
         this.doSubmit = false;
         this.popupTitle = '';
         this.popupMessage = '';
-        this.editFieldSize = 12;
+        this.formFieldSize = 12;
+        this.showDetails = false;
+        this.detailConfig = null;
+        this.recordData = null;
         //this.showSaveNew = false;
         this._reject = null;
         this._resolve = null;

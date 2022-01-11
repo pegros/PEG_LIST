@@ -35,6 +35,7 @@ import { getRecord }        from 'lightning/uiRecordApi';
 import sfpegJsonUtl         from 'c/sfpegJsonUtl';
 import sfpegMergeUtl        from 'c/sfpegMergeUtl';
 import INIT_LABEL           from '@salesforce/label/c.sfpegListInit';
+import REFRESH_LABEL        from '@salesforce/label/c.sfpegListRefresh';
 
 var RECORD_DISPLAY_CONFIGS = {};
 
@@ -46,6 +47,7 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
     @api cardClass;             // CSS Classes for the wrapping card 
     @api configName;            // DeveloperName of the sfpegList__mdt record to be used
     @api actionConfigName;      // DeveloperName of the sfpegAction__mdt record to be used for header actions
+    @api buttonSize = 'small';  // Size of the standard header buttons (to align with custom header actions)
     @api useLDS = false;        // LDS data fetch activation
     @api isDebug = false;       // Debug mode activation
     @api isDebugFine = false;   // Debug mode activation for all subcomponents.
@@ -77,6 +79,7 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
 
     //Widget Labels & Titles from custom labels
     initLabel = INIT_LABEL;
+    refreshTitle = REFRESH_LABEL;
 
     //----------------------------------------------------------------
     // Custom UI Display getters
@@ -322,8 +325,10 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
         sfpegMergeUtl.sfpegMergeUtl.mergeTokens(this.configDetails.template,this.configDetails.tokens,this.userId,this.userData,this.objectApiName,this.recordId,this.recordData,null)
         .then( value => {
             if (this.isDebug) console.log('finalizeDisplay: context merged within display template ',value);
+
             let rawTemplate = JSON.parse(value);
             if (this.isDebug) console.log('finalizeDisplay: message template parsed ',JSON.stringify(rawTemplate));
+
             if (rawTemplate) {
                 if (this.isDebug) console.log('finalizeDisplay: setting display properties ');
                 this.cardTitle = rawTemplate.title || 'NONE';
@@ -388,11 +393,19 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
     //----------------------------------------------------------------
     // Event Handlers  
     //----------------------------------------------------------------      
+    // Standard Action handling
+    handleRefresh(event) {
+        if (this.isDebug) console.log('handleRefresh: START');
+        this.finalizeDisplay();
+        if (this.isDebug) console.log('handleRefresh: END');
+    }
+
     // Header action handling
     handleActionDone(event) {
         if (this.isDebug) console.log('handleActionDone: START');
 
         if (this.isDebug) console.log('handleActionDone: END');
     }
+
 
 }

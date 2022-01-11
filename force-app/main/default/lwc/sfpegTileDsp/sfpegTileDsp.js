@@ -33,8 +33,9 @@ import sfpegJsonUtl from 'c/sfpegJsonUtl';
 
 export default class SfpegTileDsp extends LightningElement {
     // Main configuration fields
-    @api displayType;           // Card display type
-    @api configDetails;         // Card display configuration
+    @api displayType;               // Tile display type (for detail fields, displayed as TileList or CardList)
+    @api configDetails;             // Card display configuration
+    @api displayVariant = "box";    // Card display type (for the global appearance, i.e. box or timeline)
 
     // Implementation with setter to ensure proper update of display data upon recordData change.    
     _recordData = {}; // Internal storage of record data
@@ -55,6 +56,7 @@ export default class SfpegTileDsp extends LightningElement {
 
     // Internal technical fields
     @track isReady = false;      // Flag to control the initilisation fo the component
+    @track wrapperClass = "slds-box slds-box_x-small slds-var-m-around_small"; // CSS class for the wrapping div
     @track cardIcon = null;      // Displayed icon name (if any)
     @track cardIconSize = 'small'; // Displayed icon size (if any)
     @track cardIconVariant;     // Displayed icon size (if any)
@@ -62,6 +64,8 @@ export default class SfpegTileDsp extends LightningElement {
     @track cardTitle = null;    // Displayed title (if any)
     @track cardTitleLabel = null // Displayed title on hover label
     @track cardData = [];       // Displayed field data (if any)
+    @track isExpanded = false;  // Expanded detail fields section (if any)
+    @track cardDetails = null;  // Displayed detail field data (if any)
     @track cardMenu = [];       // Displayed menu (if any) - includes evaluation of disabled property
 
     // Custom getter
@@ -101,6 +105,7 @@ export default class SfpegTileDsp extends LightningElement {
         }
 
         if (this.isDebug) console.log('connected: displayType provided ', this.displayType);
+        if (this.isDebug) console.log('connected: displayVariant provided ', this.displayVariant);
         if (this.isDebug) console.log('connected: configDetails provided ', JSON.stringify(this.configDetails));
         if (this.isDebug) console.log('connected: recordData provided ', JSON.stringify(this.recordData));
         //if (this.isDebug) console.log('connected: configActions provided ', JSON.stringify(this.configActions));
@@ -108,6 +113,14 @@ export default class SfpegTileDsp extends LightningElement {
         if ((!this.configDetails) || (!this.displayType)){
             console.warn('connected: END / missing configuration');
             return;
+        }
+
+        if (this.displayVariant === 'timeline') {
+            if (this.isDebug) console.log('connected: initialising timeline parameters');
+            let iconSize = (this.configDetails.icon ? (this.configDetails.icon.size || 'small') : 'small');
+            this.wrapperClass = "slds-var-m-around_x-small leftBorder leftBorder-" + iconSize;
+            /*this.cardIcon = "utility:info_alt";
+            this.cardIconSize = 'small';*/
         }
 
         this.isReady = true;
@@ -152,20 +165,24 @@ export default class SfpegTileDsp extends LightningElement {
                 this.cardIcon = this._recordData[this.configDetails.icon.fieldName];
             }
             else {
-                console.warn('connected: END / wrong icon configuration');
-                return;
+                if (this.isDebug) console.log('connected: no icon name configured');
+                //return;
             }
             if ((this.configDetails.icon.value) && (this.configDetails.icon.value.fieldName)) {
                 if (this.isDebug) console.log('resetDisplayData: setting icon value');
                 this.cardIconValue = this._recordData[this.configDetails.icon.value.fieldName];
             }
         }
+        if (this.displayVariant === 'timeline') {
+            if (this.isDebug) console.log('resetDisplayData: setting default timeline icon if none set');
+            this.cardIcon = this.cardIcon || "utility:info_alt";
+        }
         if (this.isDebug) console.log('resetDisplayData: card icon init', this.cardIcon);
 
         // Card Content initialisation
         if (this.isDebug) console.log('resetDisplayData: columns provided ', JSON.stringify(this.configDetails.columns));
         if (this.configDetails.columns) {
-            if (this.isDebug) console.log('resetDisplayData: initializing card data', this.configDetails.columns);
+            if (this.isDebug) console.log('resetDisplayData: initializing card data');
             sfpegJsonUtl.sfpegJsonUtl.isDebug = this.isDebug;
             this.cardData = [];
             this.configDetails.columns.forEach(item => {
@@ -175,39 +192,12 @@ export default class SfpegTileDsp extends LightningElement {
                         if (this.isDebug) console.log('resetDisplayData: registering standard field ', item.fieldName);
                         this.cardData.push({
                             label: item.label,
-                            value: this._recordData[item.fieldName],
+                            value: ((item.type && (item.type == 'boolean')) ? eval(this._recordData[item.fieldName]) : this._recordData[item.fieldName]),
                             //value: sfpegJsonUtl.sfpegJsonUtl.formatField(this._recordData[item.fieldName],item),
                             type: item.type || 'text',
                             name: item.fieldName
                         });
                     }
-                    /*
-                    else if ((item.fieldName).includes('.0.')) {
-                        if (this.isDebug) console.log('resetDisplayData: registering list first record field ', item.fieldName);
-                        let fieldPath = (item.fieldName).split('.');
-                        if (this.isDebug) console.log('resetDisplayData: fieldPath set ', fieldPath);
-
-                        let fieldValue = this._recordData;
-                        fieldPath.forEach( iter => {
-                            if (this.isDebug) console.log('resetDisplayData: processingg iter ', iter);
-                            if (fieldValue) {
-                                fieldValue = fieldValue[iter];
-                            }
-                            if (this.isDebug) console.log('resetDisplayData: fieldValue updated ', fieldValue);
-                        });
-                        if (fieldValue) {
-                            this.cardData.push({
-                                label: item.label,
-                                value: fieldValue,
-                                type: item.type || 'text',
-                                name: item.fieldName
-                            });
-                        }
-                        else {
-                            if (this.isDebug) console.log('resetDisplayData: empty fieldValue ');
-                        }
-                    }
-                    */
                     else {
                         if (this.isDebug) console.log('resetDisplayData: ignoring empty field ', item.fieldName);
                     }
@@ -219,8 +209,44 @@ export default class SfpegTileDsp extends LightningElement {
             if (this.isDebug) console.log('resetDisplayData: card data init', this.cardData);  
         }
         else {
-            console.warn('resetDisplayData: no card detailed content provided');
+            console.warn('resetDisplayData: no card data (columns) provided');
         }
+
+
+        // Card Details Content initialisation
+        if (this.isDebug) console.log('resetDisplayData: details provided ', JSON.stringify(this.configDetails.details));
+        if (this.configDetails.details) {
+            if (this.isDebug) console.log('resetDisplayData: initializing card details');
+            sfpegJsonUtl.sfpegJsonUtl.isDebug = this.isDebug;
+            this.cardDetails = [];
+            this.configDetails.details.forEach(item => {
+                if (item.fieldName !== titleFieldName) {
+                    if (this.isDebug) console.log('resetDisplayData: procesing item ', item);
+                    if (this._recordData[item.fieldName] != null) {
+                        if (this.isDebug) console.log('resetDisplayData: registering standard field ', item.fieldName);
+                        this.cardDetails.push({
+                            label: item.label,
+                            value: ((item.type && (item.type == 'boolean')) ? eval(this._recordData[item.fieldName]) : this._recordData[item.fieldName]),
+                            //value: sfpegJsonUtl.sfpegJsonUtl.formatField(this._recordData[item.fieldName],item),
+                            type: item.type || 'text',
+                            name: item.fieldName
+                        });
+                    }
+                    
+                    else {
+                        if (this.isDebug) console.log('resetDisplayData: ignoring empty field ', item.fieldName);
+                    }
+                }
+                else {
+                    if (this.isDebug) console.log('resetDisplayData: ignoring title field ', item.fieldName);
+                }
+            });
+            if (this.isDebug) console.log('resetDisplayData: card details init', this.cardDetails);  
+        }
+        else {
+            console.warn('resetDisplayData: no card details (details) provided');
+        }
+        
 
         // Card Menu initialisation
         if (this.isDebug) console.log('resetDisplayData: menu provided ', JSON.stringify(this.configDetails.menu));
@@ -297,5 +323,12 @@ export default class SfpegTileDsp extends LightningElement {
     
         this.dispatchEvent(actionEvent);
         if (this.isDebug) console.log('handleActionSelect: END - action triggered',this.configDetails.title.action);
+    }
+
+    handleExpandCollapse(event) {
+        if (this.isDebug) console.log('handleExpandCollapse: START with isExpanded ',this.isExpanded);
+        this.isExpanded = !this.isExpanded;
+        if (this.isDebug) console.log('handleExpandCollapse: END with isExpanded ',this.isExpanded);
+        return;
     }
 }
