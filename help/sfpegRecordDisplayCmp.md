@@ -29,12 +29,13 @@ defined:
 * a first content section containing a list of fields
 * a second content section structured as a set of tabs (see [lightning-tabset](https://developer.salesforce.com/docs/component-library/bundle/lightning-tabset/documentation) containing
     * a list of fields
-
-![Record Display Example](/media/sfpegRecordDisplay.png)
-
     * a possible record list (via the **[sfpegListCmp](/help/sfpegCardCmp.md)** component)
 
+![Record Display Example](/media/sfpegRecordDisplay.png)<br/>
+_Tab with only fields_
+
 ![Record Display Example with sub-list](/media/sfpegRecordDisplayList.png)
+_Tab with fields and list_
 
 
 ### App Builder Configuration

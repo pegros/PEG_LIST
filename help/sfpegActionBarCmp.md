@@ -293,6 +293,42 @@ The **openURL** action type enables to open a page URL in a different browser ta
 }
 ```
 
+
+### **showDetails** Action Type
+
+The **showDetails** action type enables to open a read-only popup presenting details about a record.<br/>
+![ShowDetails Action Popup Example](/media/sfpegActionBarShowDetails.png) 
+
+It is a solution to easily replace the record summary on hover for standard lookup fields in standard list components.
+
+The action should be configured as follows:
+* _title_ and _message_ for the popup header
+* _columns_ to indicate how many fields should be displayed per row
+* _fields_ to list the fields to display (with their _value_, _type_ and _label_)
+```
+[
+    "name":"showDetails",
+    "action":{
+        "type":"showDetails",
+        "params":{
+            "columns":2,
+            "title":"Interaction pour {{{ROW.Code_Campagne}}}",
+            "message":"Détail de l'interaction",
+            "fields":[
+                {"label":"Domaine","value":"{{{ROW.Domain}}}"},
+                {"label":"Envoi","type":"dateTime","value":"{{{ROW.DateEnvoi}}}"},
+                {"label":"Segment","value":"{{{ROW.Segment}}}"},
+                {"label":"Type de Canal","value":"{{{ROW.TypeCanal}}}"},
+                {"label":"Objectif","value":"{{{ROW.Objectif}}}"}
+            ]
+        }
+    }
+}
+```
+_Note_: this example is used as a row action in a **[sfpegListCmp](/help/sfpegListCmp.md)** component
+to present information fetched by the query but not displayed in the layout.
+
+
 ### **LDS** and **DML** Action Types 
 
 Two Action Types are available to execute direct record operation (create, update, delete), either via the Ligthning Data Service (LDS, preferrable) or via direct database operaion (DML, for non LDS supported objects). 

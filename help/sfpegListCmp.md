@@ -225,7 +225,7 @@ Hereafter is an example of a mass update form with a refresh after update.
 
 ### Timeline Configuration
 
-The **sfpegListCmp** may be configured to look as follows:
+The **sfpegListCmp** may be configured to look as follows:<br/>
 ![List as timeline](/media/sfpegListTimeline.png)<br/>
 _Display as list of Tiles in timeline variant with expandable section_
 
