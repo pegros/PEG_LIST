@@ -34,7 +34,7 @@ defined:
 ![Record Display Example](/media/sfpegRecordDisplay.png)<br/>
 _Tab with only fields_
 
-![Record Display Example with sub-list](/media/sfpegRecordDisplayList.png)
+![Record Display Example with sub-list](/media/sfpegRecordDisplayList.png)<br/>
 _Tab with fields and list_
 
 
