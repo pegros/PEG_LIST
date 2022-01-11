@@ -40,6 +40,81 @@ As a baseline, the ** component provides the following set of token types:
 * **VFP.pageName** to get the full URL of a VF page, i.e. with the security token
     * This is required when the target page has CSRF protection activated
 
+As an example, the following configuration of a **[sfpegActionBarCmp](/help/sfpegListCmp.md)** component
+leverages multiple tokens.
+```
+[
+    {
+        "name":"warn", "label":"Warn (if not permission)",
+        "disabled":{{{NPERM.TST_Perm}}},
+        "action":{
+            "type":"toast",
+            "params":{
+                "title":"Beware {{{USR.Name}}}!",
+                "message":"This is a warning message for {{{RCD.Name}}}.",
+                "variant":"warning"
+            }
+        }
+    }
+]
+```
+
+_Note_:
+* When using merge **tokens** for picklist fields, the API value is merged instead of the label!
+* When merging _boolean_ or _numeric_ fields in a configuration, double quotes should not be set around the merge **token**, as it would result in a string instead of 
+
+
+---
+
+## Post Merge Modifier - Double Quotes **Escape**
+
+As a baseline, the **sfpegMerge** directly replaces the tokens by their value.
+
+However, in some cases, some issues may arise when parsing the resulting merged
+string as a JSON list or object. Main origin are the double quotes (") within
+text fields which then break the JSON parsing operation.
+
+Richtext fields are a key source of problems, e.g. for the **[sfpegMessageListCmp](/help/sfpegMessageListCmp.md)** 
+or the **[sfpegRecordDisplayCmp](/help/sfpegRecordDisplayCmp.md)** components, especially the 
+double quotes induced by HTML formatting.
+'''
+<p>These are the <b style="color: rgb(176, 8, 8);"><i><u>conditions</u></i></b> for the <b>campaign:</b></p>
+'''
+
+Text fields may also raise the same issue, as double quotes in their content are indeed not escaped (via '&quot;')
+as in the richtext field case. 
+
+In order to prevent these fields to break the configuration parsing, a special **ESCAPE(((...)))** directive
+is available. Such a directive is applied after the initial merge and replaces all '"' character occurrences
+by '\\"' ones. This enables to escape these double quotes for the JSON parsing and restore their original
+value for display afterwards.
+
+The following **[sfpegRecordDisplayCmp](/help/sfpegRecordDisplayCmp.md)** configuration example describes
+how to use the **ESCAPE(((...)))** directive. It is positionned around the merge **token** but inside the
+field attribute double quotes, escaping the double quotes only within the **token** value and letting the 
+global JSON parsing be executed correctly. Escaping is here applied only to text and richtext fields.
+'''
+{
+    "title":"{{{RCD.Name}}}",
+    "icon":"standard:campaign",
+    "fields":[
+        {"value":"ESCAPE((({{{RCD.Description}}})))","type":"text","label":"Objectives"},
+        {"value":"{{{RCD.Status}}}","label":"Status"}
+    ],
+    "tabs":[
+        {
+            "label":"Description",
+            "fields":[
+                {"value":"ESCAPE((({{{RCD.Objectives__c}}})))","type":"richText","label":"Objectives","size":6},
+                {"value":"ESCAPE((({{{RCD.Messages__c}}})))","type":"richText","label":"Messages","size":6}
+            ]
+        },
+        ...
+    ]
+}
+'''
+
+
 ---
 
 ## Merge Tokens Extension
@@ -71,6 +146,7 @@ the **DBD** token base may be used as follows (see also **[sfpegActionBarCmp](/h
     }
 }
 ```
+
 
 Specific Org records may then be added to the configuration (e.g. the Knowledge Articles or FSC Reciprocal Roles in the example below).<br/>
 ![Custom Merge Tokens List](/media/sfpegMergeConfiguration.png)

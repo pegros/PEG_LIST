@@ -231,11 +231,14 @@ _Note_: this is especially useful in communities, as the file preview is (still)
 LWC [navigation service](https://developer.salesforce.com/docs/component-library/bundle/lightning-navigation/documentation)
 in such a case.
 
+
 ---
 
 ## Configuration Examples
 
 ### Popup with Notification back to original Component
+
+
 
 ***TO BE CONTINUED***
 

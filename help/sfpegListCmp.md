@@ -44,6 +44,9 @@ _Display as list of Tiles (1 tile per row)_
 ![List as tile cards](/media/sfpegListCards.png)<br/>
 _Display as list of Tile Cards (2 tiles per row)_
 
+![List as timeline](/media/sfpegListTimeline.png)<br/>
+_Display as list of Tiles in timeline variant (1 tile per row)_
+
 ![List as data table](/media/sfpegListTable.png)<br/>
 _Display as Data Table_
 
@@ -133,6 +136,11 @@ the JSON display configuration of the standard
         if _CardList_ mode is used) 
     * An optional  _menu_ property describing the row action menu (_name_, _mabel_ and optional _icon_ of each menu
     item) to be displayed in each tile / at the end of each data-table /tree-grid row (see _Row Actions_ below).
+    * An optional _variant_ property enables to alter the display of the tiles
+        * For now, two values are available, i.e. `base` for default tile box display or `timeline` for timeline like display (no box, vertical grey border under the icon)
+    * An optional _details_ property enabling to set a second list of fields (similar to the _fields_ one)
+        * setting this property activates an expand/collapse on the tile content
+        * when expanded, the fields of this list are displayed below the main ones in a _cardList_ mode
 * _Flatten Results?_ to activate fetched data JSON structure _flattening_ in order to let related record data being
 properly displayed within _DataTree_ or _TreeGrid_ components (which do not support displaying data from JSON sub-objects,
 as when related record fields are fetched)
@@ -210,9 +218,47 @@ Hereafter is an example of a mass update form with a refresh after update.
 }
 ```
 
+
 ---
 
 ## Configuration Examples
+
+### Timeline Configuration
+
+The **sfpegListCmp** may be configured to look as follows:
+![List as timeline](/media/sfpegListTimeline.png)<br/>
+_Display as list of Tiles in timeline variant with expandable section_
+
+In this example, within the related **sfpegList__mdt** custom metadata
+* the **Display Type** must be set in _TileList_ (selected option in the example) or _CardList_ mode.
+* the **Display Configuration** should activate both:
+    * the `timeline` variant (via the _variant_ property)
+    * an expandable section displaying additional detail fields for each tile (via the _details_ property). 
+```
+{
+    "keyField":"Code_Campagne",
+    "cardNbr":1,
+    "fieldNbr":2,
+    "variant":"timeline",
+    "title":{"label":"Code_Campagne", "fieldName":"Code_Campagne","sortable":true,"action":"showDetails"},
+    "icon":{"size":"x-small","name":"standard:event"},
+    "columns":[
+        {"label":"DateEnvoi","fieldName":"DateEnvoi","sortable":true,"type":"dateTime"},
+        {"label":"TypeCanal","fieldName":"TypeCanal","sortable":true},
+        {"label":"Segment","fieldName":"Segment","sortable":true},
+        {"label":"Open?","fieldName":"isOpened","type":"boolean","sortable":true}
+    ],
+    "details":[
+        {"label":"Domaine","fieldName":"Domain"},
+        {"label":"Segment","fieldName":"Segment"},
+        {"label":"Type de Canal","fieldName":"TypeCanal"},
+        {"label":"Objectif","fieldName":"Objectif"}
+    ]
+}
+```
+
+_Note_: In `timeline` mode, an icon is always displayed within each tile (default value being `utility:info_alt`).
+
 
 ### Apex List Retrieval and OpenURL Action with Rework 
 

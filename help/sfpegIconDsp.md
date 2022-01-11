@@ -1,10 +1,10 @@
 ---
-# sfpegIconCmp Component
+# sfpegIconDsp Component
 ---
 
 ## Introduction
 
-The **sfpegIconDsp** component is a pure display and interaction components enabling
+The **sfpegIconDsp** component is a pure display and interaction component enabling
 to easily display various types of icons while masking the underlying technical
 implementation variations.
 

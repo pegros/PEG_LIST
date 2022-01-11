@@ -188,7 +188,7 @@ It is also possible to dynamically activate/disable buttons and menu items via t
         "action":{
             "type":"toast",
             "params":{
-                "title":"Beware {{{[USR.Name](https://usr.name/)}}}!",
+                "title":"Beware {{{USR.Name}}}!",
                 "message":"This is a warning message for {{{RCD.Name}}}.",
                 "variant":"warning"
             }
