@@ -38,8 +38,30 @@
     /*text-align:left;*/
     width:100%;
 }
+.filterPopup {
+    max-width: calc(100% - 46px) !important;
+    /*min-width: 60% !important;*/
+    background: var(--lwc-brandDark);
+}
 .filterInput {
     --sds-c-input-radius-border : 0px;
+    min-width: calc(50% + 30px) !important;
+    width:auto !important;
+    /*display: inline-block;*/
+}
+.filterSelect {
+    /*overflow-wrap: break-word;*/
+    text-overflow: ellipsis !important;
+    /*background-color: white !important;
+    overflow-x: hidden !important;
+    white-space: nowrap !important;*/
+    /*--slds-c-button-line-height : 5px !important;
+    padding: 1.875rem !important;*/
+    /*max-width: 25% !important;
+    text-overflow: ellipsis;
+    overflow-wrap: break-word;*/
+    /*--slds-c-button-line-height : 5px !important;*/
+    /*min-height: 30px !important;*/
 }
 .expandCollapse {
     --sds-c-button-color-background : transparent !important;

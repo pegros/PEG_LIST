@@ -202,6 +202,33 @@ export default class SfpegListCmp extends LightningElement {
                 &&  ((this.resultListOrig || this.resultList || []).length < (this.recordCount || 0)) );
         //return ((this.configDetails.query.doPagination));
     }
+    get formatSearchScope() {
+        // Method to "truncate" label of the scope selector menu in the filter popup,
+        // in order to keep enough space for the actual search input widget.
+        if (this.isDebug) console.log('formatSearchScope: START');
+
+        let divWrapper = this.template.querySelector('div[data-my-id=wrapperDiv]');
+        if (this.isDebug) console.log('formatSearchScope: wrapperDiv ', divWrapper);
+
+        let popupWidth = ((divWrapper.clientWidth - 46) - 2 );
+        //if (this.isDebug) console.log('formatSearchScope: popupWidth ', popupWidth);
+        let inputWidth = 30 + popupWidth / 2;
+        //if (this.isDebug) console.log('formatSearchScope: inputWidth ', inputWidth);
+        let selectWidth = popupWidth - inputWidth - 28 - 32 - 32;
+        //if (this.isDebug) console.log('formatSearchScope: selectWidth ', selectWidth);
+        let maxChars = Math.max(selectWidth / 10 - 2,0);
+        if (this.isDebug) console.log('formatSearchScope: maxChars ', maxChars);
+
+        let label = this.filterScope.label || 'All';
+        if (maxChars < 3) {
+            label = null;
+        }
+        else if (label.length > maxChars) {
+            label = label.slice(0,maxChars) + '...';
+        }
+        console.log('formatSearchScope: END with ', label);
+        return label;
+    }
 
     get showCardHeaderIcons() {
         return (this.cardIcon || this.isCollapsible);
@@ -331,11 +358,18 @@ export default class SfpegListCmp extends LightningElement {
         }
     }
 
+    /*
     renderedCallback() {
         if (this.isDebug) console.log('renderedCallback: START');
+
+        let divWrapper = this.template.querySelector('.filterPopup');
+        if (this.isDebug) console.log('renderedCallback: divWrapper fetched ', divWrapper);
+        if (this.isDebug) console.log('renderedCallback: divWrapper client width ', divWrapper?.clientWidth);
+        if (this.isDebug) console.log('renderedCallback: divWrapper ofsset width ', divWrapper?.offsetWidth);
+
         if (this.isDebug) console.log('renderedCallback: END');
     }
-
+    */
 
     //----------------------------------------------------------------
     // Contextual Data Fetch via LDS
@@ -749,11 +783,11 @@ export default class SfpegListCmp extends LightningElement {
     
             if (this.resultListOrig) this.resultListOrig = this.resultListOrig.concat(resultList);
             if (this.isDebug) console.log('handleLoadNext: original results updated ', JSON.stringify(this.resultListOrig));
-            if (this.isDebug) console.log('handleLoadNext: #original results ', this.resultList?.length);
+            if (this.isDebug) console.log('handleLoadNext: #original results ', this.resultListOrig?.length);
 
             if (this.isDebug) console.log('handleLoadNext: tracking last record key ', this.configDetails.query.orderByField);
-            let lastRecord = (resultList.slice(-1));
-            if (this.isDebug) console.log('executeQuery: lastRecord fetched ', JSON.stringify(lastRecord));
+            let lastRecord = (resultList.length > 0 ? (resultList.slice(-1)) : null);
+            if (this.isDebug) console.log('handleLoadNext: lastRecord fetched ', JSON.stringify(lastRecord));
             this.lastRecordKey = ((lastRecord || [{}])[0])[(this.configDetails.query.orderByField)];
             if (this.isDebug) console.log('handleLoadNext: lastRecordKey registered ', this.lastRecordKey);
                 
@@ -960,7 +994,7 @@ export default class SfpegListCmp extends LightningElement {
                     if (this.isDebug) console.log('filterRecords: filtered list # ', this.resultList.length);
                     
                     if (this.hideCheckbox) this.selectedRecords = this.resultList;
-                    if (this.isDebug) console.log('handleLoadNext: selectedRecords update ', JSON.stringify(this.selectedRecords));
+                    if (this.isDebug) console.log('filterRecords: selectedRecords update ', JSON.stringify(this.selectedRecords));
                 }
                 else {
                     if (this.isDebug) console.log('filterRecords: resetting original record list');
