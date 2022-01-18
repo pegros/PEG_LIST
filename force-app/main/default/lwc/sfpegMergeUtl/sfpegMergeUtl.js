@@ -534,7 +534,7 @@ const sfpegMergeUtl = {
                 if (mergeResult.includes('ESCAPE(((')) {
                     if (this.isDebug) console.log('mergeTokens: escaping required ');
 
-                    let escapeMatches = [...mergeResult.matchAll(/ESCAPE(\(\(\()(.*?)(\)\)\))/g)];
+                    let escapeMatches = [...mergeResult.matchAll(/ESCAPE(\(\(\()(.*?)(\)\)\))/gms)];
                     if (this.isDebug) console.log('mergeTokens: escapeMatches found ',escapeMatches);
     
                     escapeMatches.forEach(matchIter => {
@@ -542,7 +542,11 @@ const sfpegMergeUtl = {
                         //if (this.isDebug) console.log('mergeTokens: match considered ',matchIter[0]);
                         //if (this.isDebug) console.log('mergeTokens: value considered ',matchIter[2]);
                         //if (this.isDebug) console.log('mergeTokens: submatches ',[...(matchIter[2]).matchAll(/"/g)]);
-                        let newMatchValue = (matchIter[2]).replace(/"/g,'\\"');
+                        let newMatchValue = (matchIter[2]).replace(/"/gms,'\\"');
+                        newMatchValue = (newMatchValue).replace(/[\r\n\t]/gms,' ');
+                        //newMatchValue = (newMatchValue).replace(/[\r]/gms,'\\r');
+                        //newMatchValue = (newMatchValue).replace(/[\n]/gms,'\\n');
+                        //newMatchValue = (newMatchValue).replace(/[\t]/gms,'\\t');
                         if (this.isDebug) console.log('mergeTokens: newMatchValue ', newMatchValue);
                         mergeResult = mergeResult.replace(matchIter[0],newMatchValue);
                         //if (this.isDebug) console.log('mergeTokens: mergeResult updated ', mergeResult);

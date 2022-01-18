@@ -114,6 +114,8 @@ global JSON parsing be executed correctly. Escaping is here applied only to text
 }
 '''
 
+This feature has been extended to also replace by a white space other characters breaking the Javascript JSON parsing, such as '\r', '\n', '\t'.
+
 
 ---
 
