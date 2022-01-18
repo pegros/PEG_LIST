@@ -93,7 +93,7 @@ The following **[sfpegRecordDisplayCmp](/help/sfpegRecordDisplayCmp.md)** config
 how to use the **ESCAPE(((...)))** directive. It is positionned around the merge **token** but inside the
 field attribute double quotes, escaping the double quotes only within the **token** value and letting the 
 global JSON parsing be executed correctly. Escaping is here applied only to text and richtext fields.
-'''
+```
 {
     "title":"{{{RCD.Name}}}",
     "icon":"standard:campaign",
@@ -112,9 +112,10 @@ global JSON parsing be executed correctly. Escaping is here applied only to text
         ...
     ]
 }
-'''
+```
 
-This feature has been extended to also replace by a white space other characters breaking the Javascript JSON parsing, such as '\r', '\n', '\t'.
+_Note_: This feature has been extended to also replace by a white space other characters breaking
+the Javascript JSON parsing, such as `\r`, `\n`, `\t`.
 
 
 ---
