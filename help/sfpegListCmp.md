@@ -219,9 +219,8 @@ Hereafter is an example of a mass update form with a ***refresh*** after update.
 }
 ```
 
-Hereafter is an example of a set of ***filter*** actions to set / unset specific filter conditions.
-
-![List Filter Action Menu](/media/sfpeggListFilterAction.png)
+Hereafter is an example of a set of ***filter*** actions to set / unset specific filter conditions.<br/>
+![List Filter Action Menu](/media/sfpegListFilterAction.png)
 
 ```
 ...{
