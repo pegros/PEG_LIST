@@ -181,13 +181,14 @@ SELECT count() FROM Task WHERE  WhatId = '{{{ID}}}' and IsClosed = false and Rec
 The **sfpegListCmp** includes some specific features concerning the action functionality provided
 by the **[sfpegActionBarCmp](/help/sfpegActionBar.md)**
 * When selection is enabled on the component, it sets/updates the list of selected records in
-the header action component to support the trigger of mass actions on this base
-(e.g. to mass edit selected records)
-* It provides a specific _refresh_ action type to force a reload of the displayed data,
+the header action component to support the trigger of ***mass actions*** on this base (see 
+**[sfpegActionBarCmp](/help/sfpegActionBar.md)** for details), e.g. to mass edit selected records.
+* It provides a specific ***refresh*** action type to force a reload of the displayed data,
 usually called within a _next_ action property (e.g. to execute a list reload after a
 record creation or row update)
+* It also provides a specific ***filter*** action type to quickly set/unset the **sfpegListCmp** filter value.
 
-Hereafter is an example of a mass update form with a refresh after update.
+Hereafter is an example of a mass update form with a ***refresh*** after update.
 ```
 {
     "name": "closeForm", "label": "Close Selected", "iconName": "utility:close",
@@ -218,6 +219,44 @@ Hereafter is an example of a mass update form with a refresh after update.
 }
 ```
 
+Hereafter is an example of a set of ***filter*** actions to set / unset specific filter conditions.
+
+![List Filter Action Menu](/media/sfpeggListFilterAction.png)
+
+```
+...{
+    "name": "selectionMenu", "iconSize": "small",
+    "items": [
+    {   "label": "SMS", "iconName": "utility:filter",
+        "action": { "type": "done",
+                    "params": { "type": "filter",
+                                "params": { "scope": "Channel", "string": "SMS"}
+                    }
+        }
+    },
+    {   "label": "Email", "iconName": "utility:filter",
+        "action": { "type": "done",
+                    "params": { "type": "filter",
+                                "params": { "scope": "Channel", "string": "EMAIL" }
+                    }
+        }
+    },
+    {   "label": "Courrier", "iconName": "utility:filter",
+        "action": { "type": "done",
+                    "params": { "type": "filter",
+                                "params": {"scope": "Channel", "string": "MAIL" }
+                    }
+        }
+    },
+    {   "label": "All", "iconName": "utility:filter",
+        "action": { "type": "done",
+                    "params": { "type": "filter",
+                                "params": { "scope": "ALL", "string": "" }
+                    }
+        }
+    }]
+}...
+```
 
 ---
 
