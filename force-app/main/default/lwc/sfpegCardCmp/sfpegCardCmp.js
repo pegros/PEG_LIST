@@ -203,7 +203,8 @@ export default class SfpegCardDsp extends LightningElement {
                         },
                         size:       config.size || 12,
                         fields:     config.fields || [],
-                        sections:   config.sections || []
+                        sections:   config.sections || [],
+                        density:    config.density || 'comfy'
                     };
                     this.configDetails = CARD_CONFIGS[this.configName];
                     if (this.isDebug) console.log('connected: configuration registered ',JSON.stringify(this.configDetails));
@@ -266,6 +267,8 @@ export default class SfpegCardDsp extends LightningElement {
     wiredRecord({ error, data }) {
         if (this.isDebug) console.log('wiredRecord: START with ID ', this.recordId);
         if (this.isDebug) console.log('wiredRecord: recordFields fetched ',JSON.stringify(this.recordFields));
+        if (this.isDebug) console.log('wiredRecord: current objectApiName  ', this.objectApiName);
+        if (this.isDebug) console.log('wiredRecord: current recordId ', this.recordId);
 
         if (data) {
             if (this.isDebug) console.log('wiredRecord: data fetch OK', JSON.stringify(data));
@@ -276,7 +279,7 @@ export default class SfpegCardDsp extends LightningElement {
             else {
                 if (this.isDebug) console.log('wiredRecord: data fields ', JSON.stringify((data.fields)));
                 if (this.isDebug) console.log('wiredRecord: ID Field ', this.configDetails.target.recordIdField);
-                this.formRecordId = ((data.fields)[this.configDetails.target.recordIdField]).value;
+                this.formRecordId = ((data.fields)[this.configDetails.target.recordIdField])?.value;
                 //this.formRecordId = this.recordId;
                 if (this.isDebug) console.log('wiredRecord: END / formRecordId set ', this.formRecordId);
             } 
@@ -294,6 +297,8 @@ export default class SfpegCardDsp extends LightningElement {
 
     initFormTarget() {
         if (this.isDebug) console.log('initFormTarget: START');
+        if (this.isDebug) console.log('initFormTarget: current objectApiName  ', this.objectApiName);
+        if (this.isDebug) console.log('initFormTarget: current recordId ', this.recordId);
 
         if (this.isDebug) console.log('initFormTarget: target configured ', JSON.stringify(this.configDetails.target));
 

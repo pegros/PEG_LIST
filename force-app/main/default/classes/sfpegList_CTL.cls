@@ -86,7 +86,7 @@ public with sharing class sfpegList_CTL {
     /***
     * @description  Standard method to fetch the list of records corresponding to a 
     *               preconfigured sfpegList__mdt query record in a specific context.
-    *               SOQL, SOSL, SAQL and Apex query types are supported.
+    *               SOQL, SOSL and Apex query types are supported.
     *               All records are merge in a single list in case of SOSL.
     * @param    name    Dev Name of the Query configuration record to execute
     * @param    input   Context Object record containing all the input data expected
@@ -172,7 +172,7 @@ public with sharing class sfpegList_CTL {
                 throw new AuraHandledException('SOQL Query failure: ' + error.getMessage());
             }
         }
-        else if (query.QueryType__c == 'SAQL') {
+        /*else if (query.QueryType__c == 'SAQL') {
             System.debug(LoggingLevel.FINE,'getData: executing SAQL query ' + query.QuerySOQL__c);
 
             String mergedQuery = mergeQuery(query.QuerySOQL__c, (Map<Object,Object>) input);
@@ -196,7 +196,7 @@ public with sharing class sfpegList_CTL {
                 System.debug(LoggingLevel.WARN,'getData: END / KO - ' + error.getMessage());
                 throw new AuraHandledException('SAQL Query failure: ' + error.getMessage());
             }
-        }
+        }*/
         else {
             System.debug(LoggingLevel.WARN,'getData: END / KO - Unsupported Configuration type' + query.QueryType__c);
             throw new AuraHandledException('Unsupported Configuration type ' + query.QueryType__c + ' for config ' + name);

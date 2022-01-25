@@ -3,6 +3,7 @@
     <apiVersion>51.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>SF PEG Custom List</masterLabel>
+    <description>This component enables to display a list of reciords fetched via custom logic.</description>
 
     <targets>
         <target>lightning__AppPage</target>

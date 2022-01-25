@@ -118,7 +118,7 @@ export default class SfpegTileDsp extends LightningElement {
         if (this.displayVariant === 'timeline') {
             if (this.isDebug) console.log('connected: initialising timeline parameters');
             let iconSize = (this.configDetails.icon ? (this.configDetails.icon.size || 'small') : 'small');
-            this.wrapperClass = "slds-var-m-around_x-small leftBorder leftBorder-" + iconSize;
+            this.wrapperClass = "slds-var-m-around_small leftBorder leftBorder-" + iconSize;
             /*this.cardIcon = "utility:info_alt";
             this.cardIconSize = 'small';*/
         }

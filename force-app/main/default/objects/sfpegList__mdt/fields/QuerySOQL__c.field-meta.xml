@@ -4,7 +4,7 @@
     <description>When using SOQL query, query details with {{{XXX.xxxx}}} merge tokens corresponding to the Input parameter.</description>
     <externalId>false</externalId>
     <fieldManageability>SubscriberControlled</fieldManageability>
-    <label>Query SOQL</label>
+    <label>Query Template</label>
     <length>50000</length>
     <type>LongTextArea</type>
     <visibleLines>3</visibleLines>

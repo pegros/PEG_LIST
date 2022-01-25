@@ -149,13 +149,14 @@
                         <dd class="slds-dl_horizontal__detail">{objectApiName} - {recordId}</dd>
                         <dt class="slds-dl_horizontal__label slds-truncate">Records#</dt>
                         <dd class="slds-dl_horizontal__detail">{resultCount}  </dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Form Factor</dt>
+                        <dd class="slds-dl_horizontal__detail">{formfactor}  </dd>
                         <template if:true={hasConfig}>
                         <dt class="slds-dl_horizontal__label slds-truncate">Key / Order Field</dt>
                         <dd class="slds-dl_horizontal__detail">{configDetails.display.keyField} / {configDetails.query.orderByField} </dd>
                         <dt class="slds-dl_horizontal__label slds-truncate">Row Actions</dt>
                         <dd class="slds-dl_horizontal__detail">{configDetails.rowActions}</dd>
                         </template>
-                        
                         <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
                         <dd class="slds-dl_horizontal__detail">
                             <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListCmp.md"
@@ -163,7 +164,6 @@
                                                         target="_blank">
                             </lightning-formatted-url>
                         </dd>
-                        
                     </dl>
                 </div>
             </template>

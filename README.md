@@ -157,10 +157,11 @@ bar specific behaviours currently not possible from LWC: automatic closing of th
 trigger, console tab operations (close all tabs, close tab and open another one...),
 custom/flow popup open... (_Note_: this component may be used in Community page footer as well)
 
+```
 <p align="center" >
 <img src="/media/sfpegActionUtility.png"    alt="Action Utility"    title="Action Utility in Utility Bar" />
 </p>
-
+```
 
 ### Addressable Aura Components
 
@@ -188,7 +189,7 @@ queries & actions to be used in the components), often containing complex JSON c
 Such an approach enables to easily reuse the same detailed configuration in multiple Lightning page layouts and
 enables a more efficient local configuration caching (for better performances)
 
-![List App Builder Configuration Example!](/media/sfpegListConfiguration.png)
+![List App Builder Configuration Example](/media/sfpegListConfiguration.png)
 <p align="center" >
 _Example of the **[sfpegListCmp](/help/sfpegListCmp.md)** component configuration in the App Builder, referencing 2 custom metadata records (orange zones) respectively for the data fetch/display configuration and for the header actions_
 </p>
@@ -296,3 +297,14 @@ implement and integrate additional custom Apex logic.
 This applies to the following features:
 * actions (see **sfpegAction__mdt** configuration) leveraging the **sfpegAction_SVC** virtual class
 * list queries (see **sfpegList__mdt** configuration) leveraging the **sfpegListQuery_SVC** virtual class
+
+
+### Community Usage 
+
+For component usage in Communities (Experience Cloud), 2 additional properties are displayed at the bottom
+of the component configuration panel in the Experience Builder:
+* `recordId` to feed the ID of the current record (via the default `{!recordId}` value)
+* `objectApiName` to feed the Object API Name of th current record (via the default `{!objectApiName}` value)
+
+_Note_: The `{!objectApiName}` value seems to be sometimes not valued when initializing the components. In order 
+to mitigate such issues, and if possible, a fixed test value (e.g. "Account")is then preferrable.

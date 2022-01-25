@@ -62,6 +62,7 @@ on the current record.
 The second **Configuration** section describes the internal field layout of the component,
 as a JSON object with the following properties :
 * _size_ defines the default size (in portion of 12) for each field
+* _density_ defines how the labels are displayed (above vs next to the field value)
 * _fields_ defines the main list of fields displayed just below the card header, as a list
 of JSON field definition objects
   * Each field definition has a mandatory _name_ property (API name of the field)

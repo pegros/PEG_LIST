@@ -40,6 +40,8 @@ import sfpegJsonUtl         from 'c/sfpegJsonUtl';
 import sfpegMergeUtl        from 'c/sfpegMergeUtl';
 import sfpegCsvUtl          from 'c/sfpegCsvUtl';
 
+import FORM_FACTOR          from '@salesforce/client/formFactor';
+
 import REFRESH_LABEL        from '@salesforce/label/c.sfpegListRefresh';
 import FILTER_LABEL         from '@salesforce/label/c.sfpegListFilter';
 import FILTER_ALL           from '@salesforce/label/c.sfpegListFilterAll';
@@ -120,6 +122,9 @@ export default class SfpegListCmp extends LightningElement {
     @track filterScope = null;      // Applicable filter scope selected (default being "ALL")
     @track filterString = null;     // Applicable filter keywords entered
     @track isFiltering = false;     // Ongoing Filter state  (to control spinner)
+
+    //Form Factor (fo mobile specific configuration override)
+    formfactor = FORM_FACTOR;
 
     //Widget Labels & Titles from custom labels
     refreshTitle = REFRESH_LABEL;
@@ -278,6 +283,8 @@ export default class SfpegListCmp extends LightningElement {
         if (this.isDebug) console.log('connected: recordId provided ',this.recordId);
         if (this.isDebug) console.log('connected: objectApiName provided ',this.objectApiName);
         if (this.isDebug) console.log('connected: userId provided ',this.userId);
+        if (this.isDebug) console.log('connected: formfactor provided ',this.formfactor);
+        
         //this.errorMsg = 'Component initialized.';
 
         if (this.isReady) {
@@ -323,6 +330,7 @@ export default class SfpegListCmp extends LightningElement {
                         rowActions: (result.RowActions__c || 'N/A')
                     };
                     this.configDetails = LIST_CONFIGS[this.configName];
+
                     if ((this.configDetails.display.menu) && (this.configDetails.display.columns))  {
                         if (this.isDebug) console.log('connected: registering menu in columns configuration ',JSON.stringify(this.configDetails.display.menu));
                         this.configDetails.display.columns.push({
@@ -335,6 +343,20 @@ export default class SfpegListCmp extends LightningElement {
                         if (this.isDebug) console.log('connected: columns configuration updated ',JSON.stringify(this.configDetails.display.columns));
                         if (this.isDebug) console.log('connected: LIST_CONFIGS[this.configName] state ',JSON.stringify(LIST_CONFIGS[this.configName]));
                     }
+
+                    if (this.formfactor === "Small") {
+                        if (this.isDebug) console.log('connected: overriding configuration for mobile');
+                        this.configDetails.type = "TileList"; 
+                        this.configDetails.display.cardNbr = 1; 
+                        this.configDetails.display.fieldNbr = 1; 
+                        /*if (this.configDetails.display.menu) {
+                            this.configDetails.display.menu.forEach(item => {
+                                if (!item.title) item.title = item.label;
+                                if (item.label) delete item.label;
+                            });
+                        }*/
+                    }
+
                     this.finalizeConfig();
                     if (this.isDebug) console.log('connected: END / configuration parsed');
                     //this.errorMsg = 'Configuration fetched and parsed: ' + LIST_CONFIGS[this.configName].label;

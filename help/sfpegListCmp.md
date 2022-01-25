@@ -13,7 +13,7 @@ related lists by offering more flexibility in:
 * the actions available on this record selection (more than the standard edit/delete)
 
 It further extends these capabilities by providing:
-* a wide variety of alternative record fetch methods (SOQL, SOSL, SAQL or custom Apex)
+* a wide variety of alternative record fetch methods (SOQL, SOSL or custom Apex)
 * the ability to handle completely custom data sets (as Apex `Map<String,Object>` lists converted as JSON objects)
 e.g. fetched via callouts to external systems (without the need for external objects) or built from custom
 Apex logic (combining multiple related records, rebuilding record hierarchies...)
@@ -90,10 +90,10 @@ user language.
 
 The **Query** section defines how data are retrieved: 
 * Query or Apex class to be applied
-    * _Query Type_ to select a fetch mode (SOQL, SOSL, SAQL, Apex)
+    * _Query Type_ to select a fetch mode (SOQL, SOSL, Apex)
     * _Query Class_ (if _Apex_ mode is chosen) to specify the name of the Apex class to call 
     (implementing **sfpegListQuery_SVC** virtual class) 
-    * _Query SOQL_ (to be renamed as _Query_) to specify the SOQL/SOSL/SAQL query to execute (when these modes are chosen).
+    * _Query Template_ (formely _Query SOQL_) to specify the SOQL/SOSL query to execute (when these modes are chosen).
 * Inputs required to contextualise the fetch 
     * _Query Input_ to specify a single JSON context object to contextualise the query or
     be passed as input to the Apex class fetch method

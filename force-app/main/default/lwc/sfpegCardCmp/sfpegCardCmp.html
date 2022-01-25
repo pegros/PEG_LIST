@@ -94,7 +94,8 @@
 
                     <!-- Read Mode Display -->
                     <template if:false={isEditMode}>
-                        <lightning-record-view-form object-api-name={formObjectApiName} record-id={formRecordId}>
+                        <lightning-record-view-form object-api-name={formObjectApiName} record-id={formRecordId}
+                                                    density={configDetails.density}>
 
                             <!-- Stand-alone fields -->
                             <!--   horizontal-align="end" -->
@@ -143,10 +144,9 @@
                     <!-- Edit Mode Display -->
                     <template if:true={isEditMode}>
                         <lightning-record-edit-form object-api-name={formObjectApiName}
-                                                    record-type-id={formRecordTypeId}
-                                                    record-id={formRecordId}
-                                                    onload={handleFormLoad}
-                                                    onsuccess={handleFormSuccess} >
+                                                    record-type-id={formRecordTypeId}   record-id={formRecordId}
+                                                    density={configDetails.density}
+                                                    onload={handleFormLoad}             onsuccess={handleFormSuccess} >
                             
                             <!-- Stand-alone fields -->
                             <!--   horizontal-align="end" -->
