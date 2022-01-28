@@ -546,7 +546,7 @@ base component (updates being then made via LDS)
 (useful for object types not supported by LDS, such as Task & Event)
     * In such a case, the popup form works with the `formRecord` and `formFields` instead of `record` and
     `fields` and the LDS standard submission is replaced by a DML on the `record`.
-    * All output form field values are applied on the “record” before the DML (with the same API name unless
+    * All output form field values are applied on the `record` before the DML (with the same API name unless
     a `fieldMapping` JSON object property is provided (`{ "formFieldName": "recordFieldName",....}`).
     * In the example below, a *TST_TaskProxy__c* custom object has been created with a single *Reason__c* field leveraging the same API name & picklist global value set as the *Reason__c* field configured on the Task object (as the *Task* object is not supportyedd by the LDS).
 ```
@@ -569,6 +569,7 @@ base component (updates being then made via LDS)
     }
 }
 ```
+
 
 * **apexForm** : PLANNED
     * Same behaviour as the ldsForm but with the ability to fetch/update data via Apex calls
@@ -929,8 +930,16 @@ FYI, the configuration of the “*close*” action is the following:
 
 see [Apex List Retrieval and OpenURL Action with Rework](/help/sfpegListCmp.md)
 
+
 ---
 
 ## Technical Details
 
-***TO BE CONTINUED***
+The **sfpegActionBarCmp** heavily relies on the following components:
+* the standard [lightning-navigation](https://developer.salesforce.com/docs/component-library/bundle/lightning-navigation/documentation) service  for ***navigation*** actions
+* the standard [platform-show-toast-event](https://developer.salesforce.com/docs/component-library/bundle/lightning-platform-show-toast-event/documentation) for ***toast*** actions or error notifications
+* the standard **Lightning Data Service** (see [uiRecordApi](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.reference_lightning_ui_api_record)) for LDS operations
+* the **sfpegAction_CTL** Apex controller for Apex actions and DML executions
+* the **sfpegPopupDsp** component for confirmation, record form or spinner popup display
+* the **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** component for action configuration contextualisation
+
