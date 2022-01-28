@@ -185,8 +185,9 @@ export default class SfpegListCmp extends LightningElement {
             returnClass = returnClass + " slds-is-collapsed";
         }
         else if ((this.configDetails) && (this.configDetails.type.includes('List'))) {
-            returnClass = returnClass + ' slds-var-p-around_small'
-                        + (((this.displayHeight) &&  (this.displayHeight !== '0')) ? ' slds-scrollable_y' : '');
+            returnClass = returnClass + ' slds-var-p-horizontal_small'
+                        + (((this.displayHeight) &&  (this.displayHeight !== '0')) ? ' slds-scrollable_y' : '')
+                        + ((this.configDetails.display.variant === 'timeline') ? ' slds-var-p-top_medium slds-var-p-bottom_large' : ' slds-var-p-vertical_small');
         }
         if (this.isDebug) console.log('contentClass: value init ', returnClass);
         return returnClass;

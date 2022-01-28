@@ -37,13 +37,14 @@ container).
 
 Display of a **sfpegActionBarCmp** component within a page (with 1 button followed by 2 menus).
 
+
 ### App Builder Configuration
 
 In the App Builder, the configuration of the **sfpegActionBarCmp** component basically
 consists in selecting one of the available **sfpegAction__mdt** custom metadata record
 containing the details of the buttons and menus to display.
 
-![Standalone Action Bar Configuration!](/media/sfpegActionConfiguration.png)
+![Standalone Action Bar Configuration](/media/sfpegActionConfiguration.png)
 
 Additional properties enable to control the CSS of the wrapping div and activate debug mode.
 Via the CSS, it is possible to control the background if the component and the position of the
@@ -52,7 +53,7 @@ They are set to `slds-theme_shade slds-grid slds-grid_align-end` by default but 
 easily be overriden.
 
 Only **sfpegAction__mdt** custom metadata record applicable to the page _scope_ may be selected
-in the dropdown displayed for the _Action configuration_ property (see configuration principles in
+in the dropdown displayed for the `Action configuration` property (see configuration principles in
 [SF PEG LIST](https://github.com/pegros/PEG_LIST) introduction).
 
 
@@ -60,19 +61,21 @@ in the dropdown displayed for the _Action configuration_ property (see configura
 
 The **sfpegAction__mdt** custom metadata provides most of the configuration of the **sfpegActionBarCmp**
 components (buttons & menus in an action bar, with underlying actions triggered). Its most important property
-is _Actions_ which provides all the required information to properly display and execute a set of actions.
+is `Actions` which provides all the required information to properly display and execute a set of actions.
 
 Context merge is systematically applied upon load/refresh (see **[sfpegMergeUtl](/help/sfpegMergeUtl.md)**
 component) to adapt the set of actions to the display environment.
 
-![Standalone Action Bar Metadata!](/media/sfpegActionConfigMeta.png)
+![Standalone Action Bar Metadata](/media/sfpegActionConfigMeta.png)
 
+
+### Base Action Configuration
 
 Hereafter is a typical configuration for a standalone mix of buttons and menus,
 containing first a menu with 3 options leading to a report, a dashboard and a folder,
-then 2 buttons to create Accounts via a Flow (launched within an addressable Aura
-Lightning component) or via a standard creation page.
-
+then 2 buttons to create Accounts via a Flow (launched within the addressable
+**[sfpegFlowEmbed_CMP](https://github.com/pegros/PEG_FLW/blob/master/help/sfpegFlowEmbedCmp.md)** 
+Aura component) or via a standard creation page.
 ```
 [
     {
@@ -137,7 +140,7 @@ Lightning component) or via a standard creation page.
             "params": {
                 "type": "standard__component",
                 "attributes": {
-                    "componentName": "c__PEG_FlowEmbed_CMP"
+                    "componentName": "c__sfpegFlowEmbed_CMP"
                 },
                 "state": {
                     "c__flow": "CreateBusinessAccount",
@@ -171,15 +174,21 @@ Lightning component) or via a standard creation page.
 ]
 ```
 
-For buttons, at least _iconName_ or _label_ should be specified, whereas for menu items,
-_label_ is mandatory and _iconName_ optional.
+For buttons, at least `iconName` or `label` should be specified, whereas for menu items,
+`label` is mandatory and `iconName` optional.
 
 Multiple other display properties are available:
-* _variant_ to change the display style (see [lightning-button](https://developer.salesforce.com/docs/component-library/bundle/lightning-button/specification) for possible values).
-* _iconPosition_ to set the icon on the left or right of the label
-* _iconSize_ to act on the button icon size (see [lightning-button-icon](https://developer.salesforce.com/docs/component-library/bundle/lightning-button-icon/specification) or [button-menu](https://developer.salesforce.com/docs/component-library/bundle/lightning-button-menu/specification) for info)
+* `variant` to change the display style (see [lightning-button](https://developer.salesforce.com/docs/component-library/bundle/lightning-button/specification) for possible values).
+* `iconPosition` to set the icon on the left or right of the label
+* `iconSize` to act on the button icon size (see [lightning-button-icon](https://developer.salesforce.com/docs/component-library/bundle/lightning-button-icon/specification) or [button-menu](https://developer.salesforce.com/docs/component-library/bundle/lightning-button-menu/specification) for info)
 
-It is also possible to dynamically activate/disable buttons and menu items via the _disabled_ property, e.g. leveraging current user’s custom permissions via custom formula fields on the _User_ object.
+At last, there is a main `action` property for each button or menu item, which enabless to specify the actual action to be executed when clicking/selecting the item (see below for available actio, types), the action being chosen among a set of possible action types described hereafter.
+
+
+### Dynamic Action Activation (_disabled_ Property)
+
+It is also possible to dynamically activate/disable buttons and menu items via the `disabled` property, e.g. leveraging current user’s custom permissions (via the dedicated `PERM` and `NPERM` merge tokens, see
+**[sfpegMergeUtl](/help/sfpegMergeUtl.md)**) as in the following example.
 ```
 [
     {
@@ -226,7 +235,43 @@ It is also possible to dynamically activate/disable buttons and menu items via t
 ]
 ```
 
-At last, there is a main _action_ property for each button or menu item, which enabless to specify the actual action to be executed when clicking/selecting the item, the action being chosen among a set of possible action types described hereafter.
+### Action Chaining (_next_ Property)
+
+It is possible to chain multiple actions one aftrer the other for a menu / button entry.
+
+It may be done at action level, the second action being systematically launched once the first 
+has been launched (not necessarily executed).
+```
+    "action":{
+        "type":"<ACTION_1>",
+        "params":{<ACTION_1_PARAMS> },
+        "next": {
+            "type": "<ACTION_2>",
+            "params": {
+                <ACTION_2_PARAMS>
+            }
+        }
+```
+
+It may be specified within the action _params_ property, in which case the second action is
+triggered only if the first action completes successfully. Such a mechanism is supported
+by most action types, i.e. those able to detect a successful completion (e.g. not the
+***navigation*** ones).
+```
+    action":{
+        "type":"<ACTION_1>",
+        "params":{
+            <ACTION_1_PARAMS>,
+            "next": {
+                "type": "<ACTION_2>",
+                "params": {
+                    <ACTION_2_PARAMS>
+                }
+            }
+        }
+    }
+```
+
 
 ---
 
@@ -256,7 +301,7 @@ The example below enables to open a report
 
 ### **open** and **edit** Action Types
 
-Both types are shortcuts for the **navigation** one.
+Both action types are actually shortcuts for usual **navigation** one.
 
 * **open** is a shortcut to simplify the opening of a record (for the selected row in a list)
 ```
@@ -277,8 +322,8 @@ Both types are shortcuts for the **navigation** one.
 
 ### **openURL** Action Type
 
-The **openURL** action type enables to open a page URL in a different browser tab (via _window.open()_ javascript primitive instead of the Lightning navigation service).
-    * _url_ is the main property to define with the target URL to be used
+The **openURL** action type enables to force the opening of a Web page in a different browser tab (via a `window.open()` javascript call instead of the Lightning navigation service).
+    * `url` is the main property to define with the target URL to use
     * some URL rework directives are available but still pending actual large scale use cases to be officially supported (and documented)
 ```
 {
@@ -287,7 +332,7 @@ The **openURL** action type enables to open a page URL in a different browser ta
     "action":{
         "type":"openURL",
         "params":{
-            "url":"https://www.google.com/search?q={{{[RCD.Name](https://rcd.name/)}}}"
+            "url":"https://www.google.com/search?q={{{RCD.Name}}}"
         }
     }
 }
@@ -302,9 +347,9 @@ The **showDetails** action type enables to open a read-only popup presenting det
 It is a solution to easily replace the record summary on hover for standard lookup fields in standard list components.
 
 The action should be configured as follows:
-* _title_ and _message_ for the popup header
-* _columns_ to indicate how many fields should be displayed per row
-* _fields_ to list the fields to display (with their _value_, _type_ and _label_)
+* `title` and `message` for the popup header
+* `columns` to indicate how many fields should be displayed per row
+* `fields` to list the fields to display (with their _value_, _type_ and _label_)
 ```
 [
     "name":"showDetails",
@@ -331,11 +376,13 @@ to present information fetched by the query but not displayed in the layout.
 
 ### **LDS** and **DML** Action Types 
 
-Two Action Types are available to execute direct record operation (create, update, delete), either via the Ligthning Data Service (LDS, preferrable) or via direct database operaion (DML, for non LDS supported objects). 
+Two Action Types are available to execute direct record operation (create, update, delete), either via the Ligthning Data Service (LDS, preferrable) or via direct database operation (DML, for non LDS supported objects). A confirmation
+popup is usually displayed to the user before executing the operation. 
 
 * **LDS** to trigger a single record direct create/update/delete via the Lightning Data Service
-    * “*title*” and “*message*“ properties enable to change the corresponding text elements in the top part of the displayed popup.
-    * “*params*” property should define the “*type*” of the LDS action to execute (“*create*”, “*update*” or “*delete*”) and provide the parameters to be provided to the corresponding [uiRecordApi](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.reference_lightning_ui_api_record) primitive, i.e. create, update or delete.
+    * `title` and `message` properties enable to set the corresponding text elements in the top part of the displayed user confimation popup (default values being applied otherwise, see **sfpegActionDefault...** custom labels).
+    * `bypassConfirm` boolean property enable to bypass the confirmation step 
+    * `params` property should define the `type` of the LDS action to execute (_create_, _update_ or _delete_) and provide the parameters to be provided to the corresponding [uiRecordApi](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.reference_lightning_ui_api_record) primitive, i.e. create, update or delete.
     * Hereafter are 3 possible examples.
 ```
 {
@@ -344,6 +391,8 @@ Two Action Types are available to execute direct record operation (create, updat
         "type": "LDS",
         "params": {
             "type": "create",
+            "title": "Adding a Child record",
+            "bypassConfirm":true,
             "params": {
                 "apiName": "TST_ChildObject__c",
                 "fields": {
@@ -396,7 +445,7 @@ Two Action Types are available to execute direct record operation (create, updat
         "type": "DML",
         "params": {
             "title": "Clone Task",
-            "message": "Adding a new Task",
+            "bypassConfirm": true,
             "params": {
                 "operation": "insert",
                 "records": [{
@@ -454,16 +503,15 @@ either via the Lightning Data Service (LDS, preferrable) or via direct database 
 * **ldsForm** opens a popup to create / edit a record leveraging the standard
 [lightning-record-edit-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-edit-form/documentation)
 base component (updates being then made via LDS)
-    * _title_ and _message_ properties enable to change the corresponding text elements in the top part of the
-    displayed popup.
-    * _columns_ property defines how many fields are displayed per line in the popup form,
-    * _record_ property enables to set contextual elements for the form,
-        * _Id_, _RecordTypeId_ and _ObjectApiName_ sub-properties are a must to initialize the appropriate form
-        * _edit_ vs _create_ mode is automatically derived from the presence of the “Id” sub-property
+    * `title` and `message` properties enable to set the corresponding text elements in the top part of the displayed form popup (default values being applied otherwise, see **sfpegActionDefault...** custom labels).
+    * `columns` property defines how many fields are displayed per line in the popup form,
+    * `record` property enables to set contextual elements for the form,
+        * `Id`, `RecordTypeId` and `ObjectApiName` sub-properties are a must to initialize the appropriate form
+        * _edit_ vs _create_ mode is automatically derived from the presence of the `Id` sub-property
         * Other sub-properties may be used to set default values for the form fields (according to their API names)
-    * _fields_ property enables to list the set of fields to be displayed in the popup form and consists in a
+    * `fields` property enables to list the set of fields to be displayed in the popup form and consists in a
     list of form field definitions
-        * each form field definition needs a “name” containing the API name of the field to be displayed
+        * each form field definition needs a `name` containing the API name of the field to be displayed
         * display properties may be tuned to set the field as disabled, required or hidden.
         * Only the fields explicitely mentioned in this list are submitted by the form.
 ```
@@ -496,11 +544,11 @@ base component (updates being then made via LDS)
 
 * **dmlForm** implements the same behaviour but enables to execute the update via a DML call
 (useful for object types not supported by LDS, such as Task & Event)
-    * In such a case, the popup form works with the “formRecord” and “formFields” instead of _record_ and
-    _fields_ and the LDS standard submission is replaced by a DML on the _record_.
+    * In such a case, the popup form works with the `formRecord` and `formFields` instead of `record` and
+    `fields` and the LDS standard submission is replaced by a DML on the `record`.
     * All output form field values are applied on the “record” before the DML (with the same API name unless
-    a _fieldMapping_ JSON object property is provided { "formFieldName": "recordFieldName",....}).
-    * In the example below, a _TST_TaskProxy__c_ custom object has been created with a single _Reason__c_ field leveraging the same API name & picklist global value set as the _Reason__c_ field configured on the Task object.
+    a `fieldMapping` JSON object property is provided (`{ "formFieldName": "recordFieldName",....}`).
+    * In the example below, a *TST_TaskProxy__c* custom object has been created with a single *Reason__c* field leveraging the same API name & picklist global value set as the *Reason__c* field configured on the Task object (as the *Task* object is not supportyedd by the LDS).
 ```
 {
     "name": "close",
@@ -526,6 +574,8 @@ base component (updates being then made via LDS)
     * Same behaviour as the ldsForm but with the ability to fetch/update data via Apex calls
     instead of LDS (e.g. to perform callouts to external systems).
 
+_Note_: Whenever a error occurs, the error message provided is automatically displayed in an error toast popup.
+
 
 ### **Mass** Action Types (**massForm** and **massDML**)
 
@@ -541,7 +591,7 @@ base component and apply the corresponding changes via a mass DML update on the 
 provided by a parent component.
     * e.g. the **sfpegListCmp** provides the set of selected records as input (when selection is enabled on this component)
     * The configuration is similar to the **ldsForm** action, the main difference being that the output of the LDS form displayed is cloned and applied to all records selected.
-    * The _removeRT_ flag enables to avoid applying to the selected records the Record Type defined in the “record” property (which may be useful to control picklist values in the displayed form)
+    * The `removeRT` flag enables to avoid applying to the selected records the Record Type defined in the “record” property (which may be useful to control picklist values in the displayed form)
 ```
 {
     "name": "closeForm", "label": "Close", "iconName": "utility:close",
@@ -573,12 +623,12 @@ provided by a parent component.
 ```
 
 * **massDML** to execute a predefined mass operation via DML (update or delete) on the selected records
-    * A confirmation popup is displayed, the header _title_ and _message_ of which may be customised by
+    * A confirmation popup is displayed, the header `title` and `message` of which may be customised by
     dedicated properties.
-    * The _bypassConfirm_ property enables to bypass this ste and directly execute the DML.
-    * For the _update_ operation, the _record_ property must be defined with the set of field values to
+    * The `bypassConfirm` property enables to bypass this ste and directly execute the DML.
+    * For the _update_ operation, the `record` property must be defined with the set of field values to
     be applied on all the selected records. The generated DML contains clones of this JSON object with
-    the _Id_ property set from the value available on each selected record.
+    the `Id` property set from the value available on each selected record.
 ```
 {
     "name": "close", "label": "Close", "iconName": "utility:close",
@@ -623,10 +673,13 @@ provided by a parent component.
     * Same behaviour as the **massDML** but with the ability to call an Apex logic instead of simple DMLs.
 
 
+_Note_: Whenever a error occurs, the error message provided is automatically displayed in an error toast popup.
+
+
 ### Record Data LDS **Reload** Type (**reload**)
 
 The **reload** action type enables to trigger a LDS reload of a single record
-* This is typically useful to refresh the LDS cache data of a record modified via Apex or DML (via the “next” property).
+* This is typically useful to refresh the LDS cache data of a record modified via Apex or DML (via the `next` property) or to the content of a list after an insertion.
 * It relies on the standard [getRecordNotifyChange](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/reference_get_record_notify) method.
 
 ```
@@ -658,44 +711,47 @@ The **reload** action type enables to trigger a LDS reload of a single record
 ### Parent Action Trigger Type (**done**) 
 
 The **done** action type enables to trigger an action on a parent component.
-* This is typically used to trigger a _refresh_ on the parent component once another operation has
+* This is typically used to trigger a **refresh** on the parent component once another operation has
 been executed (e.g. refresh of the **[sfpegListCmp](/help.sfpegListCmp.md)** displayed records
 after a record creation/update/deletion)
-* Such a behaviour is usually specified within the _next_ property of an action.
-* In the example below, the _refresh_ action type is actually provided by the
+* Such a behaviour is usually specified within the `next` property of an action.
+* In the example below, the **refresh** action type is actually provided by the
 **[sfpegListCmp](/help.sfpegListCmp.md)** parent component containing the action bar.
 ```
+    ...
     "next": {
         "type": "done",
         "params": {
             "type": "refresh"
         }
     }
+    ...
 ```
+
 
 ### **toast** Action Type
 
-The **toast** action type enables to display a simple toast message, e.g. once another operation is complete.
+The **toast** action type enables to display a simple toast message, e.g. once another operation is complete
+(e.g. as part of a `next` action property).
     * It relies on the standard [platform-show-toast-event](https://developer.salesforce.com/docs/component-library/bundle/lightning-platform-show-toast-event/documentation) event.
 ```
-{
-    "name": "warn", "label": "Warn",
-    "action": {
+    ...
+    "next": {
         "type": "toast",
         "params": {
-            "title": "Beware {{{USR.Name}}}!",
-            "message": "There is a problem with {{{RCD.Name}}}.",
-            "variant": "warning"
+            "title": "Operation Success",
+            "message": "Your new record was properly created.",
+            "variant": "success"
         }
     }
-}
+    ...
 ```
 
 ### Custom **apex** Action Type
 
 The **apex** action type enables to execute any operation implemented in a custom Apex class.
 * This Apex class should implement the **sfpegAction_SVC** virtual class.
-* The _params_ are then provided as input to the configured Apex class.
+* The `params` are then provided as input to the configured Apex class.
 ```
 {
     "name": "apexAction", "label": "apexAction",
@@ -727,6 +783,8 @@ in which case a “method” parameter can be specified after the class name.
     }
 }
 ```
+
+_Note_: Whenever a error occurs, the error message provided is automatically displayed in an error toast popup. Raising a custom Apex Exception then enables to provide tailored error messages to the end-users.
 
 
 ### **Notification** Action Types (**utility**, **action** and **notify**)
@@ -772,13 +830,13 @@ enabling to trigger any custom browser side LWC logic via the **sfActionBarCmp**
     themselves once an action has been executed.
     * It relies on the **sfpegCustomNotification** message channel and leverages the _Notification Channels_ 
     attribute of the metadata record.
-    * the target components need to set the _Notification Channel_ fields of the **sfpegAction** records they use
-    (for the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** components they embed)
-    * e.g. the following example triggers a _refresh_ action on all **[sfpegListCmp](/help/sfpegListCmp.md)**
-    instances having header actions configured to listen to the _RefreshList_ channel. 
+    * the target components need to set the `Notification Channel` fields of the **sfpegAction** records they use
+    (for the **sfpegActionBarCmp** components they embed)
+    * e.g. the following example triggers a **refresh** action on all **[sfpegListCmp](/help/sfpegListCmp.md)**
+    instances having their **sfpegAction** header actions configuration record set to listen to the *RefreshList* channel. 
 ```
 {
-  "label": "Refresh", "name": "refresh",qfd
+  "label": "Refresh", "name": "refresh",
   "action": {
     "type": "notify",
     "channel": "RefreshList",
@@ -792,14 +850,23 @@ enabling to trigger any custom browser side LWC logic via the **sfActionBarCmp**
 }
 ```
 
-The _Notification Channels_ attribute is to be set only if **notify** action types are used to filter
-which actions should be actually executed by the Action Bar component instance.
-* It is a JSON list of strings containing the labels of the channels used within
-**sfpegCustomNotification** message channel events.
-* When a value is set, the Action Bar registers to these events.
+The `Notification Channels` attribute of a **sfpegAction** custom metadata record defines which channels
+the **sfpegActionBarCmp** components using it should be listening to. 
+* It should be be set only if **notify** action types are used and have to be handled by the corresponding **sfpegActionCmp** component instances.
+* If set, it filters the actions actually executed by the **sfpegActionBarCmp** component instances, these instances then registering to these events.
+* It is a JSON list of strings containing the labels of the channels used within **sfpegCustomNotification** message channel events.
 * e.g. for an action header bar, the following text should be provided to register to the custom _RefreshList_ channel
 
 ![Action Notification Registration!](/media/sfpegActionNotifConfig.png)
+
+
+### Action Types from Other Components (Flow Popup, Aura Application Event, List Refresh, List Filter...)
+
+Other action types (or triggering contexts) are available from other components via various triggering mechanisms:
+* **[sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md)** actions may be triggered within a **utility** action type
+* **[sfpegActionUtilityCmp](/help/sfpegActionUtilityCmp.md)** actions may be triggered within a **utility** action type
+* **[sfpegListCmp](/help/sfpegListCmp.md)** actions may be triggered within a **done** action type
+
 
 ---
 

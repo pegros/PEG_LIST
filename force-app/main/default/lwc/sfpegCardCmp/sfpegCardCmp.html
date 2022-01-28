@@ -146,8 +146,11 @@
                         <lightning-record-edit-form object-api-name={formObjectApiName}
                                                     record-type-id={formRecordTypeId}   record-id={formRecordId}
                                                     density={configDetails.density}
-                                                    onload={handleFormLoad}             onsuccess={handleFormSuccess} >
-                            
+                                                    onload={handleFormLoad}
+                                                    onsuccess={handleFormSuccess}       onerror={handleFormError} >
+
+                            <lightning-messages></lightning-messages>
+
                             <!-- Stand-alone fields -->
                             <!--   horizontal-align="end" -->
                             <lightning-layout   multiple-rows="true"   >
@@ -188,7 +191,7 @@
                                 <lightning-button-group class="">
                                     <lightning-button variant="neutral"  label={cancelLabel} onclick={handleModeToggle}>
                                     </lightning-button>
-                                    <lightning-button variant="brand" type="submit" label={saveLabel}>
+                                    <lightning-button variant="brand" type="submit" label={saveLabel} onclick={handleFormSubmit}>
                                     </lightning-button>
                                 </lightning-button-group>
                             </div>

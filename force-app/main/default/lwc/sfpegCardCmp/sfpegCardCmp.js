@@ -343,6 +343,12 @@ export default class SfpegCardDsp extends LightningElement {
     }
     
     // Edit Form management
+    handleFormSubmit(event) {
+        if (this.isDebug) console.log('handleFormSubmit: START ',event);
+
+        if (this.isDebug) console.log('handleFormSubmit: END ');
+    }
+
     handleFormLoad(event) {
         if (this.isDebug) console.log('handleFormLoad: START ');
         if (this.isDebug) console.log('handleFormLoad: event received  ',event);
@@ -371,6 +377,12 @@ export default class SfpegCardDsp extends LightningElement {
         if (this.isDebug) console.log('handleFormSuccess: END / edit mode reset to ',this.isEditMode);
     }
  
+    handleFormError(event) {
+        if (this.isDebug) console.log('handleFormError: START ',error);
+        if (this.isDebug) console.log('handleFormError: END');
+    }
+
+
     // Section expand / collapse 
     handleExpandCollapse(event){
         if (this.isDebug) console.log('handleExpandCollapse: START ');

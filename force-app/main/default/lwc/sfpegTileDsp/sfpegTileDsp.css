@@ -34,7 +34,7 @@
     top: 18px;
     /*bottom: 5px;*/
     left: 6px;
-    height: calc(100% - 18px);
+    height: calc(100% - 5px);
     border-left-width: var(--lwc-borderRadiusSmall) !important;
     border-left-style: solid !important;
     border-left-color: var(--lwc-colorBorderButtonDefault) !important;
@@ -46,7 +46,7 @@
     top: 20px;
     /*bottom: 5px;*/
     left: 7px;
-    height: calc(100% - 20px);
+    height: calc(100% - 7px);
     border-left-width: var(--lwc-borderRadiusSmall) !important;
     border-left-style: solid !important;
     border-left-color: var(--lwc-colorBorderButtonDefault) !important;
@@ -57,9 +57,10 @@
     position: absolute;
     top: 27px;
     /*bottom: 5px;*/
-    left: 10px;
-    height: calc(100% - 27px);
-    border-left-width: var(--lwc-borderRadiusMedium) !important;
+    left: 11px;
+    height: calc(100% - 16px);
+    border-left-width: var(--lwc-borderRadiusSmall) !important;
+    /*border-left-width: var(--lwc-borderRadiusMedium) !important;*/
     border-left-style: solid !important;
     border-left-color: var(--lwc-colorBorderButtonDefault) !important;
 }
@@ -69,9 +70,10 @@
     position: absolute;
     top: 35px;
     /*bottom: 5px;*/
-    left: 14px;
-    height: calc(100% - 35px);
-    border-left-width: var(--lwc-borderRadiusMedium) !important;
+    left: 15px;
+    height: calc(100% - 23px);
+    border-left-width: var(--lwc-borderRadiusSmall) !important;
+    /*border-left-width: var(--lwc-borderRadiusMedium) !important;*/
     border-left-style: solid !important;
     border-left-color: var(--lwc-colorBorderButtonDefault) !important;
 }
@@ -81,9 +83,10 @@
     position: absolute;
     top: 50px;
     /*bottom: 5px;*/
-    left: 20px;
-    height: calc(100% - 50px);
-    border-left-width: var(--lwc-borderRadiusLarge) !important;
+    left: 23px;
+    height: calc(100% - 39px);
+    border-left-width: var(--lwc-borderRadiusSmall) !important;
+    /*border-left-width: var(--lwc-borderRadiusLarge) !important;*/
     border-left-style: solid !important;
     border-left-color: var(--lwc-colorBorderButtonDefault) !important;
 }
