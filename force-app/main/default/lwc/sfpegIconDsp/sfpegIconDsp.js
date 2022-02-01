@@ -5,6 +5,7 @@
 *               specificities of standard SLDS vs custom Icons.
 *               Custom icons have to be added as SVG sprites within the 
 *               sfpegIcons static resource file.
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

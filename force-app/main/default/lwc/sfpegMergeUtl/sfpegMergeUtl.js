@@ -3,6 +3,7 @@
 * @date   June 2021
 * @description  Utility Javascript LWC component providing simple methods to manipulate
 *               string templates and tokens for a context merge functionality.
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

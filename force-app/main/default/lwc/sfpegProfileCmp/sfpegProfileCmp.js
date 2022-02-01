@@ -4,6 +4,7 @@
 * @description  LWC Component to display a summary of record information in various 
 *               ways (background header, avatar, header summary, header badges,
 *               detailed info list/table).
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

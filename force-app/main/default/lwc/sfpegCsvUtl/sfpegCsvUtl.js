@@ -3,6 +3,7 @@
 * @date   June 2021
 * @description  Utility Javascript LWC component providing simple tools to export
 *               JSON lists in CSV.
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

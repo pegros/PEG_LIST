@@ -5,6 +5,7 @@
 *               configuration attribute data source (to display a picklist).
 * @author       P-E GROS
 * @date         Dec 2021
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 
@@ -46,7 +47,7 @@ global with sharing class sfpegRecordDisplaySelector_CTL extends VisualEditor.Dy
     ***/    
     
     global sfpegRecordDisplaySelector_CTL(VisualEditor.DesignTimePageContext pageContext) {
-        System.debug(LoggingLevel.FINEST,'Constructor START with page context ' + pageContext);
+        System.debug(LoggingLevel.FINEST,'Constructor START with sfpegRecordDisplay page context ' + pageContext);
         System.debug(LoggingLevel.FINEST,'Constructor entityName ' + pageContext.entityName);
         this.pageContext = pageContext;
     }
@@ -70,21 +71,19 @@ global with sharing class sfpegRecordDisplaySelector_CTL extends VisualEditor.Dy
     * @exception   none really specific.
     ***/
     global override VisualEditor.DynamicPickListRows getValues() {
-        System.debug(LoggingLevel.FINEST,'getValues: START');
+        System.debug(LoggingLevel.FINEST,'getValues: START for sfpegRecordDisplay');
     
         VisualEditor.DynamicPickListRows picklistValues = new VisualEditor.DynamicPickListRows();
         picklistValues.addRow(new VisualEditor.DataRow('---','N/A'));
         System.debug(LoggingLevel.FINEST,'getValues: picklistValues init ' + picklistValues);
     
-    
         System.debug(LoggingLevel.FINEST,'getValues: entity name fetched ' + pageContext.entityName);
-        Map<ID,sfpegRecordDisplay__mdt> configurations = new Map<ID,sfpegRecordDisplay__mdt>();
+        Map<ID,sfpegRecordDisplay__mdt> configurations = new Map<ID,sfpegRecordDisplay__mdt>(
+            [   select MasterLabel,  DeveloperName
+                from sfpegRecordDisplay__mdt 
+                where Scope__c LIKE '%RECORDS%']);
         if (! String.isEmpty(pageContext.entityName)) {
             System.debug(LoggingLevel.FINEST,'getValues: fetching Record and object specific queries');
-            configurations.putAll(new Map<ID,sfpegRecordDisplay__mdt>(
-                [   select MasterLabel,  DeveloperName
-                    from sfpegRecordDisplay__mdt 
-                    where Scope__c LIKE '%RECORDS%']));
             String entityPattern = '%' + pageContext.entityName + '%';
             configurations.putAll(new Map<ID,sfpegRecordDisplay__mdt>(
                 [   select MasterLabel,  DeveloperName

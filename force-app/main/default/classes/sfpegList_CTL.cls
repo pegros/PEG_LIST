@@ -6,6 +6,7 @@
 * @author       P-E GROS
 * @date         April 2021
 * @see          sfpegListQuery_SVC
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 
@@ -50,7 +51,7 @@ public with sharing class sfpegList_CTL {
     ***/
     @AuraEnabled(cacheable=true)
     public static Object getConfiguration(final String name) {
-        System.debug(LoggingLevel.FINE,'getConfiguration: START with configuration name ' + name);
+        System.debug(LoggingLevel.FINE,'getConfiguration: START with sfpegList configuration name ' + name);
 
         List<sfpegList__mdt> configs = [    SELECT MasterLabel, DisplayType__c, DisplayConfig__c, QueryInput__c, DoPagination__c, QueryOrderBy__c,  FlattenResults__c, RowActions__c 
                                             FROM sfpegList__mdt

@@ -4,6 +4,7 @@
 * @author       P-E GROS
 * @date         April 2021
 * @see          sfpegAction_TST
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

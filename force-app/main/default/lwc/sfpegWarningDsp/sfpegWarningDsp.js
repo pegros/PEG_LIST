@@ -2,6 +2,7 @@
 * @author P-E GROS
 * @date   Sept 2021
 * @description  LWC Component to display an error message in a standard way.
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

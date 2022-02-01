@@ -5,6 +5,7 @@
 * @see         sfpegMerge_CTL
 * @see         sfpegMergeLabels_CTL
 * @see         sfpegMergeLabels_VFP
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

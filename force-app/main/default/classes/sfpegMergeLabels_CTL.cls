@@ -6,6 +6,7 @@
 * @author       P-E GROS
 * @date         May 2021
 * @see          sfpegMergeLabels_VFP
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

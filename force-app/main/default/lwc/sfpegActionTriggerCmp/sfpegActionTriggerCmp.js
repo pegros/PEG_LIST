@@ -2,6 +2,7 @@
 * @author P-E GROS
 * @date   Oct 2021
 * @description  LWC Component to automatically trigger an action.
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

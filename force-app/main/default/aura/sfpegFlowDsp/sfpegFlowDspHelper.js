@@ -3,6 +3,7 @@
 * @author P-E GROS
 * @date   Oct 2021
 * @description  Aura Component to execute a Flow in a component and trigger a popup close upon completion.
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

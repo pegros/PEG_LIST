@@ -4,6 +4,7 @@
 * @description  LWC Component to display a field value in a record card (leveraging
 *               the proper lightning-formated-XXX standard output component based on
 *               field type).
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

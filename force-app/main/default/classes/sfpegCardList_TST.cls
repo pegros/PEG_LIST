@@ -4,6 +4,7 @@
 * @date        Oct. 2021
 * @see         sfpegCardList_CTL
 * @see         sfpegCardListSelector_CTL
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

@@ -13,8 +13,8 @@ It basically provides:
 (all fields available) than the standard **Related Record** App Builder component 
 * a more consistent and dense UI than the new Lightning **Flexible Layout** feature. 
 
-The component enables to switch between _view_ and _edit_ modes via an _edit_
-button. _Read-Only_ mode is therefore possible by deactivating this button.
+The component enables to switch between `view` and `edit` modes via an `edit`
+button. `Read-Only` mode is therefore possible by deactivating this button.
 
 ---
 
@@ -40,7 +40,7 @@ consists in
 of the main fields and sections displayed in the card body
 * selecting one of the available **sfpegAction__mdt** custom metadata record containing the 
 configuration of the header action button bar (see the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component for details)
-* setting various behaviour options (_read only_, _collapsible_...)
+* setting various behaviour options (`read only`, `collapsible`...)
 
 ![Record Card Configuration](/media/sfpegCardConfiguration.png)
 
@@ -48,36 +48,35 @@ configuration of the header action button bar (see the **[sfpegActionBarCmp](/he
 ### Metadata Configuration
 
 The **pegCard__mdt** custom Metadata provides the main configuration of the **sfpegCardCmp** components
-(target record identification and sections and fields layout).
-
+(target record identification and sections and fields layout).<br/>
 ![Record Card Metadata](/media/sfpegCardMeta.png)
 
 The first **Related Target** section enables to define the actual record to be displayed in the card
 * When the card is for the current record, both fields should remain empty
 (the component then automatically uses the standard LWC recordId and objectApiName variables)
-* Otherwise the _TargetObject_ should contain the API name of the object displayed in the card
-and _TargetIdField_ should contain the API Name of the lookup field identifying the target record
+* Otherwise the `TargetObject` should contain the API name of the object displayed in the card
+and `TargetIdField` should contain the API Name of the lookup field identifying the target record
 on the current record. 
 
 The second **Configuration** section describes the internal field layout of the component,
 as a JSON object with the following properties :
-* _size_ defines the default size (in portion of 12) for each field
-* _density_ defines how the labels are displayed (above vs next to the field value)
-* _fields_ defines the main list of fields displayed just below the card header, as a list
+* `size` defines the default size (in portion of 12) for each field
+* `density` defines how the labels are displayed (above vs next to the field value)
+* `fields` defines the main list of fields displayed just below the card header, as a list
 of JSON field definition objects
-  * Each field definition has a mandatory _name_ property (API name of the field)
-  * It may include _disabled_ and _required_ boolean properties to control field interaction
+  * Each field definition has a mandatory `name` property (API name of the field)
+  * It may include `disabled` and `required` boolean properties to control field interaction
   in edit mode
-  * It may also include a _size_ one to override the main default value
-* _sections_ defines the sections displayed afterwards in the card, as a list of JSON section
+  * It may also include a `size` one to override the main default value
+* `sections` defines the sections displayed afterwards in the card, as a list of JSON section
 definition objects
-  * Each section definition has a mandatory _label_ property (possibly using a Custom Label
+  * Each section definition has a mandatory `label` property (possibly using a Custom Label
   leveraging the `{{{LBL.xxx}}}` merge syntax)
   * It then has a mandatory _fields_ property to define the fields displayed in the section
   (similarly to the main _fields_ property)
-  * It may include _isCollapsible_ an _isCollapsed_ boolean properties to set a section
+  * It may include `isCollapsible` an `isCollapsed` boolean properties to set a section
   as collapsible and set its initial state
-  * It may also include a _size_ one to override the main default value for the section
+  * It may also include a `size` one to override the main default value for the section
 
 ```
 {

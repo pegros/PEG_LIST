@@ -3,6 +3,7 @@
 * @author P-E GROS
 * @date   Dec 2021
 * @description  Addressable Aura component to display a sfpegListCmp LWC component within a standalone tab.
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

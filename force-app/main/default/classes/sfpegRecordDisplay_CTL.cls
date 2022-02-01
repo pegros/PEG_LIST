@@ -3,6 +3,7 @@
 *               It relies on the sfpegRecordDisplay__mdt custom metadata.
 * @author       P-E GROS
 * @date         Dec 2021
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 
@@ -41,7 +42,7 @@ public with sharing class sfpegRecordDisplay_CTL {
     ***/
     @AuraEnabled(cacheable=true)
     public static Object getConfiguration(final String name) {
-        System.debug(LoggingLevel.FINE,'getConfiguration: START with configuration name ' + name);
+        System.debug(LoggingLevel.FINE,'getConfiguration: START with sfpegRecordDisplay configuration name ' + name);
 
         List<sfpegRecordDisplay__mdt> configs = [   SELECT  MasterLabel, DisplayConfig__c
                                                     FROM sfpegRecordDisplay__mdt

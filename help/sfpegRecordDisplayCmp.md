@@ -57,26 +57,29 @@ The **sfpegRecordDisplay__mdt** custom metadata provides most of the configurati
 
 ![Record Display Configuration Metadata](/media/sfpegRecordDisplayConfigMeta.png)
 
-The main _Display Configuration_ property is a JSON object with the following properties:
-* _title_ and _icon_ to respectively set the title and icon of the containing [lightning-card](https://developer.salesforce.com/docs/component-library/bundle/lightning-card/documentation)
-* _fields_ provides the list of fields displayed in the header section, each field being described as a JSON object with the following properties:
-    * _value_ is mandatory and provides the field value (usually leveraging merge **tokens**)
-    * _type_ provides the type of field (see **[sfpegFieldDsp](/help/sfpegFieldDsp.md)**) for details about supported values, default being `text`.
-    * _label_ (optional) provides the label displayed above the displayed field.
-    * _title_ (optional) provides the title displayed when hovering above the displayed field.
-    * _size_ (optional) provides the size of the field value display, within a 12 unit grid system, default being 12.
-* _tabs_ provides the set of tabs to be displayed below, each tab being described as a JSON object with the following properties
-    * _label_ for the tab label
-    * _fields_ for the list of fields displayed in the tab, described in the same war as the main _fields_ property
-    * _list_ for the optional **[sfpegListCmp](/help/sfpegListCmp.md)** component displayed below the tab fields, as a JSON object with the following properties
-        * _title_ and _icon_ (optional) respectively provide the label and icon displayed in the list card header
-        * _name_ provides the developer name of the **sfpegList__mdt** custom metadata record to use for the list
-        * _actions_ (optional) provides the developer name of the **sfpegAction__mdt** custom metadata record to use for the list header actions
+The main `Display Configuration` property is a JSON object with the following properties:
+* `title` and `icon` to respectively set the title and icon of the containing **[lightning-card](https://developer.salesforce.com/docs/component-library/bundle/lightning-card/documentation)**
+* `variant` (optional) to set a tabset display option (see **[lightning-tabset](https://developer.salesforce.com/docs/component-library/bundle/lightning-tabset/documentation)** for details, default value being _standard_)
+* `fields` provides the list of fields displayed in the header section, each field being described as a JSON object with the following properties:
+    * `value` is mandatory and provides the field value (usually leveraging merge **tokens**)
+    * `type` provides the type of field (see **[sfpegFieldDsp](/help/sfpegFieldDsp.md)** for details about supported values, default being _text_).
+    * `label` (optional) provides the label displayed above the displayed field.
+    * `title` (optional) provides the title displayed when hovering above the displayed field.
+    * `size` (optional) provides the size of the field value display, within a 12 unit grid system, default being 12.
+* `tabs` provides the set of tabs to be displayed below, each tab being described as a JSON object with the following properties
+    * `label` for the tab label
+    * `fields` for the list of fields displayed in the tab, described in the same war as the main _fields_ property
+    * `list` for the optional **[sfpegListCmp](/help/sfpegListCmp.md)** component displayed below the tab fields, as a JSON object with the following properties
+        * `title` and `icon` (optional) respectively provide the label and icon displayed in the list card header
+        * `name` provides the developer name of the **sfpegList__mdt** custom metadata record to use for the list
+        * `actions` (optional) provides the developer name of the **sfpegAction__mdt** custom metadata record to use for the list header actions
 
 ⚠️ **Beware** : when using **merge** tokens (see **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** ),
 please pay attention to the possible double quotes within the field values, which completely break the JSON parsing after merge.
 In such cases, explicit **ESCAPE(((...)))** directives are required required. This is especially relevant 
 when using this component especially meant to display text or richtext areas.
+
+
 
 ---
 
@@ -106,5 +109,7 @@ For the displayed component example, the configuration is the following.
 
 ## Technical Details
 
-It relies on the **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** component to fetch record data, either
+It relies on:
+* the **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** component to fetch record data, either
 via Lightning Data Service (recommended) or via direct SOQL (for LDS unsupported objects).
+* the **[lightning-tabset](https://developer.salesforce.com/docs/component-library/bundle/lightning-tabset/documentation)** standard component to display the tabs (see variants supported)

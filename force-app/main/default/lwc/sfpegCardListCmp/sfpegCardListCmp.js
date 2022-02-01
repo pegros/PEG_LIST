@@ -3,6 +3,7 @@
 * @date   Oct 2021
 * @description  LWC Component to display a list of Cards, leveraging the LDS for each record
 *               (with a configurable list of fields).
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

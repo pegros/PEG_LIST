@@ -4,6 +4,7 @@
 *               It relies on the sfpegKpiList__mdt custom metadata.
 * @author       P-E GROS
 * @date         July 2021
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 
@@ -45,7 +46,7 @@ public with sharing class sfpegKpiList_CTL {
     ***/
     @AuraEnabled(cacheable=true)
     public static Object getConfiguration(final String name) {
-        System.debug(LoggingLevel.FINE,'getConfiguration: START with configuration name ' + name);
+        System.debug(LoggingLevel.FINE,'getConfiguration: START with sfpegKpiList configuration name ' + name);
 
         List<sfpegKpiList__mdt> configs = [ SELECT MasterLabel, DisplayConfig__c
                                             FROM sfpegKpiList__mdt

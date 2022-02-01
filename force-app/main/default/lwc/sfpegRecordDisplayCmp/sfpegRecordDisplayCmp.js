@@ -2,6 +2,7 @@
 * @author P-E GROS
 * @date   Dec 2021
 * @description  LWC Component to display a record as main section and subtabs.
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 
@@ -62,6 +63,7 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
     @track errorMsg;                // Error message displayed (if applicable)
     
     // Display Parameters
+    @track tabVariant = 'standard' // Variant of the tab container
     @track cardTitle;           // Title of the wrapping Card
     @track cardIcon;            // Icon of the wrapping Card
     @track mainFields;          // Content of the top section
@@ -98,6 +100,7 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
         if (this.tabList) return true;
         return false;
     }
+    
 
     //----------------------------------------------------------------
     // Component initialisation  
@@ -331,6 +334,7 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
 
             if (rawTemplate) {
                 if (this.isDebug) console.log('finalizeDisplay: setting display properties ');
+                this.tabVariant = rawTemplate.variant || 'standard';
                 this.cardTitle = rawTemplate.title || 'NONE';
                 this.cardIcon = rawTemplate.icon;
                 this.mainFields = rawTemplate.fields;

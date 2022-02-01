@@ -2,6 +2,7 @@
 * @author P-E GROS
 * @date   May 2021
 * @description  LWC Component to display User interaction Popups
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

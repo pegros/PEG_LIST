@@ -2,6 +2,7 @@
 * @author P-E GROS
 * @date   April 2021
 * @description  LWC Component to display Lists of actions in a utility bar menu.
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

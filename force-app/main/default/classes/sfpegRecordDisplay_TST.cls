@@ -4,6 +4,7 @@
 * @date        Dec. 2021
 * @see         sfpegRecordDisplay_CTL
 * @see         sfpegRecordDisplaySelector_CTL
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

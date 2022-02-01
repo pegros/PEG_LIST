@@ -5,6 +5,7 @@
 * @see         sfpegList_CTL
 * @see         sfpegListQuery_SVC
 * @see         sfpegListSelector_CTL
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * This code is the property of Salesforce.com and is protected by U.S. and International

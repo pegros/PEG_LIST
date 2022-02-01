@@ -3,6 +3,7 @@
 * @date   April 2021
 * @description  Utility Javascript LWC component providing simple tools to manipulate
 *               JSON lists.
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

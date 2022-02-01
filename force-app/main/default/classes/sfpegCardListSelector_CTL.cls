@@ -5,6 +5,7 @@
 *              attribute data source (to display a picklist).
 * @author      P-E GROS
 * @date        Oct 2021
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 
@@ -46,7 +47,7 @@ global with sharing class sfpegCardListSelector_CTL extends VisualEditor.Dynamic
     ***/    
     
         global sfpegCardListSelector_CTL(VisualEditor.DesignTimePageContext pageContext) {
-            System.debug(LoggingLevel.FINEST,'Constructor START with page context ' + pageContext);
+            System.debug(LoggingLevel.FINEST,'Constructor START with sfpegCardList page context ' + pageContext);
             System.debug(LoggingLevel.FINEST,'Constructor entityName ' + pageContext.entityName);
             this.pageContext = pageContext;
         }
@@ -70,7 +71,7 @@ global with sharing class sfpegCardListSelector_CTL extends VisualEditor.Dynamic
     * @exception   none really specific.
     ***/
         global override VisualEditor.DynamicPickListRows getValues() {
-            System.debug(LoggingLevel.FINEST,'getValues: START');
+            System.debug(LoggingLevel.FINEST,'getValues: START for sfpegCardList');
     
             VisualEditor.DynamicPickListRows picklistValues = new VisualEditor.DynamicPickListRows();
             picklistValues.addRow(new VisualEditor.DataRow('---','N/A'));

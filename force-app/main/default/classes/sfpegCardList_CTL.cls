@@ -2,6 +2,7 @@
 * @description  Lightning controller to provide details about existing Card List configurations.
 * @author       P-E GROS
 * @date         Oct 2021
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 
@@ -42,7 +43,7 @@ public with sharing class sfpegCardList_CTL {
     ***/
     @AuraEnabled(cacheable=true)
     public static Object getConfiguration(final String name) {
-        System.debug(LoggingLevel.FINE,'getConfiguration: START with configuration name ' + name);
+        System.debug(LoggingLevel.FINE,'getConfiguration: START with sfpegCardList configuration name ' + name);
 
         List<sfpegCardList__mdt> configs = [    select  Query__c, RecordIdField__c, RecordNameField__c, CardContext__c,
                                                         IconName__c, IconNameField__c, ObjectName__c, ObjectNameField__c, 

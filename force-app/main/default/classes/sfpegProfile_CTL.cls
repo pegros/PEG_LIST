@@ -3,6 +3,7 @@
 *               It relies on the sfpegProfile__mdt custom metadata.
 * @author       P-E GROS
 * @date         August 2021
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 
@@ -41,7 +42,7 @@ public with sharing class sfpegProfile_CTL {
     ***/
     @AuraEnabled(cacheable=true)
     public static Object getConfiguration(final String name) {
-        System.debug(LoggingLevel.FINE,'getConfiguration: START with configuration name ' + name);
+        System.debug(LoggingLevel.FINE,'getConfiguration: START with sfpegProfile configuration name ' + name);
 
         List<sfpegProfile__mdt> configs = [ SELECT  MasterLabel, ProfileBanner__c, ProfileAvatar__c, ProfileHeader__c,
                                                     ProfileActions__c, ProfileDetails__c

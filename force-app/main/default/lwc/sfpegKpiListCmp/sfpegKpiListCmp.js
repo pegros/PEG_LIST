@@ -3,6 +3,7 @@
 * @date   July 2021
 * @description  LWC Component to display Lists of KPIS based on the current record
 *               in a set of cards.
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

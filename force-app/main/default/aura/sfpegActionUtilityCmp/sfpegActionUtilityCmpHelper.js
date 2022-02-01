@@ -3,6 +3,7 @@
 * @author P-E GROS
 * @date   June 2021
 * @description  Aura Component to display an action menu in a utility bar and handle specific console operations.
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 

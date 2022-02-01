@@ -3,6 +3,7 @@
 *               It relies on the sfpegMessage__mdt custom metadata.
 * @author       P-E GROS
 * @date         August 2021
+* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 
@@ -41,7 +42,7 @@ public with sharing class sfpegMessage_CTL {
     ***/
     @AuraEnabled(cacheable=true)
     public static Object getConfiguration(final String name) {
-        System.debug(LoggingLevel.FINE,'getConfiguration: START with configuration name ' + name);
+        System.debug(LoggingLevel.FINE,'getConfiguration: START with sfpegMessage configuration name ' + name);
 
         List<sfpegMessage__mdt> configs = [ SELECT MasterLabel, MessageDisplay__c, MessageActions__c
                                             FROM sfpegMessage__mdt

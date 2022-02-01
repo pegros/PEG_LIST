@@ -35,6 +35,8 @@
                         <dd class="slds-dl_horizontal__detail">{configName}</dd>
                         <dt class="slds-dl_horizontal__label slds-truncate">Action Configuration:</dt>
                         <dd class="slds-dl_horizontal__detail">{actionConfigName}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Context:</dt>
+                        <dd class="slds-dl_horizontal__detail">Object: {objectApiName} / Record ID: {recordId}</dd>
                         <dt class="slds-dl_horizontal__label slds-truncate">Use LDS?</dt>
                         <dd class="slds-dl_horizontal__detail">{useLDS}</dd>
                         <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
@@ -77,7 +79,8 @@
         
             <!-- Tabs Display -->
             <template if:true={hasTabData}>
-                <lightning-tabset class="slds-p-horizontal_small">
+                <div class="slds-p-horizontal_small">
+                <lightning-tabset variant={tabVariant}>
                     <template for:each={tabList} for:item="iterTab">  
                         <lightning-tab label={iterTab.label} key={iterTab._key}>
 
@@ -112,6 +115,7 @@
                         </lightning-tab>
                     </template>
                 </lightning-tabset>
+                </div>
             </template>
 
         </lightning-card>
