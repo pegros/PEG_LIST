@@ -157,11 +157,10 @@ bar specific behaviours currently not possible from LWC: automatic closing of th
 trigger, console tab operations (close all tabs, close tab and open another one...),
 custom/flow popup open... (_Note_: this component may be used in Community page footer as well)
 
-```
 <p align="center" >
 <img src="/media/sfpegActionUtility.png"    alt="Action Utility"    title="Action Utility in Utility Bar" />
 </p>
-```
+
 
 ### Addressable Aura Components
 
