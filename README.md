@@ -186,42 +186,45 @@ queries & actions to be used in the components), often containing complex JSON c
 
 
 Such an approach enables to easily reuse the same detailed configuration in multiple Lightning page layouts and
-enables a more efficient local configuration caching (for better performances)
+enables a more efficient local configuration caching (for better performances).
 
-![List App Builder Configuration Example](/media/sfpegListConfiguration.png)
+The following example illustrate the configuration of the **[sfpegListCmp](/help/sfpegListCmp.md)** component
+in the App Builder, referencing 2 custom metadata records (orange zones) respectively for the data
+fetch/display configuration and for the header actions.
+
 <p align="center" >
-_Example of the **[sfpegListCmp](/help/sfpegListCmp.md)** component configuration in the App Builder, referencing 2 custom metadata records (orange zones) respectively for the data fetch/display configuration and for the header actions_
+![List App Builder Configuration Example](/media/sfpegListConfiguration.png)
 </p>
 
 
 ### Configuration Contextualisation
 
-In the main property of most metadata records, context __merge tokens__ may be used to dynamically set some values
+In the main property of most metadata records, context ***merge tokens*** may be used to dynamically set some values
 based on the applicable record(s) and user. See the **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** for more details
 about the applicable syntax and all the possible tokens.
 
 
 ### Configuration Scoping
 
-All custom metadata objects include a _scope_ property_ to define the pages for which the configuration record
-is applicable, i.e. a set of comma separated strings
-* _GLOBAL_ keyword  (for all pages),
-* _RECORDS_ keyword (for all record pages)
-* _<ObjectApiName>_ (for a specific Salesforce Object) 
+All custom metadata objects include a `Scope` property to define the pages for which the configuration record
+is applicable, i.e. a set of space separated strings
+* `GLOBAL` keyword  (for all pages),
+* `RECORDS` keyword (for all record pages)
+* `<ObjectApiName>` (for a specific Salesforce Object) 
 
 This value is then taken into account by the **Datasource** Apex controllers to let the users only choose
 the appropriate records when cconfiguring a component in the App Builder.
 
-Setting a _Scope_ is optional, e.g. for **sfpegAction__mdt** records used as row actions of other component
+Setting a `Scope` is optional, e.g. for **sfpegAction__mdt** records used as row actions of other component
 metadata records (e.g. **sfpegList__mdt**).
 
 
 ### Debug Mode Activation
 
-All App Builder components include _Debug xxx ?_ properties to enable to display some configuration information
+All App Builder components include `Debug xxx ?` properties to enable to display some configuration information
 within the component (usually in its wrapping card footer) and activate debug logs within the browser console.
-* _Debug ?_ applies only to the current component
-* _Debug (fine) ?_ applies to all sub-components used  within the component (e.g. the action bar or the merge utility).
+* `Debug ?` applies only to the current component
+* `Debug (fine) ?` applies to all sub-components used  within the component (e.g. the action bar or the merge utility).
 
 On server side, all controllers have Apex debug logs implemented at various levels (error, warning, debug, fine...).
 
@@ -255,8 +258,7 @@ In order to optimise initialisation time of the different components, a 2 stage 
 * any fetched / parsed configuration is also stored in a static map variable per component
 (enabling to execute the initialisation only once and only fetch the missing elements or initialise the specific items)
 
-This approach enables to dramatically reduce initialisation times when the same configuration is used in multiple pages.
-E.g. when opening Account pages
+This approach enables to dramatically reduce initialisation times when the same configuration is used in multiple pages. E.g. when opening Account pages
 * the configuration is loaded first then all contextual data requested when opening the first Account page 
 * the configuration is reused and contextual data directly fetched when opening the later Account pages.
 
