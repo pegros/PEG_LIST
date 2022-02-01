@@ -19,7 +19,7 @@ e.g. fetched via callouts to external systems (without the need for external obj
 Apex logic (combining multiple related records, rebuilding record hierarchies...)
 * a extended set of display options (tiles, tree-grid) to handle cases where data-table are not suitable
 from a UX perspective
-* out-of-the-box record set filtering, sorting and CSV export capabilities
+* out-of-the-box record list filtering, sorting and CSV export capabilities
 * the option to load records progressively (pagination) for potentially large data sets (the total count being
 automatically fetched upon instantiation, a _load more_ button being displayed in the component's footer as long
 as this total count has not been loaded)
@@ -82,35 +82,35 @@ components. It contains multiple sections of properties to respectively configur
 
 ![Main List Metadata Record](/media/sfpegListConfigMeta.png)
 
-_Note_: Context merge is systematically applied to the _query input_ property upon initial load/refresh
+_Note_: Context merge is systematically applied to the `query input` property upon initial load/refresh
 (see **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** component) to adapt the query context to the display environment.
-Label related _merge tokens_ are also evaluated in the _Display Configuration_ property to adapt labels to the 
+Label related ***merge tokens*** are also evaluated in the `Display Configuration` property to adapt labels to the 
 user language.
 
 
 The **Query** section defines how data are retrieved: 
 * Query or Apex class to be applied
-    * _Query Type_ to select a fetch mode (SOQL, SOSL, Apex)
-    * _Query Class_ (if _Apex_ mode is chosen) to specify the name of the Apex class to call 
+    * `Query Type` to select a fetch mode (SOQL, SOSL, Apex)
+    * `Query Class` (if _Apex_ mode is chosen) to specify the name of the Apex class to call 
     (implementing **sfpegListQuery_SVC** virtual class) 
-    * _Query Template_ (formely _Query SOQL_) to specify the SOQL/SOSL query to execute (when these modes are chosen).
+    * `Query Template` (formely `Query SOQL`) to specify the SOQL/SOSL query to execute (when these modes are chosen).
 * Inputs required to contextualise the fetch 
-    * _Query Input_ to specify a single JSON context object to contextualise the query or
+    * `Query Input` to specify a single JSON context object to contextualise the query or
     be passed as input to the Apex class fetch method
-    * For the _Query SOQL_, the properties of this JSON object are to be merged via 
+    * For the `Query SOQL`, the properties of this JSON object are to be merged via 
     `{{{propertyName}}}` tokens in the query string  (e.g. `{{{ID}}}` in the example
     above to fetch the ID property value of the input object)
     * The values of this JSON object may be initialized via any `{{{mergeToken}}}` supported
     by the **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** utility component
     (e.g. `{{{GEN.recordId}}}` in the example above to fetch the Salesforce ID of the current page record)
 
-_Note_: Additional security related parameters will be soon added for the SOQL mode, such as _enforce FLS_ and _bypass sharing_.
+_Note_: Additional security related parameters will be soon added for the SOQL mode, such as `enforce FLS` and `bypass sharing`.
 
 
 The **PaginationHandling** section defines how pagination (for progressive data load for large data sets) should work:
-* _Do Pagination ?_ to check to activate pagination (supported only in SOQL and Apex modes for now)
-* _Query Count_ to provide a SOQL `count()` query corresponding to the _Query SOQL_ (if SOQL mode retrieval is used)
-* _Query Order By Field_ and _Order Direction_ to let the component properly manage the pagination (the feature not
+* `Do Pagination ?` to check to activate pagination (supported only in SOQL and Apex modes for now)
+* `Query Count` to provide a SOQL `count()` query corresponding to the _Query SOQL_ (if SOQL mode retrieval is used)
+* `Query Order By Field` and `Order Direction` to let the component properly manage the pagination (the feature not
 relying in the standard SOQL `OFFSET` mechanism but on explicit `WHERE` clause statements).
 * When pagination mode is activated in SOQL mode, the _Query SOQL_ should then include 
     * a specific `{{{PAGE}}}` merge token within its `WHERE` clause to set the page range limit (lower or higher depending on direction)
@@ -121,38 +121,38 @@ and `getPaginatedData()` methods instead of the base `getData()` one.
 
 
 The **Display** section defines how data are displayed in the component:
-* _Display Type_ to choose among the four display modes supported (_DataTable_, _DataTree_, _CardList_, _TileList_),
+* `Display Type` to choose among the four display modes supported (_DataTable_, _DataTree_, _CardList_, _TileList_),
 most of the configuration element being shared among them (or simply ignored)
-* _Display Configuration_ to define how data are displayed, as a single JSON object structure leveraging (and extending)
+* `Display Configuration` to define how data are displayed, as a single JSON object structure leveraging (and extending)
 the JSON display configuration of the standard
 [lightning-datatable](https://developer.salesforce.com/docs/component-library/bundle/lightning-datatable/documentation) and
 [lightning-tree-grid](https://developer.salesforce.com/docs/component-library/bundle/lightning-tree-grid/documentation) base components.
     * This is especially applicable to the _columns_ property
     * Additional root properties have been added for the _CardList_ and _TileList_ modes to tune their specific layouts
-        * _title_ and _icon_ to configure the title and optional icon for each tile displayed in these modes,
-        icon name being either static (by providing a _name_ property) or dynamic (by providing a _fieldName_ property,
+        * `title` and `icon` to configure the title and optional icon for each tile displayed in these modes,
+        icon name being either static (by providing a `name` property) or dynamic (by providing a `fieldName` property,
         this field containing the actual icon name to be used) 
-        * _cardNbr_ and _fieldNbr_ to respectively set the number per row of tiles and fields (within a tile,
+        * `cardNbr` and `fieldNbr` to respectively set the number per row of tiles and fields (within a tile,
         if _CardList_ mode is used) 
-    * An optional  _menu_ property describing the row action menu (_name_, _mabel_ and optional _icon_ of each menu
-    item) to be displayed in each tile / at the end of each data-table /tree-grid row (see _Row Actions_ below).
-    * An optional _variant_ property enables to alter the display of the tiles
-        * For now, two values are available, i.e. `base` for default tile box display or `timeline` for timeline like display (no box, vertical grey border under the icon)
-    * An optional _details_ property enabling to set a second list of fields (similar to the _fields_ one)
+    * An optional  `menu` property describing the row action menu (`name`, `label` and optional `icon` of each menu
+    item) to be displayed in each tile / at the end of each data-table /tree-grid row (see `Row Actions` below).
+    * An optional `variant` property enables to alter the display of the tiles
+        * For now, two values are available, i.e. _base_ for default tile box display or _timeline_ for timeline like display (no box, vertical grey border under the icon)
+    * An optional `details` property enabling to set a second list of fields (similar to the `fields` one)
         * setting this property activates an expand/collapse on the tile content
         * when expanded, the fields of this list are displayed below the main ones in a _cardList_ mode
-* _Flatten Results?_ to activate fetched data JSON structure _flattening_ in order to let related record data being
+* `Flatten Results?` to activate fetched data JSON structure ***flattening*** in order to let related record data being
 properly displayed within _DataTree_ or _TreeGrid_ components (which do not support displaying data from JSON sub-objects,
 as when related record fields are fetched)
-* _Row Actions_ definining the actions available at row level 
+* `Row Actions` definining the actions available at row level 
     * It should simply provide the developer name of a **sfpegAction__mdt** custom metadata record containing the actions
-    used within the _Display Configuration_ property (identified by their _name_ properties).
-    * This may apply to _button_ or _action_ items of the _columns_ property (see
+    used within the `Display Configuration` property (identified by their `name` properties).
+    * This may apply to _button_ or _action_ items of the `columns` property (see
     [lightning-datatable](https://developer.salesforce.com/docs/component-library/bundle/lightning-datatable/documentation)
     for details)
-    * This may also apply to the _menu_ property defining the tile menu for the _TileList_ and _CardList_ display modes or
+    * This may also apply to the `menu` property defining the tile menu for the _TileList_ and _CardList_ display modes or
     the appended last column menu in _DataTable_ and _TreeGrid_ modes.
-    * This at last applies to the _action_ sub-property of the _title_ property for the _TileList_ and _CardList_ display
+    * This at last also applies to the `action` sub-property of the `title` property for the _TileList_ and _CardList_ display
     modes (to activate an action link on the tile title)
     * Beware that conditional activation of actions does not work for _action_ entries in the _DataTable_ and _TreeGrid_
     columns (i.e. only for _button_ ones), while they properly work in the menu for the _TileList_ and _CardList_ modes.
@@ -164,16 +164,35 @@ Hereafter is an example of the **sfpegAction__mdt** record used for row level ac
 ### Special Paginated Use Cases
 
 When using the pagination, this example should be modified the following way:
-* _Query SOQL_ should be modified to :<br/>
+* `Query Template` should be modified to :<br/>
 ```
 SELECT...  WHERE  WhatId = '{{{RECORD}}}' and IsClosed = false and RecordType.DeveloperName = 'NBA' and {{{PAGE}}} order by Id desc limit 5
 ```
-* _Query Count_ should be set to : <br/>
+* `Query Count` should be set to : <br/>
 ```
 SELECT count() FROM Task WHERE  WhatId = '{{{ID}}}' and IsClosed = false and RecordType.DeveloperName = 'NBA'
 ```
-* _Query OrderBy Field_ should be set to `Id`
-* _Order Direction_ should be set to `Descending`
+* `Query OrderBy Field` should be set to `Id`
+* `Order Direction` should be set to `Descending`
+
+
+### Special Preset List Filter
+
+It is also possible to preset a filter applied on the list of records, this filtering being
+automatically applied on browser side after data fetch. 
+
+You just need to include a `filter` property in the `Display Configuration` parameter, specifying
+filter `scope` and `string` to be applied.
+```
+    ...
+    "filter":{
+        "scope": "CheckBox__c",
+        "string": "true"
+    }
+    ...
+```
+
+_Note_: if no scope is defined, the default _ALL_ scope is used.
 
 
 ### Specific Action Features

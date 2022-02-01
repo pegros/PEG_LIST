@@ -568,6 +568,20 @@ export default class SfpegListCmp extends LightningElement {
                 this.filterScope = this.filterFields[0];
             } 
 
+            // Initialization of preset filter
+            if (this.configDetails?.display?.filter) {
+                if (this.isDebug) console.log('finalizeConfig: initializing filter from config',JSON.stringify(this.configDetails.display.filter));
+                this.isFiltered = true;
+                let filterScopeName = this.configDetails.display.filter.scope || 'ALL';
+                if (this.isDebug) console.log('finalizeConfig: provided filter scope name ',filterScopeName);
+                this.filterScope = this.filterFields.find(item => item.fieldName === filterScopeName);                
+                if (this.isDebug) console.log('finalizeConfig: filter scope set',JSON.stringify(this.filterScope));
+                this.filterFields.forEach(item => item.selected = (item.fieldName === this.filterScope.fieldName));
+                if (this.isDebug) console.log('finalizeConfig: filterFields updated ',JSON.stringify(this.filterFields));
+                this.filterString = this.configDetails.display.filter.string;
+                if (this.isDebug) console.log('finalizeConfig: filterString set ',JSON.stringify(this.filterString));
+            }
+
             if (ldsFetchRequired) {
                 if (this.isDebug) console.log('finalizeConfig: END / waiting for LDS data fetch');
             }
@@ -585,6 +599,7 @@ export default class SfpegListCmp extends LightningElement {
     }
 
     //Query execution
+    //TODO: refactor paginated case to trigger count & initial query in parallel instead of sequence
     executeQuery = function() {
         if (this.isDebug) console.log('executeQuery: START');
 
@@ -604,8 +619,10 @@ export default class SfpegListCmp extends LightningElement {
         this.errorMsg = '';
 
         // reset filter (when execute triggered as part of refresh)
-        this.isFiltered = false;
-        this.filterString = null;
+        //###################
+        /*this.isFiltered = false;
+        this.filterString = null;*/
+        //###################
         this.resultListOrig = null
         this.selectedRecords = null;
 
@@ -675,6 +692,13 @@ export default class SfpegListCmp extends LightningElement {
                 this.lastRecordKey = (lastRecord ? (lastRecord[0])[(this.configDetails.query.orderByField)] : null);
                 if (this.isDebug) console.log('executeQuery: lastRecordKey registered ', this.lastRecordKey);
 
+                //###################
+                if (this.filterString) {
+                    if (this.isDebug) console.log('executeQuery: filtering results ');
+                    this.filterRecords();
+                }
+                //####################
+
                 //this.errorMsg = result.length + " item(s) fetched from Server!";
                 this.sortDirection = 'asc';
                 this.sortedBy = null;
@@ -727,6 +751,14 @@ export default class SfpegListCmp extends LightningElement {
                     if (this.isDebug) console.log('executeQuery: CheckBox displayed ');
                     this.selectedRecords = ( dataTable ? dataTable.getSelectedRows() : []);
                 }
+
+                //###################
+                if (this.filterString) {
+                    if (this.isDebug) console.log('executeQuery: filtering results ');
+                    this.filterRecords();
+                }
+                //####################
+    
                 if (this.isDebug) console.log('executeQuery: selectedRecords init ', JSON.stringify(this.selectedRecords));
 
                 //this.errorMsg = result.length + " item(s) fetched from Server!";

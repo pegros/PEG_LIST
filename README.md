@@ -72,15 +72,12 @@ of which is provided [here](/help/sfpegComponentList.md).
 
 A main set of LWC components is available for use in Lightning App Builder:
 
-* **[sfpegListCmp](/help/sfpegListCmp.md)** displays a contextualised and actionable list of records in 3 main formats
-(data table, data tree or tile list), data being retrieved via SOQL, Apex...
+* **[sfpegListCmp](/help/sfpegListCmp.md)** displays a contextualised and actionable list of records in 3 main formats (data table, data tree or tile list), data being retrieved via SOQL, Apex...
 
 <p align="center">
 <img src="/media/sfpegListTiles.png"    alt="List as Tiles"         title="List as Tiles" />
-<img src="/media/sfpegListCards.png"    alt="List as Tile Cards"    title="List as Tile Cards"/>
 <img src="/media/sfpegListTimeline.png" alt="List as Timeline"      title="List as Timeline"/>
 <img src="/media/sfpegListTable.png"    alt="List as Data Table"    title="List as Data Table"/>
-<img src="/media/sfpegListTree.png"     alt="List as Tree Grid"     title="List as Tree Grid"/>
 </p>
 
 * **[sfpegMessageListCmp](/help/sfpegMessageListCmp.md)** displays a conditional, contextualised and actionable list
