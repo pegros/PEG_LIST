@@ -53,7 +53,7 @@ _Display as Data Table_
 ![List as tree grid](/media/sfpegListTree.png) <br/>
 _Display as Tree Grid_
 
-_Note_:In the last _tree grid_ example, fetching data with custom Apex enables to fetch
+_Note_:In the last _TreeGrid_ example, fetching data with custom Apex enables to fetch
 a whole multi-level record hierarchy in a single call (while SOQL only supports 1 level of
 embedded subqueries)
 
@@ -425,6 +425,62 @@ The _TreeGrid_ layout configuration looks as follows:<br/>
         }
     ]
 }
+```
+
+
+### Dynamically Disabled Row Actions
+
+In that example, the **sfpegListCmp** component is configured in _DataTable_ mode and
+relies on a custom boolean formula field to activate an action or not on a per row basis.<br/>
+![List with row level conditional actions](/media/sfpegListRowActionsExample.png)
+
+The query should include the boolean formula field (here *HasReason__c*) to be used for action activation 
+```
+select Id, Name, RecordType.Name, TOLABEL(Motif__c), TST_ACL__c, TST_ACL__r.Name, ReasonCode__c, HasReason__c
+from TST_PEG__c
+where TST_ACL__c = '{{{ID}}}'
+```
+
+The _DataTable_ configuration layout looks as follows:<br/>
+```
+{
+    "keyField": "Id",
+    "columns": [
+        {   "type":"button", "fieldName": "Name", "label": "Nom",
+            "typeAttributes":{"label":{"fieldName":"Name"},"name":"open","variant":"base"} },
+        {   "fieldName": "RecordType.Name", "label": "Type" },
+        {   "fieldName": "Motif__c", "label": "Reason" },
+        {   "fieldName": "TST_ACL__r.Name", "label": "Parent" },
+        {   "fieldName": "HasReason__c", "label": "Has Reason?", "type":"boolean" },
+        {   "type":"button",
+            "typeAttributes":{"label": "Edit","name":"editDml","variant":"base","disabled":{"fieldName":"HasReason__c"}} }
+    ]
+}
+```
+
+_Notes_:
+* Beware that in the example above, the `Flatten Results?` checkbox should be selectd in the **sfpegList** custom 
+metadata component on order for the compound fields (e.g. `TST_ACL__r.Name`)  to be properly displayed.
+* Beware that in _DataTable_ and _TreeGrid_ modes, the `disabled` property only works for `button` or `button-icon`
+column types. Among others it does not for row actions set in the `menu` property due to a current 
+**[lightning-datatable](https://developer.salesforce.com/docs/component-library/bundle/lightning-datatable/documentation)** component limitation.
+
+
+For the _CardList_ and _TileList_ modes, any entry in the `menu` property may be dynamically disabled
+in a similar way. However the `isDynamicMenu` boolean property needs to be explicitly set to `true` in
+the configuration:
+```
+...
+"isDynamicMenu":true,
+"menu": [
+    ...
+    {
+        "label": "Edit (DML)", "name": "editDml", "iconName":"utility:edit",
+        "disabled":{"fieldName":"HasReason__c"}
+    }
+    ...
+]
+...
 ```
 
 ---
