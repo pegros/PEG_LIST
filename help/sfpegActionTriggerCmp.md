@@ -58,7 +58,7 @@ E.g. the following Aura component may be used to trigger the *Flow* action of th
 </aura:component>
 ```
 
-* Javascript ccontroller of the component
+* Javascript controller of the component
 
 ```
 ({
