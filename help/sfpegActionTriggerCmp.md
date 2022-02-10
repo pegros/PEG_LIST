@@ -40,21 +40,21 @@ E.g. the following Aura component may be used to trigger the *Flow* action of th
 
 ```
 <aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId,force:hasSObjectName" access="global" >
-	
-	<aura:attribute name="userId"	type="String"	access="private" />
+
+    <aura:attribute name="userId"	type="String"	access="private" />
     <aura:handler	name="init"		value="{!this}"	action="{!c.doInit}" />
     
     <div class="slds-box">
-    	<p class="slds-text-heading_small">Executing action.</p>
+        <p class="slds-text-heading_small">Executing action.</p>
     </div>
     
     <aura:if isTrue="{!v.userId.length > 0}">
-		<c:sfpegActionTriggerCmp	configName="TST_TstPopups"			actionName="Flow"
-                					objectApiName="{!v.sObjectName}"	recordId="{!v.recordId}"
-                             		userId="{!v.userId}" 				isDebug="false">
+        <c:sfpegActionTriggerCmp    configName="TST_TstPopups"          actionName="Flow"
+                                    objectApiName="{!v.sObjectName}"    recordId="{!v.recordId}"
+                                    userId="{!v.userId}"                isDebug="false">
     	</c:sfpegActionTriggerCmp>
     </aura:if>
-    
+
 </aura:component>
 ```
 
