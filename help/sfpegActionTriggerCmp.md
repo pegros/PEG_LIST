@@ -62,19 +62,19 @@ E.g. the following Aura component may be used to trigger the *Flow* action of th
 
 ```
 ({
-	doInit : function(component, event, helper) {
+    doInit : function(component, event, helper) {
         console.log('doInit: START');
         component.set("v.userId", $A.get("$SObjectType.CurrentUser.Id"));
 
-		let dismissActionPanel = $A.get("e.force:closeQuickAction");
+        let dismissActionPanel = $A.get("e.force:closeQuickAction");
         setTimeout(() => {
-        	dismissActionPanel.fire();
-			console.log('doInit: END');
+            dismissActionPanel.fire();
+            console.log('doInit: END');
         }, 1000);
         //To be tuned according to the duration of the action launch
-                          
+
         console.log('doInit: waiting for action to be launched');
-	}
+    }
 })
 ```
 
