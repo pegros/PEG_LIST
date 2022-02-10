@@ -68,16 +68,20 @@ export default class SfpegListCmp extends LightningElement {
     @api cardIcon;              // Icon of the wrapping Card
     @api cardClass;             // CSS Classes for the wrapping card div
     @api buttonSize = 'small';  // Size of the standard header buttons (to align with custom header actions)
+
     @api configName;            // DeveloperName of the sfpegList__mdt record to be used
-    @api showCount = 'right';   // Items Count display
+    @api actionConfigName;      // DeveloperName of the sfpegAction__mdt record to be used for header actions
+    @api contextString;         // Context data to be provided as additional CONTEXT input to query 
+
+    @api showCount = 'right';   // Flag to display the items count.
     @api showSearch = false;    // Flag to show Filter action in header.
     @api showExport = false;    // Flag to show Export action in header.
-    @api actionConfigName;      // DeveloperName of the sfpegAction__mdt record to be used for header actions
+    @api displayHeight = 0;     // Max-height of the content Div (0 meaning no limit)
+    @api isCollapsible = false; // Flag to set the list details as collapsible 
+    @api isCollapsed = false;   // Flag inddicating the initial/current collapsed state
+
     @api isDebug = false;       // Debug mode activation
     @api isDebugFine = false;   // Debug mode activation for all subcomponents.
-    @api displayHeight = 0;     // Max-height of the content Div (0 meaning no limit)
-    @api isCollapsible = false;
-    @api isCollapsed = false;
 
 
     //----------------------------------------------------------------
@@ -615,14 +619,9 @@ export default class SfpegListCmp extends LightningElement {
 
         this.isReady = true;
         if (this.isDebug) console.log('executeQuery: configuration ready / triggering query ');
+
         this.isLoading = true;
         this.errorMsg = '';
-
-        // reset filter (when execute triggered as part of refresh)
-        //###################
-        /*this.isFiltered = false;
-        this.filterString = null;*/
-        //###################
         this.resultListOrig = null
         this.selectedRecords = null;
 
@@ -637,11 +636,16 @@ export default class SfpegListCmp extends LightningElement {
                 sfpegMergeUtl.sfpegMergeUtl.isDebug = false;
                 if (this.isDebug) console.log('executeQuery: context merged within configuration ',value);
                 inputData = JSON.parse(value);
-                if (this.isDebug) console.log('executeQuery: input Data prepared',inputData);
+                if (this.isDebug) console.log('executeQuery: input Data parsed',inputData);
+
+                if (this.contextString) {
+                    if (this.isDebug) console.log('executeQuery: adding context',this.contextString);
+                    inputData.CONTEXT = this.contextString;
+                }
+
                 if (this.isDebug) console.log('executeQuery: fetching count');
                 this.paginatedInput = inputData;
-                return getCount({    name:   this.configName,
-                                    input:  inputData});
+                return getCount({name: this.configName, input: inputData});
             }).then((result) => {
                 if (this.isDebug) console.log('executeQuery: count received ', result);
                 this.recordCount = result;
@@ -692,16 +696,21 @@ export default class SfpegListCmp extends LightningElement {
                 this.lastRecordKey = (lastRecord ? (lastRecord[0])[(this.configDetails.query.orderByField)] : null);
                 if (this.isDebug) console.log('executeQuery: lastRecordKey registered ', this.lastRecordKey);
 
-                //###################
                 if (this.filterString) {
                     if (this.isDebug) console.log('executeQuery: filtering results ');
                     this.filterRecords();
                 }
-                //####################
-
-                //this.errorMsg = result.length + " item(s) fetched from Server!";
+                
                 this.sortDirection = 'asc';
                 this.sortedBy = null;
+                if (this.sortFields) {
+                    let sortFields = [...this.sortFields];
+                    if (this.isDebug) console.log('executeQuery: resetting sortFields ',JSON.stringify(sortFields));
+                    sortFields.forEach(item => {item.iconName = null;});
+                    if (this.isDebug) console.log('executeQuery: sortFields reset ',JSON.stringify(sortFields));
+                    this.sortFields = sortFields;
+                }
+
                 if (this.isDebug) console.log('executeQuery: END OK (pagination)');
             }).catch( error => {
                 if (this.isDebug) console.warn('executeQuery: END / KO (pagination) ', error);
@@ -722,10 +731,13 @@ export default class SfpegListCmp extends LightningElement {
                 sfpegMergeUtl.sfpegMergeUtl.isDebug = false;
                 if (this.isDebug) console.log('executeQuery: context merged within configuration ',value);
                 let inputData = JSON.parse(value);
-                if (this.isDebug) console.log('executeQuery: input Data prepared',inputData);
+                if (this.isDebug) console.log('executeQuery: input Data parsed ',inputData);
+                if (this.contextString) {
+                    if (this.isDebug) console.log('executeQuery: adding context',this.contextString);
+                    inputData.CONTEXT = this.contextString;
+                }
                 if (this.isDebug) console.log('executeQuery: fetching data');
-                return getData({    name:   this.configName,
-                                    input:  inputData});
+                return getData({ name: this.configName, input: inputData});
             }).then((result) => {
                 //if (this.isDebug) console.log('executeQuery: config ', JSON.stringify(this.configDetails));
                 if (this.isDebug) console.log('executeQuery: results received ', JSON.stringify(result));
@@ -752,12 +764,10 @@ export default class SfpegListCmp extends LightningElement {
                     this.selectedRecords = ( dataTable ? dataTable.getSelectedRows() : []);
                 }
 
-                //###################
                 if (this.filterString) {
                     if (this.isDebug) console.log('executeQuery: filtering results ');
                     this.filterRecords();
                 }
-                //####################
     
                 if (this.isDebug) console.log('executeQuery: selectedRecords init ', JSON.stringify(this.selectedRecords));
 
@@ -765,6 +775,13 @@ export default class SfpegListCmp extends LightningElement {
                 this.recordCount = this.resultList.length;
                 this.sortDirection = 'asc';
                 this.sortedBy = null;
+                if (this.sortFields) {
+                    let sortFields = [...this.sortFields];
+                    if (this.isDebug) console.log('executeQuery: resetting sortFields ',JSON.stringify(sortFields));
+                    sortFields.forEach(item => {item.iconName = null;});
+                    if (this.isDebug) console.log('executeQuery: sortFields reset ',JSON.stringify(sortFields));
+                    this.sortFields = sortFields;
+                }
 
                 let loadEvt = new CustomEvent('load', { detail: this.resultList });
                 if (this.isDebug) console.log('triggerParentEvt: triggering load event for parent component ', JSON.stringify(loadEvt));
@@ -850,6 +867,16 @@ export default class SfpegListCmp extends LightningElement {
             if (this.filterString) {
                 if (this.isDebug) console.log('handleLoadNext: filtering results ');
                 this.filterRecords();
+            }
+
+            this.sortDirection = 'asc';
+            this.sortedBy = null;
+            if (this.sortFields) {
+                let sortFields = [...this.sortFields];
+                if (this.isDebug) console.log('handleLoadNext: resetting sortFields ',JSON.stringify(sortFields));
+                sortFields.forEach(item => {item.iconName = null;});
+                if (this.isDebug) console.log('handleLoadNext: sortFields reset ',JSON.stringify(sortFields));
+                this.sortFields = sortFields;
             }
 
             if (this.isDebug) console.log('handleLoadNext: END OK');
@@ -1185,14 +1212,23 @@ export default class SfpegListCmp extends LightningElement {
                 if (this.isDebug) console.log('handleActionDone: setting filter');
 
                 if (event.detail.params) {
-                    this.showFilter =false;
+                    this.showFilter = false;
                     if (this.isDebug) console.log('handleActionDone: closing filter popup if needed');
+                    if (this.isDebug) console.log('handleActionDone: current filterFields fetched',JSON.stringify(this.filterFields));
 
                     let filterScopeName = event.detail.params.scope || 'ALL';
                     if (this.isDebug) console.log('handleActionDone: provided filter scope name ',filterScopeName);
-                    this.filterScope = this.filterFields.find(item => item.fieldName === filterScopeName);                
-                    if (this.isDebug) console.log('handleActionDone: filter scope reset',JSON.stringify(this.filterScope));
-                    this.filterFields.forEach(item => item.selected = (item.fieldName === this.filterScope.fieldName));
+                    let newScope = this.filterFields.find(item => item.fieldName === filterScopeName);                
+                    if (this.isDebug) console.log('handleActionDone: filter scope reset',JSON.stringify(newScope));
+                    
+                    if (!newScope) {
+                        console.warn('handleActionDone: END / unavailable scope name',filterScopeName );
+                        return;
+                    }
+
+                    this.filterScope = newScope;
+                    //this.filterFields.forEach(item => item.selected = (item.fieldName === this.filterScope.fieldName));
+                    this.filterFields.forEach(item => item.selected = (item.fieldName === filterScopeName));
                     if (this.isDebug) console.log('handleActionDone: filterFields updated ',JSON.stringify(this.filterFields));
                     
                     this.filterString = event.detail.params.string || '';

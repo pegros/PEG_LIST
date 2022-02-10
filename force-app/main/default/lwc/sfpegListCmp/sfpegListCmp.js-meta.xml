@@ -42,6 +42,11 @@
                         type="String"
                         datasource="apex://sfpegListSelector_CTL"
                         description="(Developer)Name of the Query Configuration record to be used (see sfpegList__mdt)."/>
+            <property   name="contextString"
+                        label="Query Context (Beta)"
+                        type="String"
+                        description="Context (optional) to be provided as input to the query (to mutualise configuration of similar queries)."/>
+
             <property   name="showCount"
                         label="Show #Records?"
                         type="String"
@@ -114,6 +119,11 @@
                         type="String"
                         datasource="apex://sfpegListSelector_CTL"
                         description="(Developer)Name of the Query Configuration record to be used (see sfpegList__mdt)."/>
+            <property   name="contextString"
+                        label="Query Context (Beta)"
+                        type="String"
+                        description="Context (optional) to be provided as input to the query (to mutualise configuration of similar queries)."/>
+
             <property   name="showCount"
                         label="Show #Records?"
                         type="String"

@@ -54,16 +54,18 @@
             ondone="{!c.handleAction}">
     </c:sfpegActionHandlerCmp>
 
-    <div class="slds-box slds-m-around_xx-small">
-        <dl class="slds-dl_horizontal slds-text-align_left">
-            <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
-            <dd class="slds-dl_horizontal__detail">
-                <lightning:formattedUrl value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegActionUtilityCmp.md"
-                                        label="See Help on GitHub"
-                                        target="_blank">
-                </lightning:formattedUrl>
-            </dd>
-        </dl>
-    </div>
+    <aura:if isTrue="{#v.isDebug}">
+        <div class="slds-box slds-m-around_xx-small">
+            <dl class="slds-dl_horizontal slds-text-align_left">
+                <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+                <dd class="slds-dl_horizontal__detail">
+                    <lightning:formattedUrl value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegActionUtilityCmp.md"
+                                            label="See Help on GitHub"
+                                            target="_blank">
+                    </lightning:formattedUrl>
+                </dd>
+            </dl>
+        </div>
+    </aura:if>
 
 </aura:component>	
