@@ -45,11 +45,20 @@ public class  sfpegAction_TST {
         String currentUserId = UserInfo.getUserId();
         System.debug('testSetup: currentUserId fetched ' + currentUserId);
 
-        List<PermissionSet> sfpegPSets = [SELECT Id, Name FROM PermissionSet WHERE Name LIKE 'sfpeg%'];
+        Map<ID,PermissionSet> sfpegPSets = new Map<ID,PermissionSet>([SELECT Id, Name FROM PermissionSet WHERE Name LIKE 'sfpeg%']);
         System.debug('testSetup: sfpegPSets fetched ' + sfpegPSets);
 
+        List<PermissionSetAssignment> currentAssignments = [    select PermissionSetId from PermissionSetAssignment 
+                                                                where AssigneeId = :currentUserId and PermissionSetId in :sfpegPSets.keySet()];
+        System.debug('testSetup: currentAssignments fetched ' + currentAssignments);
+        for (PermissionSetAssignment iter : currentAssignments) {
+            System.debug('testSetup: removing PermissionSet ' + iter.PermissionSetId);
+            sfpegPSets.remove(iter.PermissionSetId);
+        }
+        System.debug('testSetup: sfpegPSets revised ' + sfpegPSets);
+
         List<PermissionSetAssignment> newAssignments = new List<PermissionSetAssignment>();
-        for (PermissionSet iter : sfpegPSets) {
+        for (PermissionSet iter : sfpegPSets.values()) {
             System.debug('testSetup: sfpegPSets processing PSet ' + iter);
             newAssignments.add(new PermissionSetAssignment(AssigneeId = currentUserId, PermissionSetId = iter.Id));
         }
