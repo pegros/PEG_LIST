@@ -66,8 +66,11 @@ The main `Display Configuration` property is a JSON object with the following pr
     * `label` (optional) provides the label displayed above the displayed field.
     * `title` (optional) provides the title displayed when hovering above the displayed field.
     * `size` (optional) provides the size of the field value display, within a 12 unit grid system, default being 12.
+    * `hidden` (optional) enables to conditionally hide the field (it should haev a boolean value, e.g. testing if the
+    user has a custom permission via `{{{NPERM.xxxxx}}}` merge token or a boolean formula field of the record)
 * `tabs` provides the set of tabs to be displayed below, each tab being described as a JSON object with the following properties
     * `label` for the tab label
+    * `hidden` (optional)  enables to conditionally hide the tab (as for the fields)
     * `fields` for the list of fields displayed in the tab, described in the same war as the main _fields_ property
     * `list` for the optional **[sfpegListCmp](/help/sfpegListCmp.md)** component displayed below the tab fields, as a JSON object with the following properties
         * `title` and `icon` (optional) respectively provide the label and icon displayed in the list card header
