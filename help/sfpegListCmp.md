@@ -94,10 +94,11 @@ The **Query** section defines how data are retrieved:
     * `Query Class` (if _Apex_ mode is chosen) to specify the name of the Apex class to call 
     (implementing **sfpegListQuery_SVC** virtual class) 
     * `Query Template` (formely `Query SOQL`) to specify the SOQL/SOSL query to execute (when these modes are chosen).
+    * `Bypass Sharing ?` to check if the SOSL or SOQL query should be executed without record sharing applied.
 * Inputs required to contextualise the fetch 
     * `Query Input` to specify a single JSON context object to contextualise the query or
     be passed as input to the Apex class fetch method
-    * For the `Query SOQL`, the properties of this JSON object are to be merged via 
+    * For the `Query Template`, the properties of this JSON object are to be merged via 
     `{{{propertyName}}}` tokens in the query string  (e.g. `{{{ID}}}` in the example
     above to fetch the ID property value of the input object)
     * The values of this JSON object may be initialized via any `{{{mergeToken}}}` supported

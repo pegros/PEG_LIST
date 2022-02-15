@@ -3,8 +3,12 @@
     <label>sfpegTestSosl</label>
     <protected>false</protected>
     <values>
+        <field>BypassSharing__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">Test of the List component</value>
+        <value xsi:type="xsd:string">Test of the List component in SOSL mode</value>
     </values>
     <values>
         <field>DisplayConfig__c</field>
@@ -48,7 +52,7 @@
     </values>
     <values>
         <field>QuerySOQL__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">FIND &apos;TEST&apos; IN ALL FIELDS RETURNING {{{OBJECT}}}(Name)</value>
     </values>
     <values>
         <field>QueryType__c</field>

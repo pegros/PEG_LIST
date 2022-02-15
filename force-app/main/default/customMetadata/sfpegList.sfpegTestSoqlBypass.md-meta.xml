@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>sfpegTestSoql</label>
+    <label>sfpegTestSoqlBypass</label>
     <protected>false</protected>
     <values>
         <field>BypassSharing__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">Test of the List component</value>
+        <value xsi:type="xsd:string">Test of the List component in Bypass mode</value>
     </values>
     <values>
         <field>DisplayConfig__c</field>
         <value xsi:type="xsd:string">{
 &quot;keyField&quot;:&quot;Id&quot;,
 &quot;columns&quot;: [
-{&quot;label&quot;:&quot;{{{FLBL.sfpegTestObject__c.Name}}}&quot;, &quot;fieldName&quot;: &quot;Name&quot;, &quot;sortable&quot;: true} ]
+{&quot;label&quot;:&quot;Name&quot;, &quot;fieldName&quot;: &quot;Name&quot;, &quot;sortable&quot;: true} ]
 }</value>
     </values>
     <values>

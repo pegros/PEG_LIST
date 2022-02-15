@@ -46,7 +46,12 @@ export default class SfpegFieldDsp extends LightningElement {
         return this._fieldValue;
     }
     set fieldValue(value) {
-        this._fieldValue = value;
+        if ((this.fieldType) && (this.fieldType === "boolean")) {
+            this._fieldValue = eval(value);
+        }
+        else {
+            this._fieldValue = value;
+        }
     }
 
     // Custom getter for type dependent display

@@ -625,7 +625,7 @@ export default class SfpegListCmp extends LightningElement {
         this.resultListOrig = null
         this.selectedRecords = null;
 
-        let dataTable = this.template.querySelector('lightning-datatable');
+        let tableOrTree = this.template.querySelector('lightning-datatable') || this.template.querySelector('lightning-tree-grid');
         sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
         if (this.configDetails.query.doPagination) {
             // PAGINATED CASE HANDLING
@@ -686,7 +686,7 @@ export default class SfpegListCmp extends LightningElement {
                 }
                 else {
                     if (this.isDebug) console.log('executeQuery: CheckBox displayed ');
-                    this.selectedRecords = ( dataTable ? dataTable.getSelectedRows() : []);
+                    this.selectedRecords = ( tableOrTree ? tableOrTree.getSelectedRows() : []);
                 }
                 if (this.isDebug) console.log('executeQuery: selectedRecords init ', JSON.stringify(this.selectedRecords));
 
@@ -761,7 +761,7 @@ export default class SfpegListCmp extends LightningElement {
                 }
                 else {
                     if (this.isDebug) console.log('executeQuery: CheckBox displayed ');
-                    this.selectedRecords = ( dataTable ? dataTable.getSelectedRows() : []);
+                    this.selectedRecords = ( tableOrTree ? tableOrTree.getSelectedRows() : []);
                 }
 
                 if (this.filterString) {
@@ -849,8 +849,8 @@ export default class SfpegListCmp extends LightningElement {
             if (this.isDebug) console.log('handleLoadNext: results updated ', JSON.stringify(this.resultList));
             if (this.isDebug) console.log('handleLoadNext: #results displayed ', this.resultList.length);
             
-            let dataTable = this.template.querySelector('lightning-datatable');
-            this.selectedRecords = (this.hideCheckbox ? this.resultList : dataTable?.getSelectedRows() || [] );
+            let tableOrTree = this.template.querySelector('lightning-datatable') || this.template.querySelector('lightning-tree-grid');
+            this.selectedRecords = (this.hideCheckbox ? this.resultList : tableOrTree?.getSelectedRows() || [] );
             //if (this.hideCheckbox) this.selectedRecords = this.resultList;
             if (this.isDebug) console.log('handleLoadNext: selectedRecords update ', JSON.stringify(this.selectedRecords));
     

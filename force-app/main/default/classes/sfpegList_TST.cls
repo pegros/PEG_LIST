@@ -28,11 +28,20 @@ public class  sfpegList_TST {
         String currentUserId = UserInfo.getUserId();
         System.debug('testSetup: currentUserId fetched ' + currentUserId);
 
-        List<PermissionSet> sfpegPSets = [SELECT Id, Name FROM PermissionSet WHERE Name LIKE 'sfpeg%'];
+        Map<ID,PermissionSet> sfpegPSets = new Map<ID,PermissionSet>([SELECT Id, Name FROM PermissionSet WHERE Name LIKE 'sfpeg%']);
         System.debug('testSetup: sfpegPSets fetched ' + sfpegPSets);
 
+        List<PermissionSetAssignment> currentAssignments = [    select PermissionSetId from PermissionSetAssignment 
+                                                                where AssigneeId = :currentUserId and PermissionSetId in :sfpegPSets.keySet()];
+        System.debug('testSetup: currentAssignments fetched ' + currentAssignments);
+        for (PermissionSetAssignment iter : currentAssignments) {
+            System.debug('testSetup: removing PermissionSet ' + iter.PermissionSetId);
+            sfpegPSets.remove(iter.PermissionSetId);
+        }
+        System.debug('testSetup: sfpegPSets revised ' + sfpegPSets);
+
         List<PermissionSetAssignment> newAssignments = new List<PermissionSetAssignment>();
-        for (PermissionSet iter : sfpegPSets) {
+        for (PermissionSet iter : sfpegPSets.values()) {
             System.debug('testSetup: sfpegPSets processing PSet ' + iter);
             newAssignments.add(new PermissionSetAssignment(AssigneeId = currentUserId, PermissionSetId = iter.Id));
         }
@@ -77,12 +86,12 @@ public class  sfpegList_TST {
         }
 
         try {
-            Object actionDesc = sfpegList_CTL.getConfiguration('sfpegOpenTasks');
-            System.debug('testGetConfiguration: configuration for standard OpenTaskList list found ' + actionDesc);
+            Object actionDesc = sfpegList_CTL.getConfiguration('sfpegTestSoql');
+            System.debug('testGetConfiguration: configuration for sfpegTestSoql list found ' + actionDesc);
             System.assert(true);
         }
         catch (Exception e) {
-            System.debug(LoggingLevel.Error,'testGetConfiguration: configuration for standard OpenTaskList list not found ' + e.getMessage());
+            System.debug(LoggingLevel.Error,'testGetConfiguration: configuration for sfpegTestSoql list not found ' + e.getMessage());
             System.assert(false);
         }
 
@@ -149,17 +158,6 @@ public class  sfpegList_TST {
             System.assert(true);           
         }
 
-        // Bad SOQL
-        try {
-            List<Object> resultList = sfpegList_CTL.getData('sfpegTestSosl',inputData);
-            System.debug(LoggingLevel.Error,'testGetData: no error raised for unsupported SOSL ');
-            System.assert(false);  
-        }
-        catch (Exception e) {
-            System.debug('testGetData: exception properly raised for unsupported SOSL ' + e.getMessage());
-            System.assert(true);           
-        }
-
         // SOQL OK case 
         try {
             List<Object> resultList = sfpegList_CTL.getData('sfpegTestSoql',inputData);
@@ -168,6 +166,17 @@ public class  sfpegList_TST {
         }
         catch (Exception e) {
             System.debug(LoggingLevel.Error,'testGetData: exception raised for sfpegTestSoql List ' + e.getMessage());
+            System.assert(false);           
+        }
+
+        // SOQL Bypass OK case 
+        try {
+            List<Object> resultList = sfpegList_CTL.getData('sfpegTestSoqlBypass',inputData);
+            System.debug('testGetData: sfpegTestSoqlBypass List config properly executed');
+            System.assert(true);  
+        }
+        catch (Exception e) {
+            System.debug(LoggingLevel.Error,'testGetData: exception raised for sfpegTestSoqlBypass List ' + e.getMessage());
             System.assert(false);           
         }
 
@@ -181,9 +190,61 @@ public class  sfpegList_TST {
             System.debug(LoggingLevel.Error,'testGetData: exception raised for sfpegTestApex List ' + e.getMessage());
             System.assert(false);           
         }
-		
-		Test.stopTest();
-		System.debug('testGetData: END');
+
+        // Apex KO case 
+        try {
+            List<Object> resultList = sfpegList_CTL.getData('sfpegTestApexUnknown',inputData);
+            System.debug(LoggingLevel.Error,'testGetData: no error raised for bad Apex class');
+            System.assert(false);  
+        }
+        catch (Exception e) {
+            System.debug('testGetData: error properly raised for unknown class ' + e.getMessage());
+            System.assert(true);           
+        }
+
+        // Added because SOSL does not work in test classes otherwise.
+        list<ID> setSearchResults = new list<ID>();
+        for (sfpegTestObject__c iter : rcdList) {
+            setSearchResults.add(iter.Id);
+        }
+        System.debug('testGetData: sfpegTessetSearchResults init ' + setSearchResults);
+        Test.setFixedSearchResults(setSearchResults);
+
+        // SOSL OK case 
+        try {
+            List<Object> resultList = sfpegList_CTL.getData('sfpegTestSosl',inputData);
+            System.debug('testGetData: sfpegTestSosl List config properly executed');
+            System.assert(true);  
+        }
+        catch (Exception e) {
+            System.debug(LoggingLevel.Error,'testGetData: exception raised for sfpegTestSosl List ' + e.getMessage());
+            System.assert(false);           
+        }
+
+        // Bad SOSL
+        try {
+            List<Object> resultList = sfpegList_CTL.getData('sfpegTestSoslKO',inputData);
+            System.debug(LoggingLevel.Error,'testGetData: no error raised for unsupported SOSL ');
+            System.assert(false);  
+        }
+        catch (Exception e) {
+            System.debug('testGetData: exception properly raised for unsupported SOSL ' + e.getMessage());
+            System.assert(true);           
+        }
+
+        // SOSL Bypass OK case 
+        try {
+            List<Object> resultList = sfpegList_CTL.getData('sfpegTestSoslBypass',inputData);
+            System.debug('testGetData: sfpegTestSoslBypass List config properly executed');
+            System.assert(true);  
+        }
+        catch (Exception e) {
+            System.debug(LoggingLevel.Error,'testGetData: exception raised for sfpegTestSoslBypass List ' + e.getMessage());
+            System.assert(false);           
+        }
+
+        Test.stopTest();
+        System.debug('testGetData: END');
     }
 
     /***
@@ -264,6 +325,17 @@ public class  sfpegList_TST {
         }
         catch (Exception e) {
             System.debug(LoggingLevel.Error,'testGetCount: exception raised for sfpegTestSoqlPaginated List ' + e.getMessage());
+            System.assert(false);           
+        }
+
+        // SOQL Bypass OK case 
+        try {
+            Integer rcdCount = sfpegList_CTL.getCount('sfpegTestSoqlPaginatedBypass',inputData);
+            System.debug('testGetCount: sfpegTestSoqlPaginatedBypass List config properly executed');
+            System.assert(true);  
+        }
+        catch (Exception e) {
+            System.debug(LoggingLevel.Error,'testGetCount: exception raised for sfpegTestSoqlPaginatedBypass List ' + e.getMessage());
             System.assert(false);           
         }
 
@@ -378,6 +450,17 @@ public class  sfpegList_TST {
         }
         catch (Exception e) {
             System.debug(LoggingLevel.Error,'testGetPaginatedData: exception raised for sfpegTestSoqlPaginated List on page #2 ' + e.getMessage());
+            System.assert(false);           
+        }
+
+        // SOQL OK case - First page
+        try {
+            List<Object> resultList = sfpegList_CTL.getPaginatedData('sfpegTestSoqlPaginatedBypass',inputData,null);
+            System.debug('testGetPaginatedData: sfpegTestSoqlPaginatedBypass List config properly executed');
+            System.assert(true);  
+        }
+        catch (Exception e) {
+            System.debug(LoggingLevel.Error,'testGetCount: exception raised for sfpegTestSoqlPaginatedBypass List ' + e.getMessage());
             System.assert(false);           
         }
 

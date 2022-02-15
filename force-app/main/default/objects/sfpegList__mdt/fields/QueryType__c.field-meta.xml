@@ -26,13 +26,6 @@
                 <default>false</default>
                 <label>SOSL</label>
             </value>
-            <!--
-            <value>
-                <fullName>SAQL</fullName>
-                <default>false</default>
-                <label>SAQL</label>
-            </value>
-            -->
         </valueSetDefinition>
     </valueSet>
 </CustomField>

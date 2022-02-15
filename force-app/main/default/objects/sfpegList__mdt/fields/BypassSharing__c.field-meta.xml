@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DoPagination__c</fullName>
+    <fullName>BypassSharing__c</fullName>
     <defaultValue>false</defaultValue>
+    <description>Flag to execute the SOQL / SOSL query without sharing</description>
     <externalId>false</externalId>
     <fieldManageability>SubscriberControlled</fieldManageability>
-    <label>Do Pagination?</label>
+    <inlineHelpText>Flag to execute the SOQL / SOSL query without sharing</inlineHelpText>
+    <label>Bypass Sharing?</label>
     <type>Checkbox</type>
 </CustomField>

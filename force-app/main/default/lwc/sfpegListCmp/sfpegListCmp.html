@@ -179,8 +179,8 @@
 
                 <!-- Results Display -->
                 <template if:true={hasConfig}>
-                    <div class={contentClass} style={contentStyle}>
-                        
+                    <div class={contentClass}  >
+                        <!-- style={contentStyle} -->
                         <!-- Data Table mode data display -->
                         <template if:true={isDataTable}>
                         <!--<div class="slds-card__body cardContent ">-->
@@ -217,7 +217,8 @@
                                     sorted-direction={sortDirection}
                                     sorted-by={sortedBy}
                                     onsort={handleSort} 
-                                    onrowaction={handleRowAction} >
+                                    onrowaction={handleRowAction} 
+                                    onrowselection={handleRowSelection} >
                             </lightning-tree-grid>
                         <!--</div>-->
                         </template>

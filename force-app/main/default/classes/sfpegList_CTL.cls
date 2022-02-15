@@ -110,7 +110,8 @@ public with sharing class sfpegList_CTL {
 
             try {
                 System.debug('getData: END / triggering mergedQuery');
-                return database.query(mergedQuery);
+                return executeSoql(mergedQuery, query.BypassSharing__c);
+                //return database.query(mergedQuery);
             }
             catch (Exception error) {
                 System.debug(LoggingLevel.WARN,'getData: END / KO - ' + error.getMessage());
@@ -140,7 +141,8 @@ public with sharing class sfpegList_CTL {
 
             try {
                 System.debug('getData: triggering SOSL mergedQuery');
-                List<List<sObject>> soslResults = Search.query(mergedQuery);
+                List<List<sObject>> soslResults = executeSosl(mergedQuery, query.BypassSharing__c);
+                //List<List<sObject>> soslResults = Search.query(mergedQuery);
                 System.debug('getData: SOSL results received' + soslResults);
 
                 List<Object> soslMergedList = new List<Object>();
@@ -231,7 +233,8 @@ public with sharing class sfpegList_CTL {
 
             try {
                 System.debug('getCount: END / triggering mergedQuery');
-                return database.countQuery(mergedQuery);
+                //return database.countQuery(mergedQuery);
+                return executeSoqlCount(mergedQuery, query.BypassSharing__c);
             }
             catch (Exception error) {
                 System.debug(LoggingLevel.WARN,'getCount: END / KO - ' + error.getMessage());
@@ -258,7 +261,7 @@ public with sharing class sfpegList_CTL {
             System.debug(LoggingLevel.WARN,'getCount: END / KO - Unsupported Paginated Configuration type' + query.QueryType__c);
             throw new AuraHandledException('Unsupported Paginated Configuration type ' + query.QueryType__c + ' for config ' + name);
         }
-    }   
+    }
 
     /***
     * @description  If lazy loading is configured on the List LWC component, all records are not
@@ -301,7 +304,8 @@ public with sharing class sfpegList_CTL {
 
             try {
                 System.debug('getPaginatedData: END / triggering mergedQuery');
-                return database.query(mergedQuery);
+                //return database.query(mergedQuery);
+                return executeSoql(mergedQuery, query.BypassSharing__c);
             }
             catch (Exception error) {
                 System.debug(LoggingLevel.WARN,'getPaginatedData: END / KO - ' + error.getMessage());
@@ -346,7 +350,7 @@ public with sharing class sfpegList_CTL {
     private static sfpegList__mdt getConfig(final String name) {
         System.debug(LoggingLevel.FINE,'getConfig: START for name ' + name);
 
-        List<sfpegList__mdt> configs = [    SELECT MasterLabel, QueryType__c, QueryClass__c, QuerySOQL__c, QueryCount__c, QueryOrderBy__c, QueryOrder__c  
+        List<sfpegList__mdt> configs = [    SELECT MasterLabel, QueryType__c, QueryClass__c, QuerySOQL__c, QueryCount__c, QueryOrderBy__c, QueryOrder__c, BypassSharing__c  
                                             FROM sfpegList__mdt
                                             WHERE DeveloperName =  :name];
         if ((configs == null) || (configs.size() != 1)) {
@@ -455,13 +459,13 @@ public with sharing class sfpegList_CTL {
             System.debug(LoggingLevel.WARN,'initPagination: END / KO - Missing orderBy field configuration');
             throw new AuraHandledException('Paginated Query failure: No OrderBy field configured');
         }
-        
+
         String paginationClause = ' Id != null '; // default initial page clause.
         if (String.isNotEmpty(lastValue)) {
             System.debug(LoggingLevel.FINE,'initPagination: computing clause');
             paginationClause = fieldName + ((orderDir == 'ASC') ? ' > \'' : ' < \'') + lastValue + '\'';
         }
-        
+
         Map<Object,Object> returnMap = new Map<Object,Object>{
             'PAGE' => paginationClause
         };
@@ -492,33 +496,116 @@ public with sharing class sfpegList_CTL {
             List<Schema.DescribeTabResult> iterTabs = iter.getTabs();
             for (Schema.DescribeTabResult iterTab : iterTabs) {
                 if (iterTab.isCustom()) {
-	    	        System.debug('getCustomObjectIcon: processing Tab ' + iterTab.getSObjectName()); 
+                    System.debug('getCustomObjectIcon: processing Tab ' + iterTab.getSObjectName()); 
                     if (iterTab.getSObjectName() == objectName) {
                         System.debug('getCustomObjectIcon: fetching icon ID');
                         List<Schema.DescribeIconResult> iterIcons = iterTab.getIcons();
                         for (Schema.DescribeIconResult iterIcon : iterIcons) {
-	        		        //System.debug('getData: ' + ' # ' + iterIcon.getContentType()); 
+                            //System.debug('getData: ' + ' # ' + iterIcon.getContentType()); 
                             if (iterIcon.getContentType() == 'image/svg+xml') {
                                 Integer lastSlash = (iterIcon.getUrl()).lastIndexOf('/') + 1;
                                 Integer lastDot = (iterIcon.getUrl()).lastIndexOf('.');
                                 objectIcon = (iterIcon.getUrl()).mid(lastSlash, lastDot - lastSlash);
 
-			    		        System.debug('getCustomObjectIcon: END / icon Name found ' + objectIcon);
+                                System.debug('getCustomObjectIcon: END / icon Name found ' + objectIcon);
                                 return objectIcon;
                             }
                         }
                     }
                     else {
-    	    	        System.debug('getCustomObjectIcon: ignored (different object)');
+                        System.debug('getCustomObjectIcon: ignored (different object)');
                     } 
                 }
                 else {
                     System.debug('getCustomObjectIcon: ignored (standard object)');
-                } 
+                }
             }
         }
         System.debug('getCustomObjectIcon: END / object icon not found, returning default ' + objectIcon);
         return objectIcon;
     }
 
+    /***
+    * @description  Private utility method to execute a SOQL query
+    * @param        query           SOQL query to execute
+    * @param        bypassSharing   Boolean flag to bypass sharing
+    * @return       List<sObject>   Result of the SOQL query 
+    * @exception    none
+    ***/
+    @TestVisible
+    private static list<sObject> executeSoql(final String query, final Boolean bypassSharing) {
+        System.debug('executeSoql: START');
+
+        if (bypassSharing) {
+            System.debug('executeSoql: END / executing without sharing request');
+            sfpegBypassSharing_CTL subHandler = new sfpegBypassSharing_CTL();
+            return subHandler.querySoql(query);
+        }
+        else {
+            System.debug('executeSoql: END / executing with sharing request');
+            return Database.query(query);
+        }
+    }
+
+    /***
+    * @description  Private utility method to execute a SOQL count query
+    * @param        query           SOQL count query to execute
+    * @param        bypassSharing   Boolean flag to bypass sharing
+    * @return       Integer         Result of the SOQL count query 
+    * @exception    none
+    ***/
+    @TestVisible
+    private static Integer executeSoqlCount(final String query, final Boolean bypassSharing) {
+        System.debug('executeSoqlCount: START');
+
+        if (bypassSharing) {
+            System.debug('executeSoqlCount: END / executing without sharing request');
+            sfpegBypassSharing_CTL subHandler = new sfpegBypassSharing_CTL();
+            return subHandler.countSoql(query);
+        }
+        else {
+            System.debug('executeSoqlCount: END / executing with sharing request');
+            return Database.countQuery(query);
+        }
+    }
+
+    /***
+    * @description  Private utility method to execute a SOQL query
+    * @param        query           SOSL query to execute
+    * @param        bypassSharing   Boolean flag to bypass sharing
+    * @return       List<List<sObject>> Result of the SOSL query 
+    * @exception    none
+    ***/
+    @TestVisible
+    private static List<List<sObject>> executeSosl(final String query, final Boolean bypassSharing) {
+        System.debug('executeSosl: START');
+
+        if (bypassSharing) {
+            System.debug('executeSosl: END / executing without sharing request');
+            sfpegBypassSharing_CTL subHandler = new sfpegBypassSharing_CTL();
+            return subHandler.querySosl(query);
+        }
+        else {
+            System.debug('executeSosl: END / executing with sharing request');
+            return Search.query(query);
+        }
+    }
+
+    /***
+    * @description  Private class and methods to execute SOQL or SOSL queries in without sharing mode.
+    ***/
+    private without sharing class sfpegBypassSharing_CTL {
+        public list<sObject> querySoql(String queryString) {
+            System.debug('querySoql: query requested '  + queryString);
+            return Database.query(queryString);
+        }
+        public Integer countSoql(String queryString) {
+            System.debug('countSoql: query requested ' + queryString);
+            return Database.countQuery(queryString);
+        }
+        public List<List<sObject>> querySosl(String queryString) {
+            System.debug('querySosl: query requested '  + queryString);
+            return Search.query(queryString);
+        }
+    }
 }
