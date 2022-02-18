@@ -225,11 +225,11 @@
 
                         <!-- List mode data display -->
                         <template if:true={isList}>
-                        <!--<div class="slds-card__body cardContent slds-var-p-around_small " is-debug={isDebug}>  config-actions={configDetails.rowActions}  -->
+                        <!--<div class="slds-card__body cardContent horizontal-align="end" slds-var-p-horizontal_small slds-var-p-around_small " is-debug={isDebug}>  config-actions={configDetails.rowActions}  -->
                             <div class="slds-var-p-horizontal_x-small">
-                            <lightning-layout   multiple-rows="true"  horizontal-align="end" >
+                            <lightning-layout   multiple-rows="true"   >
                                 <template for:each={resultList} for:item="iter">
-                                    <!-- alignment-bump="right" -->
+                                    <!-- alignment-bump="right" alignment-bump="left" -->
                                     <lightning-layout-item  key={iter.Id}  size={tileSize}  >
                                         <c-sfpeg-tile-dsp   display-type={configDetails.type}
                                                             display-variant={configDetails.display.variant}

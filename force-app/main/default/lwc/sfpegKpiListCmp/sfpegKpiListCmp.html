@@ -4,7 +4,7 @@
 
         <!-- Error Message display -->
         <template if:true={errorMsg}>
-            <div class="slds-card__body slds-card__body_inner cardContent slds-var-p-vertical_medium slds-media slds-media_center">
+            <div class="slds-card__body slds-var-p-horizontal_small slds-card__body_inner cardContent slds-var-p-vertical_medium slds-media slds-media_center">
                 <div    class="slds-media__figure">
                     <lightning-icon icon-name="utility:warning"
                                     size="small"
@@ -109,8 +109,8 @@
                                                     </template>
                                                 </div>
                                             </template>
-                                            <div    class="slds-media__body"
-                                                    name={iterKpi.name}   title={iterKpi.title}> 
+                                            <!-- name={iterKpi.name} -->
+                                            <div    class="slds-media__body"    title={iterKpi.title}> 
                                                 <template if:true={iterKpi.label}>
                                                     <lightning-formatted-text   value={iterKpi.label}
                                                                                 class="slds-text-title">

@@ -411,7 +411,7 @@ export default class SfpegProfileCmp extends LightningElement {
         if (data) {
             if (this.isDebug) console.log('wiredObject: object metadata fetch OK ',JSON.stringify(data));
             if (this.configDetails.labelFieldsOK[this.objectApiName]) {
-                if (this.isDebug) console.log('wiredObject: END / labels already fetched for object ', this.objectApiNameName);
+                if (this.isDebug) console.log('wiredObject: END / labels already fetched for object ', this.objectApiName);
             }
             else {
                 if (this.isDebug) console.log('wiredObject: processing field labels');
