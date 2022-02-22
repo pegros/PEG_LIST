@@ -53,20 +53,20 @@ Its main property is _Message Display_ which contains a JSON list of message def
 ![Message List Configuration](/media/sfpegMessageConfigMeta.png)
 
 Each message definition is a JSON object with the following properties:
-* _header_: main rich text message to display 
-* _message_: additional rich text message information
-* _variant_: global style to apply to the message
-    * i.e. _base_, _notif_, _info_, _infoLight_, _warning_, _warningLight_, _error_, _errorLight_, _success_, _successLight_)
-    * variant settings being possibly overriden by explicit specific properties, such as _iconName_, _iconSize_,_iconVariant_, _iconValue_
-* _size_ (optional): width of the message as part of a 12 column grid (12 meaning 100% of the width, no size letting the message grow dynamically according to its content)
-* _path_ or _progress_ (optional): activates the display of a progress bar / indicator between header and message
+* `header`: main rich text message to display 
+* `message`: additional rich text message information
+* `variant`: global style to apply to the message
+    * i.e. _base_, _notif_, _info_, _infoLight_, _warning_, _warningLight_, _error_, _errorLight_, _success_, _successLight_
+    * variant settings being possibly overriden by explicit specific properties, such as `iconName`, `iconSize`, `iconVariant`, `iconValue`, `msgClass`
+* `size` (optional): width of the message as part of a 12 column grid (12 meaning 100% of the width, no size letting the message grow dynamically according to its content)
+* `path` or `progress` (optional): activates the display of a progress bar / indicator between header and message
     * see examples below for details, configuration being based on the standard Lightning base component displayed
-* _action_ (optional): activates the display of an action button via a JSON action definition containing:
-    * the _name_ of one action registered in the **sfpegAction__mdt** referenced in the main _Message Actions_ property
-    * a _label_ or _iconName_ for the button
-* _isHidden_ (optional): display condition for message, which should have a boolean value but may be defined as a Javascript formula evaluated at runtime by the component (no need to define custom formula fields on the User or current Object).
+* `action` (optional): activates the display of an action button via a JSON action definition containing:
+    * the `name` of one action registered in the **sfpegAction__mdt** referenced in the main _Message Actions_ property
+    * a `label` or `iconName` for the button
+* `isHidden` (optional): display condition for message, which should have a boolean value but may be defined as a Javascript formula evaluated at runtime by the component (no need to define custom formula fields on the User or current Object).
 
-If actions are used in the message list (via the _action_ message property), a ***pegAction__mdt** custom metadata record name must be specified in the _Message Actions_ property.
+If actions are used in the message list (via the _action_ message property), a ***pegAction__mdt** custom metadata record name must be specified in the `Message Actions` property.
 * This record should contain all the actions possibly triggered by the message list.
 * see **[sfpegAction](/help/sfpegActionBarCmp.md)** for details about available actions
 
@@ -83,7 +83,7 @@ _Notes_:
 For the following example,<br/>
 ![List of messages with dynamic icons](/media/sfpegMessageExample.png)
 
-the _Message Display_ property of the custom metadata record should be configured as follows:
+the `Message Display` property of the custom metadata record should be configured as follows:
 ```
 [
     {
@@ -145,6 +145,28 @@ _Note_: the _value_ progress or path widget and the _iconValue_ of a dynamic ico
 via a formula field but should follow the format expected by the underlying Lightning base component.
 See technical section for links to the appropriate sub-component used to get more detailed information.
 Beware that some values are text ones and others numbers.
+
+### Simple Page Header
+
+In the following example, there is a single message presenting a summary of the current record, e.g.
+for a Community in which the Record Type of the object should be emphasized instead of the Salesforce 
+Object Name.<br/>
+![Simple Header Message](/media/sfpegMessageHeader.png)
+
+the `Message Display` property of the custom metadata record should be configured as follows:
+```
+[{
+    "variant":"base",
+    "header":"{{{RCD.RecordType.Name}}} > {{{RCD.Name}}}",
+    "iconName":"standard:account",
+    "iconSize":"medium",
+    "size":12,
+    "msgClass":"slds-text-heading_large slds-text-title_bold"
+}]
+```
+
+the _
+
 
 ---
 

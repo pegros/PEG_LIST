@@ -154,7 +154,10 @@ export default class SfpegMessageListCmp extends LightningElement {
     //----------------------------------------------------------------
     connectedCallback(){
         if (this.isDebug) console.log('connected: START');
-        //this.errorMsg = 'Component initialized.';
+        if (this.isDebug) console.log('connected: objectApiName ', this.objectApiName);
+        if (this.isDebug) console.log('connected: recordId ', this.recordId);
+        if (this.isDebug) console.log('connected: configName', this.configName);
+        
         if (this.isReady) {
             console.warn('connected: END / already ready');
             return;

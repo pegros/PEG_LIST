@@ -57,6 +57,8 @@
     <aura:if isTrue="{#v.isDebug}">
         <div class="slds-box slds-m-around_xx-small">
             <dl class="slds-dl_horizontal slds-text-align_left">
+                <dt class="slds-dl_horizontal__label slds-truncate">Action Utility</dt>
+                <dd class="slds-dl_horizontal__detail">Debug? {!v.isDebug}</dd>
                 <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
                 <dd class="slds-dl_horizontal__detail">
                     <lightning:formattedUrl value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegActionUtilityCmp.md"
