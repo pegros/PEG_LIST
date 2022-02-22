@@ -146,7 +146,8 @@ via a formula field but should follow the format expected by the underlying Ligh
 See technical section for links to the appropriate sub-component used to get more detailed information.
 Beware that some values are text ones and others numbers.
 
-### Simple Page Header
+
+### Simple Custom Page Header
 
 In the following example, there is a single message presenting a summary of the current record, e.g.
 for a Community in which the Record Type of the object should be emphasized instead of the Salesforce 
@@ -165,7 +166,10 @@ the `Message Display` property of the custom metadata record should be configure
 }]
 ```
 
-the _
+The `Wrapping CSS` Builder configuration parameter is set to the following value:
+```
+slds-box slds-box_small slds-theme_default 
+```
 
 
 ---
@@ -173,7 +177,7 @@ the _
 ## Technical Details
 
 It relies on the **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** utility component to contextualise
-the messages via _merge tokens_ and on the **[sfpegIconDsp](/help/sfpegIconDsp.md)** display component
+the messages via ***merge tokens*** and on the **[sfpegIconDsp](/help/sfpegIconDsp.md)** display component
 to display a wide range of static or dynamic icons.
 
 It also uses the standard
