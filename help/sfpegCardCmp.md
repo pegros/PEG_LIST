@@ -136,6 +136,12 @@ the configuration in the **sfpegCard** custom metadata should be
 } 
 ```
 
+_Note_: The names of the icons are custom ones registered in the **sfpegIcons** static resource
+as managed by the **[sfpegIconDsp](/help/sfpegIconDsp.md)** component. All standard
+**[SLDS](https://www.lightningdesignsystem.com/icons/)** icon names may be used (e.g. `utility:help`
+or `standard:icon`).
+
+
 ---
 
 ## Technical Details
