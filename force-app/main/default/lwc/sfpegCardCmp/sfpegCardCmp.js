@@ -182,6 +182,9 @@ export default class SfpegCardDsp extends LightningElement {
                     this.configDetails = CARD_CONFIGS[this.configName];
                     if (this.isDebug) console.log('connected: configuration registered ',JSON.stringify(this.configDetails));
 
+                    this.configDetails.iconSize = this.configDetails.iconSize || "small";
+                    this.configDetails.variant = this.configDetails.variant || "standard";
+
                     ((this.configDetails).fields).forEach( iterField => {
                         iterField.size = ((iterField.size) || (this.configDetails.size));
                     });

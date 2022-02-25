@@ -30,6 +30,10 @@ with a title, icon and set of header actions (via the **[sfpegActionBarCmp](/hel
 
 ![Cards on different records](/media/sfpegCard.png) 
 
+It may also include icons next to the fields.
+
+![Card with icons](/media/sfpegCardIcons.png) 
+
 
 ### App Builder Configuration
 
@@ -61,13 +65,16 @@ on the current record.
 The second **Configuration** section describes the internal field layout of the component,
 as a JSON object with the following properties :
 * `size` defines the default size (in portion of 12) for each field
-* `density` defines how the labels are displayed (above vs next to the field value)
+* `iconSize` defines the size of the icons displayed (if any), as "small", "medium"...)
+* `density` defines how the labels are displayed (above vs next to the field value, see **lightning-record-view-form** or **lightning-record-edit-form**)
+* `variant` may be alternatively defined for similar  (see **lightning-input-field** or **lightning-output-field**)
 * `fields` defines the main list of fields displayed just below the card header, as a list
 of JSON field definition objects
   * Each field definition has a mandatory `name` property (API name of the field)
   * It may include `disabled` and `required` boolean properties to control field interaction
   in edit mode
   * It may also include a `size` one to override the main default value
+  * It may also include an `icon` one to display next to the field
 * `sections` defines the sections displayed afterwards in the card, as a list of JSON section
 definition objects
   * Each section definition has a mandatory `label` property (possibly using a Custom Label
@@ -108,7 +115,26 @@ definition objects
 
 ## Configuration Examples
 
-***TO BE CONTINUED***
+### Card with Icons
+
+For the example provided below on the Account object
+
+![Card with icons](/media/sfpegCardIcons.png) 
+
+the configuration in the **sfpegCard** custom metadata should be 
+```
+{
+  "size":6,
+  "iconSize":"medium",
+  "variant":"label-stacked",
+  "fields":[
+    {"name":"Name","icon":"resource:nom"},
+    {"name":"Mail__c","icon":"resource:email"},
+    {"name":"Phone","icon":"resource:telephone"},
+    {"name":"Industry","icon":"resource:activity"}
+  ]
+} 
+```
 
 ---
 

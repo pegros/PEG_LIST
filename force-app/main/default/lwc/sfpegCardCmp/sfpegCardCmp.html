@@ -19,8 +19,13 @@
                             </lightning-button-stateful>
                         </template>
                         <template if:true={cardIcon}>
+                            <c-sfpeg-icon-dsp   icon-name={cardIcon}
+                                                icon-size="small" >
+                            </c-sfpeg-icon-dsp>
+                            <!--
                             <lightning-icon icon-name={cardIcon} size="small" >
                             </lightning-icon>
+                            -->
                         </template>
                     </div>
                 </template>
@@ -102,8 +107,20 @@
                             <lightning-layout   multiple-rows="true"   >
                                 <template for:each={configDetails.fields} for:item="iterField">
                                     <lightning-layout-item  key={iterField.name}  size={iterField.size} alignment-bump="right" >
-                                        <lightning-output-field field-name={iterField.name}>
-                                        </lightning-output-field>
+                                        <div class="slds-media">
+                                            <template if:true={iterField.icon}>
+                                                <div class="slds-media__figure slds-p-top_x-small">
+                                                    <c-sfpeg-icon-dsp   icon-name={iterField.icon}
+                                                                        icon-size={configDetails.iconSize} >
+                                                    </c-sfpeg-icon-dsp>
+                                                </div>
+                                            </template>
+                                            <div class="slds-media__body">
+                                                <lightning-output-field field-name={iterField.name}
+                                                                        variant={configDetails.variant}>
+                                                </lightning-output-field>
+                                            </div>
+                                        </div>
                                     </lightning-layout-item>
                                 </template>
                             </lightning-layout>
@@ -130,8 +147,20 @@
                                     <lightning-layout   multiple-rows="true"  >
                                         <template for:each={iterSection.fields} for:item="iterSectionField">
                                             <lightning-layout-item  key={iterSectionField.name}  size={iterSectionField.size}  alignment-bump="right">
-                                                <lightning-output-field field-name={iterSectionField.name}>
-                                                </lightning-output-field>
+                                                <div class="slds-media">
+                                                    <template if:true={iterSectionField.icon}>
+                                                        <div class="slds-media__figure slds-p-top_x-small">
+                                                            <c-sfpeg-icon-dsp   icon-name={iterSectionField.icon}
+                                                                                icon-size={configDetails.iconSize} >
+                                                            </c-sfpeg-icon-dsp>
+                                                        </div>
+                                                    </template>
+                                                    <div class="slds-media__body">
+                                                        <lightning-output-field field-name={iterSectionField.name}
+                                                                                variant={configDetails.variant}>
+                                                        </lightning-output-field>
+                                                    </div>
+                                                </div>
                                             </lightning-layout-item>
                                         </template>
                                     </lightning-layout>
@@ -156,10 +185,22 @@
                             <lightning-layout   multiple-rows="true"   >
                                 <template for:each={configDetails.fields} for:item="iterField">
                                     <lightning-layout-item  key={iterField.name}  size={iterField.size} alignment-bump="right" >
-                                        <lightning-input-field  field-name={iterField.name} 
-                                                                required={iterField.required}
-                                                                disabled={iterField.disabled} >
-                                        </lightning-input-field>
+                                        <div class="slds-media">
+                                            <template if:true={iterSectionField.icon}>
+                                                <div class="slds-media__figure slds-p-top_x-small">
+                                                    <c-sfpeg-icon-dsp   icon-name={iterField.icon}
+                                                                        icon-size={configDetails.iconSize} >
+                                                    </c-sfpeg-icon-dsp>
+                                                </div>
+                                            </template>
+                                            <div class="slds-media__body">
+                                                <lightning-input-field  field-name={iterField.name} 
+                                                                        required={iterField.required}
+                                                                        disabled={iterField.disabled} 
+                                                                        variant={configDetails.variant} >
+                                                </lightning-input-field>
+                                            </div>
+                                        </div>
                                     </lightning-layout-item>
                                 </template>
                             </lightning-layout>
@@ -175,10 +216,22 @@
                                     <lightning-layout   multiple-rows="true">
                                         <template for:each={iterSection.fields} for:item="iterSectionField">
                                             <lightning-layout-item  key={iterSectionField.name}  size={iterSectionField.size} alignment-bump="right" >
-                                                <lightning-input-field  field-name={iterSectionField.name} 
-                                                                        required={iterSectionField.required}
-                                                                        disabled={iterSectionField.disabled} >
-                                                </lightning-input-field>
+                                                <div class="slds-media">
+                                                    <template if:true={iterSectionField.icon}>
+                                                        <div class="slds-media__figure slds-p-top_x-small">
+                                                            <c-sfpeg-icon-dsp   icon-name={iterSectionField.icon}
+                                                                                icon-size={configDetails.iconSize} >
+                                                            </c-sfpeg-icon-dsp>
+                                                        </div>
+                                                    </template>
+                                                    <div class="slds-media__body">
+                                                        <lightning-input-field  field-name={iterField.name} 
+                                                                                required={iterSectionField.required}
+                                                                                disabled={iterSectionField.disabled} 
+                                                                                variant={configDetails.variant} >
+                                                        </lightning-input-field>
+                                                    </div>
+                                                </div>
                                             </lightning-layout-item>
                                         </template>
                                     </lightning-layout>
