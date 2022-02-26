@@ -144,7 +144,7 @@ the configuration in the **sfpegCard** custom metadata should be
 _Note_: The names of the icons are here custom ones added to the **sfpegIcons** static resource
 (see **[sfpegIconDsp](/help/sfpegIconDsp.md)** component for details).
 All standard **[SLDS](https://www.lightningdesignsystem.com/icons/)** icon names may also be used
-(e.g. `utility:help` or `standard:account`). Dynamic icons are not supported.
+(e.g. `utility:info` or `standard:account`). Dynamic icons are not supported.
 
 
 ---
