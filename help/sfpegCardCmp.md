@@ -28,9 +28,14 @@ with a title, icon and set of header actions (via the **[sfpegActionBarCmp](/hel
 * containing a first top set of fields
 * followed by a set of sections containing their own set of fields
 
+The following snapshot presents two successive instances of the component, the first one
+applying to the current record and the second on a parent record (identified via a lookup
+field on the current record).
+
 ![Cards on different records](/media/sfpegCard.png) 
 
-It may also include icons next to the fields.
+Cards may also include icons next to the fields, the example below being in read-only mode on 
+an Experience/Community Site.
 
 ![Card with icons](/media/sfpegCardIcons.png) 
 
@@ -136,25 +141,26 @@ the configuration in the **sfpegCard** custom metadata should be
 } 
 ```
 
-_Note_: The names of the icons are custom ones registered in the **sfpegIcons** static resource
-as managed by the **[sfpegIconDsp](/help/sfpegIconDsp.md)** component. All standard
-**[SLDS](https://www.lightningdesignsystem.com/icons/)** icon names may be used (e.g. `utility:help`
-or `standard:icon`).
+_Note_: The names of the icons are here custom ones added to the **sfpegIcons** static resource
+(see **[sfpegIconDsp](/help/sfpegIconDsp.md)** component for details).
+All standard **[SLDS](https://www.lightningdesignsystem.com/icons/)** icon names may also be used
+(e.g. `utility:help` or `standard:account`). Dynamic icons are not supported.
 
 
 ---
 
 ## Technical Details
 
-Currently, there are some known limitations with email and phone fields: when using a _softPhone_
-or using an _email_ global action, the corresponding fields do not behave as in the standard 
+This component relies on:
+* **[record-view-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-view-form/documentation)** and **[record-edit-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-edit-form/documentation)** standard components to fetch / update record data
+* **[output-field](https://developer.salesforce.com/docs/component-library/bundle/lightning-output-field/documentation)** and **[input-field](https://developer.salesforce.com/docs/component-library/bundle/lightning-input-field/documentation)** standard components to display / update record fields
+* **[sfpegIconDsp](/help/sfpegIconDsp.md)** to display icons.
+
+_Note_: Currently, there are some known limitations with email and phone fields: when using a `softPhone`
+or using an `email` global action, the corresponding fields do not behave as in the standard 
 record detail / highlight panel / related list components (i.e. do not open the proper popups).
 These limitations come from the standard LWC
 [output-field](https://developer.salesforce.com/docs/component-library/bundle/lightning-output-field/documentation)
 and
 [input-field](https://developer.salesforce.com/docs/component-library/bundle/lightning-input-field/documentation)
-base components in 
-[record-view-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-view-form/documentation)
-or
-[record-edit-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-edit-form/documentation)
-ones, which only display `mailto:` (for email) and `tel:` (for phone) hyperlinks.
+base components, which only display `mailto:` (for email) and `tel:` (for phone) hyperlinks.
