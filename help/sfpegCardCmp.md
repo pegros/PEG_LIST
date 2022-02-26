@@ -29,7 +29,7 @@ with a title, icon and set of header actions (via the **[sfpegActionBarCmp](/hel
 * followed by a set of sections containing their own set of fields
 
 The following snapshot presents two successive instances of the component, the first one
-applying to the current record and the second on a parent record (identified via a lookup
+applying to the current record and the second to a parent record (identified via a lookup
 field on the current record).
 
 ![Cards on different records](/media/sfpegCard.png) 
