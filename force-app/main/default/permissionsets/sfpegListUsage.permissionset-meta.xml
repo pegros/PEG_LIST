@@ -80,6 +80,10 @@
         <apexClass>sfpegRecordDisplay_CTL</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>sfpegIconCatalog_CTL</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>sfpegAction__mdt</name>

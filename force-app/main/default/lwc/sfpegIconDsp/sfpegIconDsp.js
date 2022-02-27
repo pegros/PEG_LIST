@@ -65,7 +65,7 @@ export default class SfpegIconDsp extends LightningElement {
     // Internal technical parameters
     @track isResourceIcon = false;  // Indicates that the iconName is leveraging the custom SVG static resource
     @track iconSrc;                 // Source if the custom SVG to display (with name + size)
-    @track iconClass;               // CSS class to apply
+    @track iconClass = "";          // CSS class to apply
     @track isDynamicIcon = false;   // Indicates that the iconName is a type of lightning:dynamicIcon 
     @track iconType;                // Type of lightning:dynamicIcon to display
     @track isProgressRing = false;  // Indicates that the iconName is a lightning:progressRing
