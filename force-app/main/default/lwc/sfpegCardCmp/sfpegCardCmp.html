@@ -186,7 +186,7 @@
                                 <template for:each={configDetails.fields} for:item="iterField">
                                     <lightning-layout-item  key={iterField.name}  size={iterField.size} alignment-bump="right" >
                                         <div class="slds-media">
-                                            <template if:true={iterSectionField.icon}>
+                                            <template if:true={iterField.icon}>
                                                 <div class="slds-media__figure slds-p-top_x-small">
                                                     <c-sfpeg-icon-dsp   icon-name={iterField.icon}
                                                                         icon-size={configDetails.iconSize} >
