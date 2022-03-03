@@ -77,9 +77,9 @@ text fields which then break the JSON parsing operation.
 Richtext fields are a key source of problems, e.g. for the **[sfpegMessageListCmp](/help/sfpegMessageListCmp.md)** 
 or the **[sfpegRecordDisplayCmp](/help/sfpegRecordDisplayCmp.md)** components, especially the 
 double quotes induced by HTML formatting.
-'''
+```
 <p>These are the <b style="color: rgb(176, 8, 8);"><i><u>conditions</u></i></b> for the <b>campaign:</b></p>
-'''
+```
 
 Text fields may also raise the same issue, as double quotes in their content are indeed not escaped (via '&quot;')
 as in the richtext field case. 
