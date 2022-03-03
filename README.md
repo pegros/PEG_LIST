@@ -190,7 +190,7 @@ in the App Builder, referencing 2 custom metadata records (orange zones) respect
 fetch/display configuration and for the header actions.
 
 <p align="center" >
-![List App Builder Configuration Example](/media/sfpegListConfiguration.png)
+<img src="/media/sfpegListConfiguration.png" alt="App Builder Config" title="List App Builder Configuration Example" />
 </p>
 
 

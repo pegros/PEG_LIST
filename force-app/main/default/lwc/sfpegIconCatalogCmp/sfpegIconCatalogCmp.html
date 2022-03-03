@@ -5,13 +5,14 @@
             <lightning-layout multiple-rows="true" horizontal-align="center">
                 <template for:each={iconCatalog} for:item="iterIcon">
                     <lightning-layout-item padding="around-small" key={iterIcon.name}>
-                        <div class="slds-box slds-box_xx-small">
+                        <div class="slds-box slds-box_xx-small ">
                             <lightning-layout vertical-align="end" horizontal-align="center">
                                 <template for:each={iterIcon.sizes} for:item="iterSize">
                                     <lightning-layout-item  padding="around-small" key={iterSize} >
-                                        <div style="border: 1px rgb(201, 201, 201) dashed; border-radius: 3px;" class="slds-grow-none slds-p-around_x-small">
+                                        <div style="border: 1px rgb(201, 201, 201) dashed; border-radius: 3px;" class="slds-grow-none slds-theme_shade slds-p-around_x-small">
                                         <c-sfpeg-icon-dsp   icon-name={iterIcon.name}
-                                                            icon-size={iterSize}>
+                                                            icon-size={iterSize}
+                                                            icon-variant="inverse">
                                         </c-sfpeg-icon-dsp>
                                         </div>
                                         <p class="slds-text-title slds-align_absolute-center">{iterSize}</p>

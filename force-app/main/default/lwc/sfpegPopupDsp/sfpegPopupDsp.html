@@ -76,12 +76,13 @@
                         <div class="slds-form slds-grid slds-gutters slds-wrap fullWidth">
                             <template for:each={recordData} for:item="iter">
                                 <div class={detailFieldClass} key={iter.label} >
-                                    <label  class="slds-form-element__label slds-truncate tableLabel"
+                                    <label  class="slds-text-title slds-form-element__label slds-truncate tableLabel"
                                             title={iter.label}>
                                         {iter.label}
                                     </label>
                                     <div class="slds-form-element__control">
-                                        <div class="slds-form-element__static slds-text-body_small">
+                                        <!-- slds-text-body_small-->
+                                        <div class="slds-form-element__static ">
                                             <c-sfpeg-field-dsp  field-type={iter.type}
                                                                 field-label={iter.label}
                                                                 field-value={iter.value}>

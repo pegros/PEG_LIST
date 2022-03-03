@@ -26,3 +26,6 @@
     padding-right: 0px !important;
     /*width: 100% !important;*/
 }
+.formField {
+    margin-bottom: var(--lwc-spacingSmall) !important;
+}

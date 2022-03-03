@@ -124,7 +124,7 @@ export default class SfpegPopupDsp extends LightningElement {
         this.popupMessage = message;
         this.recordData = fields;
 
-        this.detailFieldClass = "slds-col slds-form-element slds-size_1-of-" + (columns || 1) +  " slds-form-element_stacked" ;
+        this.detailFieldClass = "slds-col slds-form-element slds-size_1-of-" + (columns || 1) +  " slds-form-element_stacked formField" ;
         if (this.isDebug) console.log('showDetails: detailFieldClass init ',this.detailFieldClass);
 
         if (this.isDebug) console.log('showDetails: END');
