@@ -99,7 +99,7 @@
 	object-fit          :   contain;
     width               :   98%;
 	height              :   98%;
-    border-radius       :   50px !important; 
+    border-radius       :   calc(50% + 5px) !important; 
     border-style        :   solid;
     border-width        :   5px !important;
     border-top-width    :   5px !important;
