@@ -115,8 +115,9 @@ once the flow completes, leveraging a `notify` action type within a `next` prope
 }
 ```
 
-_Note_: For the notify action to work properly, the `Notification Channel` of the **sfpegAction** configuration metadata used
-in the originating **[sfpegListCmp](/help/sfpegListCmp.md)** should be set to include the `RefreshList` channel used in this configuration.
+_Note_: For the notify action to work properly, the `Notification Channel` of the **[sfpegAction](/help/sfpegActionBarCmp.md)**
+row action configuration used in the originating **[sfpegListCmp](/help/sfpegListCmp.md)** should be set to include the
+`RefreshList` channel used here.
 
 
 ### **closeTabs** Action Type
