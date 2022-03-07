@@ -35,8 +35,9 @@
 
 import { LightningElement, wire , api, track} from 'lwc';
 import getConfiguration from '@salesforce/apex/sfpegCard_CTL.getConfiguration';
+import updateRecord     from '@salesforce/apex/sfpegCard_CTL.updateRecord';
 import currentUserId    from '@salesforce/user/Id';
-import { getRecord }    from 'lightning/uiRecordApi';
+import { getRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
 import SAVE_LABEL       from '@salesforce/label/c.sfpegCardSave';
 import CANCEL_LABEL     from '@salesforce/label/c.sfpegCardCancel';
 
@@ -62,6 +63,8 @@ export default class SfpegCardDsp extends LightningElement {
     @api isDebug = false;       // Debug mode activation
     @api isDebugFine = false;   // Debug mode activation for all subcomponents.
 
+    @api useDML = false;        // DML (instead of LDS) mode activation 
+
     //----------------------------------------------------------------
     // Other configuration fields (for component embedding)
     //----------------------------------------------------------------
@@ -75,10 +78,10 @@ export default class SfpegCardDsp extends LightningElement {
     // Internal Initialization Parameters
     //----------------------------------------------------------------
     @track isReady = false;         // Initialization state of the component (to control spinner)
+    @track isUpdating = false;      // DML Updating state of the component (to control spinner)
     @track configDetails = null;    // Global configuration of the component
     @track isEditMode = false;      // Current Edit/Read mode
     @track errorMsg = null;         // Error message (if any for end user display)
-    @track errorMsg;                // Possible error message displayed
 
     //----------------------------------------------------------------
     // Context Data
@@ -144,6 +147,8 @@ export default class SfpegCardDsp extends LightningElement {
             this.isReady = true;
             return;
         }
+
+        //if (this.cardClass?.includes('useDML')) this.useDML = true;
 
         if (this.isDebug) console.log('connected: config name fetched ', this.configName);
         if (CARD_CONFIGS[this.configName]) {
@@ -322,7 +327,46 @@ export default class SfpegCardDsp extends LightningElement {
     handleFormSubmit(event) {
         if (this.isDebug) console.log('handleFormSubmit: START ',event);
 
-        if (this.isDebug) console.log('handleFormSubmit: END ');
+        if (this.useDML) {
+            if (this.isDebug) console.log('handleFormSubmit: triggering DML update ');
+            event.preventDefault();
+            this.isUpdating = true;
+
+            let recordData = { ObjectApiName: this.objectApiName, Id:this.recordId };
+            let inputFields = this.template.querySelectorAll('lightning-input-field');
+            inputFields.forEach(item => {
+                if (this.isDebug) console.log('handleFormSubmit: processing field ', item.fieldName);
+                if (this.isDebug) console.log('handleFormSubmit: with value ', JSON.stringify(item.value));
+                if ((item.value) &&  (typeof (item.value) === 'object')) {
+                    (Object.keys(item.value)).forEach(subItem => {
+                        if (this.isDebug) console.log('handleFormSubmit: processing subItem ', subItem);
+                        if (this.isDebug) console.log('handleFormSubmit: with value ', (item.value)[subItem]);
+                        recordData[subItem] = (item.value)[subItem];
+                    });
+                } 
+                else {
+                    recordData[item.fieldName] = item.value;
+                }
+            });
+            if (this.isDebug) console.log('handleFormSubmit: recordData init ', JSON.stringify(recordData));
+
+            updateRecord({record: recordData})
+            .then( () => {
+                if (this.isDebug) console.log('handleFormSubmit: END / DML update executed');
+                getRecordNotifyChange([{recordId: this.recordId}]);
+                this.isUpdating = false;
+                this.isEditMode = false;
+            })
+            .catch( error => {
+                console.warn('handleFormSubmit: END / configuration fetch error ', JSON.stringify(error));
+                this.isUpdating = false;
+                //this.errorMsg = 'DML update error: ' + JSON.stringify(error);
+            });
+            if (this.isDebug) console.log('handleFormSubmit: request sent');
+        }
+        else {
+            if (this.isDebug) console.log('handleFormSubmit: END / standard LDS form submit ');
+        }
     }
 
     handleFormLoad(event) {

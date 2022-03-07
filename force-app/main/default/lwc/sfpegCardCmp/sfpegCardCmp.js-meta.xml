@@ -31,7 +31,7 @@
                         description="Size of the standard header buttons (to align with custom header actions)"/>
 
             <property   name="configName"
-                        label="Query Configuration"
+                        label="Card Configuration"
                         type="String"
                         datasource="apex://sfpegCardSelector_CTL"
                         description="(Developer) Name of the Card Configuration record to be used (see sfpegCard__mdt)."/>
@@ -57,6 +57,12 @@
                         type="String"
                         datasource="apex://sfpegActionSelector_CTL"
                         description="(Developer) Name of the Action Configuration record to be used in header (see sfpegAction__mdt)."/>
+
+            <property   name="useDML"
+                        label="Use DML?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to force the use of without sharing DML instead of standard LDS."/>
 
             <property   name="isDebug"
                         label="Debug?"
@@ -90,7 +96,7 @@
                         description="Size of the standard header buttons (to align with custom header actions)"/>
 
             <property   name="configName"
-                        label="Query Configuration"
+                        label="Card Configuration"
                         type="String"
                         datasource="apex://sfpegCardSelector_CTL"
                         description="(Developer) Name of the Card Configuration record to be used (see sfpegCard__mdt)."/>
@@ -116,6 +122,12 @@
                         type="String"
                         datasource="apex://sfpegActionSelector_CTL"
                         description="(Developer) Name of the Action Configuration record to be used in header (see sfpegAction__mdt)."/>
+
+            <property   name="useDML"
+                        label="Use DML?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to force the use of without sharing DML instead of standard LDS."/>
 
             <property   name="isDebug"
                         label="Debug?"

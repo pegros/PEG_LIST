@@ -860,6 +860,10 @@ the **sfpegActionBarCmp** components using it should be listening to.
 
 ![Action Notification Registration!](/media/sfpegActionNotifConfig.png)
 
+Please refer to **[sfpegActionUtilityCmp](/help/sfpegActionUtilityCmp.md)** to see an example combining a flow popup
+triggering via a `utility` action type followed by a `notify` one to refresh the originating
+**[sfpegListCmp](/help/sfpegListCmp.md)** component.
+
 
 ### Action Types from Other Components (Flow Popup, Aura Application Event, List Refresh, List Filter...)
 

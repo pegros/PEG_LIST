@@ -95,7 +95,7 @@
 
                 <!-- Results Display -->
                 <template if:true={showContent}>
-                    <div class="slds-p-horizontal_small slds-card__body_inner ">
+                    <div class="slds-p-horizontal_x-small slds-p-bottom_x-small">
 
                     <!-- Read Mode Display -->
                     <template if:false={isEditMode}>
@@ -107,9 +107,10 @@
                             <lightning-layout   multiple-rows="true"   >
                                 <template for:each={configDetails.fields} for:item="iterField">
                                     <lightning-layout-item  key={iterField.name}  size={iterField.size} alignment-bump="right" >
-                                        <div class="slds-media">
+                                        <div class="slds-media slds-p-horizontal_x-small">
                                             <template if:true={iterField.icon}>
-                                                <div class="slds-media__figure slds-p-top_x-small">
+                                                <!-- slds-p-top_x-small -->
+                                                <div class="slds-media__figure ">
                                                     <c-sfpeg-icon-dsp   icon-name={iterField.icon}
                                                                         icon-size={configDetails.iconSize} >
                                                     </c-sfpeg-icon-dsp>
@@ -147,9 +148,10 @@
                                     <lightning-layout   multiple-rows="true"  >
                                         <template for:each={iterSection.fields} for:item="iterSectionField">
                                             <lightning-layout-item  key={iterSectionField.name}  size={iterSectionField.size}  alignment-bump="right">
-                                                <div class="slds-media">
+                                                <div class="slds-media slds-p-horizontal_x-small">
                                                     <template if:true={iterSectionField.icon}>
-                                                        <div class="slds-media__figure slds-p-top_x-small">
+                                                        <!-- slds-p-top_x-small -->
+                                                        <div class="slds-media__figure ">
                                                             <c-sfpeg-icon-dsp   icon-name={iterSectionField.icon}
                                                                                 icon-size={configDetails.iconSize} >
                                                             </c-sfpeg-icon-dsp>
@@ -185,9 +187,10 @@
                             <lightning-layout   multiple-rows="true"   >
                                 <template for:each={configDetails.fields} for:item="iterField">
                                     <lightning-layout-item  key={iterField.name}  size={iterField.size} alignment-bump="right" >
-                                        <div class="slds-media">
+                                        <div class="slds-media slds-p-horizontal_x-small">
                                             <template if:true={iterField.icon}>
-                                                <div class="slds-media__figure slds-p-top_x-small">
+                                                <!-- slds-p-top_x-small -->
+                                                <div class="slds-media__figure ">
                                                     <c-sfpeg-icon-dsp   icon-name={iterField.icon}
                                                                         icon-size={configDetails.iconSize} >
                                                     </c-sfpeg-icon-dsp>
@@ -216,16 +219,17 @@
                                     <lightning-layout   multiple-rows="true">
                                         <template for:each={iterSection.fields} for:item="iterSectionField">
                                             <lightning-layout-item  key={iterSectionField.name}  size={iterSectionField.size} alignment-bump="right" >
-                                                <div class="slds-media">
+                                               <div class="slds-media slds-p-horizontal_x-small">
                                                     <template if:true={iterSectionField.icon}>
-                                                        <div class="slds-media__figure slds-p-top_x-small">
+                                                        <!-- slds-p-top_x-small -->
+                                                        <div class="slds-media__figure ">
                                                             <c-sfpeg-icon-dsp   icon-name={iterSectionField.icon}
                                                                                 icon-size={configDetails.iconSize} >
                                                             </c-sfpeg-icon-dsp>
                                                         </div>
                                                     </template>
                                                     <div class="slds-media__body">
-                                                        <lightning-input-field  field-name={iterField.name} 
+                                                        <lightning-input-field  field-name={iterSectionField.name} 
                                                                                 required={iterSectionField.required}
                                                                                 disabled={iterSectionField.disabled} 
                                                                                 variant={configDetails.variant} >
@@ -240,7 +244,7 @@
                             </template>
 
                             <!-- Save / Candel buttons -->
-                            <div class="slds-align_absolute-center">
+                            <div class="slds-align_absolute-center slds-p-top_x-small">
                                 <lightning-button-group class="">
                                     <lightning-button variant="neutral"  label={cancelLabel} onclick={handleModeToggle}>
                                     </lightning-button>
@@ -261,6 +265,11 @@
                     <lightning-spinner alternative-text={initLabel} size="medium">
                     </lightning-spinner>
                 </div>
+            </template>
+            <!-- Spinner display (DML Update) -->
+            <template if:true={isUpdating}>
+                <lightning-spinner alternative-text="Updating" size="medium">
+                </lightning-spinner>
             </template>
         </lightning-card>
     </div>

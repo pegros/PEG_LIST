@@ -85,8 +85,9 @@ The **openFlow** action type enables to launch a Lightning Flow within a popup (
 component and the
 [Overlay Library](https://developer.salesforce.com/docs/component-library/bundle/lightning:overlayLibrary/documentation).
 
-From a **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component, the following action configuration enables to
-launch a _TEST_TST_Flow_ Flow in a Popup.<br/>
+From a **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component, the following row action configuration enables to
+launch a flow called `TEST_TST_Flow` in a Popup (and refresh the content of the originating **[sfpegListCmp](/help/sfpegListCmp.md)**
+once the flow completes, leveraging a `notify` action type within a `next` property).<br/>
 ```
 {
     "name": "Flow", "label":"Flow",
@@ -96,15 +97,27 @@ launch a _TEST_TST_Flow_ Flow in a Popup.<br/>
             "type": "openFlow",
             "params": {
                 "name":"TEST_TST_Flow",
-                "params":[{"name" : "recordId", "type" : "String", "value" : "{{{GEN.recordId}}}"}],
+                "params":[{"name" : "recordId", "type" : "String", "value" : "{{{ROW.Id}}}"}],
                 "header":"Test Flow Header",
                 "doRefresh":true,
-                "class": "slds-modal slds-fade-in-open slds-slide-down-cancel slds-modal_large"
+                "class": "slds-modal slds-fade-in-open slds-slide-down-cancel slds-modal_large",
+                "next": {
+                    "type": "notify",
+                    "channel": "RefreshList",
+                    "params": {
+                        "type": "done",
+                        "params": { "type": "refresh" }
+                    }
+                }
             }
         }
     }
 }
 ```
+
+_Note_: For the notify action to work properly, the `Notification Channel` of the **sfpegAction** configuration metadata used
+in the originating **[sfpegListCmp](/help/sfpegListCmp.md)** should be set to include the `RefreshList` channel used in this configuration.
+
 
 ### **closeTabs** Action Type
 

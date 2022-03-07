@@ -73,11 +73,15 @@ Such an event should be handled by setting the _onaction_ handler on the compone
 
 ---
 
-## Static Resources for Custom Icons
+## Static Resource for Custom Icons
 
-The **sfpegIcons** static resource contains all the custom SVG icons usable in the other components via the `resource:xxxx` syntax. If new icons are required, new SVG definitions may be added in the static resource for the new icon in all target sizes 
+The **sfpegIcons** static resource contains all the custom SVG icons usable in the other components via the `resource:xxxx` syntax. If new icons are required, new SVG definitions may be added in the static resource for the new icon in all target sizes. The content of the static resource is easily accessible via the **sfpegIconCatalog**
+App page.
 
-In the following example, the resource:total icon is defined in both medium and small formats.
+![Icon Catalog Page](/media/sfpegIconCatalog.mng)
+
+
+In the following example, the `resource:total` icon is defined in both medium and small formats.
 * the id of the sprite is built following the `<iconName>-<iconSize>` format
 * In order to reuse an original SVG defined in other sizes, a transformation is applied to scale and translate the original SVG directives for a proper display. The general viewBox is in a `0 0 100 100` configuration and target sizes for medium and small sizes are respectively `32px` and `24px`.
 * The stroke color has to be explicitely specified (as it is not inherited from the containers) and the stroke-width may also be adapted to the size.

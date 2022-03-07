@@ -64,4 +64,32 @@ public with sharing class sfpegCard_CTL {
         System.debug(LoggingLevel.FINE,'getConfiguration: END ' + configs[0].MasterLabel);
         return (Object) (configs[0]);
     }
+
+    /***
+    * @description  Standard method to execute the record update when LDS is not
+    *               used in the sfpegCardCmp component.
+    * @param    record  Record data to be updated (should include a record ID)
+    * @return   void    Nothing, simply executes the update.
+    * @exception   None special.
+    ***/
+    @AuraEnabled
+    public static void updateRecord(SObject record) {
+        System.debug('updateRecord: START with record ' + record);
+        
+        sfpegBypassSharingCard_CTL subHandler = new sfpegBypassSharingCard_CTL();
+        Database.SaveResult result = subHandler.updateRecord(record);
+
+        System.debug('updateRecord: END with result ' + result);
+        return;
+    }
+
+    /***
+    * @description  Private class and methods to execute DML update in without sharing mode.
+    ***/
+    private without sharing class sfpegBypassSharingCard_CTL {
+        public Database.SaveResult updateRecord(SObject record) {
+            System.debug('updateRecord: bypassed update requested');
+            return Database.update(record);
+        }
+    }
 }

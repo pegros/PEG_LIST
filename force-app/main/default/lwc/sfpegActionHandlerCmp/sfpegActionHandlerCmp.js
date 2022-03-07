@@ -107,7 +107,7 @@ export default class SfpegActionHandlerCmp extends LightningElement {
 
         try {
             if (this.isDebug) console.log('executeAction: triggering action');
-            actionBar.processAction(action,context);
+            actionBar.executeAction(action,context);
             if (this.isDebug) console.log('executeAction: END / action triggered');
         }
         catch (error) {

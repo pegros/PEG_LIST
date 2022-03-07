@@ -484,6 +484,14 @@ the configuration:
 ...
 ```
 
+
+### List Refresh after Flow Popup Execution
+
+Please refer to **[sfpegActionUtilityCmp](/help/sfpegActionUtilityCmp.md)** to see an example combining a flow popup
+triggering via a `utility` action type followed by a `notify` one to refresh the originating
+**sfpegListCmp** component.
+
+
 ---
 
 ## Technical Details

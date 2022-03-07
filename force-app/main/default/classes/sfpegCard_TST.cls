@@ -105,6 +105,25 @@ public class  sfpegCard_TST {
     }
 
     /***
+    * @description  Test method for the sfpegCard_CTL class, checking the "updateRecord" method.
+    * @see  sfpegCard_CTL
+    ***/
+
+    static TestMethod void testUpdateRecord() {
+        System.debug('testUpdateRecord: START'); 
+        sfpegTestObject__c testRcd = new sfpegTestObject__c(Name='TEST'); 
+        insert testRcd;
+        System.debug('testUpdateRecord: testRcd inserted ' + testRcd); 
+    
+        Test.startTest();
+        testRcd.Name = 'TEST UPD';
+        sfpegCard_CTL.updateRecord(testRcd);
+        Test.stopTest();
+
+        System.debug('testUpdateRecord: END');
+    }
+
+    /***
     * @description Test method for the sfpegCardSelector_CTL class, checking the "getDefaultValue" method,
     *              which should always return the default "N/A" value.
     * @see sfpegActionSelector_CTL
