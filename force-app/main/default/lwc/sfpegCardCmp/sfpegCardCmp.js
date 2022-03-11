@@ -40,6 +40,9 @@ import currentUserId    from '@salesforce/user/Id';
 import { getRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
 import SAVE_LABEL       from '@salesforce/label/c.sfpegCardSave';
 import CANCEL_LABEL     from '@salesforce/label/c.sfpegCardCancel';
+import SAVE_ERROR       from '@salesforce/label/c.sfpegCardSaveError';
+import MODE_TOGGLE      from '@salesforce/label/c.sfpegCardModeToggle';
+
 
 var CARD_CONFIGS = {};
 
@@ -73,6 +76,7 @@ export default class SfpegCardDsp extends LightningElement {
     //Button Labels from custom labels
     cancelLabel = CANCEL_LABEL;
     saveLabel = SAVE_LABEL;
+    modeToggleTitle = MODE_TOGGLE;
 
     //----------------------------------------------------------------
     // Internal Initialization Parameters
@@ -82,6 +86,7 @@ export default class SfpegCardDsp extends LightningElement {
     @track configDetails = null;    // Global configuration of the component
     @track isEditMode = false;      // Current Edit/Read mode
     @track errorMsg = null;         // Error message (if any for end user display)
+    @track errorObj = null;         // Error object (if any for end user display)
 
     //----------------------------------------------------------------
     // Context Data
@@ -231,13 +236,15 @@ export default class SfpegCardDsp extends LightningElement {
                 }
                 catch (parseError){
                     console.warn('connected: END / configuration parsing failed ',parseError);
-                    this.errorMsg = 'Configuration parsing failed: ' + parseError;
+                    this.errorMsg = 'Configuration parsing failed';
+                    this.errorObj = { message: parseError};
                     this.isReady = true;
                 }
             })
             .catch( error => {
                 console.warn('connected: END / configuration fetch error ',error);
-                this.errorMsg = 'Configuration fetch error: ' + error;
+                this.errorMsg = 'Configuration fetch error';
+                this.errorObj = { message: error};
                 this.isReady = true;
             });
             if (this.isDebug) console.log('connected: request sent');
@@ -318,7 +325,12 @@ export default class SfpegCardDsp extends LightningElement {
         this.isEditMode = !this.isEditMode;
         if (this.isEditMode) {
             this.isCollapsed = false;
-            if (this.isDebug) console.log('handleModeToggle: enforcing uncollapsed mode ',this.isCollapsed);
+            if (this.isDebug) console.log('handleModeToggle: enforcing uncollapsed edit mode ',this.isCollapsed);
+        }
+        else {
+            this.errorMsg = null;
+            this.errorObj = null;
+            if (this.isDebug) console.log('handleModeToggle: removing error messages if read mode ');
         }
         if (this.isDebug) console.log('handleModeToggle: END with toggled isEditMode ',this.isEditMode);
     }
@@ -354,11 +366,15 @@ export default class SfpegCardDsp extends LightningElement {
             .then( () => {
                 if (this.isDebug) console.log('handleFormSubmit: END / DML update executed');
                 getRecordNotifyChange([{recordId: this.recordId}]);
+                this.errorMsg = null;
+                this.errorObj = null;
                 this.isUpdating = false;
                 this.isEditMode = false;
             })
             .catch( error => {
-                console.warn('handleFormSubmit: END / configuration fetch error ', JSON.stringify(error));
+                console.warn('handleFormSubmit: END / record update error ', JSON.stringify(error));
+                this.errorMsg = SAVE_ERROR;
+                this.errorObj = error;
                 this.isUpdating = false;
                 //this.errorMsg = 'DML update error: ' + JSON.stringify(error);
             });
@@ -371,8 +387,8 @@ export default class SfpegCardDsp extends LightningElement {
 
     handleFormLoad(event) {
         if (this.isDebug) console.log('handleFormLoad: START ');
-        if (this.isDebug) console.log('handleFormLoad: event received  ',event);
-        if (this.isDebug) console.log('handleFormLoad: event detail received  ',JSON.stringify(event.detail));
+        if (this.isDebug) console.log('handleFormLoad: event received ', event);
+        if (this.isDebug) console.log('handleFormLoad: event detail received ', JSON.stringify(event.detail));
 
         if (!this.formRecordTypeId) {
             let rtID = (event.detail.records)[this.formRecordId].recordTypeId;

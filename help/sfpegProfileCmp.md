@@ -53,13 +53,13 @@ the following display widgets:
 ### App Builder Configuration
 
 In the App Builder, the configuration is straightforward, most of it consisting in selecting the
-appropriate **sfpegProfile__mdt** custom metadata record in the _Profile Configuration_ property.<br/>
+appropriate **sfpegProfile__mdt** custom metadata record in the `Profile Configuration` property.<br/>
 ![Profile Component App Builder Configuration](/media/sfpegProfileConfig.png) 
 
-Various styling options are also available, such as _Wrapping CSS_, _Display Size_, _Padding Size_,
-_Action Alignment_, _Inverse Mode?_ (for text color).
+Various styling options are also available, such as `Wrapping CSS`, `Display Size`, `Padding Size`,
+`Action Alignment`, `Inverse Mode?` (for text color).
 
-_Note_: one of the possible valeus for the _Action Alignment_ property enables to set the action bar within the header section next to the title. This is useful to optimise vertical screen consumption.
+_Note_: one of the possible values for the `Action Alignment` property enables to set the action bar within the header section next to the title. This is useful to optimise vertical screen consumption.
 
 
 ### Metadata Configuration
@@ -69,39 +69,39 @@ The **sfpegProfile__mdt** custom metadata provides most if not all configuration
 ![Profile Configuration](/media/sfpegProfileConfigMeta.png)
 
 The following properties are available to configure the different profile widgets:
-* _Profile Banner_ defines the name of the background image to display
+* `Profile Banner` defines the name of the background image to display
     * Its value may be a static text (i.e. same value for all component instances)
-    * A dynamic behaviour (i.e. value depending on the page record) may be defined instead, in which case its value should be a JSON object providing the record _fieldName_ (e.g. a formula field) used to get the image name (as `{"fieldName":"<fieldApiName>"}`)
+    * A dynamic behaviour (i.e. value depending on the page record) may be defined instead, in which case its value should be a JSON object providing the record `fieldName` (e.g. a formula field) used to get the image name (as `{"fieldName":"<fieldApiName>"}`)
     * The resulting image name should match one of the files available within the **sfpegBanners** static resource.
     * Custom `.jpg` or `.png` image files may added to this static resources and later referenced in this configuration.
     * No value hides the background widget.
-* _Profile Avatar_ defines the name of the avatar image to display
-    * It follows the same principles as _Profile Banner_ but uses the **sfpegAvatars** static resource instead.
+* `Profile Avatar` defines the name of the avatar image to display
+    * It follows the same principles as `Profile Banner` but uses the **sfpegAvatars** static resource instead.
      or sfpegAvatars* static resources
-* _Profile Header_ configures the header section, as a JSON object with the following optional properties
-    * _title_: record field API name to use to set header title (no value hiding the title)
-    * _badge_: record field API name to use to set the badge label (no value hiding the badge)
-    * _badgeClass_: SLDS classes to apply on the badge (e.g. to change its background color)
-    * _details_: JSON list of record field API names to be displayed in the header details (below the title) 
+* `Profile Header` configures the header section, as a JSON object with the following optional properties
+    * `title`: record field API name to use to set header title (no value hiding the title)
+    * `badge`: record field API name to use to set the badge label (no value hiding the badge)
+    * `badgeClass`: SLDS classes to apply on the badge (e.g. to change its background color)
+    * `details`: JSON list of record field API names to be displayed in the header details (below the title) 
     * No value hides the whole header section. 
-* _Profile Actions_ enables to add a **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component
+* `Profile Actions` enables to add a **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component
     * It should contain the name of the **sfpegAction__mdt** custom metadata record to be used
     * No value hides the action bar.
-* _Profile Details_ configures the content of the details section, as a JSON object with the following properties
-    * _variant_: display variant, which should have one of the following possible values
-        * _list_ for horizontal list of field values
-        * _base_ for standard [lightning-output-field](https://developer.salesforce.com/docs/component-library/bundle/lightning-output-field/documentation) display in a grid,
-        * _table_ to display field labels next to their values in a [SLDS description list](https://www.lightningdesignsystem.com/utilities/description-list/#Horizontal)
-        * _media_ to display icons instead of field labels next to their values in a [SLDS media object](https://www.lightningdesignsystem.com/utilities/media-objects/)
-    * _columns_: number of fields displayed per row (for all variant but _list_)
+* `Profile Details` configures the content of the details section, as a JSON object with the following properties
+    * `variant_: display variant, which should have one of the following possible values
+        * `list` for horizontal list of field values
+        * `base` for standard [lightning-output-field](https://developer.salesforce.com/docs/component-library/bundle/lightning-output-field/documentation) display in a grid,
+        * `table` to display field labels next to their values in a [SLDS description list](https://www.lightningdesignsystem.com/utilities/description-list/#Horizontal)
+        * `media` to display icons instead of field labels next to their values in a [SLDS media object](https://www.lightningdesignsystem.com/utilities/media-objects/)
+    * `columns`: number of fields displayed per row (for all variant but `list`)
         * It should be divider of 12, as fields are displayed in a [SLDS grid](https://www.lightningdesignsystem.com/utilities/grid/).
-    * _iconSize_: size of the icons displayed (for the _media_ variant)
+    * `iconSize`: size of the icons displayed (for the `media` variant)
         * it should be one of the 
-    * _fields_: JSON list of record fields to be displayed
-        * for all variants but _media_, it should contain field API names (i.e. JSON list of strings)
-        * for the _media_ variant, it should contain JSON field definition objects with the following properties
-            * _fieldName_: API name of the field
-            * _iconName_: name of the icon to display (as a name supported by the **[sfpegIconDsp](/help/sfpegIconDsp.md)** component for non-dynamic icons)
+    * `fields`: JSON list of record fields to be displayed
+        * for all variants but `media`, it should contain field API names (i.e. JSON list of strings)
+        * for the `media` variant, it should contain JSON field definition objects with the following properties
+            * `fieldName`: API name of the field
+            * `iconName`: name of the icon to display (as a name supported by the **[sfpegIconDsp](/help/sfpegIconDsp.md)** component for non-dynamic icons)
 
 ---
 
@@ -109,28 +109,36 @@ The following properties are available to configure the different profile widget
 
 ### Profile Banner
 
-Hereafter is a static configuration example for the Profile banner
+To set the Profile banner background image, a value must be provided in the `Profile Banner` property
+of the **sfpegProfile_mdt** custom metadata record. Hereafter are examples for the possible cases:
+* for a static configuration (`banner4.png` being the name of one of the default image files
+provided in the **sfpegBanners** static resource)
 ```
 banner4.png
 ```
-
-Hereafter is a dynamic configuration example for the Profile banner
+* for a dynamic configuration (`Banner__c` being the API name of one field, possibly a formula one,
+on the current record providing the name of the image to display)
 ```
 { "fieldName": "Banner__c" }
 ```
+* for no banner, simply leave the field blank.
 
 
 ### Profile Avatar
 
-Hereafter is a static configuration example for the Profile avatar
+To set the Avatar image, a value must be provided in the `Profile Avatar` property
+of the **sfpegProfile_mdt** custom metadata record. Hereafter are examples for the possible cases:
+* for a static configuration (`avatar1.jpg` being the name of one of the default image files
+provided in the **sfpegAvatars** static resource)
 ```
 avatar1.jpg
 ```
-
-Hereafter is a dynamic configuration example for the Profile avatar
+* for a dynamic configuration (`Avatar__c` being the API name of one field, possibly a formula one,
+on the current record providing the name of the image to display)
 ```
 { "fieldName": "Avatar__c" }
 ```
+* for no avatar, simply leave the field blank.
 
 
 ### Profile Header
@@ -148,7 +156,7 @@ Hereafter is a full configuration example for the Profile header
 
 ### Profile Details
 
-Hereafter is a configuration example for the Profile details in ***list*** display mode
+Hereafter is a configuration example for the Profile details in `list` display mode
 ```
 {
     "variant":"list",
@@ -156,7 +164,7 @@ Hereafter is a configuration example for the Profile details in ***list*** displ
 }
 ```
 
-Hereafter is a configuration example for the Profile details in ***table*** display mode (with _columns_ property set)
+Hereafter is a configuration example for the Profile details in `table` display mode (with `columns` property set)
 ```
 {
     "variant":"table",
@@ -165,7 +173,7 @@ Hereafter is a configuration example for the Profile details in ***table*** disp
 }
 ```
 
-Hereafter is a configuration example for the Profile details in ***media*** display mode (with _iconName_ properties set)
+Hereafter is a configuration example for the Profile details in `media` display mode (with `iconName` properties set)
 ```
 {
     "variant":"media",
@@ -183,9 +191,14 @@ Hereafter is a configuration example for the Profile details in ***media*** disp
 
 ## Technical Details
 
-The **sfpegProfileCmp** component exclusively relies on the [lightning-view-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-view-form/documentation) standard component to fetch all 
-necessary data to display the required field values, image and icon names. This requires all data to be defined on accessible (possibly formula) fields of the current record to be displayed or fetched via [lightning-output-field](https://developer.salesforce.com/docs/component-library/bundle/lightning-output-field/documentation) standard components.
+The **sfpegProfileCmp** component exclusively relies on the **[lightning-view-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-view-form/documentation)** standard component to fetch all 
+necessary data to display the required field values, image and icon names.
+* This requires all data to be defined on accessible (possibly formula) fields of the current record to be displayed or fetched via **[lightning-output-field](https://developer.salesforce.com/docs/component-library/bundle/lightning-output-field/documentation)** standard components.
+* Even avatar and banner fields (for dynamic configuration) are fetched this way via hidden **lightning-output-field**.
+* It is therefore not available for some specific standard Objects (see [LDS Doc](https://developer.salesforce.com/docs/atlas.en-us.lightning.meta/lightning/data_service_considerations.htm)).
+
 
 It also relies on 
 * a **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component to display the action bar 
 * **[sfpegIconDsp](/help/sfpegIconDsp.md)** components to display field icons instead of names if needed.
+* the **sfpegBanners** and **sfpegAvatars** static resources respectively for banner background and avatar image display, these resources being easily extended to include any addditional custom `.jpg` or `.png` image files.

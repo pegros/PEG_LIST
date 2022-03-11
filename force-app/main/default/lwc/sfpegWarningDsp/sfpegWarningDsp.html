@@ -10,6 +10,11 @@
                 <p class={variantConfig.textColor}>
                     {message}
                 </p>
+                <template if:true={errorDetails}>
+                    <p class="slds-text-body_small">
+                        {errorDetails}
+                    </p>
+                </template>
         </div>
     </div>
 </template>

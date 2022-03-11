@@ -57,17 +57,46 @@ const DISPLAY_VARIANTS = {
 export default class SfpegWarningDsp extends LightningElement {
 
     //----------------------------------------------------------------
-    // Component parameters  
+    // Component configuration parameters  
     //----------------------------------------------------------------   
-    // Configuration parameters
-    @api message;               // Error message to display
+    @api message;               // Text message to display
+    @api error;                 // Error object for which message properties should be displayed
     @api variant = "warning";   // Variant of the display
+    @api isDebug = false;       // Flag to trigger debug logs
+
+    //----------------------------------------------------------------
+    // Component internal parameters  
+    //----------------------------------------------------------------  
+    @track errorDetails;        // Concatenated error message properties for display
     @track variantConfig = {};  // configuration corresponding to the variant
 
     //----------------------------------------------------------------
     // Component initialisation  
     //----------------------------------------------------------------      
     connectedCallback() {
+        if (this.isDebug) console.log('connected: START');
+
         this.variantConfig = DISPLAY_VARIANTS[this.variant] || DISPLAY_VARIANTS.warning;
+        if (this.isDebug) console.log('connected: variantConfig init ', this.variantConfig);
+
+        if (this.error) {
+            if (this.isDebug) console.log('connected: parsing error object', JSON.stringify(this.error));
+
+            let regexp = /message":"(.*?)"/gi;
+            //if (this.isDebug) console.log('connected: regexp init ', regexp);
+
+            let messageList = (JSON.stringify(this.error)).match(regexp);
+            if (this.isDebug) console.log('connected: messageList extracted ', messageList);
+
+            this.errorDetails = messageList.reduce((previous ,current) => {
+                let newCurrent = current.slice(10,-1);
+                if (previous) return previous + '\n' + newCurrent;
+                return newCurrent;
+            },'');
+            //this.errorMessage = messageList.join('\n');
+            if (this.isDebug) console.log('connected: errorDetails init ', this.errorDetails);
+        }
+
+        if (this.isDebug) console.log('connected: END');
     }
 }

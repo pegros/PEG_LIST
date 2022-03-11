@@ -370,7 +370,7 @@ export default class SfpegPopupDsp extends LightningElement {
             }
         }
         catch (error) {
-            console.warn('handleSave: error raised whil saving ', JSON.stringify(error));
+            console.warn('handleSave: error raised while saving ', JSON.stringify(error));
             this.showSpinner = false;
         }
     }

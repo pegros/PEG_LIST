@@ -178,7 +178,7 @@ export default class SfpegProfileCmp extends LightningElement {
     // Component Initialization
     //----------------------------------------------------------------
     connectedCallback(){
-        if (this.isDebug) console.log('connected: START', this.configName);
+        if (this.isDebug) console.log('connected: START with config ', this.configName);
         //this.errorMsg = 'Component initialized.';
         if (this.isReady) {
             console.warn('connected: END / already ready');
@@ -192,11 +192,11 @@ export default class SfpegProfileCmp extends LightningElement {
             return;
         }
 
-        if (this.isDebug) console.log('connected: config name fetched ', this.configName);
         if (PROFILE_CONFIGS[this.configName]) {
             if (this.isDebug) console.log('connected: END / configuration already available');
             this.configDetails = PROFILE_CONFIGS[this.configName];
             this.finalizeConfig();
+            this.isReady = true;
         }
         else {
             if (this.isDebug) console.log('connected: fetching configuration from server', this.configName);
@@ -349,7 +349,7 @@ export default class SfpegProfileCmp extends LightningElement {
             else {
                 if (this.isDebug) console.log('finalizeConfig: fetching field labels for new object ',this.objectApiName);
                 this.labelObject = this.objectApiName;
-                if (this.isDebug) console.log('finalizeConfig: field list init', JSON.stringify(this.labelFields));
+                if (this.isDebug) console.log('finalizeConfig: field list init', JSON.stringify(this.configDetails.labelFields));
             }
         }
         else {

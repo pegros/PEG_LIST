@@ -256,6 +256,20 @@
         <shortDescription>sfpegCardCancel</shortDescription>
         <value>Cancel</value>
     </labels>
-
-
+    <labels>
+        <fullName>sfpegCardModeToggle</fullName>
+        <categories>PEG Component LWC Button Title</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegCardModeToggle</shortDescription>
+        <value>Toggle Edit/Read mode</value>
+    </labels>
+    <labels>
+        <fullName>sfpegCardSaveError</fullName>
+        <categories>PEG Component LWC Error Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegCardSaveError</shortDescription>
+        <value>Record Update failed</value>
+    </labels>
 </CustomLabels>

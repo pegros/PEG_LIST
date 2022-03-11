@@ -1121,7 +1121,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                         if (this.isDebug) console.log('triggerMassDML: initializing delete operation');
                         this._recordList.forEach(rcdIter => {
                             if (this.isDebug) console.log('triggerMassDML: processing rcdIter', JSON.stringify(rcdIter));
-                            let rcdUpdate = {"Id":rcdIter.Id};
+                            let rcdUpdate = { Id : rcdIter.Id};
                             dmlList.push(rcdUpdate);
                         });
                         break;

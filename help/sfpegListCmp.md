@@ -196,17 +196,28 @@ filter `scope` and `string` to be applied.
 _Note_: if no scope is defined, the default _ALL_ scope is used.
 
 
-### Specific Action Features
+### Row Selection and Mass Action Handling
 
-The **sfpegListCmp** includes some specific features concerning the action functionality provided
-by the **[sfpegActionBarCmp](/help/sfpegActionBar.md)**
-* When selection is enabled on the component, it sets/updates the list of selected records in
+When using the `DataTable` or `DataTree` display modes (not supported in `TileList` or `CardList` yet),
+it is possible to activate the row selection feature and trigger mass actions from the **sfpegListCmp**
+header action bar.
+
+In order to activate the row selection feature, it is necessary to add the following properties in the 
+**Display** configuration:
+```
+...
+    "hideCheckboxColumn": false,
+    "maxRowSelection": 10,
+...
+```
+
+Otherwise, all records displayed in the component (or only the first level ones in `DataTree` mode) are
+considered for any mass action triggered. If pagination is used, only the loaded ones are considered as
+well.
+
+This list of row selected rows is then automatically made available (and updated) to
 the header action component to support the trigger of ***mass actions*** on this base (see 
 **[sfpegActionBarCmp](/help/sfpegActionBar.md)** for details), e.g. to mass edit selected records.
-* It provides a specific ***refresh*** action type to force a reload of the displayed data,
-usually called within a _next_ action property (e.g. to execute a list reload after a
-record creation or row update)
-* It also provides a specific ***filter*** action type to quickly set/unset the **sfpegListCmp** filter value.
 
 Hereafter is an example of a mass update form with a ***refresh*** after update.
 ```
@@ -238,6 +249,16 @@ Hereafter is an example of a mass update form with a ***refresh*** after update.
     }
 }
 ```
+
+### Specific Action Features
+
+The **sfpegListCmp** includes some specific features concerning the action functionality provided
+by the **[sfpegActionBarCmp](/help/sfpegActionBar.md)**
+
+* It provides a specific ***refresh*** action type to force a reload of the displayed data,
+usually called within a `next` action property (e.g. to execute a list reload after a
+record creation or row update, see mass action example above)
+* It also provides a specific ***filter*** action type to quickly set/unset the **sfpegListCmp** filter value.
 
 Hereafter is an example of a set of ***filter*** actions to set / unset specific filter conditions.<br/>
 ![List Filter Action Menu](/media/sfpegListFilterAction.png)
@@ -288,10 +309,10 @@ The **sfpegListCmp** may be configured to look as follows:<br/>
 _Display as list of Tiles in timeline variant with expandable section_
 
 In this example, within the related **sfpegList__mdt** custom metadata
-* the **Display Type** must be set in _TileList_ (selected option in the example) or _CardList_ mode.
+* the **Display Type** must be set in `TileList` (selected option in the example) or `CardList` mode.
 * the **Display Configuration** should activate both:
-    * the `timeline` variant (via the _variant_ property)
-    * an expandable section displaying additional detail fields for each tile (via the _details_ property). 
+    * the `timeline` variant (via the `variant` property)
+    * an expandable section displaying additional detail fields for each tile (via the `details` property). 
 ```
 {
     "keyField":"Code_Campagne",

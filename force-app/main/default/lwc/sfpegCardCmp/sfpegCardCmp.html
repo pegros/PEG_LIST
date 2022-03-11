@@ -51,7 +51,7 @@
                     <lightning-button-icon
                         variant={editIconVariant}
                         icon-name={editIconName}
-                        title="Toggle Edit/Read mode"
+                        title={modeToggleTitle}
                         size={buttonSize}
                         onclick={handleModeToggle} >
                     </lightning-button-icon>
@@ -88,8 +88,13 @@
                 
                 <!-- Error Message display -->
                 <template if:true={hasErrorMsg}>
-                    <c-sfpeg-warning-dsp message={errorMsg}>
-                    </c-sfpeg-warning-dsp>
+                    <div class="slds-p-horizontal_small slds-p-bottom_x-small">
+                        <c-sfpeg-warning-dsp    message={errorMsg}
+                                                error={errorObj}
+                                                is-debug={isDebugFine}
+                                                variant="errorLight" >
+                        </c-sfpeg-warning-dsp>
+                    </div>
                 </template>
 
 
@@ -177,7 +182,7 @@
                         <lightning-record-edit-form object-api-name={formObjectApiName}
                                                     record-type-id={formRecordTypeId}   record-id={formRecordId}
                                                     density={configDetails.density}
-                                                    onload={handleFormLoad}
+                                                    onload={handleFormLoad}             onsubmit={handleFormSubmit}
                                                     onsuccess={handleFormSuccess}       onerror={handleFormError} >
 
                             <lightning-messages></lightning-messages>
@@ -248,7 +253,8 @@
                                 <lightning-button-group class="">
                                     <lightning-button variant="neutral"  label={cancelLabel} onclick={handleModeToggle}>
                                     </lightning-button>
-                                    <lightning-button variant="brand" type="submit" label={saveLabel} onclick={handleFormSubmit}>
+                                    <!-- onclick={handleFormSubmit} -->
+                                    <lightning-button variant="brand" type="submit" label={saveLabel} >
                                     </lightning-button>
                                 </lightning-button-group>
                             </div>

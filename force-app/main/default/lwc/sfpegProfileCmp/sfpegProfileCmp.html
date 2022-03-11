@@ -10,7 +10,7 @@
             </div>
         </template>
 
-        <!-- Display of List of Messages -->
+        <!-- Display of Profile Elements -->
         <template if:true={isReady}>
 
             <lightning-record-view-form record-id={recordId}
@@ -216,7 +216,7 @@
 
         <!-- Loading spinner display -->
         <template if:false={isReady}>
-            <div class="slds-is-relative" style="height:200px !important;" >-->
+            <div class="slds-is-relative" style="height:200px !important;" >
                 <lightning-spinner  alternative-text="Loading"  size="medium">
                 </lightning-spinner>
             </div>
@@ -239,7 +239,7 @@
                     <dt class="slds-dl_horizontal__label slds-truncate">Actions</dt>
                     <dd class="slds-dl_horizontal__detail slds-wrap">{configDetails.actions}</dd>
                     <dt class="slds-dl_horizontal__label slds-truncate">Details</dt>
-                    <dd class="slds-dl_horizontal__detail slds-wrap">{detailsSrc}</dd>
+                    <dd class="slds-dl_horizontal__detail slds-wrap" style="word-wrap: break-word !important;" >{detailsSrc}</dd>
                     <dt class="slds-dl_horizontal__label slds-truncate">Record</dt>
                     <dd class="slds-dl_horizontal__detail slds-wrap">{objectApiName}: {recordId}</dd>
                     <template if:true={isReady}>
