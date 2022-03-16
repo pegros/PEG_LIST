@@ -76,7 +76,8 @@
                                             </div>
                                             <template if:true={hasActions}>
                                                 <template if:true={isTitleAction}>
-                                                    <div class="slds-media__figure slds-media__figure_reverse">
+                                                    <!-- slds-media__figure slds-media__figure_reverse slds-var-p-right_small -->
+                                                    <div class={titleActionClass}>
                                                         <lightning-button-group class="slds-col ">
                                                             <c-sfpeg-action-bar-cmp bar-class=""
                                                                 config-name={configDetails.actions}
@@ -165,8 +166,9 @@
                                     <template if:true={isMediaDisplay}>
                                         <template for:each={detailsConfig} for:item="iterField">
                                             <div    class={configDetails.details.fieldClass} key={iterField.name}>
-                                                <div class="slds-media slds-media_small slds-media_center ">
-                                                    <div class="slds-media__figure">
+                                                <!-- slds-media_center-->
+                                                <div class="slds-media slds-media_small  ">
+                                                    <div class="slds-media__figure slds-var-p-right_xx-small">
                                                         <c-sfpeg-icon-dsp   icon-name={iterField.icon}      icon-size={fieldIconSize}
                                                                             icon-title={iterField.label}    icon-variant={fieldIconVariant}
                                                                             is-debug={isDebugFine}>

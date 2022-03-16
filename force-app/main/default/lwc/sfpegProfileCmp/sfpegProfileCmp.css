@@ -156,6 +156,10 @@
     margin-right : 10px  !important;
 }
 
+.profileTitle {
+    font-weight: bold !important;
+}
+
 /* ACTIONS Classes */
 .profileActions {
     width: 100%;

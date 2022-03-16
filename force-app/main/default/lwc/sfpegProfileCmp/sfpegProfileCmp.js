@@ -110,7 +110,8 @@ export default class SfpegProfileCmp extends LightningElement {
         return (this.avatarImage ? "" : "slds-var-p-horizontal_" + this.detailsPadding);
     }
     get titleClass() {
-        return "slds-text-heading_small slds-var-p-bottom_x-small " + (this.isInverseMode ? " slds-text-color_inverse" : "");
+        // slds-text-heading_small profileTitle
+        return "slds-page-header__title slds-var-p-bottom_x-small " + (this.isInverseMode ? " slds-text-color_inverse" : "");
     }
     get fieldClass() {
         return "slds-text-body_small" + (this.isInverseMode ? " slds-text-color_inverse" : "");
@@ -129,13 +130,17 @@ export default class SfpegProfileCmp extends LightningElement {
     get actionClass() {
         return "profileActions slds-grid slds-grid_align-" + this.actionAlignment + " slds-var-p-horizontal_" + this.detailsPadding;
     }
+    get titleActionClass() {
+        return "slds-media__figure slds-media__figure_reverse slds-var-p-right_" + this.detailsPadding;
+    }
 
     // for details
     get hasDetails() {
         return  ((this.configDetails) && (this.configDetails.isDetailsDisplayed));
     }
     get detailsClass() {
-        return "profileDetails slds-var-p-horizontal_" + this.detailsPadding;
+        return "profileDetails slds-var-p-vertical_" + this.detailsPadding + " slds-p-horizontal_" + this.detailsPadding;
+        //return "profileDetails slds-var-p-around_" + this.detailsPadding;
     }
     get isGridDisplay(){
         return !(this.configDetails.details.variant === "list");
@@ -249,7 +254,7 @@ export default class SfpegProfileCmp extends LightningElement {
 
                     if (result.ProfileDetails__c) {
                         if (this.isDebug) console.log('connected: reworking details ');
-                        (PROFILE_CONFIGS[this.configName]).details.fieldClass = "slds-col slds-size_1-of-" + ((PROFILE_CONFIGS[this.configName]).details.columns || "1");
+                        (PROFILE_CONFIGS[this.configName]).details.fieldClass = "slds-col slds-var-p-vertical_xx-small slds-size_1-of-" + ((PROFILE_CONFIGS[this.configName]).details.columns || "1");
                         (PROFILE_CONFIGS[this.configName]).details.variant = (PROFILE_CONFIGS[this.configName]).details.variant || "list";
 
                         if (this.isDebug) console.log('connected: registering details field for label fetch');
