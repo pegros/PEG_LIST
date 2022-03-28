@@ -253,7 +253,7 @@ conditions as a string property instead (thus reducing the need for custom formu
 e.g. combining the need for a custom permission and the record ownership as in the following
 example.
 ```
-"hidden":"{{{NPERM.TST_Perm}}} && '{{{RCD.OwnerId}}}' != '{{{GEN.userId}}}'"
+"hidden":"{{{NPERM.TST_Perm}}} || '{{{RCD.OwnerId}}}' != '{{{GEN.userId}}}'"
 ```
 
 _Note_: Beware to leverage fields that are safe in your conditions, as a possibly unsecure Javascript
