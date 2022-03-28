@@ -13,6 +13,6 @@
     </lightningMessageFields>
     <lightningMessageFields>
         <fieldName>context</fieldName>
-        <description>Context data to be used when executing the action.</description>
+        <description>Context data to be used when executing the action (optional).</description>
     </lightningMessageFields>
 </LightningMessageChannel>

@@ -935,6 +935,126 @@ FYI, the configuration of the “*close*” action is the following:
 see [Apex List Retrieval and OpenURL Action with Rework](/help/sfpegListCmp.md)
 
 
+### Custom Action Notification Implementation
+
+In order to send a custom `action` notification to an external custom LWC component via a dedicated
+`TEST_CHANNEL` channel, the following action configuration may be used.
+```
+{
+    "label": "Remote Action",
+    "name": "RemoteAction",
+    "action": {
+        "type": "action",
+        "channel": "TEST_CHANNEL",
+        "params": {
+            "param1": "Hello",
+            "param2": "World"
+        }
+    }
+}
+```
+
+In the custom LWC component, the following code should be used to subscribe to the
+action notifications and handle messages sent on the `TEST_CHANNEL` channel.
+* In the javascripts imports
+```
+// To notify the utility bar handler if required
+import {
+    subscribe,
+    unsubscribe,
+    MessageContext
+} from 'lightning/messageService';
+import sfpegCustomAction from '@salesforce/messageChannel/sfpegCustomAction__c';
+```
+* In the class definition
+```
+    // Notification handling
+    subscription = null;
+    @wire(MessageContext)
+    messageContext;
+
+    // Component Initialization
+    connectedCallback() {
+        this.subscribeToMessageChannel();
+    }
+    disconnectedCallback() {
+        this.unsubscribeToMessageChannel();
+    }
+
+    // Handler for message received by component
+    handleMessage(message) {
+        if ((message.channel) && (message.channel == "TEST_CHANNEL")) {
+            console.log('handleMessage: processing TEST_CHANNEL message');
+            ...
+        }
+        else {
+            console.log('handleMessage: ignoring message on channel',message.channel);
+        }
+    }
+
+    // Notification subscription 
+    // Encapsulate logic for Lightning message service subscribe and unsubsubscribe
+    subscribeToMessageChannel() {
+        if (!this.subscription) {
+            this.subscription = subscribe(
+                this.messageContext,
+                sfpegCustomAction,
+                (message) => this.handleMessage(message));
+        }
+    }
+
+    unsubscribeToMessageChannel() {
+        unsubscribe(this.subscription);
+        this.subscription = null;
+    }
+```
+
+Please refer to the **[Lightning Message Service](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.use_message_channel)** for more technical details.
+
+It is then also possible to propagate the received event to an Aura parent component via a
+simple custom event dispatch, as between the **sfpegActionHandlerCmp** (LWC) and
+the **sfpegActiuonUtilityCmp** (Aura) utility components.
+* in the child LWC even handling
+```
+let doneEvent = new CustomEvent('done', {
+    "detail": message.action});
+this.dispatchEvent(doneEvent);
+```
+* in the parent HTML
+```
+<c:chilCmp
+    aura:id="messageHandler"
+    ondone="{!c.handleDone}">
+</c:chilCmp>
+```
+
+Similarly, it is also possible to generate back a custom `notify` notification back to 
+the different **sfpegActionBarCmp** components having registered to the a `TEST_FEEDBACK` channel.
+* In the javascripts imports, include also the `publish` action and the 
+`sfpegCustomNotification` message channel
+```
+// To notify the utility bar handler if required
+import {
+    subscribe,
+    unsubscribe,
+    publish,
+    MessageContext
+} from 'lightning/messageService';
+import sfpegCustomAction from '@salesforce/messageChannel/sfpegCustomAction__c';
+import sfpegCustomNotification from '@salesforce/messageChannel/sfpegCustomNotification__c';
+```
+* In the class definition, simply publish a `sfpegCustomNotification` message
+```
+let actionNotif = {
+    'channel': "TEST_FEEDBACK",
+    'action': {
+        "type":"toast",
+        "params":{"title":"Notified Back!"}
+    }
+};
+publish(this.messageContext, sfpegCustomNotification, actionNotif);
+```
+
 ---
 
 ## Technical Details
