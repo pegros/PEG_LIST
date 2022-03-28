@@ -22,280 +22,292 @@
             <template if:true={hasConfig}>
 
                 <!-- Vertical Display -->
-                <!-- SLS issue : Direct duplicate code required as button start/end CSS in buttonGroup
+                <!-- SLDS issue : Direct duplicate code required as button start/end CSS in buttonGroup
                      are not applied when buttons are instantiated in sub component  -->
                 <template if:true={isVertical}>
                     <ul class="">
-                    <template iterator:it={actionList}>
-                        <li key={it.value.name} class="slds-m-around_xx-small">
-                        <!-- Button -->
-                        <template if:false={it.value.items}>
-                            <template if:true={it.value.label}>
-                                <template if:true={it.value.disabled}>
-                                    <lightning-button   key={it.value.name}
-                                                        label={it.value.label}
-                                                        variant={it.value.variant}
-                                                        name={it.value.name}
-                                                        title={it.value.title}
-                                                        icon-name={it.value.iconName}
-                                                        icon-position={it.value.iconPosition}
-                                                        disabled>
-                                    </lightning-button>
-                                </template>
-                                <template if:false={it.value.disabled}>
-                                    <lightning-button   key={it.value.name}
-                                                        label={it.value.label}
-                                                        variant={it.value.variant}
-                                                        name={it.value.name}
-                                                        title={it.value.title}
-                                                        icon-name={it.value.iconName}
-                                                        icon-position={it.value.iconPosition}
-                                                        value={it.value}
-                                                        onclick={handleButtonClick}>
-                                    </lightning-button>
-                                </template>
-                            </template>
-                            <template if:false={it.value.label}>
-                                <template if:true={it.value.disabled}>
-                                    <lightning-button-icon  key={it.value.name}
-                                                            size={it.value.iconSize}
-                                                            variant={it.value.variant}
-                                                            name={it.value.name}
-                                                            title={it.value.title}
-                                                            icon-name={it.value.iconName}
-                                                            icon-position={it.value.iconPosition}
-                                                            disabled>
-                                    </lightning-button-icon>
-                                </template>
-                                <template if:false={it.value.disabled}>
-                                    <lightning-button-icon  key={it.value.name}
-                                                            size={it.value.iconSize}
-                                                            variant={it.value.variant}
-                                                            name={it.value.name}
-                                                            title={it.value.title}
-                                                            icon-name={it.value.iconName}
-                                                            icon-position={it.value.iconPosition}
-                                                            value={it.value}
-                                                            onclick={handleButtonClick}>
-                                    </lightning-button-icon>
-                                </template>
-                            </template>
-                        </template>
+                        <template iterator:it={actionList}>
+                            <template if:false={it.value.hidden}>
+                                <li key={it.value.name} class="slds-m-around_xx-small">
+                                    <!-- Button -->
+                                    <template if:false={it.value.items}>
+                                        <template if:true={it.value.label}>
+                                            <template if:true={it.value.disabled}>
+                                                <lightning-button   key={it.value.name}
+                                                                    label={it.value.label}
+                                                                    variant={it.value.variant}
+                                                                    name={it.value.name}
+                                                                    title={it.value.title}
+                                                                    icon-name={it.value.iconName}
+                                                                    icon-position={it.value.iconPosition}
+                                                                    disabled>
+                                                </lightning-button>
+                                            </template>
+                                            <template if:false={it.value.disabled}>
+                                                <lightning-button   key={it.value.name}
+                                                                    label={it.value.label}
+                                                                    variant={it.value.variant}
+                                                                    name={it.value.name}
+                                                                    title={it.value.title}
+                                                                    icon-name={it.value.iconName}
+                                                                    icon-position={it.value.iconPosition}
+                                                                    value={it.value}
+                                                                    onclick={handleButtonClick}>
+                                                </lightning-button>
+                                            </template>
+                                        </template>
+                                        <template if:false={it.value.label}>
+                                            <template if:true={it.value.disabled}>
+                                                <lightning-button-icon  key={it.value.name}
+                                                                        size={it.value.iconSize}
+                                                                        variant={it.value.variant}
+                                                                        name={it.value.name}
+                                                                        title={it.value.title}
+                                                                        icon-name={it.value.iconName}
+                                                                        icon-position={it.value.iconPosition}
+                                                                        disabled>
+                                                </lightning-button-icon>
+                                            </template>
+                                            <template if:false={it.value.disabled}>
+                                                <lightning-button-icon  key={it.value.name}
+                                                                        size={it.value.iconSize}
+                                                                        variant={it.value.variant}
+                                                                        name={it.value.name}
+                                                                        title={it.value.title}
+                                                                        icon-name={it.value.iconName}
+                                                                        icon-position={it.value.iconPosition}
+                                                                        value={it.value}
+                                                                        onclick={handleButtonClick}>
+                                                </lightning-button-icon>
+                                            </template>
+                                        </template>
+                                    </template>
                         
-                        <!-- Menu display -->
-                        <template if:true={it.value.items}>
-                            <template if:true={it.value.disabled}>
-                                <template if:true={it.value.iconName}>
-                                    <lightning-button-menu  key={it.value.name}
-                                                            icon-size={it.value.iconSize}
-                                                            icon-name={it.value.iconName}
-                                                            variant={it.value.variant}
-                                                            label={it.value.label}
-                                                            disabled >
-                                    </lightning-button-menu>
-                                </template>
-                                <template if:false={it.value.iconName}>
-                                    <lightning-button-menu  key={it.value.name}
-                                                            variant={it.value.variant}
-                                                            label={it.value.label}
-                                                            disabled >
-                                    </lightning-button-menu>
-                                </template>
-                            </template>
-                            <template if:false={it.value.disabled}>
-                                <template if:true={it.value.iconName}>
-                                    <lightning-button-menu  key={it.value.name}
-                                                            menu-alignment={it.value.align}
-                                                            icon-size={it.value.iconSize}
-                                                            icon-name={it.value.iconName}
-                                                            variant={it.value.variant}
-                                                            label={it.value.label}
-                                                            onselect={handleMenuSelect} >
-                                        <template for:each={it.value.items} for:item="menuIter">
-                                            <template if:true={menuIter.disabled}>
-                                                <lightning-menu-item    key={menuIter.name}
-                                                                        label={menuIter.label}
-                                                                        icon-name={menuIter.iconName}
-                                                                        disabled>
-                                                </lightning-menu-item>
+                                    <!-- Menu display -->
+                                    <template if:true={it.value.items}>
+                                        <template if:true={it.value.disabled}>
+                                            <template if:true={it.value.iconName}>
+                                                <lightning-button-menu  key={it.value.name}
+                                                                        icon-size={it.value.iconSize}
+                                                                        icon-name={it.value.iconName}
+                                                                        variant={it.value.variant}
+                                                                        label={it.value.label}
+                                                                        disabled >
+                                                </lightning-button-menu>
                                             </template>
-                                            <template if:false={menuIter.disabled}>
-                                                <lightning-menu-item    key={menuIter.name}
-                                                                        label={menuIter.label}
-                                                                        icon-name={menuIter.iconName}
-                                                                        value={menuIter}>
-                                                </lightning-menu-item>
+                                            <template if:false={it.value.iconName}>
+                                                <lightning-button-menu  key={it.value.name}
+                                                                        variant={it.value.variant}
+                                                                        label={it.value.label}
+                                                                        disabled >
+                                                </lightning-button-menu>
                                             </template>
                                         </template>
-                                    </lightning-button-menu>
-                                </template>
-                                <template if:false={it.value.iconName}>
-                                    <lightning-button-menu  key={it.value.name}
-                                                            menu-alignment={it.value.align}
-                                                            icon-name={it.value.iconName}
-                                                            variant={it.value.variant}
-                                                            label={it.value.label}
-                                                            onselect={handleMenuSelect} >
-                                        <template for:each={it.value.items} for:item="menuIter">
-                                            <template if:true={menuIter.disabled}>
-                                                <lightning-menu-item    key={menuIter.name}
-                                                                        label={menuIter.label}
-                                                                        icon-name={menuIter.iconName}
-                                                                        disabled>
-                                                </lightning-menu-item>
+                                        <template if:false={it.value.disabled}>
+                                            <template if:true={it.value.iconName}>
+                                                <lightning-button-menu  key={it.value.name}
+                                                                        menu-alignment={it.value.align}
+                                                                        icon-size={it.value.iconSize}
+                                                                        icon-name={it.value.iconName}
+                                                                        variant={it.value.variant}
+                                                                        label={it.value.label}
+                                                                        onselect={handleMenuSelect} >
+                                                    <template for:each={it.value.items} for:item="menuIter">
+                                                        <template if:false={menuIter.hidden}>
+                                                            <template if:true={menuIter.disabled}>
+                                                                <lightning-menu-item    key={menuIter.name}
+                                                                                        label={menuIter.label}
+                                                                                        icon-name={menuIter.iconName}
+                                                                                        disabled>
+                                                                </lightning-menu-item>
+                                                            </template>
+                                                            <template if:false={menuIter.disabled}>
+                                                                <lightning-menu-item    key={menuIter.name}
+                                                                                        label={menuIter.label}
+                                                                                        icon-name={menuIter.iconName}
+                                                                                        value={menuIter}>
+                                                                </lightning-menu-item>
+                                                            </template>
+                                                        </template>
+                                                    </template>
+                                                </lightning-button-menu>
                                             </template>
-                                            <template if:false={menuIter.disabled}>
-                                                <lightning-menu-item    key={menuIter.name}
-                                                                        label={menuIter.label}
-                                                                        icon-name={menuIter.iconName}
-                                                                        value={menuIter}>
-                                                </lightning-menu-item>
+                                            <template if:false={it.value.iconName}>
+                                                <lightning-button-menu  key={it.value.name}
+                                                                        menu-alignment={it.value.align}
+                                                                        icon-name={it.value.iconName}
+                                                                        variant={it.value.variant}
+                                                                        label={it.value.label}
+                                                                        onselect={handleMenuSelect} >
+                                                    <template for:each={it.value.items} for:item="menuIter">
+                                                        <template if:false={menuIter.hidden}>
+                                                            <template if:true={menuIter.disabled}>
+                                                                <lightning-menu-item    key={menuIter.name}
+                                                                                        label={menuIter.label}
+                                                                                        icon-name={menuIter.iconName}
+                                                                                        disabled>
+                                                                </lightning-menu-item>
+                                                            </template>
+                                                            <template if:false={menuIter.disabled}>
+                                                                <lightning-menu-item    key={menuIter.name}
+                                                                                        label={menuIter.label}
+                                                                                        icon-name={menuIter.iconName}
+                                                                                        value={menuIter}>
+                                                                </lightning-menu-item>
+                                                            </template>
+                                                        </template>
+                                                    </template>
+                                                </lightning-button-menu>
                                             </template>
                                         </template>
-                                    </lightning-button-menu>
-                                </template>
+                                    </template>
+                                </li>
                             </template>
                         </template>
-                        </li>
-                    </template>
                     </ul>
                 </template>
 
                 <!-- Horizontal Display -->
                 <template if:false={isVertical}>
                     <lightning-button-group>
-                    <template iterator:it={actionList}>
-                        <!-- Button -->
-                        <template if:false={it.value.items}>
-                            <template if:true={it.value.label}>
-                                <template if:true={it.value.disabled}>
-                                    <lightning-button   key={it.value.name}
-                                                        label={it.value.label}
-                                                        variant={it.value.variant}
-                                                        name={it.value.name}
-                                                        title={it.value.title}
-                                                        icon-name={it.value.iconName}
-                                                        icon-position={it.value.iconPosition}
-                                                        disabled>
-                                    </lightning-button>
+                        <template iterator:it={actionList}>
+                            <template if:false={it.value.hidden}>
+                                <!-- Button -->
+                                <template if:false={it.value.items}>
+                                    <template if:true={it.value.label}>
+                                        <template if:true={it.value.disabled}>
+                                            <lightning-button   key={it.value.name}
+                                                                label={it.value.label}
+                                                                variant={it.value.variant}
+                                                                name={it.value.name}
+                                                                title={it.value.title}
+                                                                icon-name={it.value.iconName}
+                                                                icon-position={it.value.iconPosition}
+                                                                disabled>
+                                            </lightning-button>
+                                        </template>
+                                        <template if:false={it.value.disabled}>
+                                            <lightning-button   key={it.value.name}
+                                                                label={it.value.label}
+                                                                variant={it.value.variant}
+                                                                name={it.value.name}
+                                                                title={it.value.title}
+                                                                icon-name={it.value.iconName}
+                                                                icon-position={it.value.iconPosition}
+                                                                value={it.value}
+                                                                onclick={handleButtonClick}>
+                                            </lightning-button>
+                                        </template>
+                                    </template>
+                                    <template if:false={it.value.label}>
+                                        <template if:true={it.value.disabled}>
+                                            <lightning-button-icon  key={it.value.name}
+                                                                    size={it.value.iconSize}
+                                                                    variant={it.value.variant}
+                                                                    name={it.value.name}
+                                                                    title={it.value.title}
+                                                                    icon-name={it.value.iconName}
+                                                                    icon-position={it.value.iconPosition}
+                                                                    disabled>
+                                            </lightning-button-icon>
+                                        </template>
+                                        <template if:false={it.value.disabled}>
+                                            <lightning-button-icon  key={it.value.name}
+                                                                    size={it.value.iconSize}
+                                                                    variant={it.value.variant}
+                                                                    name={it.value.name}
+                                                                    title={it.value.title}
+                                                                    icon-name={it.value.iconName}
+                                                                    icon-position={it.value.iconPosition}
+                                                                    value={it.value}
+                                                                    onclick={handleButtonClick}>
+                                            </lightning-button-icon>
+                                        </template>
+                                    </template>
                                 </template>
-                                <template if:false={it.value.disabled}>
-                                    <lightning-button   key={it.value.name}
-                                                        label={it.value.label}
-                                                        variant={it.value.variant}
-                                                        name={it.value.name}
-                                                        title={it.value.title}
-                                                        icon-name={it.value.iconName}
-                                                        icon-position={it.value.iconPosition}
-                                                        value={it.value}
-                                                        onclick={handleButtonClick}>
-                                    </lightning-button>
-                                </template>
-                            </template>
-                            <template if:false={it.value.label}>
-                                <template if:true={it.value.disabled}>
-                                    <lightning-button-icon  key={it.value.name}
-                                                            size={it.value.iconSize}
-                                                            variant={it.value.variant}
-                                                            name={it.value.name}
-                                                            title={it.value.title}
-                                                            icon-name={it.value.iconName}
-                                                            icon-position={it.value.iconPosition}
-                                                            disabled>
-                                    </lightning-button-icon>
-                                </template>
-                                <template if:false={it.value.disabled}>
-                                    <lightning-button-icon  key={it.value.name}
-                                                            size={it.value.iconSize}
-                                                            variant={it.value.variant}
-                                                            name={it.value.name}
-                                                            title={it.value.title}
-                                                            icon-name={it.value.iconName}
-                                                            icon-position={it.value.iconPosition}
-                                                            value={it.value}
-                                                            onclick={handleButtonClick}>
-                                    </lightning-button-icon>
-                                </template>
-                            </template>
-                        </template>
 
-                        <!-- Menu display -->
-                        <template if:true={it.value.items}>
-                            <template if:true={it.value.disabled}>
-                                <template if:true={it.value.iconName}>
-                                    <lightning-button-menu  key={it.value.name}
-                                                            icon-size={it.value.iconSize}
-                                                            icon-name={it.value.iconName}
-                                                            variant={it.value.variant}
-                                                            label={it.value.label}
-                                                            disabled >
-                                    </lightning-button-menu>
-                                </template>
-                                <template if:false={it.value.iconName}>
-                                    <lightning-button-menu  key={it.value.name}
-                                                            variant={it.value.variant}
-                                                            label={it.value.label}
-                                                            disabled >
-                                    </lightning-button-menu>
-                                </template>
-                            </template>
-                            <template if:false={it.value.disabled}>
-                                <template if:true={it.value.iconName}>
-                                    <lightning-button-menu  key={it.value.name}
-                                                            menu-alignment={it.value.align}
-                                                            icon-size={it.value.iconSize}
-                                                            icon-name={it.value.iconName}
-                                                            variant={it.value.variant}
-                                                            label={it.value.label}
-                                                            onselect={handleMenuSelect} >
-                                        <template for:each={it.value.items} for:item="menuIter">
-                                            <template if:true={menuIter.disabled}>
-                                                <lightning-menu-item    key={menuIter.name}
-                                                                        label={menuIter.label}
-                                                                        icon-name={menuIter.iconName}
-                                                                        value={menuIter}
-                                                                        disabled>
-                                                </lightning-menu-item>
-                                            </template>
-                                            <template if:false={menuIter.disabled}>
-                                                <lightning-menu-item    key={menuIter.name}
-                                                                        label={menuIter.label}
-                                                                        icon-name={menuIter.iconName}
-                                                                        value={menuIter}>
-                                                </lightning-menu-item>
-                                            </template>
+                                <!-- Menu display -->
+                                <template if:true={it.value.items}>
+                                    <template if:true={it.value.disabled}>
+                                        <template if:true={it.value.iconName}>
+                                            <lightning-button-menu  key={it.value.name}
+                                                                    icon-size={it.value.iconSize}
+                                                                    icon-name={it.value.iconName}
+                                                                    variant={it.value.variant}
+                                                                    label={it.value.label}
+                                                                    disabled >
+                                            </lightning-button-menu>
                                         </template>
-                                    </lightning-button-menu>
-                                </template>
-                                <template if:false={it.value.iconName}>
-                                    <lightning-button-menu  key={it.value.name}
-                                                            menu-alignment={it.value.align}
-                                                            variant={it.value.variant}
-                                                            icon-size={it.value.iconSize}
-                                                            label={it.value.label}
-                                                            onselect={handleMenuSelect} >
-                                        <template for:each={it.value.items} for:item="menuIter">
-                                            <template if:true={menuIter.disabled}>
-                                                <lightning-menu-item    key={menuIter.name}
-                                                                        label={menuIter.label}
-                                                                        icon-name={menuIter.iconName}
-                                                                        value={menuIter}
-                                                                        disabled>
-                                                </lightning-menu-item>
-                                            </template>
-                                            <template if:false={menuIter.disabled}>
-                                                <lightning-menu-item    key={menuIter.name}
-                                                                        label={menuIter.label}
-                                                                        icon-name={menuIter.iconName}
-                                                                        value={menuIter}>
-                                                </lightning-menu-item>
-                                            </template>
+                                        <template if:false={it.value.iconName}>
+                                            <lightning-button-menu  key={it.value.name}
+                                                                    variant={it.value.variant}
+                                                                    label={it.value.label}
+                                                                    disabled >
+                                            </lightning-button-menu>
                                         </template>
-                                    </lightning-button-menu>
+                                    </template>
+                                    <template if:false={it.value.disabled}>
+                                        <template if:true={it.value.iconName}>
+                                            <lightning-button-menu  key={it.value.name}
+                                                                    menu-alignment={it.value.align}
+                                                                    icon-size={it.value.iconSize}
+                                                                    icon-name={it.value.iconName}
+                                                                    variant={it.value.variant}
+                                                                    label={it.value.label}
+                                                                    onselect={handleMenuSelect} >
+                                                <template for:each={it.value.items} for:item="menuIter">
+                                                    <template if:false={menuIter.hidden}>
+                                                        <template if:true={menuIter.disabled}>
+                                                            <lightning-menu-item    key={menuIter.name}
+                                                                                    label={menuIter.label}
+                                                                                    icon-name={menuIter.iconName}
+                                                                                    value={menuIter}
+                                                                                    disabled>
+                                                            </lightning-menu-item>
+                                                        </template>
+                                                        <template if:false={menuIter.disabled}>
+                                                            <lightning-menu-item    key={menuIter.name}
+                                                                                    label={menuIter.label}
+                                                                                    icon-name={menuIter.iconName}
+                                                                                    value={menuIter}>
+                                                            </lightning-menu-item>
+                                                        </template>
+                                                    </template>
+                                                </template>
+                                            </lightning-button-menu>
+                                        </template>
+                                        <template if:false={it.value.iconName}>
+                                            <lightning-button-menu  key={it.value.name}
+                                                                    menu-alignment={it.value.align}
+                                                                    variant={it.value.variant}
+                                                                    icon-size={it.value.iconSize}
+                                                                    label={it.value.label}
+                                                                    onselect={handleMenuSelect} >
+                                                <template for:each={it.value.items} for:item="menuIter">
+                                                    <template if:false={menuIter.hidden}>
+                                                        <template if:true={menuIter.disabled}>
+                                                            <lightning-menu-item    key={menuIter.name}
+                                                                                    label={menuIter.label}
+                                                                                    icon-name={menuIter.iconName}
+                                                                                    value={menuIter}
+                                                                                    disabled>
+                                                            </lightning-menu-item>
+                                                        </template>
+                                                        <template if:false={menuIter.disabled}>
+                                                            <lightning-menu-item    key={menuIter.name}
+                                                                                    label={menuIter.label}
+                                                                                    icon-name={menuIter.iconName}
+                                                                                    value={menuIter}>
+                                                            </lightning-menu-item>
+                                                        </template>
+                                                    </template>
+                                                </template>
+                                            </lightning-button-menu>
+                                        </template>
+                                    </template>
                                 </template>
                             </template>
                         </template>
-                    </template>
                     </lightning-button-group>
                 </template>
 
@@ -303,18 +315,18 @@
 
             <!-- Debug Info Display -->
             <template if:true={isDebug}>
-                <div style="display:inline-block; !important">
+                <div style="display:inline-block !important;">
                     <div class={buttonClass}> 
                         <a href="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegActionBarCmp.md">                                                    
-                        <lightning-helptext icon-name="utility:info"
-                                            class="slds-m-horizontal_xx-small"
-                                            content={helptext}>
-                        </lightning-helptext>
+                            <lightning-helptext icon-name="utility:info"
+                                                class="slds-m-horizontal_xx-small"
+                                                content={helptext}>
+                            </lightning-helptext>
                         </a>
                     </div>
                 </div>
             </template>
-            
+
         </template>
     </div>
 </template>

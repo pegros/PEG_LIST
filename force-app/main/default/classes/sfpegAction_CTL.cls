@@ -44,7 +44,7 @@ public with sharing class sfpegAction_CTL {
     public static Object getConfiguration(final String name) {
         System.debug(LoggingLevel.FINE,'getConfiguration: START with sfpegAction configuration name ' + name);
 
-        List<sfpegAction__mdt> configs = [  select Actions__c, NotificationChannels__c, MasterLabel
+        List<sfpegAction__mdt> configs = [  select Actions__c, NotificationChannels__c, DoEvaluation__c, MasterLabel
                                             from sfpegAction__mdt
                                             where DeveloperName =  :name];
         if ((configs == null) || (configs.size() != 1)) {

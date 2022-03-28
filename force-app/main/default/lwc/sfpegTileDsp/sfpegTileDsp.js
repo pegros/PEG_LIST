@@ -193,7 +193,8 @@ export default class SfpegTileDsp extends LightningElement {
                         if (this.isDebug) console.log('resetDisplayData: registering standard field ', item.fieldName);
                         this.cardData.push({
                             label: item.label,
-                            value: ((item.type && (item.type == 'boolean')) ? eval(this._recordData[item.fieldName]) : this._recordData[item.fieldName]),
+                            //value: ((item.type && (item.type == 'boolean')) ? eval(this._recordData[item.fieldName]) : this._recordData[item.fieldName]),
+                            value: ((item.type && (item.type == 'boolean')) ? (String(this._recordData[item.fieldName]).toLowerCase() == "true") : this._recordData[item.fieldName]),
                             //value: sfpegJsonUtl.sfpegJsonUtl.formatField(this._recordData[item.fieldName],item),
                             type: item.type || 'text',
                             name: item.fieldName
@@ -227,7 +228,8 @@ export default class SfpegTileDsp extends LightningElement {
                         if (this.isDebug) console.log('resetDisplayData: registering standard field ', item.fieldName);
                         this.cardDetails.push({
                             label: item.label,
-                            value: ((item.type && (item.type == 'boolean')) ? eval(this._recordData[item.fieldName]) : this._recordData[item.fieldName]),
+                            //value: ((item.type && (item.type == 'boolean')) ? eval(this._recordData[item.fieldName]) : this._recordData[item.fieldName]),
+                            value: ((item.type && (item.type == 'boolean')) ? (String(this._recordData[item.fieldName]).toLowerCase() == "true") : this._recordData[item.fieldName]),
                             //value: sfpegJsonUtl.sfpegJsonUtl.formatField(this._recordData[item.fieldName],item),
                             type: item.type || 'text',
                             name: item.fieldName
@@ -265,7 +267,8 @@ export default class SfpegTileDsp extends LightningElement {
                         }
                         else {
                             if (this.isDebug) console.log('resetDisplayData: setting static disabled value ');
-                            newItem.disabled = eval(iterItem.disabled);
+                            newItem.disabled = (String(iterItem.disabled).toLowerCase() == "true");
+                            //newItem.disabled = eval(iterItem.disabled);
                         }
                     }
                     newMenu.push(newItem);

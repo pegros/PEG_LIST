@@ -68,6 +68,9 @@ component) to adapt the set of actions to the display environment.
 
 ![Standalone Action Bar Metadata](/media/sfpegActionConfigMeta.png)
 
+The `Do Evaluation?` boolean checkbox enables to trigger an explicit evaluation of the `hidden` or `disabled` 
+properties on the different action elements (see dynamic action activation section).
+
 
 ### Base Action Configuration
 
@@ -182,45 +185,53 @@ Multiple other display properties are available:
 * `iconPosition` to set the icon on the left or right of the label
 * `iconSize` to act on the button icon size (see [lightning-button-icon](https://developer.salesforce.com/docs/component-library/bundle/lightning-button-icon/specification) or [button-menu](https://developer.salesforce.com/docs/component-library/bundle/lightning-button-menu/specification) for info)
 
-At last, there is a main `action` property for each button or menu item, which enabless to specify the actual action to be executed when clicking/selecting the item (see below for available actio, types), the action being chosen among a set of possible action types described hereafter.
+At last, there is a main `action` property for each button or menu item, which enabless to specify the actual action to be executed when clicking/selecting the item (see below for available action types), the action being chosen among a set of possible action types described hereafter.
 
 
-### Dynamic Action Activation (_disabled_ Property)
+### Dynamic Action Activation (_hidden_ and _disabled_ Properties)
 
-It is also possible to dynamically activate/disable buttons and menu items via the `disabled` property, e.g. leveraging current user’s custom permissions (via the dedicated `PERM` and `NPERM` merge tokens, see
+It is also possible to dynamically hide or disable buttons and menu items via
+* their `hidden` property, to completely hide (or display) them
+* their `disabled` property, to simply disable (or activate) them
+
+By default, they are assumed to be false (i.e. showing and actiating the action item) but simple
+boolean values may be used to let them become dynamic, e.g. leveraging record boolean fields or
+current user’s custom permissions (via the dedicated `PERM` and `NPERM` merge tokens, see
 **[sfpegMergeUtl](/help/sfpegMergeUtl.md)**) as in the following example.
 ```
 [
     {
-        "name":"warn", "label":"Warn (if not permission)",
-        "disabled":{{{NPERM.TST_Perm}}},
+        "name":"info", "label":"Info (if record not hidden)",
+        "hidden":{{{RCD.IsHidden__c}}},
         "action":{
             "type":"toast",
             "params":{
-                "title":"Beware {{{USR.Name}}}!",
-                "message":"This is a warning message for {{{RCD.Name}}}.",
-                "variant":"warning"
+                "title":"FYI {{{USR.Name}}}!",
+                "message":"This is an information message on {{{RCD.Name}}}.",
+                "variant":"info"
             }
         }
     },
     {
         "label":"Menu",
         "align":"auto",
+        "hidden":{{{RCD.IsMenuHidden__c}}},
         "items":[
             {
-                "name":"toast", "label":"Info (if permission)",
+                "name":"warn", "label":"Warn (if permission)",
                 "disabled":{{{PERM.TST_Perm}}},
                 "action":{
                     "type":"toast",
                     "params":{
-                        "title":"FYI {{{USR.Name}}}!",
-                        "message":"This is an information message on {{{RCD.Name}}}.",
-                        "variant":"info"
+                        "title":"Warn {{{USR.Name}}}!",
+                        "message":"This is a warning message on {{{RCD.Name}}}.",
+                        "variant":"warning"
                     }
                 }
             },
             {
-                "name":"toast", "label":"Error (always)",
+                "name":"error", "label":"Error (if no permission)",
+                "disabled":{{{NPERM.TST_Perm}}},
                 "action":{
                     "type":"toast",
                     "params":{
@@ -234,6 +245,20 @@ It is also possible to dynamically activate/disable buttons and menu items via t
     }
 ]
 ```
+
+By default, `hidden` and `disabled` properties are assumed to be directly of boolean type 
+(component rendering will fail otherwise). However, when selecting `Do Evaluation?` in the
+**sfpegAction** custom metadata configuration, it becomes possible to define more complex
+conditions as a string property instead (thus reducing the need for custom formula fields),
+e.g. combining the need for a custom permission and the record ownership as in the following
+example.
+```
+"hidden":"{{{NPERM.TST_Perm}}} && '{{{RCD.OwnerId}}}' != '{{{GEN.userId}}}'"
+```
+
+_Note_: Beware to leverage fields that are safe in your conditions, as a possibly unsecure Javascript
+`eval()` statement is executed for each string `hidden` and `disabled` property.
+
 
 ### Action Chaining (_next_ Property)
 

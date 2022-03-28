@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DoEvaluation__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Flag to trigger evaluation of combined conditions in hidden and disabled boolean parameters</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Flag to trigger evaluation of combined conditions in hidden and disabled boolean parameters</inlineHelpText>
+    <label>Do Evaluation ?</label>
+    <type>Checkbox</type>
+</CustomField>

@@ -47,7 +47,8 @@ export default class SfpegFieldDsp extends LightningElement {
     }
     set fieldValue(value) {
         if ((this.fieldType) && (this.fieldType === "boolean")) {
-            this._fieldValue = eval(value);
+            //this._fieldValue = eval(value);
+            this._fieldValue = (String(value).toLowerCase() == "true");
         }
         else {
             this._fieldValue = value;

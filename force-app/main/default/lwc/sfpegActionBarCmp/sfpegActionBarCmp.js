@@ -202,6 +202,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                     ACTION_CONFIGS[this.configName] = {
                         "label"     :   result.MasterLabel,
                         "actions"   :   result.Actions__c,
+                        "doEval":       result.DoEvaluation__c,
                         "channels"  :   JSON.parse(result.NotificationChannels__c || "[]"),
                         "input"     :   sfpegMergeUtl.sfpegMergeUtl.extractTokens(result.Actions__c,this.objectApiName)
                     };
@@ -414,10 +415,29 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         sfpegMergeUtl.sfpegMergeUtl.mergeTokens(this.configDetails.actions,this.configDetails.input,this.userId,this.userData,this.objectApiName,this.recordId,this.recordData,null)
         .then( value => {
             if (this.isDebug) console.log('doMerge: context merged within configuration ',value);
-            this.actionList = JSON.parse(value)
-            if (this.isDebug) console.log('doMerge: configuration updated', JSON.stringify(this.actionList));
+            let actionList = JSON.parse(value);
+            if (this.isDebug) console.log('doMerge: configuration updated', JSON.stringify(actionList));
+            if (this.configDetails.doEval) {
+                //@TODO put in subfunction
+                if (this.isDebug) console.log('doMerge: evaluating complex hidden/disabled flags');
+                actionList.forEach(iterAction => {
+                    if (this.isDebug) console.log('doMerge: processing action ', iterAction.name);
+                    if (iterAction.hasOwnProperty('hidden'))    iterAction.hidden = this.evalValue(iterAction.hidden);
+                    if (iterAction.hasOwnProperty('disabled'))  iterAction.disabled = this.evalValue(iterAction.disabled);
+                    if (this.isDebug) console.log('doMerge: hidden / disabled reevaluated',iterAction);
+                    if (iterAction.items) {
+                        iterAction.items.forEach(iterMenu => {
+                            if (this.isDebug) console.log('doMerge: processing menu item ', iterMenu.name);
+                            if (iterMenu.hasOwnProperty('hidden'))    iterMenu.hidden = this.evalValue(iterMenu.hidden);
+                            if (iterMenu.hasOwnProperty('disabled'))  iterMenu.disabled = this.evalValue(iterMenu.disabled);
+                            if (this.isDebug) console.log('doMerge: hidden / disabled reevaluated',iterMenu);
+                        });
+                    }
+                });
+            } 
+            this.actionList = actionList;
             let readyEvt = new CustomEvent('ready', null);
-            if (this.isDebug) console.log('triggerParentEvt: END / triggering readyEvt', JSON.stringify(readyEvt));
+            if (this.isDebug) console.log('doMerge: END / triggering readyEvt', JSON.stringify(readyEvt));
             this.dispatchEvent(readyEvt);
         }).catch( error => {
             console.warn('doMerge: KO ',error);
@@ -429,6 +449,16 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
 
         if (this.isDebug) console.log('doMerge: merge requested ');
     }
+
+    // Boolean condition evaluation
+    evalValue =  function(condition) {
+        //@TODO : check eval() via regex first
+        if (typeof condition == "string") {
+            if (this.isDebug) console.log('executeAction: START', JSON.stringify(condition));
+            return eval(condition);
+        }
+        return condition;
+    } 
 
     //----------------------------------------------------------------
     // Interface actions

@@ -50,6 +50,10 @@
                 <behavior>Edit</behavior>
                 <field>NotificationChannels__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DoEvaluation__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>

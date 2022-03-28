@@ -43,7 +43,8 @@
             console.log('initComponent: END init already done');
         }
         else {
-            let isDebug = (state.c__isDebug ? eval(state.c__isDebug) : false);
+            //let isDebug = (state.c__isDebug ? eval(state.c__isDebug) : false);
+            let isDebug = (state.c__isDebug ? (String(state.c__isDebug).toLowerCase() == "true") : false);
             //console.log('initComponent: isDebug determined ', isDebug);
             component.set("v.isDebug",isDebug);
             if (isDebug) console.log('initComponent: state fetched',JSON.stringify(state));

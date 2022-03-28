@@ -387,6 +387,7 @@ export default class SfpegMessageListCmp extends LightningElement {
 
                     message._key = currentKey++;
                     message._msgWrapClass = (message.size ? ' slds-size_' + message.size + '-of-12 ' : ' slds-shrink-none slds-grow ') + ' slds-col  slds-grid_vertical-stretch msgWrapper';
+                    //@TODO regex to include before executing eval()
                     message._isHidden = eval(message.isHidden);
                     message.msgClass = (message.msgClass || 'slds-box slds-box_x-small slds-m-vertical_xx-small') + ' slds-media slds-media_center ' + variantConfig.theme;
                     message.iconName = message.iconName || variantConfig.iconName;
