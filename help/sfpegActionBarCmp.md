@@ -256,7 +256,7 @@ example.
 "hidden":"{{{NPERM.TST_Perm}}} || '{{{RCD.OwnerId}}}' != '{{{GEN.userId}}}'"
 ```
 
-_Note_: Beware to leverage fields that are safe in your conditions, as a possibly unsecure Javascript
+_Note_: **Beware** to leverage fields that are safe in your conditions, as a possibly unsecure Javascript
 `eval()` statement is executed for each string `hidden` and `disabled` property.
 
 
