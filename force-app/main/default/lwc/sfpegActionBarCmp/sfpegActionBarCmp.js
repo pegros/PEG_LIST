@@ -454,7 +454,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     evalValue =  function(condition) {
         //@TODO : check eval() via regex first
         if (typeof condition == "string") {
-            if (this.isDebug) console.log('executeAction: START', JSON.stringify(condition));
+            if (this.isDebug) console.log('evalValue: string condition ', JSON.stringify(condition));
             return eval(condition);
         }
         return condition || false;
