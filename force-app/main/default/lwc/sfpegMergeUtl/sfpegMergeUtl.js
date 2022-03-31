@@ -190,13 +190,17 @@ const sfpegMergeUtl = {
         let recordFields = new Set();
         (tokenDomain.tokens).forEach(iterField => {
             //recordFields.push(recordObject + '.' + iterField.field);
-            if ((recordData) && (recordData[iterField.field])) {
+            /*if ((recordData) && (recordData[iterField.field])) {
                 if (sfpegMergeUtl.isDebug) console.log('getRecordData: taking contextual data for field ',iterField.field);
                 (resultData[domain])[iterField.field] = recordData[iterField.field];
             }
             else if ((recordData) && (iterField.field in recordData)) {
                 if (sfpegMergeUtl.isDebug) console.log('getRecordData: taking contextual null data for field ',iterField.field);
                 (resultData[domain])[iterField.field] = null;
+            }*/
+            if ((recordData) && (iterField.field in recordData)) {
+                if (sfpegMergeUtl.isDebug) console.log('getRecordData: taking contextual data for field ',iterField.field);
+                (resultData[domain])[iterField.field] = recordData[iterField.field];
             }
             else {
                 if (sfpegMergeUtl.isDebug) console.log('getRecordData: registrating field for fetch ',iterField.field);
