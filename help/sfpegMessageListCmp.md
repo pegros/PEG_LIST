@@ -64,7 +64,7 @@ Each message definition is a JSON object with the following properties:
 * `action` (optional): activates the display of an action button via a JSON action definition containing:
     * the `name` of one action registered in the **sfpegAction__mdt** referenced in the main _Message Actions_ property
     * a `label` or `iconName` for the button
-* `isHidden` (optional): display condition for message, which should have a boolean value but may be defined as a Javascript formula evaluated at runtime by the component (no need to define custom formula fields on the User or current Object).
+* `isHidden` (optional): display condition for message, which should have a boolean value but may be alternatively defined as a string containing a Javascript formula evaluated at runtime by the component (no need then to define custom formula fields on the User or current Object).
 
 If actions are used in the message list (via the _action_ message property), a ***pegAction__mdt** custom metadata record name must be specified in the `Message Actions` property.
 * This record should contain all the actions possibly triggered by the message list.
@@ -73,6 +73,7 @@ If actions are used in the message list (via the _action_ message property), a *
 _Notes_: 
 * Context merge is systematically applied to the _Message Display_ property upon initial load/refresh (see **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** component) to adapt the messages / display conditions to the display environment.
 * This component leverages the **[sfpegIconDsp](/help/sfpegIconDsp.md)** component to display icons. Custom SVG icons or dynamic ones may thus be referenced within the message configuration in addition to all standard SLDS ones.
+* **Beware** to leverage fields that are safe in your `isHidden` conditions, as a possibly unsecure Javascript `eval()` statement when a string property is provided.
 
 ---
 

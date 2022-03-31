@@ -457,7 +457,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             if (this.isDebug) console.log('executeAction: START', JSON.stringify(condition));
             return eval(condition);
         }
-        return condition;
+        return condition || false;
     } 
 
     //----------------------------------------------------------------

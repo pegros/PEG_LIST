@@ -388,13 +388,14 @@ export default class SfpegMessageListCmp extends LightningElement {
                     message._key = currentKey++;
                     message._msgWrapClass = (message.size ? ' slds-size_' + message.size + '-of-12 ' : ' slds-shrink-none slds-grow ') + ' slds-col  slds-grid_vertical-stretch msgWrapper';
                     //@TODO regex to include before executing eval()
-                    message._isHidden = eval(message.isHidden);
+                    message._isHidden = this.evalValue(message.isHidden);
                     message.msgClass = (message.msgClass || 'slds-box slds-box_x-small slds-m-vertical_xx-small') + ' slds-media slds-media_center ' + variantConfig.theme;
                     message.iconName = message.iconName || variantConfig.iconName;
                     message.iconSize = message.iconSize || variantConfig.iconSize || 'small';
                     message.iconVariant = message.iconVariant || variantConfig.iconVariant;
                     message.iconValue = message.iconValue;
                     message.textClass =  "slds-media__body " + variantConfig.textVariant;
+                    if (this.isDebug) console.log('finalizeMessages: message updated ',message);
                 });
                 this.displayedMessages = rawMessages;
                 if (this.isDebug) console.log('finalizeMessages: END / message finalized ',JSON.stringify(this.displayedMessages));
@@ -415,6 +416,16 @@ export default class SfpegMessageListCmp extends LightningElement {
         
 
         if (this.isDebug) console.log('finalizeMessages: message merge triggered');
+    }
+
+    // Boolean condition evaluation
+    evalValue =  function(condition) {
+        //@TODO : check eval() via regex first
+        if (typeof condition == "string") {
+            if (this.isDebug) console.log('evalValue: String eval ', JSON.stringify(condition));
+            return eval(condition);
+        }
+        return condition || false;
     }
 
     //----------------------------------------------------------------

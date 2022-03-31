@@ -205,7 +205,7 @@ export default class SfpegListCmp extends LightningElement {
                 : '');*/
     }
     get contentStyle() {
-        return (((this.displayHeight) &&  (this.displayHeight !== '0')) ? 'height: ' + this.displayHeight + ';' : '');
+        return (((this.displayHeight) &&  (this.displayHeight !== '0')) ? 'height: ' + this.displayHeight + ';' : 'height:100%;');
     }
     get showPagination() {
         //if (this.isDebug) console.log('showPagination: showPagination? ', this.configDetails.query.doPagination);
