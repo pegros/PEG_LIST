@@ -207,8 +207,8 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                         "input"     :   sfpegMergeUtl.sfpegMergeUtl.extractTokens(result.Actions__c,this.objectApiName)
                     };
                     this.configDetails = ACTION_CONFIGS[this.configName];
+                    if (this.isDebug) console.log('connected: configuration parsed ',JSON.stringify(this.configDetails));
                     this.finalizeConfig();
-                    if (this.isDebug) console.log('connected: configuration parsed');
                     //this.errorMsg = 'Configuration fetched and parsed: ' + ACTION_CONFIGS[this.configName].label;
                 }
                 catch(parseError){
@@ -367,7 +367,9 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             // fetching Record data
             if (this.objectApiName) {
                 if (this.isDebug) console.log('finalizeConfig: analysing record fields for object ',this.objectApiName);
+                //if (this.isDebug) console.log('finalizeConfig: input data ',JSON.stringify(this.configDetails.input));
                 if (this.configDetails.recordFields) {
+                    if (this.isDebug) console.log('finalizeConfig: analysing existing recordFields ', JSON.stringify(this.configDetails.recordFields));
                     ldsFetchRequired = true;
                     if (this.configDetails.recordFields[this.objectApiName]) {
                         this.recordFields = this.configDetails.recordFields[this.objectApiName];
@@ -375,12 +377,13 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                     }
                     else {
                         this.configDetails.recordFields[this.objectApiName] = [];
-                        this.configDetails.input.RCD.forEach(item => (this.configDetails.recordFields[this.objectApiName]).push(this.objectApiName + '.' + item.field));
+                        this.configDetails.input.RCD.tokens.forEach(item => (this.configDetails.recordFields[this.objectApiName]).push(this.objectApiName + '.' + item.field));
                         this.recordFields = this.configDetails.recordFields[this.objectApiName];
                         if (this.isDebug) console.log('finalizeConfig: recordFields init from previous (with different object) ',JSON.stringify(this.recordFields));
                     }
                 }
                 else if (this.configDetails.input.RCD) {
+                    if (this.isDebug) console.log('finalizeConfig: registering new recordFields ');
                     ldsFetchRequired = true;
                     this.configDetails.recordFields = {};
                     //this.configDetails.recordFields[this.objectApiName] = [];

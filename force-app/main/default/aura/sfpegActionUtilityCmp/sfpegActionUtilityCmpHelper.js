@@ -208,8 +208,15 @@
             openParams.overrideNavRules= false;
             if (helper.isDebug) console.log('openTab: openParams prepared',JSON.stringify(openParams));
 
-            workspaceUtil.openTab(openParams)
-            .then(function(newTabId){
+            workspaceUtil.getFocusedTabInfo()
+            .then(function(currentFocusedTab) {
+                if (helper.isDebug) console.log('openTab: currentFocusedTab retrieved ',JSON.stringify(currentFocusedTab));
+                if (sourceId == null) {
+                    if (helper.isDebug) console.log('openTab: setting sourceId ');
+                    sourceId = currentFocusedTab.tabId;
+                } 
+                return workspaceUtil.openTab(openParams);
+            }).then(function(newTabId){
                 if (helper.isDebug) console.log('openTab: new tab opened ',newTabId);
                 //helper.TABS_TO_FOCUS[newTabId] = true;
                 //if (helper.isDebug) console.log('openTab: TABS_TO_FOCUS updated ',JSON.stringify(helper.TABS_TO_FOCUS));

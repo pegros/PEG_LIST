@@ -61,7 +61,7 @@ public with sharing class sfpegList_CTL {
             throw new AuraHandledException('Configuration not found with name ' + name);
         }
 
-        if ((configs[0].DisplayConfig__c).contains('{{{LBL.')) {
+        if ((configs[0]?.DisplayConfig__c)?.contains('{{{LBL.')) {
             System.debug(LoggingLevel.FINE,'getConfiguration: extracting/replacing custom labels in display config');
             configs[0].DisplayConfig__c = sfpegMerge_CTL.replaceLabelTokens(configs[0].DisplayConfig__c);
             System.debug(LoggingLevel.FINE,'getConfiguration: custom labels replaced in display config');
@@ -70,7 +70,7 @@ public with sharing class sfpegList_CTL {
             System.debug(LoggingLevel.FINE,'getConfiguration: no custom label in display config');
         }
 
-        if ((configs[0].DisplayConfig__c).contains('{{{FLBL.')) {
+        if ((configs[0]?.DisplayConfig__c)?.contains('{{{FLBL.')) {
             System.debug(LoggingLevel.FINE,'getConfiguration: extracting/replacing field labels in display config');
             configs[0].DisplayConfig__c = sfpegMerge_CTL.replaceFieldLabelTokens(configs[0].DisplayConfig__c);
             System.debug(LoggingLevel.FINE,'getConfiguration: field labels replaced in display config');
