@@ -1080,6 +1080,90 @@ let actionNotif = {
 publish(this.messageContext, sfpegCustomNotification, actionNotif);
 ```
 
+
+### Dynamic Rendering for ***Next*** Action
+
+Leveraging the dynamic action activation feature, it is possible to implement
+a `next` button to move ahead in a process controlled by a picklist field.
+
+![Dynamic Next Buttons](/media/sfpegActionBarNext.png)
+
+By activating the global `Do Evaluation?` parameter and carefully setting the `hidden`
+`disabled` properties of each individual action, it is possible to trigger
+a picklist field value change via LDS depending on the process stage and let it 
+become active only when certain conditions are met.
+
+For the example above, the 
+```
+[
+    {
+        "name": "go2selection",
+        "label": "Suivant",
+        "iconName": "utility:chevronright",
+        "hidden": "'{{{RCD.Stage__c}}}' != 'CHANNEL'",
+        "disabled": "'{{{RCD.SelectedChannels__c}}}' == ''",
+        "action": {
+            "type": "LDS",
+            "params": {
+                "type": "update",
+                "bypassConfirm": true,
+                "params": {
+                    "fields": {
+                        "Id": "{{{GEN.recordId}}}",
+                        "Stage__c": "TARGET"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "go2personnalisation",
+        "label": "Suivant",
+        "iconName": "utility:chevronright",
+        "hidden": "'{{{RCD.Stage__c}}}' != 'TARGET'",
+        "disabled": "{{{RCD.TargetNumber__c}}} == 0",
+        "action": {
+            "type": "LDS",
+            "params": {
+                "type": "update",
+                "bypassConfirm": true,
+                "params": {
+                    "fields": {
+                        "Id": "{{{GEN.recordId}}}",
+                        "Stage__c": "CUSTOMIZE"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "go2synthèse",
+        "label": "Suivant",
+        "iconName": "utility:chevronright",
+        "hidden": "'{{{RCD.Stage__c}}}' != 'CUSTOMIZE'",
+        "action": {
+            "type": "LDS",
+            "params": {
+                "type": "update",
+                "bypassConfirm": true,
+                "params": {
+                    "fields": {
+                        "Id": "{{{GEN.recordId}}}",
+                        "Stage__c": "SEND"
+                    }
+                }
+            }
+        }
+    }
+]
+```
+
+_Notes_:
+* The same may be done for a ***Previous*** action (combined in the same **sfpegCard__mdt** record).
+* These buttons may be combined with dynamic ***process validation*** messages 
+Action (see **[sfpegMessageListCmp](/help/sfpegMessageListCmp.md)**) to notify users about missing information.
+
+
 ---
 
 ## Technical Details

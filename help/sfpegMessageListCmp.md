@@ -66,7 +66,8 @@ Each message definition is a JSON object with the following properties:
     * a `label` or `iconName` for the button
 * `isHidden` (optional): display condition for message, which should have a boolean value but may be alternatively defined as a string containing a Javascript formula evaluated at runtime by the component (no need then to define custom formula fields on the User or current Object).
 
-If actions are used in the message list (via the _action_ message property), a ***pegAction__mdt** custom metadata record name must be specified in the `Message Actions` property.
+If actions are used in the message list (via the _action_ message property), a ***pegAction__mdt** custom metadata record name
+must be specified in the `Message Actions` property.
 * This record should contain all the actions possibly triggered by the message list.
 * see **[sfpegAction](/help/sfpegActionBarCmp.md)** for details about available actions
 
@@ -78,6 +79,46 @@ _Notes_:
 ---
 
 ## Configuration Example
+
+### Dynamic Process Validation Messages
+
+One typical use case in a process oriented record page is to display warnings each time a stage
+is reached without all recommended or mandatory data filled in.
+
+![Missing Data Warnings in Process](/media/sfpegMessageProcess.png)
+
+By carefully setting `isHidden` properties according to the process stage and validation
+conditions to move ahead, it is possible to rapidly inform users about important missing
+information to finalize the process. 
+```
+[
+    {
+        "variant": "warningLight",
+        "size": "12",
+        "header": "Attention: Canaux non sélectionnés!",
+        "message": "Veuillez sélectionner a minima un canal principal à l'étape <b>Canaux</b>.",
+        "isHidden": "'{{{RCD.Stage__c}}}' == 'CHANNEL' || '{{{RCD.SelectedChannels__c}}}' == ''"
+    },
+    {
+        "variant": "warningLight",
+        "size": "12",
+        "header": "Attention: Date d'envoi invalide!",
+        "message": "Merci de renseigner une date inférieure à la date de fin de la campagne mère et supérieure à la date du jour",
+        "isHidden": "'{{{RCD.Stage__c}}}' != 'SEND' || '{{{RCD.ScheduledDate__c}}}' ==''"
+    },
+    {
+        "variant": "warningLight",
+        "size": "12",
+        "header": "Attention: Pas de cibles sélectionnées!",
+        "message": "Veuillez ajouter a minima un membre à la campagne à l'étape <b>Sélection cible</b>.",
+        "isHidden": "'{{{RCD.Stage__c}}}' != 'SEND' || '{{{RCD.Stage__c}}}' != 'TARGET' || {{{RCD.TargetNumber__c}}} > 0"
+    }
+]
+```
+
+_Note_: These messages may be combined with a dynamic ***Next*** Action (see **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**)
+to navigate between process stages.
+
 
 ### Message with Dynamic Icons
 
