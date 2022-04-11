@@ -1090,9 +1090,13 @@ By activating the global `Do Evaluation?` parameter and carefully setting the `h
 `disabled` properties of each individual action, it is possible to trigger
 a picklist field value change via LDS depending on the process stage and let it 
 become active only when certain conditions are met.
-* Before executing the stage actions
+* Before executing the stage actions, the ***Next*** button remains inactive
+
 ![Dynamic Next Buttons (inactive)](/media/sfpegActionBarNext2.png)
-* After executing them
+
+* After executing them, it becomes active and enables a LDS update on the current record
+towards the next stage value
+
 ![Dynamic Next Buttons (active)](/media/sfpegActionBarNext.png)
 
 
