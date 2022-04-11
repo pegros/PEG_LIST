@@ -302,6 +302,71 @@ Hereafter is an example of a set of ***filter*** actions to set / unset specific
 
 ## Configuration Examples
 
+### Lookup Field Handling 
+
+Lookup fields do not work natively in the component. Depending on the display mode selected, different
+workarounds are available.
+
+For the `Datatable` and `DataTree` modes, the strategy consists in configuring a button in `base` variant,
+this button having the name of the target record as label and triggering a `navigation` action (or simply `open`
+addressing the current row)
+```
+"columns": [
+    ...
+    {
+        "label":"Nom",
+        "fieldName":"Name",
+        "type":"button",
+        "sortable":"true",
+        "typeAttributes":{
+            "label":{"fieldName":"Name"},
+            "title":{"fieldName":"RecordSummary__c"},
+            "name":"open",
+            "variant":"base"
+        }
+    }
+    ...
+]
+```
+_Notes_:
+* in the example above the `Name` field displayed is specified twice in the configuration, once as root `fieldName`
+to be used for sorting and a second time within the `label` property of the button `typeAttributes` to be 
+actually displayed in the button.
+* the button `title` may also be specified dynamically to display contextual additional information upon
+hovering (no compact layout preview available for now but PLANNED).
+* the `name` property in the button `typeAttributes` should idenfy the name of the row action to be triggered
+(which should match one of the actions available in the **sfpegAction__mdt** record referenced in the `Row Actions`
+property of the current **sfpegList__mdt** record)
+
+
+For the `CardList` and `TileList` modes, the solution is slightly different
+* an action may be specified for the tile title (referencing one of the row actions)
+```
+    ...
+    "title": {
+        "fieldName": "Name",
+        "sortable": true,
+        "action": "open"
+    },
+    ...   
+```
+* other navigation actions may be specified in the menu (referencing any row action)
+```
+"menu": [
+    ...
+    {
+        "name": "openAccount",
+        "label": "Open Account",
+        "iconName": "utility:open"
+    },
+    ...
+]
+```
+
+As a workaround for record previews, the `showPreview` action type may be used instead of the `navigation`
+one (see **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**) to display a summary of the record.
+
+
 ### Timeline Configuration
 
 The **sfpegListCmp** may be configured to look as follows:<br/>

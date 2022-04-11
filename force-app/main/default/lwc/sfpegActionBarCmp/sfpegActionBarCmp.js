@@ -364,7 +364,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                 if (this.isDebug) console.log('finalizeConfig: userFields init from config',JSON.stringify(this.userFields));
             }
 
-            // fetching Record data
+            // Fetching Record data
             if (this.objectApiName) {
                 if (this.isDebug) console.log('finalizeConfig: analysing record fields for object ',this.objectApiName);
                 //if (this.isDebug) console.log('finalizeConfig: input data ',JSON.stringify(this.configDetails.input));
