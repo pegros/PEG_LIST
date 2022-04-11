@@ -52,22 +52,22 @@ components.
 
 All of the confguration lies in the _Display Config_ property, which should contain a JSON list
 of KPI group definitions, each one consisting in:
-* a _header_ with
-    * _label_ and _icon_ properties to display in the header title
-    * a _size_ property to control the width of the group container withiin the component (in sub-units of a 12 column grid)
-    * an optional _actions_ property to display an action bar in the group header (with the name of an applicable 
+* a `header` with
+    * `label` and `iconName` properties to display in the header title
+    * a `size` property to control the width of the group container withiin the component (in sub-units of a 12 column grid)
+    * an optional `actions` property to display an action bar in the group header (with the name of an applicable 
     **sfpegAction__mdt** custom metadata record, see **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** for details)
-* a list of _kpis_ configuration items containing
-    * a main KPI (via the _name_  property containing a record field API name),
-    * an _icon_ object with
-        * with either _name_ (for a static icon name) or _fieldName_ (for a dynamic name provided by a record field) property set to 
-        * with similar optional _variant_/_variantField_ and _value_/_valueField_ properties to 
-        customise the icon appearance (availability depending on the icon type) property 
-        * an optional _size_ property to tune its display size
-    * an optional _label_ (static) displayed above the 
-    * an optional _action_  name (triggered via the icon, referencing an action _name_ registered in 
-    the **sfpegAction__mdt** custom metadata record configured in the _actions_ property of the group)
-    * an optional list of _related” KPIs displayed next to the main KPI in a smaller font size (as
+* a list of `kpis` configuration items containing
+    * a main KPI (via the `name`  property containing a record field API name),
+    * an `icon` object with
+        * with either `name` (for a static icon name) or `fieldName` (for a dynamic name provided by a record field) property set to determine the icon to display. 
+        * with similar optional `variant`/`variantField` and `value`/`valueField` properties to 
+        customise the icon appearance (availability depending on the icon type) 
+        * an optional `size` property to tune its display size
+    * an optional `label` (static) displayed above the KPI value.
+    * an optional `action`  name (triggered via the icon, referencing an action `name` registered in 
+    the **sfpegAction__mdt** custom metadata record configured in the `actions` property of the group)
+    * an optional list of `related` KPIs displayed next to the main KPI in a smaller font size (as
     a list of record field API names).
 
 _Note_: **LBL** and **FLBL** merge tokens may be used to translate labels used in the configurations, see
@@ -79,16 +79,16 @@ dedicated section in **[sfpegMergeUtl](/help/sfpegMergeUtl.md)**.
 
 ### Full Configuration Example
 
-To implement a layout the one below, the following configuration actions should be applied
+To implement a layout like the one below, leveraging dynamic icons, the following configuration
+actions should be applied.<br/>
 ![KPI List Example](/media/sfpegKpiListExample.png)
 
-* create a **sfpegKpiList__mdt** custom metadata record with the following _Display Config_ property
+* create a **sfpegKpiList__mdt** custom metadata record with the following `Display Config` property
 ```
 {
   "groups": [
   {
     "label": "Situation",
-    "icon":{"name":"custom:custom18"},
     "iconName": "custom:custom19",
     "border": true,
     "size":"12",
@@ -136,9 +136,9 @@ To implement a layout the one below, the following configuration actions should 
 }
 ```
 
-* define the **sfpegAction__mdt** record with the name referenced in the _actions_ property (`newsActions` here)
-needed for the KPI groups with the following _Display Config_ property. Each action mentioned on a KPI
-should be a valid action _name_ of the referenced action configuration.
+* define the **sfpegAction__mdt** record with the name referenced in the `actions` property
+(`newsActions` here) needed for the KPI groups with the following `Display Config` property.
+Each action mentioned on a KPI should be a valid action `name` of the referenced action configuration.
 ```
 [
   { "name":"open", "iconName":"utility:open", "title":"Open",
