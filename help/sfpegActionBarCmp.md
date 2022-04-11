@@ -1164,8 +1164,8 @@ only one of each being displayed at each stage. A possible configuration is:
 
 _Notes_:
 * The same may be done for a ***Previous*** action (combined in the same **sfpegCard__mdt** record).
-* These buttons may be combined with dynamic ***process validation*** messages 
-Action (see **[sfpegMessageListCmp](/help/sfpegMessageListCmp.md)**) to notify users about missing information.
+* These buttons may be combined with dynamic ***process validation*** messages
+(see **[sfpegMessageListCmp](/help/sfpegMessageListCmp.md)**) to notify users about missing information.
 
 
 ---
