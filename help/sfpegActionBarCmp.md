@@ -1093,13 +1093,15 @@ By activating the global `Do Evaluation?` parameter and carefully setting the `h
 a picklist field value change via LDS depending on the process stage and let it 
 become active only when certain conditions are met.
 
-For the example above, the 
+The button `label` remains the same at all stages but its name and action change,
+only one of each being displayed at each stage. A possible configuration is:
 ```
 [
     {
         "name": "go2selection",
         "label": "Suivant",
         "iconName": "utility:chevronright",
+        "variant":"brand",
         "hidden": "'{{{RCD.Stage__c}}}' != 'CHANNEL'",
         "disabled": "'{{{RCD.SelectedChannels__c}}}' == ''",
         "action": {
@@ -1120,6 +1122,7 @@ For the example above, the
         "name": "go2personnalisation",
         "label": "Suivant",
         "iconName": "utility:chevronright",
+        "variant":"brand",
         "hidden": "'{{{RCD.Stage__c}}}' != 'TARGET'",
         "disabled": "{{{RCD.TargetNumber__c}}} == 0",
         "action": {
@@ -1140,6 +1143,7 @@ For the example above, the
         "name": "go2synthèse",
         "label": "Suivant",
         "iconName": "utility:chevronright",
+        "variant":"brand",
         "hidden": "'{{{RCD.Stage__c}}}' != 'CUSTOMIZE'",
         "action": {
             "type": "LDS",
