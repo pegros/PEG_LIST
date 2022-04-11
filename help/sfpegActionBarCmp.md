@@ -1086,12 +1086,15 @@ publish(this.messageContext, sfpegCustomNotification, actionNotif);
 Leveraging the dynamic action activation feature, it is possible to implement
 a `next` button to move ahead in a process controlled by a picklist field.
 
-![Dynamic Next Buttons](/media/sfpegActionBarNext.png)
-
 By activating the global `Do Evaluation?` parameter and carefully setting the `hidden`
 `disabled` properties of each individual action, it is possible to trigger
 a picklist field value change via LDS depending on the process stage and let it 
 become active only when certain conditions are met.
+* Before executing the stage actions
+![Dynamic Next Buttons (inactive)](/media/sfpegActionBarNext2.png)
+* After executing them
+![Dynamic Next Buttons (active)](/media/sfpegActionBarNext.png)
+
 
 The button `label` remains the same at all stages but its name and action change,
 only one of each being displayed at each stage. A possible configuration is:
