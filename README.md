@@ -67,13 +67,12 @@ The **PEG_LIST** package provides a whole set of LWC components for the App Buil
 well as some Aura ones. They are summarized hereafter by use case with links to their dedicated
 description pages.
 
-They heavily rely on two main features:
-* powerful context adaptation via the **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** utility component
-* rich action capabilities (at global or row level) via the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**
+All these components rely on various configuration custom metadata also included in the package,
+the detail of which is provided [here](/help/sfpegComponentList.md). They also heavily reuse two
+powerful features:
+* context adaptation via the **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** utility component
+* global/row level action capabilities via the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**
 component.
-
-All these components rely on various custom metadata also included in the package, the detail
-of which is provided [here](/help/sfpegComponentList.md).
 
 ### App Builder Components 
 
