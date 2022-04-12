@@ -9,17 +9,19 @@ This package contains a set of LWC components primarily dedicated to the display
 (related records, KPIs, messages, fields...). They are based on some common powerful features required to easily
 customise the end-user experience (context information merge, action framework, apex logic extension).
 
+![List View](/media/sfpegListTable.png)
+
 These components were built as contributions/examples for former & ongoing Advisory assignments by 
 [Pierre-Emmanuel Gros](https://github.com/pegros), porting in LWC and optimising (for end-user performances 
 and easier configuration mutualisation among page layouts) some components previously available in a former 
 Aura component package (known as **PEG Components** not available on GitHub). 
 
-They heavily rely on standard Lightning framework features such as the Lightning Data Service (LDS) 
-or the Lightning Message Service (LMS) and try to apply as much as possible the standard Design System (SLDS). 
+They heavily rely on standard Lightning framework features such as the **Lightning Data Service (LDS)** 
+or the **Lightning Message Service (LMS)** and try to apply as much as possible the standard **Salesforce Lightning Design System (SLDS)**. 
 The goal was to make them appear as much as possible as standard native Salesforce platform components 
-but override usual limitations of the standard platform.
+while overriding usual limitations of the standard platform.
 
-Experience Cloud is now supported and requires the Object API Name and the Record ID to be explicitly
+Communities (Experience Cloud) are now supported and requires the `Object API Name` and the `Record ID` to be explicitly
 set when configuring the components within Experience Cloud pages.
 
 They are not available for Flow Designer but another package with components explicitly dedicated to
@@ -37,6 +39,7 @@ general configuration guidelines and technical implementation principles.
 As LWC does not provide embedded documentation for the components, this readme file provides links to component
 dedicated sub-pages providing detailed information about their configurations and various implementation examples.
 This applies to the different App Builder components, but some more technical ones are also described (e.g. merge utility).
+Direct links to these component help pages are also available in the component footers when activating _debug_ mode.
 
 For the few Aura components, you may have a look at their standard _.auradoc_ and for Apex classes a
 _@ApexDoc_ like approach (with `@description`... tags) has been used.
@@ -64,75 +67,35 @@ The **PEG_LIST** package provides a whole set of LWC components for the App Buil
 well as some Aura ones. They are summarized hereafter by use case with links to their dedicated
 description pages.
 
-All these components rely on various supporting metadata also included in the package, the detail
-of which is provided [here](/help/sfpegComponentList.md).
+They heavily rely on two main features:
+* powerful context adaptation via the **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** utility component
+* rich action capabilities (at global or row level) via the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**
+component.
 
+All these components rely on various custom metadata also included in the package, the detail
+of which is provided [here](/help/sfpegComponentList.md).
 
 ### App Builder Components 
 
 A main set of LWC components is available for use in Lightning App Builder:
-
 * **[sfpegListCmp](/help/sfpegListCmp.md)** displays a contextualised and actionable list of records in 3 main formats (data table, data tree or tile list), data being retrieved via SOQL, Apex...
-
-<p align="center">
-<img src="/media/sfpegListTiles.png"    alt="List as Tiles"         title="List as Tiles" />
-<img src="/media/sfpegListTimeline.png" alt="List as Timeline"      title="List as Timeline"/>
-<img src="/media/sfpegListTable.png"    alt="List as Data Table"    title="List as Data Table"/>
-</p>
-
 * **[sfpegMessageListCmp](/help/sfpegMessageListCmp.md)** displays a conditional, contextualised and actionable list
 of end-user messages with customisable styles.
-
-<p align="center" >
-<img src="/media/sfpegMessages.png"       alt="Message List Variants"           title="Message List Variants"/>
-<img src="/media/sfpegMessageExample.png" alt="Message List Dynamic Widgets"    title="Message List Dynamic Widgets"/>
-</p>
-
 * **[sfpegKpiListCmp](/help/sfpegKpiListCmp.md)** displays an actionable list of KPI field values in a structured and
 graphical way.
-
-<p align="center" >
-<img src="/media/sfpegKpis.png" alt="List of KPIs"  title="List of KPIs"/>
-</p>
-
 * **[sfpegProfileCmp](/help/sfpegProfileCmp.md)** displays an actionable graphical summary of a record, with various
 lists of fields
-
-<p align="center" >
-<img src="/media/sfpegProfile.png"  alt="Full Profile"  title="Full Profile"/>
-</p>
-
 * **[sfpegCardCmp](/help/sfpegCardCmp.md)** displays a structured card, with a custom
 set of fields / sections fetched/displayed via LDS (including edit capability), for the current or related
 (i.e. via lookups) record.
-
-<p align="center" >
-<img src="/media/sfpegCard.png" alt="Cards on main and related records"  title="Cards on main and related records"/>
-</p>
-
 * **[sfpegCardListCmp](/help/sfpegCardListCmp.md)** enables to fetch a list of records
 (via a SOQL, Apex... query) and display a **[sfpegCardCmp](/help/sfpegCardCmp.md)** for each one.
-
-<p align="center" >
-<img src="/media/sfpegCardList.png" alt="Card List" title="Card List" />
-</p>
-
 * **[sfpegRecordDisplayCmp](/help/sfpegRecordDisplayCmp.md)** displays data abouyt the current record
 in a structured way (headline section + sub-tabs), data being fetched either via LDS or SOQL
 (e.g. for Kbnowledge articles).
-
-<p align="center" >
-<img src="/media/sfpegRecordDisplay.png"    alt="Record Display"    title="Structured Record Display" />
-</p>
-
 * **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** displays an button/menu bar component enabling to
 trigger a wide variety of  actions, integrated within the previous list components but also available
 for standalone use in Lightning pages.
-
-<p align="center" >
-<img src="/media/sfpegActionBar.png"    alt="Action bar"    title="Standalone action bar"/>
-</p>
-
 * **[sfpegActionTriggerCmp](/help/sfpegActionTriggerCmp.md)** has no actual display but enables 
 to trigger a specific action automatically upon instantiation (e.g. leveraging conditional
 display, it enables to enforce the user to execute a certain operation, such as opening an Edit popup,
@@ -142,22 +105,15 @@ when opening the page).
 ### Utility Bar Components 
 
 Some additional components are available for use in the Lightning Utility bar 
-
 * **[sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md)** (LWC) is primarily the same as the
 **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** but displays a menu vertically from the utility bar
 and handles messages triggered by other components to execute actions from the utility bar instead of
 within tab (e.g. to enforce the console configuration when opening a page).
-
 * **[sfpegActionUtilityCmp](/help/sfpegActionUtilityCmp.md)** (Aura) is an Aura wrapper of
 **[sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md)** to handle a few additional actions & utility
 bar specific behaviours currently not possible from LWC: automatic closing of the utility menu upon action
 trigger, console tab operations (close all tabs, close tab and open another one...),
 custom/flow popup open... (_Note_: this component may be used in Community page footer as well)
-
-<p align="center" >
-<img src="/media/sfpegActionUtility.png"    alt="Action Utility"    title="Action Utility in Utility Bar" />
-</p>
-
 
 ### Addressable Aura Components
 
@@ -165,10 +121,6 @@ There is a single Aura Addressable component available for use in navigation act
 * **[sfpegListViewCmp](/help/sfpegListViewCmp.md)** enables to display the LWC
 **[sfpegListCmp](/help/sfpegListCmp.md)** component in a dedicated page (similarly to 
 the list opened via the _see all_ action on standard related lists).
-
-<p align="center" >
-<img src="/media/sfpegListView.png" alt="List View" title="Independent List View" />
-</p>
 
 
 * * *
@@ -180,7 +132,6 @@ Configuration is done at 2 levels:
 and select one of the available detailed configuration records (see below)
 * via **custom metadata** records, respectively to provide detailed configuration of the components (e.g. layouts,
 queries & actions to be used in the components), often containing complex JSON configuration stored in richtext fields.
-
 
 Such an approach enables to easily reuse the same detailed configuration in multiple Lightning page layouts and
 enables a more efficient local configuration caching (for better performances).
@@ -214,6 +165,9 @@ the appropriate records when cconfiguring a component in the App Builder.
 
 Setting a `Scope` is optional, e.g. for **sfpegAction__mdt** records used as row actions of other component
 metadata records (e.g. **sfpegList__mdt**).
+
+_Note_: for Communities (Experience Cloud), the `GLOBAL` scope is mandatory for now, the scope not being
+properly evaluated when rendering a record page (KNOWN ISSUE).
 
 
 ### Debug Mode Activation
@@ -305,4 +259,4 @@ of the component configuration panel in the Experience Builder:
 * `objectApiName` to feed the Object API Name of th current record (via the default `{!objectApiName}` value)
 
 _Note_: The `{!objectApiName}` value seems to be sometimes not valued when initializing the components. In order 
-to mitigate such issues, and if possible, a fixed test value (e.g. "Account")is then preferrable.
+to mitigate such issues, and if possible, a fixed test value (e.g. `Account`)is then preferrable.
