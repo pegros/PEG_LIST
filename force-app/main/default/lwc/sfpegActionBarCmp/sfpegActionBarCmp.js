@@ -480,6 +480,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         if (this.isDebug) console.log('executeBarAction: and context ', JSON.stringify(context));
         if (this.isDebug) console.log('executeBarAction: configName fetched ', this.configName);
         if (this.isDebug) console.log('executeBarAction: configDetails fetched ', JSON.stringify(this.configDetails));
+        if (this.isDebug) console.log('executeBarAction: actionList fetched ', JSON.stringify(this.actionList));
         
         if (!this.actionList) {
             console.warn('executeBarAction: END KO / Action initialisation failed');
