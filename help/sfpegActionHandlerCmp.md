@@ -25,8 +25,9 @@ When configuring a Lightning App, the **sfpegActionHandlerCmp** component may be
 **Utilities** of the app. It basically requires to select one of the available **sfpegAction__mdt** 
 custom metadata records to define the set of actions to be displayed in the utility bar.
 
-Such a configuration remains optional, only _utility_ action types (see herefafter) being handled by
-the component by default. Please opt for automatic component launch in the App Builder, in order to
+Such a configuration remains optional, only `utility` action types (see herefafter) being handled by
+the component by default. ***Beware*** to opt for automatic component launch in the App Builder
+(`Start automatically` checkbox in the component utility bar configuration), in order to
 properly support this feature even before having opened the action menu in the utility bar.
 
 ---
@@ -38,9 +39,9 @@ properly support this feature even before having opened the action menu in the u
 In order to invoke an action in the **sfpegActionHandlerCmp** component from any
 **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component (standalone or embedded in another
 component of the **[PEG_LIST](https://github.com/pegros/PEG_LIST)**  package),
-the _utility_ action type should be used.
+the `utility` action type should be used.
 
-The _params_ property of this action should then include the configuration of the actual action
+The `params` property of this action should then include the configuration of the actual action
 to be executed from the utility bar.
 
 In the following example, the action configured for the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** 

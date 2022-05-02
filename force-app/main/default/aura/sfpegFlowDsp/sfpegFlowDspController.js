@@ -31,16 +31,17 @@
 ***/
 
     doInit : function(component, event, helper) {
-        console.log('doInit: START');
-		helper.initComponent(component, event, helper);        
-        console.log('doInit: END');
-	},
+        helper.isDebug = component.get("v.isDebug");
+        if (helper.isDebug) console.log('doInit: START');
+        helper.initComponent(component, event, helper);        
+        if (helper.isDebug) console.log('doInit: END');
+    },
     statusChange : function (component, event, helper) {
         if (helper.isDebug) console.log('statusChange: START');
-    	if (event.getParam('status') === "FINISHED") {
-        	if (helper.isDebug) console.log('statusChange: finished status');
-			helper.closePopup(component, event, helper);    
-    	}
+        if (event.getParam('status') === "FINISHED") {
+            if (helper.isDebug) console.log('statusChange: finished status');
+            helper.closePopup(component, event, helper);    
+        }
         else {
         	if (helper.isDebug) console.log('statusChange: other status',JSON.stringify(event.getParams()));
         }

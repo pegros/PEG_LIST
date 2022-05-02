@@ -56,7 +56,7 @@ Periodic upgrades will be posted depending on fixes/evolutions implemented as pa
 For now, all commits are made exclusively by the author.
 
 You may easily deploy it to your Org via a simple SFDX deploy command from the project folder.
-> sfdx force:source:deploy -u <yourOrgAlias> -w 10 --verbose -p force-app
+> sfdx force:source:deploy -u _yourOrgAlias_ -w 10 --verbose -p force-app
 
 
 * * *
@@ -142,6 +142,9 @@ fetch/display configuration and for the header actions.
 <p align="center" >
 <img src="/media/sfpegListConfiguration.png" alt="App Builder Config" title="List App Builder Configuration Example" />
 </p>
+
+***Beware** to add yourself (and all users accessing the components) the proper `sfpegListUsage` permission set
+in order to access all the underlying Apex controller classes.
 
 
 ### Configuration Contextualisation

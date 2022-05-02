@@ -37,8 +37,9 @@
         console.log('doInit: END');
     }, 
     doneRendering : function(component, event, helper) {
-        console.log('doneRendering: START');
+        let isDebug = component.get("v.isDebug");
+        if (isDebug) console.log('doneRendering: START');
         helper.initComponent(component, event, helper); 
-        console.log('doneRendering: END');
+        if (isDebug) console.log('doneRendering: END');
     }
 })

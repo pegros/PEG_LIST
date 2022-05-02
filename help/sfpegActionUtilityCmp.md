@@ -43,6 +43,11 @@ see **[sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md)** for details).
 
 Its configuration is identical to the **[sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md)** one.
 
+***Beware*** to opt for automatic component launch in the App Builder
+(`Start automatically` checkbox in the component utility bar configuration), in order to
+properly handle `utility` actions triggered from the pages.
+
+
 ---
 
 ## Specific Action Types

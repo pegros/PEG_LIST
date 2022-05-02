@@ -31,6 +31,12 @@ As an [adressable](https://developer.salesforce.com/docs/component-library/bundl
 * the configuration of the embedded **[sfpegListCmp](/help/sfpegListCmp.md)** component (i.e. what data are displayed, how they are displayed and what actions are available)
     * *c__list*: Developer name of the **sfpegList__mdt** custom metadata record to be used to fetch the and display the records.
     * *c__actions*: Developer name of the **sfpegAction__mdt** custom metadata record to be used as header actions.
+    * *c__actions*: Developer name of the **sfpegAction__mdt** custom metadata record to be used as header actions.
+    * *c__showSearch*: Same boolean flag as for the **sfpegListCmp** component (displayed by default).
+    * *c__showExport*: Same boolean flag as for the **sfpegListCmp** component (false by default).
+    * *c__displayHeight*: Same property as for the **sfpegListCmp** component.
+    * *c__buttonSize*: Same property as for the **sfpegListCmp** component.
+    * *c__contextString*: Same property as for the **sfpegListCmp** component.
     * *c__title*: title to be set on the card wrapping the list
     * *c__icon*: name of the icon (see [SLDS](https://www.lightningdesignsystem.com/icons/)) to be set on the card wrapping the list
     * *c__recordId*: Id of the record to be provided as input to the list query
@@ -56,6 +62,8 @@ custom metadata record (e.g. for **[sfpegListCmp](/help/sfpegListCmp.md)** compo
             "state": {
                 "c__list": "TSTsListPage",
                 "c__actions": "TSTsListHeader",
+                "c__buttonSize": "medium",
+                "c__showExport": "true",
                 "c__label": "TSTsList",
                 "c__title": "List of TST records",
                 "c__icon": "standard:account",

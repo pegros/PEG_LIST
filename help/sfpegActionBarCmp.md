@@ -268,12 +268,12 @@ It may be done at action level, the second action being systematically launched 
 has been launched (not necessarily executed).
 ```
     "action":{
-        "type":"<ACTION_1>",
-        "params":{<ACTION_1_PARAMS> },
+        "type":"_ACTION_1_",
+        "params":{_ACTION_1_PARAMS_},
         "next": {
-            "type": "<ACTION_2>",
+            "type": "_ACTION_2_",
             "params": {
-                <ACTION_2_PARAMS>
+                _ACTION_2_PARAMS_
             }
         }
 ```
@@ -284,13 +284,13 @@ by most action types, i.e. those able to detect a successful completion (e.g. no
 ***navigation*** ones).
 ```
     action":{
-        "type":"<ACTION_1>",
+        "type":"_ACTION_1_",
         "params":{
-            <ACTION_1_PARAMS>,
+            _ACTION_1_PARAMS_,
             "next": {
-                "type": "<ACTION_2>",
+                "type": "_ACTION_2_",
                 "params": {
-                    <ACTION_2_PARAMS>
+                    _ACTION_2_PARAMS_
                 }
             }
         }
@@ -1173,6 +1173,43 @@ _Notes_:
 * The same may be done for a ***Previous*** action (combined in the same **sfpegCard__mdt** record).
 * These buttons may be combined with dynamic ***process validation*** messages
 (see **[sfpegMessageListCmp](/help/sfpegMessageListCmp.md)**) to notify users about missing information.
+
+
+### Reload and Refresh Action Chaining
+
+As mentioned in the Configuration section, it is possible to leverage `next` properties to 
+execute a chain of actions. In the following example, a `delete` DML mass action is first 
+triggered on a record selection provided by the parent component (e.g. **[sfpegListCmp](/help/sfpegListCmp.md)**) 
+and then 2 successive actions happen:
+* LDS reload of the page record (e.g. to refresh rollup sumary fields)
+* refresh of the parent component (e.g. to reload a custom related list)
+
+```
+    {
+        "label": "Supprimer",
+        "iconName": "utility:delete",
+        "name": "delete",
+        "action": {
+            "type": "massDML",
+            "title": "Suppression des membres de campagnes",
+            "message": "Confirmer la suppression",
+            "params": {
+                "operation": "delete",
+                "next": {
+                    "type":"reload",
+                    "params":{"recordId":"{{{GEN.recordId}}}"},
+                    "next": {
+                        "type": "done",
+                        "params": {
+                            "type": "refresh"
+                        }
+                    }
+                }
+            }
+        }
+    }
+```
+
 
 
 ---

@@ -38,14 +38,16 @@
         let state = pageReference.state;
 
         let context = component.get("v.context");
-
+        //console.log('initComponent: context fetched',JSON.stringify(context));
+        
         if (context === JSON.stringify(state)) {
             console.log('initComponent: END init already done');
         }
         else {
             //let isDebug = (state.c__isDebug ? eval(state.c__isDebug) : false);
+            //console.log('initComponent: state provided ', JSON.stringify(state));
             let isDebug = (state.c__isDebug ? (String(state.c__isDebug).toLowerCase() == "true") : false);
-            //console.log('initComponent: isDebug determined ', isDebug);
+            console.log('initComponent: isDebug determined ', isDebug);
             component.set("v.isDebug",isDebug);
             if (isDebug) console.log('initComponent: state fetched',JSON.stringify(state));
 
@@ -63,14 +65,19 @@
             component.set("v.icon",state.c__icon);
             component.set("v.recordId",state.c__recordId);
             component.set("v.objectApiName",state.c__objectApiName);
+            component.set("v.showSearch",(state.c__showSearch ? (String(state.c__showSearch).toLowerCase() == "true") : true));
+            component.set("v.showExport",(state.c__showExport ? (String(state.c__showExport).toLowerCase() == "true") : false));
+            component.set("v.displayHeight",state.c__displayHeight);
+            component.set("v.buttonSize",state.c__buttonSize);
+            component.set("v.contextString",state.c__contextString);
+            if (isDebug) console.log('initComponent: all list params set from state ',JSON.stringify(state));
 
-        
             // Resetting the Tab label
             if (state.c__label) {
                 if (isDebug) console.log('initComponent: changing tab label',state.c__label);
 
                 let wkAPI = component.find("workspaceUtil");
-                if (isDebug) if (isDebug) console.log('initComponent: wkAPI',wkAPI);
+                if (isDebug) console.log('initComponent: wkAPI',wkAPI);
 
                 wkAPI.isConsoleNavigation().then(function(consoleMode) {
                     if (isDebug) console.log('initComponent: console mode',consoleMode);

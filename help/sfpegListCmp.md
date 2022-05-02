@@ -578,6 +578,13 @@ triggering via a `utility` action type followed by a `notify` one to refresh the
 **sfpegListCmp** component.
 
 
+### Main Record Reload and List Refresh Action Chaining
+
+Please refer to **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** to see an example combining a `massDML`
+action on the list selected records followed by a `reload` to update the page record and a `refresh` to 
+reload the component list.
+
+
 ---
 
 ## Technical Details

@@ -205,7 +205,11 @@ export default class SfpegListCmp extends LightningElement {
                 : '');*/
     }
     get contentStyle() {
-        return (((this.displayHeight) &&  (this.displayHeight !== '0')) ? 'height: ' + this.displayHeight + ';' : 'height:100%;');
+        if ((this.isCollapsible) && (this.isCollapsed)) {
+            return '';
+        }
+        //return (((this.displayHeight) &&  (this.displayHeight !== '0')) ? 'height: ' + this.displayHeight + ';' : 'height:100%;');
+        return (((this.displayHeight) &&  (this.displayHeight !== '0')) ? 'height: ' + this.displayHeight + ';' : '');
     }
     get showPagination() {
         //if (this.isDebug) console.log('showPagination: showPagination? ', this.configDetails.query.doPagination);

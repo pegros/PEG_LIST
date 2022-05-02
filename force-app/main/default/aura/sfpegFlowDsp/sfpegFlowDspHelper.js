@@ -31,7 +31,7 @@
 ***/
     isDebug : true,
     initComponent : function(component,event,helper) {
-        helper.isDebug = component.get("v.isDebug");
+        //helper.isDebug = component.get("v.isDebug");
         if (helper.isDebug) console.log('initComponent: START');
         //if (helper.isDebug) console.log('initComponent: isDebug', helper.isDebug);
         

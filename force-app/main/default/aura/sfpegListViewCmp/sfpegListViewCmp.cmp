@@ -26,6 +26,22 @@
     <aura:attribute name="objectApiName"    type="String"
                     access="global"
                     description="API Name of the record to be provided as input to the list query." />
+
+    <aura:attribute name="showSearch"       type="Boolean"
+                    access="global"         default="true"
+                    description="Flag to show Filter action in header." />
+    <aura:attribute name="showExport"       type="Boolean"
+                    access="global"         default="false"
+                    description="Flag to show Export action in header." />
+    <aura:attribute name="displayHeight"    type="String"
+                    access="global"         default="0"
+                    description="Display max height of the table (0 means no limit)." />
+    <aura:attribute name="buttonSize"       type="String"
+                    access="global"         default="small"
+                    description="Size of the standard header buttons." />
+    <aura:attribute name="contextString"    type="String"
+                    access="global"
+                    description="Context of the query (beta)." />
     <aura:attribute name="isDebug"      type="Boolean"
                     access="global"     default="false"
                     description="Activates debug mode." />
@@ -56,12 +72,14 @@
                                 variant="error">
             </c:sfpegWarningDsp>
         <aura:set attribute="else">
-            <c:sfpegListCmp cardTitle="{!v.title}"      cardIcon="{!v.icon}"
-                            configName="{!v.list}"      actionConfigName="{!v.actions}"
-                            showCount="right"           showSearch="true"
-                            showExport="false"
-                            isDebug="{!v.isDebug}"      isDebugFine="{!v.isDebug}"
-                            recordId="{!v.recordId}"    objectApiName="{!v.objectApiName}">
+            <c:sfpegListCmp cardTitle="{!v.title}"          cardIcon="{!v.icon}"
+                            configName="{!v.list}"          actionConfigName="{!v.actions}"
+                            contextString="{!v.contextString}" 
+                            showCount="right"               buttonSize="{!v.buttonSize}"
+                            displayHeight="{!v.displayHeight}"
+                            showSearch="{!v.showSearch}"    showExport="{!v.showExport}"
+                            isDebug="{!v.isDebug}"          isDebugFine="{!v.isDebug}"
+                            recordId="{!v.recordId}"        objectApiName="{!v.objectApiName}">
             </c:sfpegListCmp>
         </aura:set>
         </aura:if>
