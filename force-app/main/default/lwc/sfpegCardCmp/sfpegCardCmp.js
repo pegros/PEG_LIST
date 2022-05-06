@@ -261,14 +261,21 @@ export default class SfpegCardDsp extends LightningElement {
         if (data) {
             if (this.isDebug) console.log('wiredRecord: data fetch OK', JSON.stringify(data));
 
+            if (this.isDebug) console.log('wiredRecord: data fields ', JSON.stringify((data.fields)));
+            if (this.isDebug) console.log('wiredRecord: ID Field ', this.configDetails.target.recordIdField);
+            let formRecordId = ((data.fields)[this.configDetails.target.recordIdField])?.value;
+
             if (this.formRecordId) {
-                if (this.isDebug) console.log('wiredRecord: END / formRecordId already set', this.formRecordId);
+                if (this.formRecordId == formRecordId) {
+                    if (this.isDebug) console.log('wiredRecord: END / formRecordId already set ', this.formRecordId);
+                }
+                else {
+                    this.formRecordId = formRecordId;
+                    if (this.isDebug) console.log('wiredRecord: END / formRecordId updated ', this.formRecordId);
+                }
             }
             else {
-                if (this.isDebug) console.log('wiredRecord: data fields ', JSON.stringify((data.fields)));
-                if (this.isDebug) console.log('wiredRecord: ID Field ', this.configDetails.target.recordIdField);
-                this.formRecordId = ((data.fields)[this.configDetails.target.recordIdField])?.value;
-                //this.formRecordId = this.recordId;
+                this.formRecordId = formRecordId;
                 if (this.isDebug) console.log('wiredRecord: END / formRecordId set ', this.formRecordId);
             } 
             this.isReady = true;
