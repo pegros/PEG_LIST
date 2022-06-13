@@ -297,6 +297,11 @@ by most action types, i.e. those able to detect a successful completion (e.g. no
     }
 ```
 
+_Note_: For some actions (e.g. for **Apex** types), it is possible to trigger a specific action upon
+processing error, leveraging the `error` property similarly to the `next` one. In such a case, no 
+error toast is raised. This should be still considered a ***beta*** feature for very specific use
+cases (e.g. trigger a flow when an Apex validation logic fails vs update record status via LDS if OK).
+
 
 ---
 
