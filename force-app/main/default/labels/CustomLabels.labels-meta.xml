@@ -145,6 +145,14 @@
         <value>Close</value>
     </labels>
     <labels>
+        <fullName>sfpegPopupFormatsTitle</fullName>
+        <categories>PEG Component LWC Title</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegPopupFormatsTitle</shortDescription>
+        <value>Accepted File Formats</value>
+    </labels>
+    <labels>
         <fullName>sfpegActionDefaultCreateHeader</fullName>
         <categories>PEG Component LWC Default Action Header Header</categories>
         <language>en_US</language>
@@ -183,6 +191,14 @@
         <protected>false</protected>
         <shortDescription>sfpegActionDefaultPopupMessage</shortDescription>
         <value>Please fill/modify the following fields.</value>
+    </labels>
+    <labels>
+        <fullName>sfpegActionDefaultUploadPopupHeader</fullName>
+        <categories>PEG Component LWC Default Upload Action Message Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegActionDefaultUploadPopupHeader</shortDescription>
+        <value>File upload requested</value>
     </labels>
     <labels>
         <fullName>sfpegActionDefaultMassPopupHeader</fullName>

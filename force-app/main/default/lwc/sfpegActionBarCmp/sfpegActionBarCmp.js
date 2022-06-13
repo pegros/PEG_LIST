@@ -51,6 +51,7 @@ import DEFAULT_UPDATE_HEADER    from '@salesforce/label/c.sfpegActionDefaultUpda
 import DEFAULT_DELETE_HEADER    from '@salesforce/label/c.sfpegActionDefaultDeleteHeader';
 import DEFAULT_POPUP_HEADER     from '@salesforce/label/c.sfpegActionDefaultPopupHeader';
 import DEFAULT_POPUP_MESSAGE    from '@salesforce/label/c.sfpegActionDefaultPopupMessage';
+import DEFAULT_UPLOAD_POPUP_HEADER  from '@salesforce/label/c.sfpegActionDefaultUploadPopupHeader';
 import DEFAULT_MASS_POPUP_HEADER    from '@salesforce/label/c.sfpegActionDefaultMassPopupHeader';
 import DEFAULT_MASS_POPUP_MESSAGE   from '@salesforce/label/c.sfpegActionDefaultMassPopupMessage';
 import DEFAULT_CONFIRM_MESSAGE  from '@salesforce/label/c.sfpegActionDefaultConfirmMessage';
@@ -600,6 +601,10 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         if (this.isDebug) console.log('handleMenuSelect: END');
     }
 
+    //----------------------------------------------------------------
+    // Action Processing Utilities
+    //----------------------------------------------------------------
+
     // Main Action Processing Utility
     processAction = function(action,context) {
         // context is kept in the signature only for the "open" and "edit" action
@@ -666,8 +671,12 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                 if (this.isDebug) console.log('processAction: processing mass DML action');
                 this.triggerMassDML(action.params);
                 break;
+            case 'upload':
+                if (this.isDebug) console.log('processAction: processing file Upload action');
+                this.triggerFileUpload(action.params);
+                break;
             case 'reload':
-                if (this.isDebug) console.log('processAction: processing record LDSD reload action');
+                if (this.isDebug) console.log('processAction: processing record LDS reload action');
                 this.triggerReload(action.params);
                 break;
             case 'done':
@@ -841,9 +850,17 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             }
         }).catch( error => {
             this.displayMsg = JSON.stringify(error);
-            this.showError(error);
             popupUtil.stopSpinner();
-            console.warn('triggerLDS: END KO / Issue when processing operation ',JSON.stringify(error));
+            console.warn('triggerLDS: Issue when processing operation ',JSON.stringify(error));
+            if (operation.error) {
+                if (this.isDebug) console.log('triggerLDS: chained error action to trigger',JSON.stringify(operation.error));
+                this.processAction(operation.error, error);
+                if (this.isDebug) console.log('triggerLDS: END / chained error action triggered');
+            }
+            else {
+                this.showError(error);
+                if (this.isDebug) console.log('triggerLDS: END / error message displayed');
+            }
         });
         if (this.isDebug) console.log('triggerLDS: confirmation promise started');            
     }
@@ -891,9 +908,17 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         })
         .catch((error) => {
             this.displayMsg = JSON.stringify(error);
-            this.showError(error);
             popupUtil.stopSpinner();
-            if (this.isDebug) console.log('triggerDML: END / Issue when processing operation: ' , JSON.stringify(error));
+            console.warn('triggerDML: Issue when processing operation ',JSON.stringify(error));
+            if (operation.error) {
+                if (this.isDebug) console.log('triggerDML: chained error action to trigger',JSON.stringify(operation.error));
+                this.processAction(operation.error, error);
+                if (this.isDebug) console.log('triggerDML: END / chained error action triggered');
+            }
+            else {
+                this.showError(error);
+                if (this.isDebug) console.log('triggerDML: END / error message displayed');
+            }
         });
         if (this.isDebug) console.log('triggerDML: confirmation promise started');            
     }
@@ -935,7 +960,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         if (this.isDebug) console.log('triggerShowDetails: popupUtil fetched ', popupUtil);
 
         popupUtil.showRecordDetails(    recordDetails.title || DEFAULT_POPUP_HEADER, recordDetails.message,
-                                        recordDetails.fields , recordDetails.columns)
+                                        recordDetails.fields , recordDetails.columns, recordDetails.size)
         .then(() => {
             if (this.isDebug) console.log('triggerShowDetails: END - display closed');
             if (recordDetails.next) {
@@ -955,6 +980,40 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         if (this.isDebug) console.log('triggerShowDetails: popup displayed');
     }
 
+    triggerFileUpload = function(action) {
+        if (this.isDebug) console.log('triggerFileUpload: START with ',JSON.stringify(action));
+
+        if ((!action) || (!action.recordId)) {
+            console.warn('triggerFileUpload: END KO / Missing recordId property');
+            this.showError({message: 'Missing recordId property in fileUpload action!'});
+            throw "Missing recordId property in fileUpload action!";
+        }
+
+        let popupUtil = this.template.querySelector('c-sfpeg-popup-dsp');
+        if (this.isDebug) console.log('triggerFileUpload: popupUtil fetched ', popupUtil);
+
+        //title,message,uploadLabel, recordId, formats, allowMultiple, size
+        popupUtil.showFileUpload(   action.title || DEFAULT_UPLOAD_POPUP_HEADER, action.message,  action.label,
+                                    action.recordId , action.formats, action.allowMultiple, action.size)
+        .then(() => {
+            if (this.isDebug) console.log('triggerFileUpload: END - upload popup closed');
+            if (action.next) {
+                if (this.isDebug) console.log('triggerFileUpload: chained action to trigger',JSON.stringify(action.next));
+                this.processAction(action.next,null);
+                if (this.isDebug) console.log('triggerFileUpload: chained action triggered');
+            }
+            else {
+                if (this.isDebug) console.log('triggerFileUpload: no chained action to trigger');
+            }
+        })
+        .catch((error) => {
+            this.displayMsg = JSON.stringify(error);
+            this.showError(error);
+            if (this.isDebug) console.log('triggerFileUpload: END / Issue when processing operation: ' , JSON.stringify(error));
+        });
+        if (this.isDebug) console.log('triggerFileUpload: popup displayed');
+    }
+
     triggerLdsForm = function(formAction) {
         if (this.isDebug) console.log('triggerLdsForm: START with ',JSON.stringify(formAction));
 
@@ -968,7 +1027,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         if (this.isDebug) console.log('triggerLdsForm: popupUtil fetched ', popupUtil);
 
         popupUtil.showRecordForm(   formAction.title || DEFAULT_POPUP_HEADER, formAction.message || DEFAULT_POPUP_MESSAGE,
-                                    formAction.record , formAction.fields, formAction.columns, true)
+                                    formAction.record , formAction.fields, formAction.columns, true, formAction.size)
         .then(() => {
             if (this.isDebug) console.log('triggerLdsForm: END - create/edit done');
             if (formAction.next) {
@@ -982,8 +1041,16 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         })
         .catch((error) => {
             this.displayMsg = JSON.stringify(error);
-            this.showError(error);
-            if (this.isDebug) console.log('triggerLdsForm: END / Issue when processing operation: ' , JSON.stringify(error));
+            console.warn('triggerLdsForm: Issue when processing operation ',JSON.stringify(error));
+            if (formAction.error) {
+                if (this.isDebug) console.log('triggerLdsForm: chained error action to trigger',JSON.stringify(formAction.error));
+                this.processAction(formAction.error, error);
+                if (this.isDebug) console.log('triggerLdsForm: END / chained error action triggered');
+            }
+            else {
+                this.showError(error);
+                if (this.isDebug) console.log('triggerLdsForm: END / error message displayed');
+            }
         });
         if (this.isDebug) console.log('triggerLdsForm: popup displayed');
     }
@@ -1001,7 +1068,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         if (this.isDebug) console.log('triggerDmlForm: popupUtil fetched ', popupUtil);
 
         popupUtil.showRecordForm(   formAction.title || DEFAULT_POPUP_HEADER, formAction.message || DEFAULT_POPUP_MESSAGE,
-                                    formAction.formRecord, formAction.formFields, formAction.columns, false)
+                                    formAction.formRecord, formAction.formFields, formAction.columns, false, formAction.size)
         .then((userInput) => {
             if (this.isDebug) console.log('triggerDmlForm: user input received',JSON.stringify(userInput));
             
@@ -1047,8 +1114,16 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         })
         .catch((error) => {
             this.displayMsg = JSON.stringify(error);
-            this.showError(error);
-            console.warn('triggerDmlForm: END - Issue when processing operation: ' , JSON.stringify(error));
+            console.warn('triggerDmlForm: Issue when processing operation ',JSON.stringify(error));
+            if (formAction.error) {
+                if (this.isDebug) console.log('triggerDmlForm: chained error action to trigger',JSON.stringify(formAction.error));
+                this.processAction(formAction.error, error);
+                if (this.isDebug) console.log('triggerDmlForm: END / chained error action triggered');
+            }
+            else {
+                this.showError(error);
+                if (this.isDebug) console.log('triggerDmlForm: END / error message displayed');
+            }
         });
         if (this.isDebug) console.log('triggerDmlForm: popup displayed');
     }
@@ -1063,7 +1138,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             if (this.isDebug) console.log('triggerMassForm: popupUtil fetched ', popupUtil);
 
             popupUtil.showRecordForm(   (formAction.title || DEFAULT_MASS_POPUP_HEADER) + ' (' + this._recordList.length + ')', formAction.message || DEFAULT_MASS_POPUP_MESSAGE,
-                                        formAction.record , formAction.fields, formAction.columns, false)
+                                        formAction.record , formAction.fields, formAction.columns, false, formAction.size)
             .then((record) => {
                 if (this.isDebug) console.log('triggerMassForm: END - user input done', JSON.stringify(record));
 
@@ -1095,9 +1170,19 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                 else {
                     if (this.isDebug) console.log('triggerMassForm: END / no chained action to trigger');
                 }
-            }).catch((message) => {
-                console.warn('triggerMassForm: END KO / execution error: ' , message);
+            }).catch((error) => {
+                this.displayMsg = JSON.stringify(error);
                 popupUtil.stopSpinner();
+                console.warn('triggerMassForm: Issue when processing operation ',JSON.stringify(error));
+                if (formAction.error) {
+                    if (this.isDebug) console.log('triggerMassForm: chained error action to trigger',JSON.stringify(formAction.error));
+                    this.processAction(formAction.error, error);
+                    if (this.isDebug) console.log('triggerMassForm: END / chained error action triggered');
+                }
+                else {
+                    this.showError(error);
+                    if (this.isDebug) console.log('triggerMassForm: END / error message displayed');
+                }
             });
             if (this.isDebug) console.log('triggerMassForm: form popup displayed');
         }
@@ -1181,9 +1266,17 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                 }
             }).catch((error) => {
                 this.displayMsg = JSON.stringify(error);
-                this.showError(error);
                 popupUtil.stopSpinner();
-                console.warn('triggerMassDML: END KO / execution error: ' , JSON.stringify(error));
+                console.warn('triggerMassDML: Issue when processing operation ',JSON.stringify(error));
+                if (dmlAction.error) {
+                    if (this.isDebug) console.log('triggerMassDML: chained error action to trigger',JSON.stringify(dmlAction.error));
+                    this.processAction(dmlAction.error, error);
+                    if (this.isDebug) console.log('triggerMassDML: END / chained error action triggered');
+                }
+                else {
+                    this.showError(error);
+                    if (this.isDebug) console.log('triggerMassDML: END / error message displayed');
+                }
             });
             if (this.isDebug) console.log('triggerMassDML: confirmation popup displayed');
         }
@@ -1250,14 +1343,17 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         })
         .catch((error) => {
             this.displayMsg = JSON.stringify(error);
-            this.showError(error);
             popupUtil.stopSpinner();
-            console.warn('triggerApex: END KO / execution error: ' , JSON.stringify(error));
-            /*this.triggerToast({
-                title : apexAction.label || DEFAULT_APEX_HEADER,
-                message: error.body.message,
-                variant: 'error'
-            }, null);*/
+            console.warn('triggerApex: Issue when processing operation ',JSON.stringify(error));
+            if (apexAction.error) {
+                if (this.isDebug) console.log('triggerApex: chained error action to trigger',JSON.stringify(apexAction.error));
+                this.processAction(apexAction.error, error);
+                if (this.isDebug) console.log('triggerApex: END / chained error action triggered');
+            }
+            else {
+                this.showError(error);
+                if (this.isDebug) console.log('triggerApex: END / error message displayed');
+            }
         });
         if (this.isDebug) console.log('triggerApex: confirmation popup displayed');
     }

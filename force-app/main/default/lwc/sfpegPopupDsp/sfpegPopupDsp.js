@@ -36,6 +36,7 @@ import SAVE_LABEL       from '@salesforce/label/c.sfpegPopupSave';
 import SAVE_NEW_LABEL   from '@salesforce/label/c.sfpegPopupSaveNew';
 import CANCEL_LABEL     from '@salesforce/label/c.sfpegPopupCancel';
 import CLOSE_LABEL      from '@salesforce/label/c.sfpegPopupClose';
+import FORMATS_TITLE    from '@salesforce/label/c.sfpegPopupFormatsTitle';
 
 
 export default class SfpegPopupDsp extends LightningElement {
@@ -47,7 +48,8 @@ export default class SfpegPopupDsp extends LightningElement {
     @track showPopup = false;           // Main flag controlling the display of the popup
     @track popupTitle = '';             // Popup display title
     @track popupMessage = '';           // Popup display message
-    
+    popupSize;                          // Popup display size : null (standard), small, medium or large
+
     // Spinner & Confirmation mode parameters
     @track showSpinner = false;         // Flag controlling the display of the popup spinner
     @track showConfirmation = false;    // Flag to toggle confirmation mode display
@@ -67,6 +69,13 @@ export default class SfpegPopupDsp extends LightningElement {
     @track recordData = null;           // Record Data to display
     @track detailFieldClass;            // CSS to apply to each field display (to control the number of columns)
 
+    // File Upload parameters
+    @track showUpload = false;          // Flag to toggle File Upload mode display
+    @track recordId;                    // Id of the record to which files should be related
+    @track uploadLabel;                 // Label displayed within the file upload widget
+    @track fileFormats = [];            // List of file extensions allowed for upload.
+    @track allowMultiple = false;       // Flag to allow multiple simultaneous uploads
+
     // Promise handling
     _resolve = null;
     _reject =  null;
@@ -77,13 +86,17 @@ export default class SfpegPopupDsp extends LightningElement {
     saveNewLabel = SAVE_NEW_LABEL;
     cancelLabel = CANCEL_LABEL;
     closeLabel = CLOSE_LABEL;
+    formatsTitle = FORMATS_TITLE;
 
     //Custom getters
+    get popupClass() {
+        return "slds-modal slds-fade-in-open slds-modal_" + this.popupSize;
+    }
     get showClose() {
-        return (this.showConfirmation || this.showDetails);
+        return (this.showConfirmation || this.showDetails || this.showUpload);
     }
     get showFooter() {
-        return this.showConfirmation || this.showForm || this.showDetails;
+        return this.showConfirmation || this.showForm || this.showDetails || this.showUpload;
     }
     
 
@@ -111,17 +124,18 @@ export default class SfpegPopupDsp extends LightningElement {
     //###########################################################
     // Record Details popup display
     //###########################################################
-    @api showRecordDetails(title,message,fields,columns) {
+    @api showRecordDetails(title,message,fields,columns,size) {
         if (this.isDebug) console.log('showRecordDetails: START with ',title);
         if (this.isDebug) console.log('showRecordDetails: message provided ',message);
         if (this.isDebug) console.log('showRecordDetails: fields provided ',JSON.stringify(fields));
         if (this.isDebug) console.log('showRecordDetails: columns provided ',columns);
-        if (this.isDebug) console.log('showRecordDetails: END');
+        if (this.isDebug) console.log('showRecordDetails: size provided ',size);
 
         this.showPopup = true;
         this.showDetails = true;
         this.popupTitle = title;
         this.popupMessage = message;
+        this.popupSize = size;
         this.recordData = fields;
 
         this.detailFieldClass = "slds-col slds-form-element slds-size_1-of-" + (columns || 1) +  " slds-form-element_stacked formField" ;
@@ -136,6 +150,64 @@ export default class SfpegPopupDsp extends LightningElement {
         });
     }
 
+
+    //###########################################################
+    // File Upload popup display
+    //###########################################################
+    @api showFileUpload(title,message,uploadLabel, recordId, formats, allowMultiple, size) {
+        if (this.isDebug) console.log('showFileUpload: START with ',title);
+        if (this.isDebug) console.log('showFileUpload: message provided ',message);
+        if (this.isDebug) console.log('showFileUpload: uploadLabel provided ',uploadLabel);
+        if (this.isDebug) console.log('showFileUpload: recordId provided ',recordId);
+        if (this.isDebug) console.log('showFileUpload: formats provided ',JSON.stringify(formats));
+        if (this.isDebug) console.log('showFileUpload: allowMultiple provided ',allowMultiple);
+        if (this.isDebug) console.log('showFileUpload: size provided ',size);
+
+        this.showPopup = true;
+        this.showUpload = true;
+        this.popupTitle = title;
+        this.popupMessage = message;
+        this.popupSize = size;
+        this.uploadLabel = uploadLabel;
+        this.recordId = recordId;
+        this.allowMultiple = allowMultiple;
+        //this.fileFormats = formats || ['.jpg', '.png', '.jpeg', '.pdf'];
+        this.fileFormats = formats;
+        if (this.isDebug) console.log('showFileUpload: formats init ',JSON.stringify(this.fileFormats));
+
+        if (this.isDebug) console.log('showFileUpload: END');
+        return new Promise( (resolve,reject) => {
+            if (this.isDebug) console.log('showFileUpload: promise START');
+            this._resolve = resolve;
+            this._reject = reject;
+            if (this.isDebug) console.log('showFileUpload: promise END');
+        });
+    }
+
+    handleUploadStart(event) {
+        if (this.isDebug) console.log('handleUploadStart: START');
+        //this.showSpinner = true;
+        if (this.isDebug) console.log('handleUploadStart: END');
+    }
+
+    handleUploadFinished(event) {
+        if (this.isDebug) console.log('handleUploadFinished: START');
+        if (this._resolve) {
+            if (this.isDebug) console.log('handleUploadFinished: END - calling promise handler');
+            this._resolve();
+        }
+        else {
+            if (this._reject) { 
+                console.warn('handleConfirm: END - no promise resolve handler available');
+                this._reject({message:'Missing promise resolve handler'});
+            }
+            else {
+                console.warn('handleConfirm: END - no promise resolve nor reject handlers available');
+            }
+        }
+        this.resetCmp();
+    }
+    
 
     //###########################################################
     // Asynchronous Confimation popup display
@@ -212,10 +284,11 @@ export default class SfpegPopupDsp extends LightningElement {
     //###########################################################
     // Asynchronous Edit / Create popup display (depends on presence of ID on record)
     //###########################################################
-    @api showRecordForm(title,message,record,fields,columns,doSubmit,showSaveNew) {
+    @api showRecordForm(title,message,record,fields,columns,doSubmit,size,showSaveNew) {
         if (this.isDebug) console.log('showRecordForm: START with submit? ',doSubmit);
         this.showPopup = true;
         this.doSubmit = doSubmit;
+        this.popupSize = size;
 
         if (this.isDebug) console.log('showRecordForm: record provided ',JSON.stringify(record));
         if (record.Id) {
@@ -446,9 +519,11 @@ export default class SfpegPopupDsp extends LightningElement {
         this.showSpinner = false;
         this.showConfirmation = false;
         this.showForm = false;
+        this.showUpload = false;
         this.doSubmit = false;
         this.popupTitle = '';
         this.popupMessage = '';
+        this.popupSize = null;
         this.formFieldSize = 12;
         this.showDetails = false;
         this.detailConfig = null;

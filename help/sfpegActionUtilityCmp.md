@@ -104,7 +104,7 @@ once the flow completes, leveraging a `notify` action type within a `next` prope
                 "name":"TEST_TST_Flow",
                 "params":[{"name" : "recordId", "type" : "String", "value" : "{{{ROW.Id}}}"}],
                 "header":"Test Flow Header",
-                "doRefresh":true,
+                "doRefresh":false,
                 "class": "slds-modal slds-fade-in-open slds-slide-down-cancel slds-modal_large",
                 "next": {
                     "type": "notify",

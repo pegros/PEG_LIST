@@ -35,8 +35,8 @@
             </div>
 
             <!-- Card Header Actions -->
-            <lightning-button-group slot="actions">
-                <c-sfpeg-action-bar-cmp bar-class= ""
+            <lightning-button-group slot="actions" >
+                <c-sfpeg-action-bar-cmp bar-class=""
                                         config-name={actionConfigName}
                                         object-api-name={objectApiName}
                                         record-id={recordId}
@@ -46,8 +46,9 @@
             </lightning-button-group>
 
             <!-- Card Mode Control -->
+            <!-- style="position:relative;top:-1px;" -->
             <template if:false={isReadOnly}>
-                <lightning-button-group slot="actions">
+                <lightning-button-group slot="actions" style="position:relative;top:-1px;">
                     <lightning-button-icon
                         variant={editIconVariant}
                         icon-name={editIconName}

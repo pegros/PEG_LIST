@@ -7,12 +7,12 @@
     left: -1rem;
 }
 .popupContainer {
-    width: 50vw;
+    /*width: 50vw;*/
     height: 100vh;
-    position: fixed;
+    /*position: fixed;
     bottom: 0px;
     top: unset;
-    left: 25vw;
+    left: 25vw;*/
 }
 .popupForm {
     min-height: 33vh !important; /* to handle picklist fields expanding below the footer ! */

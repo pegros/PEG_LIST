@@ -146,6 +146,9 @@ export default class SfpegListCmp extends LightningElement {
     searchLabel = SEARCH_LABEL;
     loadMoreLabel = LOAD_MORE_LABEL;
 
+    //Rendering optimisation (Summer22)
+    renderConfig = {virtualize: 'vertical'};
+
     //----------------------------------------------------------------
     // Custom UI Display getters
     //----------------------------------------------------------------
@@ -206,6 +209,9 @@ export default class SfpegListCmp extends LightningElement {
     }
     get contentStyle() {
         if ((this.isCollapsible) && (this.isCollapsed)) {
+            return '';
+        }
+        else if ((this.resultList || []).length == 0) {
             return '';
         }
         //return (((this.displayHeight) &&  (this.displayHeight !== '0')) ? 'height: ' + this.displayHeight + ';' : 'height:100%;');
@@ -446,7 +452,7 @@ export default class SfpegListCmp extends LightningElement {
     wiredUser({ error, data }) {
         if (this.isDebug) console.log('wiredUser: START with ID ', this.userId);
         if (this.isDebug) console.log('wiredUser: userFields fetched ',JSON.stringify(this.userFields));
-        if (this.isDebug) console.log('wiredRecord: tokens fetched ',JSON.stringify(this.configDetails.input.tokens.USR));
+        if (this.isDebug) console.log('wiredUser: tokens fetched ',JSON.stringify(this.configDetails.input.tokens.USR));
 
         if (data) {
             if (this.isDebug) console.log('wiredUser: data fetch OK', JSON.stringify(data));

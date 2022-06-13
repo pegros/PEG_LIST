@@ -33,8 +33,7 @@
                                     <template if:false={it.value.items}>
                                         <template if:true={it.value.label}>
                                             <template if:true={it.value.disabled}>
-                                                <lightning-button   key={it.value.name}
-                                                                    label={it.value.label}
+                                                <lightning-button   label={it.value.label}
                                                                     variant={it.value.variant}
                                                                     name={it.value.name}
                                                                     title={it.value.title}
@@ -44,8 +43,7 @@
                                                 </lightning-button>
                                             </template>
                                             <template if:false={it.value.disabled}>
-                                                <lightning-button   key={it.value.name}
-                                                                    label={it.value.label}
+                                                <lightning-button   label={it.value.label}
                                                                     variant={it.value.variant}
                                                                     name={it.value.name}
                                                                     title={it.value.title}
@@ -58,8 +56,7 @@
                                         </template>
                                         <template if:false={it.value.label}>
                                             <template if:true={it.value.disabled}>
-                                                <lightning-button-icon  key={it.value.name}
-                                                                        size={it.value.iconSize}
+                                                <lightning-button-icon  size={it.value.iconSize}
                                                                         variant={it.value.variant}
                                                                         name={it.value.name}
                                                                         title={it.value.title}
@@ -69,8 +66,7 @@
                                                 </lightning-button-icon>
                                             </template>
                                             <template if:false={it.value.disabled}>
-                                                <lightning-button-icon  key={it.value.name}
-                                                                        size={it.value.iconSize}
+                                                <lightning-button-icon  size={it.value.iconSize}
                                                                         variant={it.value.variant}
                                                                         name={it.value.name}
                                                                         title={it.value.title}
@@ -87,8 +83,7 @@
                                     <template if:true={it.value.items}>
                                         <template if:true={it.value.disabled}>
                                             <template if:true={it.value.iconName}>
-                                                <lightning-button-menu  key={it.value.name}
-                                                                        icon-size={it.value.iconSize}
+                                                <lightning-button-menu  icon-size={it.value.iconSize}
                                                                         icon-name={it.value.iconName}
                                                                         variant={it.value.variant}
                                                                         label={it.value.label}
@@ -96,8 +91,7 @@
                                                 </lightning-button-menu>
                                             </template>
                                             <template if:false={it.value.iconName}>
-                                                <lightning-button-menu  key={it.value.name}
-                                                                        variant={it.value.variant}
+                                                <lightning-button-menu  variant={it.value.variant}
                                                                         label={it.value.label}
                                                                         disabled >
                                                 </lightning-button-menu>
@@ -105,8 +99,7 @@
                                         </template>
                                         <template if:false={it.value.disabled}>
                                             <template if:true={it.value.iconName}>
-                                                <lightning-button-menu  key={it.value.name}
-                                                                        menu-alignment={it.value.align}
+                                                <lightning-button-menu  menu-alignment={it.value.align}
                                                                         icon-size={it.value.iconSize}
                                                                         icon-name={it.value.iconName}
                                                                         variant={it.value.variant}
@@ -133,8 +126,7 @@
                                                 </lightning-button-menu>
                                             </template>
                                             <template if:false={it.value.iconName}>
-                                                <lightning-button-menu  key={it.value.name}
-                                                                        menu-alignment={it.value.align}
+                                                <lightning-button-menu  menu-alignment={it.value.align}
                                                                         icon-name={it.value.iconName}
                                                                         variant={it.value.variant}
                                                                         label={it.value.label}

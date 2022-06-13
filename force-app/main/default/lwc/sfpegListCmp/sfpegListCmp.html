@@ -137,10 +137,15 @@
             <template if:true={isDebug}>
                 <div slot="footer" class="footerContent"  >
                     <dl class="slds-dl_horizontal">
-                        <dt class="slds-dl_horizontal__label slds-truncate">Configuration:</dt>
-                        <dd class="slds-dl_horizontal__detail">Query: {configName} / Header Actions: {actionConfigName}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Configuration</dt>
+                        <dd class="slds-dl_horizontal__detail">Query: {configName}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Actions</dt>
+                        <dd class="slds-dl_horizontal__detail">Header: {actionConfigName}</dd>
+                        
                         <dt class="slds-dl_horizontal__label slds-truncate">Loaded?</dt>
                         <dd class="slds-dl_horizontal__detail">{hasConfig}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Context</dt>
+                        <dd class="slds-dl_horizontal__detail">{contextString}</dd>
                         <dt class="slds-dl_horizontal__label slds-truncate">Display Type</dt>
                         <dd class="slds-dl_horizontal__detail">{displayType}</dd>
                         <dt class="slds-dl_horizontal__label slds-truncate">User</dt>
@@ -152,10 +157,10 @@
                         <dt class="slds-dl_horizontal__label slds-truncate">Form Factor</dt>
                         <dd class="slds-dl_horizontal__detail">{formfactor}  </dd>
                         <template if:true={hasConfig}>
-                        <dt class="slds-dl_horizontal__label slds-truncate">Key / Order Field</dt>
-                        <dd class="slds-dl_horizontal__detail">{configDetails.display.keyField} / {configDetails.query.orderByField} </dd>
-                        <dt class="slds-dl_horizontal__label slds-truncate">Row Actions</dt>
-                        <dd class="slds-dl_horizontal__detail">{configDetails.rowActions}</dd>
+                            <dt class="slds-dl_horizontal__label slds-truncate">Key / Order Field</dt>
+                            <dd class="slds-dl_horizontal__detail">{configDetails.display.keyField} / {configDetails.query.orderByField} </dd>
+                            <dt class="slds-dl_horizontal__label slds-truncate">Actions</dt>
+                            <dd class="slds-dl_horizontal__detail">Row: {configDetails.rowActions}</dd>
                         </template>
                         <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
                         <dd class="slds-dl_horizontal__detail">
@@ -197,9 +202,10 @@
                                     sorted-by={sortedBy}
                                     onsort={handleSort} 
                                     onrowaction={handleRowAction}
-                                    onrowselection={handleRowSelection} >
+                                    onrowselection={handleRowSelection}
+                                    render-config={renderConfig}>
                             </lightning-datatable>
-                        <!--</div>-->
+                        <!-- render-mode="role-based" render-config={renderConfig} </div>-->
                         </template>
 
                         <!-- Tree Grid mode data display -->
@@ -218,9 +224,10 @@
                                     sorted-by={sortedBy}
                                     onsort={handleSort} 
                                     onrowaction={handleRowAction} 
-                                    onrowselection={handleRowSelection} >
+                                    onrowselection={handleRowSelection} 
+                                    render-config={renderConfig} >
                             </lightning-tree-grid>
-                        <!--</div>-->
+                        <!--  render-mode="role-based" render-config={renderConfig} </div>-->
                         </template>
 
                         <!-- List mode data display -->

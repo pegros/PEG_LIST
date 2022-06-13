@@ -6,7 +6,7 @@
                 tabindex="-1" data-aura-rendered-by="3230:0" style="opacity: 0.8;">
         </div>
         <!-- Popup Display -->
-        <section    role="dialog"   class="slds-modal slds-fade-in-open">
+        <section    role="dialog"   class={popupClass}>
             <div class="slds-modal__container popupContainer"  >
 
                 <!-- Header display-->
@@ -93,6 +93,42 @@
                             </template>
                         </div>
                     </template>
+
+                    <!-- File Upload Display -->
+                    <template if:true={showUpload}>
+                        <template if:true={allowMultiple}>
+                            <lightning-file-upload  label={uploadLabel}
+                                                    class="slds-align_absolute-center"
+                                                    accept={fileFormats}
+                                                    record-id={recordId}
+                                                    multiple
+                                                    onuploadfinished={handleUploadFinished}
+                                                    onclick={handleUploadStart} >
+                            </lightning-file-upload>
+                        </template>
+                        <template if:false={allowMultiple}>
+                            <lightning-file-upload  label={uploadLabel}
+                                                    class="slds-align_absolute-center"
+                                                    accept={fileFormats}
+                                                    record-id={recordId}
+                                                    onuploadfinished={handleUploadFinished}
+                                                    onclick={handleUploadStart} >
+                            </lightning-file-upload>
+                        </template>
+                        <template if:true={fileFormats}>
+                            <div class="slds-p-top_small slds-align_absolute-center">
+                                <p class="slds-text-title slds-m-right_x-small">{formatsTitle}</p>
+                                <div class="slds-grid slds-wrap">
+                                <template for:each={fileFormats} for:item="eachItem">
+                                    <lightning-badge    label={eachItem}
+                                                        key={eachItem}
+                                                        class="slds-badge_inverse slds-m-vertical_xx-small">
+                                    </lightning-badge>
+                                </template>
+                                </div>
+                            </div>
+                        </template>
+                    </template>
                 </div>
 
                 <!-- Footer display-->
@@ -122,6 +158,11 @@
                         </template>
                         <!-- Detail Close Buttons-->
                         <template if:true={showDetails}>
+                            <lightning-button   variant="neutral"   label={closeLabel}
+                                                onclick={handleClose} ></lightning-button>
+                        </template>
+                        <!-- Detail Close Buttons-->
+                        <template if:true={showUpload}>
                             <lightning-button   variant="neutral"   label={closeLabel}
                                                 onclick={handleClose} ></lightning-button>
                         </template>

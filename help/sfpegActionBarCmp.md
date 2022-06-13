@@ -576,8 +576,7 @@ base component (updates being then made via LDS)
     * In the example below, a *TST_TaskProxy__c* custom object has been created with a single *Reason__c* field leveraging the same API name & picklist global value set as the *Reason__c* field configured on the Task object (as the *Task* object is not supportyedd by the LDS).
 ```
 {
-    "name": "close",
-    "label": "Close",
+    "name": "close", "label": "Close",
     "action": {
         "type": "dmlForm",
         "params": {
@@ -595,6 +594,32 @@ base component (updates being then made via LDS)
 }
 ```
 
+* **upload** : enables to upload one or multiple files as related to a record (useful to upload files
+for records displayed in a list or display an upload action on a custom file list), leveraging the standard
+**[lightning-file-upload](https://developer.salesforce.com/docs/component-library/bundle/lightning-file-upload/documentation)** component in a popup.
+Various properties are available to customise the experience:
+    * `title`, main `message` and `size` (`standard`, `small`, `medium` or `large`) of the popup
+    * `label` displayed in the upload component (above the buttons)
+    * `recordId` providing the Salesforce ID of the record to which the uploaded files should be related
+    * `formats` of the files allowed (as a JSON array of file extensions, e.g. `['.pdf','.gif']`)
+    * `allowMultiple` to be set to `true` to be able to load more than one file (`false` by default).
+```
+{
+    "name": "file",
+    "label": "File",
+    "iconName": "utility:upload",
+    "action": {
+        "type": "upload",
+        "params": {
+            "title": "Upload PDF files",
+            "label": "Multiple files possible",
+            "recordId": "{{{GEN.recordId}}}",
+            "formats": [".pdf"],
+            "allowMultiple": true
+        }
+    }
+}
+```
 
 * **apexForm** : PLANNED
     * Same behaviour as the ldsForm but with the ability to fetch/update data via Apex calls
