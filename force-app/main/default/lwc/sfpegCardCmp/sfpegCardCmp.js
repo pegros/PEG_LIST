@@ -39,6 +39,7 @@ import updateRecord     from '@salesforce/apex/sfpegCard_CTL.updateRecord';
 import currentUserId    from '@salesforce/user/Id';
 import { getRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
 import SAVE_LABEL       from '@salesforce/label/c.sfpegCardSave';
+import FORCE_SAVE_LABEL from '@salesforce/label/c.sfpegCardForceSave';
 import CANCEL_LABEL     from '@salesforce/label/c.sfpegCardCancel';
 import SAVE_ERROR       from '@salesforce/label/c.sfpegCardSaveError';
 import MODE_TOGGLE      from '@salesforce/label/c.sfpegCardModeToggle';
@@ -76,6 +77,7 @@ export default class SfpegCardDsp extends LightningElement {
     //Button Labels from custom labels
     cancelLabel = CANCEL_LABEL;
     saveLabel = SAVE_LABEL;
+    forceSaveLabel = FORCE_SAVE_LABEL;
     modeToggleTitle = MODE_TOGGLE;
 
     //----------------------------------------------------------------
@@ -87,6 +89,7 @@ export default class SfpegCardDsp extends LightningElement {
     @track isEditMode = false;      // Current Edit/Read mode
     @track errorMsg = null;         // Error message (if any for end user display)
     @track errorObj = null;         // Error object (if any for end user display)
+    @track showForceSave = false;   // Flag to display a "force save" button instead of the standard one in case of duplicate rule error.
 
     //----------------------------------------------------------------
     // Context Data
@@ -369,7 +372,7 @@ export default class SfpegCardDsp extends LightningElement {
             });
             if (this.isDebug) console.log('handleFormSubmit: recordData init ', JSON.stringify(recordData));
 
-            updateRecord({record: recordData})
+            updateRecord({record: recordData, bypassSharingRules : true, bypassDuplicateRules: false})
             .then( () => {
                 if (this.isDebug) console.log('handleFormSubmit: END / DML update executed');
                 getRecordNotifyChange([{recordId: this.recordId}]);
@@ -392,10 +395,57 @@ export default class SfpegCardDsp extends LightningElement {
         }
     }
 
+    //@TODO : merge logic with standard save
+    handleFormForceSubmit(event) {
+        if (this.isDebug) console.log('handleFormForceSubmit: START ',event);
+
+        event.preventDefault();
+        this.isUpdating = true;
+
+        let recordData = { ObjectApiName: this.objectApiName, Id:this.recordId };
+        let inputFields = this.template.querySelectorAll('lightning-input-field');
+        inputFields.forEach(item => {
+            if (this.isDebug) console.log('handleFormForceSubmit: processing field ', item.fieldName);
+            if (this.isDebug) console.log('handleFormForceSubmit: with value ', JSON.stringify(item.value));
+            if ((item.value) &&  (typeof (item.value) === 'object')) {
+                (Object.keys(item.value)).forEach(subItem => {
+                    if (this.isDebug) console.log('handleFormForceSubmit: processing subItem ', subItem);
+                    if (this.isDebug) console.log('handleFormForceSubmit: with value ', (item.value)[subItem]);
+                    recordData[subItem] = (item.value)[subItem];
+                });
+            } 
+            else {
+                recordData[item.fieldName] = item.value;
+            }
+        });
+        if (this.isDebug) console.log('handleFormSubmit: recordData init ', JSON.stringify(recordData));
+
+        updateRecord({record: recordData, bypassSharingRules : false, bypassDuplicateRules : true})
+        .then( () => {
+            if (this.isDebug) console.log('handleFormSubmit: END / DML update executed');
+            getRecordNotifyChange([{recordId: this.recordId}]);
+            this.errorMsg = null;
+            this.errorObj = null;
+            this.isUpdating = false;
+            this.isEditMode = false;
+            this.showForceSave = false;
+        })
+        .catch( error => {
+            console.warn('handleFormSubmit: END / record update error ', JSON.stringify(error));
+            this.errorMsg = SAVE_ERROR;
+            this.errorObj = error;
+            this.isUpdating = false;
+            this.showForceSave = false;
+            //this.errorMsg = 'DML update error: ' + JSON.stringify(error);
+        });
+        if (this.isDebug) console.log('handleFormSubmit: request sent');
+    }
+
     handleFormLoad(event) {
         if (this.isDebug) console.log('handleFormLoad: START ');
         if (this.isDebug) console.log('handleFormLoad: event received ', event);
         if (this.isDebug) console.log('handleFormLoad: event detail received ', JSON.stringify(event.detail));
+        //this.showForceSave = false;
 
         if (!this.formRecordTypeId) {
             let rtID = (event.detail.records)[this.formRecordId].recordTypeId;
@@ -417,11 +467,35 @@ export default class SfpegCardDsp extends LightningElement {
     handleFormSuccess(event) {
         if (this.isDebug) console.log('handleFormSuccess: START ');
         this.isEditMode = false;
+        //this.showForceSave = false;
         if (this.isDebug) console.log('handleFormSuccess: END / edit mode reset to ',this.isEditMode);
     }
  
     handleFormError(event) {
-        if (this.isDebug) console.log('handleFormError: START ',error);
+        if (this.isDebug) console.log('handleFormError: START ');
+        if (this.isDebug) console.log('handleFormError: event details ',JSON.stringify(event.detail));
+        let errors = event.detail?.output?.errors;
+        if (this.isDebug) console.log('handleFormError: #errors raised ',JSON.stringify(errors));
+
+        this.showForceSave = false;
+        let duplicateError = false;
+        let otherError = false;
+        if (errors) {
+            errors.forEach(item => {
+                if (this.isDebug) console.log('handleFormError: processing error ',JSON.stringify(item));
+                if (item.errorCode === "DUPLICATES_DETECTED") {
+                    if (this.isDebug) console.log('handleFormError: duplicate error found');
+                    duplicateError = true;
+                }
+                else {
+                    if (this.isDebug) console.log('handleFormError: other error found');
+                    otherError = true;
+                }
+            });
+        }
+        this.showForceSave = duplicateError && (!otherError);
+        if (this.isDebug) console.log('handleFormError: showForceSave updated ', this.showForceSave);
+
         if (this.isDebug) console.log('handleFormError: END');
     }
 

@@ -265,6 +265,14 @@
         <value>Save</value>
     </labels>
     <labels>
+        <fullName>sfpegCardForceSave</fullName>
+        <categories>PEG Component LWC Form Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegCardForceSave</shortDescription>
+        <value>Save (bypass Duplicates)</value>
+    </labels>
+    <labels>
         <fullName>sfpegCardCancel</fullName>
         <categories>PEG Component LWC Form Button Label</categories>
         <language>en_US</language>

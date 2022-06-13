@@ -255,8 +255,14 @@
                                     <lightning-button variant="neutral"  label={cancelLabel} onclick={handleModeToggle}>
                                     </lightning-button>
                                     <!-- onclick={handleFormSubmit} -->
-                                    <lightning-button variant="brand" type="submit" label={saveLabel} >
-                                    </lightning-button>
+                                    <template if:false={showForceSave}>
+                                        <lightning-button variant="brand" type="submit" label={saveLabel} >
+                                        </lightning-button>
+                                    </template>
+                                    <template if:true={showForceSave}>
+                                        <lightning-button variant="brand" label={forceSaveLabel} onclick={handleFormForceSubmit} >
+                                        </lightning-button>
+                                    </template>
                                 </lightning-button-group>
                             </div>
                         </lightning-record-edit-form>

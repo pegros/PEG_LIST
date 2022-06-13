@@ -117,7 +117,10 @@ public class  sfpegCard_TST {
     
         Test.startTest();
         testRcd.Name = 'TEST UPD';
-        sfpegCard_CTL.updateRecord(testRcd);
+        sfpegCard_CTL.updateRecord(testRcd, false, false);
+        sfpegCard_CTL.updateRecord(testRcd, true, false);
+        sfpegCard_CTL.updateRecord(testRcd, false, true);
+        sfpegCard_CTL.updateRecord(testRcd, true, true);
         Test.stopTest();
 
         System.debug('testUpdateRecord: END');

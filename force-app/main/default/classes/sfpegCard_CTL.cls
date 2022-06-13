@@ -73,12 +73,25 @@ public with sharing class sfpegCard_CTL {
     * @exception   None special.
     ***/
     @AuraEnabled
-    public static void updateRecord(SObject record) {
+    public static void updateRecord(SObject record, Boolean bypassSharingRules, Boolean bypassDuplicateRules) {
         System.debug('updateRecord: START with record ' + record);
+        System.debug('updateRecord: bypass Sharing Rules? ' + bypassSharingRules);
+        System.debug('updateRecord: bypass Duplicate Rules? ' + bypassDuplicateRules);
         
-        sfpegBypassSharingCard_CTL subHandler = new sfpegBypassSharingCard_CTL();
-        Database.SaveResult result = subHandler.updateRecord(record);
-
+        Database.SaveResult result = null;
+        if (bypassSharingRules) {
+            System.debug('updateRecord: bypassing Sharing rules');
+            sfpegBypassSharingCard_CTL subHandler = new sfpegBypassSharingCard_CTL();
+            result = subHandler.updateRecord(record, bypassDuplicateRules);
+        }
+        else {
+            System.debug('updateRecord: bypassing only Duplicate rules');
+            Database.DMLOptions dmlHeader = new Database.DMLOptions(); 
+            dmlHeader.DuplicateRuleHeader.allowSave = true;
+            dmlHeader.DuplicateRuleHeader.runAsCurrentUser = true;
+            System.debug('updateRecord: DML header set to bypass alert duplicate rules ' + dmlHeader);
+            result = Database.update(record, dmlHeader);
+        }
         System.debug('updateRecord: END with result ' + result);
         return;
     }
@@ -87,9 +100,20 @@ public with sharing class sfpegCard_CTL {
     * @description  Private class and methods to execute DML update in without sharing mode.
     ***/
     private without sharing class sfpegBypassSharingCard_CTL {
-        public Database.SaveResult updateRecord(SObject record) {
-            System.debug('updateRecord: bypassed update requested');
-            return Database.update(record);
+        public Database.SaveResult updateRecord(SObject record, Boolean bypassDuplicateRules) {
+            System.debug('updateRecord (without Sharing): START');
+            if (bypassDuplicateRules) {
+                System.debug('updateRecord (without Sharing): bypassing Duplicate rules');
+                Database.DMLOptions dmlHeader = new Database.DMLOptions(); 
+                dmlHeader.DuplicateRuleHeader.allowSave = true;
+                dmlHeader.DuplicateRuleHeader.runAsCurrentUser = true;
+                System.debug('updatupdateRecord (without Sharing): END / updating with DML header set ' + dmlHeader);
+                return Database.update(record, dmlHeader);
+            }
+            else {
+                System.debug('updatupdateRecord (without Sharing): END / standard update triggered');
+                return Database.update(record);
+            }
         }
     }
 }

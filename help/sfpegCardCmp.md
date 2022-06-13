@@ -53,6 +53,9 @@ configuration of the header action button bar (see the **[sfpegActionBarCmp](/he
 
 ![Record Card Configuration](/media/sfpegCardConfiguration.png)
 
+_Note_ : For some specific cases (e.g. Contact modifications in Custom Community), it is possible to opt
+for a without sharing DML update instead of standard LDS update via the `Use DML?` checkbox.
+
 
 ### Metadata Configuration
 
@@ -155,6 +158,9 @@ This component relies on:
 * **[record-view-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-view-form/documentation)** and **[record-edit-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-edit-form/documentation)** standard components to fetch / update record data
 * **[output-field](https://developer.salesforce.com/docs/component-library/bundle/lightning-output-field/documentation)** and **[input-field](https://developer.salesforce.com/docs/component-library/bundle/lightning-input-field/documentation)** standard components to display / update record fields
 * **[sfpegIconDsp](/help/sfpegIconDsp.md)** to display icons.
+
+In case of duplicate rule error, the component tracks the error origin and proposes to try and force
+the update via a DML bypassing all applicable non-blocking ones.
 
 _Note_: Currently, there are some known limitations with email and phone fields: when using a `softPhone`
 or using an `email` global action, the corresponding fields do not behave as in the standard 
