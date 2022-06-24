@@ -124,6 +124,7 @@ const sfpegMergeUtl = {
                     case 'USR':
                     case 'RCD':
                     case 'ROW':
+                    case 'CTX':
                     case 'GEN':
                         if (sfpegMergeUtl.isDebug) console.log('getConfigData: token domain ignored ',iterDomain);
                         break;
@@ -465,7 +466,7 @@ const sfpegMergeUtl = {
     // string, leveraging tokens previously extracted from the
     // template (via the parseString method).
     //#########################################################
-    mergeTokens : function(templateString, tokenMap, userId, userData, objectName, recordId, recordData, rowData) {
+    mergeTokens : function(templateString, tokenMap, userId, userData, objectName, recordId, recordData, rowData, contextData) {
         if (sfpegMergeUtl.isDebug) console.log('mergeTokens: START with templateString ',templateString);
         if (sfpegMergeUtl.isDebug) console.log('mergeTokens: tokenMap provided ',JSON.stringify(tokenMap));
         if (sfpegMergeUtl.isDebug) console.log('mergeTokens: userId provided ',userId);
@@ -474,6 +475,7 @@ const sfpegMergeUtl = {
         if (sfpegMergeUtl.isDebug) console.log('mergeTokens: objectName provided ',objectName);
         if (sfpegMergeUtl.isDebug) console.log('mergeTokens: recordData provided ',JSON.stringify(recordData));
         if (sfpegMergeUtl.isDebug) console.log('mergeTokens: rowData provided ',JSON.stringify(rowData));
+        if (sfpegMergeUtl.isDebug) console.log('mergeTokens: contextData provided ',JSON.stringify(contextData));
 
         if (!(templateString.includes('{{{'))) {
             if (sfpegMergeUtl.isDebug) console.log('mergeTokens: END returning no-merge promise ');
@@ -528,6 +530,7 @@ const sfpegMergeUtl = {
                     }
                 };*/
                 if (rowData) tokenData.ROW = rowData;
+                if (contextData) tokenData.CTX = contextData;
                 if (sfpegMergeUtl.isDebug) console.log('mergeTokens: token data init ',JSON.stringify(tokenData));
 
                 tokenData = sfpegMergeUtl.aggregateData(tokenData,values);

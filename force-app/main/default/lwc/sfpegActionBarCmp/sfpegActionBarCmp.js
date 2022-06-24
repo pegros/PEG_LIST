@@ -101,8 +101,18 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     set parentContext(value) {
         if (this.isDebug) console.log('setParentContext: START set ');
         this._parentContext = value;
-        if (this.isDebug) console.log('setParentContext: _parentContext updated ', this._parentContext);
-        if (this.isDebug) console.log('setParentContext: END set ');
+        if (this.isDebug) console.log('setParentContext: parent Context updated ', JSON.stringify(this._parentContext));
+
+        if (this.isDebug) console.log('setParentContext: is ready ?? ', this.isReady);
+
+        if (!this.isReady) {
+            if (this.isDebug) console.log('setParentContext: END / waiting for initial init completion');
+        }
+        else {
+            if (this.isDebug) console.log('setParentContext: END / calling merge');
+            this.doMerge();
+        }
+        if (this.isDebug) console.log('setParentContext: END (final) ');
     }
 
     //----------------------------------------------------------------
@@ -414,9 +424,10 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     doMerge = function(){
         if (this.isDebug) console.log('doMerge: START with ',this.configDetails.actions);
         if (this.isDebug) console.log('doMerge: recordId ',this.recordId);
+        if (this.isDebug) console.log('doMerge: parent Context ',JSON.stringify(this._parentContext));
 
         sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
-        sfpegMergeUtl.sfpegMergeUtl.mergeTokens(this.configDetails.actions,this.configDetails.input,this.userId,this.userData,this.objectApiName,this.recordId,this.recordData,null)
+        sfpegMergeUtl.sfpegMergeUtl.mergeTokens(this.configDetails.actions,this.configDetails.input,this.userId,this.userData,this.objectApiName,this.recordId,this.recordData,null,this._parentContext)
         .then( value => {
             if (this.isDebug) console.log('doMerge: context merged within configuration ',value);
             let actionList = JSON.parse(value);
@@ -526,7 +537,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             if (context) {
                 if (this.isDebug) console.log('executeBarAction: merging context data in action ');
                 sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
-                sfpegMergeUtl.sfpegMergeUtl.mergeTokens(JSON.stringify(action.action),this.configDetails.input,this.userId,this.userData,this.objectApiName,this.recordId,this.recordData,context)
+                sfpegMergeUtl.sfpegMergeUtl.mergeTokens(JSON.stringify(action.action),this.configDetails.input,this.userId,this.userData,this.objectApiName,this.recordId,this.recordData,context,this._parentContext)
                 .then( value => {
                     if (this.isDebug) console.log('executeBarAction: action contextualised ',value);
                     let mergedAction = JSON.parse(value);

@@ -20,8 +20,7 @@
                     default="false"
                     description="Flag to indicate if the component is in console or standard mode."/>
     <aura:attribute name="userId"       type="String"   access="private"
-                    default="false"
-                    description="Flag to indicate if the component is in console or standard mode."/>
+                    description="Salesforce ID of theh current User."/>
     <aura:attribute name="isPopupOpen"  type="Boolean"  access="private"
                     default="false"
                     description="Flag tracking open state of ."/>
