@@ -1241,6 +1241,46 @@ and then 2 successive actions happen:
 ```
 
 
+### ActionBar Contextualisation
+
+It is possible to leverage the `parentContext` parameter of the component to implement custom
+contextualisation of the action list. All data provided in this property get then automatically 
+available as `CTX` merge tokens in the action configuration metadata.
+
+For example, the following `toast` action leverages the `CTX.label` token.
+```
+{
+    "label":"Context Data",
+    "name":"ContextToast",
+    "action":{
+        "type": "toast",
+        "params": {
+            "title": "Test Message",
+            "message": "Selected context is {{{CTX.label}}}."
+        }
+    }
+}
+```
+
+Data for this token has to be provided by theh parent component (here and example of Aura embedding).
+```
+<c:sfpegActionBarCmp
+    configName="{#v.config}"
+    userId="{!v.userId}"
+    recordId="{!v.recordId}"
+    objectApiName="{!v.sObjectName}"
+    ondone="{!c.handleAction}"
+    parentContext="{!v.context}" />
+```
+
+Data must be a simple JSON record containing the field names included as the **CTX** tokens in the configuration.
+```
+{
+    "label":  "TEST LABEL"
+}
+```
+
+_Note_: The `handleAction` controller method enables to handle custom actions configured as `done` ones.
 
 ---
 

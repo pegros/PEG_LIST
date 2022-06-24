@@ -32,6 +32,11 @@ As a baseline, the ** component provides the following set of token types:
 * **ROW.fieldName** for data about a specific record context
     * This usually applies to a given record displayed in a list component, typically to contextualise row-level actions, values being used in tokens needing to have been fetched even if not displayed in the list
     * Syntax is similar to **RCD** and **USR** tokens.
+* **CTX.fieldName** for data about a specific usage context
+    * This usually applies when a component uses additional contextual data (e.g. a parent record) in addition 
+    to other record / user / row data. Currently possible from the **sfpegActionBarCmp** component only via its
+    `parentContext` property (more to come soon).
+    * Syntax is similar to **ROW**, **RCCD** and **USR** tokens.
 * **LBL.labelName** to retrieve a custom label value in the user language
 * **RT.objectApiName.developerName** to retrieve the Salesforce ID for a given Record Type of an Object
 * **PERM.permissionName** to check if the current user has a given custom permission in its habilitations
