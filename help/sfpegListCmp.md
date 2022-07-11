@@ -62,7 +62,7 @@ embedded subqueries)
 
 For the **sfpegListCmp** component, a lot of properties may be set directly in the App Builder:
 * Wrapping card customisation properties (title, icon, CSS, max-height, built-in action button size,
-display of record number...)
+display of record number, number of header actions displayed before overflow...)
 * Built-in actions activation (filter, sort, export, debug...)
 
 However, most of the configuration lies in two custom metadata referenced records (see orange zones below):

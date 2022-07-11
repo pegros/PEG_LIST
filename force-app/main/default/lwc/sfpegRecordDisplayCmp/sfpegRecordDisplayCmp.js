@@ -49,6 +49,7 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
     @api configName;            // DeveloperName of the sfpegList__mdt record to be used
     @api actionConfigName;      // DeveloperName of the sfpegAction__mdt record to be used for header actions
     @api buttonSize = 'small';  // Size of the standard header buttons (to align with custom header actions)
+    @api maxSize = 100;         // Header Action list overflow limit
     @api useLDS = false;        // LDS data fetch activation
     @api isDebug = false;       // Debug mode activation
     @api isDebugFine = false;   // Debug mode activation for all subcomponents.
@@ -205,13 +206,13 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
     wiredUser({ error, data }) {
         if (this.isDebug) console.log('wiredUser: START with ID ', this.userId);
         if (this.isDebug) console.log('wiredUser: userFields fetched ',JSON.stringify(this.userFields));
-        if (this.isDebug) console.log('wiredRecord: tokens fetched ',JSON.stringify(this.configDetails.input.tokens.USR));
+        if (this.isDebug) console.log('wiredUser: tokens fetched ',JSON.stringify(this.configDetails.tokens.USR));
 
         if (data) {
             if (this.isDebug) console.log('wiredUser: data fetch OK', JSON.stringify(data));
 
             sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
-            this.userData = sfpegMergeUtl.sfpegMergeUtl.convertLdsData(data,this.configDetails.input.tokens.USR);
+            this.userData = sfpegMergeUtl.sfpegMergeUtl.convertLdsData(data,this.configDetails.tokens.USR);
             sfpegMergeUtl.sfpegMergeUtl.isDebug = false;
             if (this.isDebug) console.log('wiredUser: END / userData updated ', JSON.stringify(this.userData));
 

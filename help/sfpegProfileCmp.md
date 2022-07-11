@@ -44,7 +44,8 @@ the following display widgets:
 * an optional banner background image (blue zone)
 * an optional avatar image (black zone)
 * an optional header content (orange zone), with a top badge, a title and a set of detail fields below
-* an optional action bar (grey zone) which may be actually located next to the header title
+* an optional action bar (grey zone) which may be actually located next to the header title, 
+as well as a possible max. number of actions displayed to control its width
 * an optional detailed content section (red zone) containing a set of detail fields with various possible layout variants
 
 ![Profile Component Layout](/media/sfpegProfileLayout.png) 

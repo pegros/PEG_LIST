@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>51.0</apiVersion>
+    <apiVersion>55.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>SF PEG Action Handler</masterLabel>
 
@@ -13,7 +13,7 @@
             <property   name="barClass"
                         label="CSS Class"
                         type="String"
-                        default="slds-box slds-box_x-small slds-theme_shade slds-grid slds-grid_align-end"
+                        default="slds-box slds-box_x-small slds-theme_shade"
                         description="CSS Classes for the wrapping div"/>
                                     
             <property   name="configName"

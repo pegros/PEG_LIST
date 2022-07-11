@@ -40,6 +40,7 @@
                                 </template>
 
                                 <div class="slds-media__body">
+                                    <template if:true={headerConfig}>
                                     <!-- Badges display -->
                                     <template if:true={headerConfig.badge}>
                                         <div class={badgeSectionClass}  title={headerConfig.badge.label}>
@@ -84,6 +85,7 @@
                                                                 object-api-name={objectApiName}
                                                                 record-id={recordId}
                                                                 user-id={userId}
+                                                                max-size={maxSize}
                                                                 is-debug={isDebugFine}>
                                                             </c-sfpeg-action-bar-cmp>
                                                         </lightning-button-group>
@@ -92,7 +94,7 @@
                                             </template>
                                         </div>
                                     </template>
-                            
+
                                     <template if:true={headerConfig.details}>
                                         <div class={titleDetailsClass}>
                                             <ul class="slds-list_horizontal slds-has-dividers_left slds-listbox slds-listbox_horizontal">
@@ -106,6 +108,7 @@
                                                 </template>
                                             </ul>
                                         </div>
+                                    </template>
                                     </template>
                                 </div>
                             </div>
@@ -122,6 +125,7 @@
                                                             object-api-name={objectApiName}
                                                             record-id={recordId}
                                                             user-id={userId}
+                                                            max-size={maxSize}
                                                             is-debug={isDebugFine}>
                                         </c-sfpeg-action-bar-cmp>
                                 </lightning-button-group>

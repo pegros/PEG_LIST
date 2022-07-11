@@ -53,6 +53,7 @@ export default class SfpegProfileCmp extends LightningElement {
     @api size = "small";        // Global size of the component --> impacts the display of the different elements.
     @api detailsPadding = 'none'; // Additional padding size for the detail fields (none by default)
     @api actionAlignment = 'end'; // Action bar alignment mode (start, center, end)
+    @api maxSize = 100;         // Action list overflow limit
     @api isInverseMode = false; // Flag to trigger inverse mode activation for text fields
     @api isDebug = false;       // Debug mode activation
     @api isDebugFine = false;   // Debug mode activation for all subcomponents.
@@ -86,7 +87,7 @@ export default class SfpegProfileCmp extends LightningElement {
     // for header
     get hasHeader() {
         return ( (this.bannerImage != null) || (this.avatarImage != null)
-                ||  ((this.configDetails) && (this.configDetails.isHeaderDisplayed)));
+                ||  ((this.configDetails) && (this.configDetails?.isHeaderDisplayed)));
     }
     get bannerContainerClass() {
         return "profileBannerContainer-" + this.size;
@@ -101,10 +102,10 @@ export default class SfpegProfileCmp extends LightningElement {
         return "profileBadge-" + this.size;
     }
     get badgeItemClass(){
-        return "profileBadge " + (this.configDetails.header.badgeClass || "slds-badge slds-badge_lightest");
+        return "profileBadge " + (this.configDetails?.header?.badgeClass || "slds-badge slds-badge_lightest");
     }
     get badgeTextClass() {
-        return "slds-text-title_bold profileBadgeText " + ((this.configDetails.header.badgeClass && this.configDetails.header.badgeClass.includes("inverse")) ? "slds-text-color_inverse" : "");
+        return "slds-text-title_bold profileBadgeText " + ((this.configDetails?.header?.badgeClass && this.configDetails?.header?.badgeClass?.includes("inverse")) ? "slds-text-color_inverse" : "");
     }
     get titleDetailsClass(){
         return (this.avatarImage ? "" : "slds-var-p-horizontal_" + this.detailsPadding);
@@ -117,12 +118,12 @@ export default class SfpegProfileCmp extends LightningElement {
         return "slds-text-body_small" + (this.isInverseMode ? " slds-text-color_inverse" : "");
     }
     get headerConfig() {
-        return (this.configDetails.objectHeader[this.objectApiName] || {});
+        return (this.configDetails?.objectHeader[this.objectApiName] || {});
     }
 
     //for action bar
     get hasActions() {
-        return ((this.configDetails.actions) &&  (this.configDetails.actions !== 'N/A'));
+        return ((this.configDetails?.actions) &&  (this.configDetails?.actions !== 'N/A'));
     }
     get isTitleAction() {
         return this.actionAlignment === "title";
@@ -136,29 +137,29 @@ export default class SfpegProfileCmp extends LightningElement {
 
     // for details
     get hasDetails() {
-        return  ((this.configDetails) && (this.configDetails.isDetailsDisplayed));
+        return  ((this.configDetails) && (this.configDetails?.isDetailsDisplayed));
     }
     get detailsClass() {
         return "profileDetails slds-var-p-vertical_" + this.detailsPadding + " slds-p-horizontal_" + this.detailsPadding;
         //return "profileDetails slds-var-p-around_" + this.detailsPadding;
     }
     get isGridDisplay(){
-        return !(this.configDetails.details.variant === "list");
+        return !(this.configDetails?.details?.variant === "list");
     }
     get isBaseDisplay(){
-        return (this.configDetails.details.variant === "base");
+        return (this.configDetails?.details?.variant === "base");
     }
     get isMediaDisplay() {
-        return (this.configDetails.details.variant === "media");
+        return (this.configDetails?.details?.variant === "media");
     }
     get isTableDisplay() {
-        return (this.configDetails.details.variant === "table")
+        return (this.configDetails?.details?.variant === "table")
     }
     get detailsConfig() {
-        return (this.configDetails.objectDetails[this.objectApiName] || []);
+        return (this.configDetails?.objectDetails[this.objectApiName] || []);
     }
     get fieldIconSize() {
-        return ((this.configDetails.details)? this.configDetails.details.iconSize || "small" : "small");
+        return ((this.configDetails?.details) ? this.configDetails?.details?.iconSize || "small" : "small");
     }
     get fieldIconVariant() {
         return (this.isInverseMode ? "inverse" : "");
@@ -166,16 +167,16 @@ export default class SfpegProfileCmp extends LightningElement {
     
     // for debug
     get bannerSrc() {
-        return JSON.stringify(this.configDetails.banner);
+        return JSON.stringify(this.configDetails?.banner);
     }
     get avatarSrc() {
-        return JSON.stringify(this.configDetails.avatar);
+        return JSON.stringify(this.configDetails?.avatar);
     }
     get headerSrc() {
-        return JSON.stringify(this.configDetails.header);
+        return JSON.stringify(this.configDetails?.header);
     }
     get detailsSrc() {
-        return JSON.stringify(this.configDetails.details);
+        return JSON.stringify(this.configDetails?.details);
     }
     
     
@@ -518,7 +519,7 @@ export default class SfpegProfileCmp extends LightningElement {
         //if (this.isDebug) console.log('handleFormLoad: event ',event);
         //if (this.isDebug) console.log('handleFormLoad: event details ',JSON.stringify(event.detail));
 
-        if (this.configDetails.header.badge) {
+        if (this.configDetails?.header?.badge) {
             if (this.isDebug) console.log('handleFormLoad: badge configuration fetched ',JSON.stringify(this.configDetails.header.badge));
             let badgeValue = (event.detail.records[this.recordId]).fields[this.configDetails.header.badge];
             if (this.isDebug) console.log('handleFormLoad: badgeValue extracted ',JSON.stringify(badgeValue));

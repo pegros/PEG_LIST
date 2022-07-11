@@ -25,7 +25,8 @@ record information (for objects not supported by LDS yet).
 The **sfpegRecordDisplayCmp** is built as a standard [lightning-card](https://developer.salesforce.com/docs/component-library/bundle/lightning-card/documentation) container, in which the following elements may be 
 defined:
 * the card title and icon
-* the card header action set (via the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component)
+* the card header action set (via the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component),
+as well as a possible max. number of actions displayed to control its width
 * a first content section containing a list of fields
 * a second content section structured as a set of tabs (see [lightning-tabset](https://developer.salesforce.com/docs/component-library/bundle/lightning-tabset/documentation) containing
     * a list of fields

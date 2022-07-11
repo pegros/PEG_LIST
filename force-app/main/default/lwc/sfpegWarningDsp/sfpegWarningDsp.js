@@ -88,11 +88,15 @@ export default class SfpegWarningDsp extends LightningElement {
             let messageList = (JSON.stringify(this.error)).match(regexp);
             if (this.isDebug) console.log('connected: messageList extracted ', messageList);
 
-            this.errorDetails = messageList.reduce((previous ,current) => {
+            this.errorDetails = messageList?.reduce((previous ,current) => {
                 let newCurrent = current.slice(10,-1);
                 if (previous) return previous + '\n' + newCurrent;
                 return newCurrent;
             },'');
+            if (!this.errorDetails) {
+                if (this.isDebug) console.log('connected: using full error content');
+                this.errorDetails =  JSON.stringify(this.error);
+            }
             //this.errorMessage = messageList.join('\n');
             if (this.isDebug) console.log('connected: errorDetails init ', this.errorDetails);
         }

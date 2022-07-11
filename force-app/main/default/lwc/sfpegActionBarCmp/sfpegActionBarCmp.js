@@ -68,7 +68,9 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     // Main configuration fields (for App Builder)
     //----------------------------------------------------------------
     @api barClass;              // CSS Classes for the wrapping div
+    @api maxSize = 100;         // Action list overflow limit
     @api isVertical = false;    // Flag to display the action bar vertically
+    @api isHidden = false;      // Flag to hide the action bar and use the component as an action utility
     @api configName;            // DeveloperName fo the sfpegAction__mdt record to be used
     @api isDebug = false;       // Debug mode activation
     @api isDebugFine = false;   // Merge Debug mode activation
@@ -90,7 +92,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     }
     
     //----------------------------------------------------------------
-    // Record Context (e.g. to provide default additional context) 
+    // Custom Context (e.g. to provide default additional context for CTX merge tokens) 
     //----------------------------------------------------------------
     _parentContext = {};
     // Implementation with setter to handle context changes.
@@ -125,20 +127,19 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     // Internal Query Control Parameters
     @track isExecuting = false; // Ongoing Action state  (to control spinner)
 
-    @api objectApiName;         // Object API Name for current page record (if any)
-    @api recordId;              // ID of current page record (if any)
-    @track recordFields = null; // List of Field API Names for current page record (if any) required as Query Input
+    @api    objectApiName;      // Object API Name for current page record (if any)
+    @api    recordId;           // ID of current page record (if any)
+    @track  recordFields = null;// List of Field API Names for current page record (if any) required as Query Input
     recordData;                 // Record Data fetched via LDS
 
-    @api userId = currentUserId;// ID of current User
-    @track userFields = null;   // List of Field API Names for current User (if any) required as Query Input
-    userData;                   // Current User Data fetched via LDS
-
-    //@api configData = null;     // Configuration data used in merge tokens (typically record IDs for base
-                                // elements such as reports, articles, recordTypes...)
+    @api    userId = currentUserId; // ID of current User
+    @track  userFields = null;      // List of Field API Names for current User (if any) required as Query Input
+    userData;                       // Current User Data fetched via LDS
 
     // Internal Display Parameter
-    @track errorMsg = null;     // Error message (if any for end user display)
+    @track  errorMsg = null;        // Error message (if any for end user display)
+    @track  mainActions = [];       // Main actions displayed (responsive & max. items)
+    @track  overflowActions = [];   // Content of the overflow action menu (responsive & max. items)
     
     // To notify the utility bar handler if required / receive notification    
     notificationSubscription = null;
@@ -173,6 +174,14 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     }
     get buttonClass() {
         return (this.isVertical ? 'slds-m-around_xx-small' : '');
+    }
+    get showMainActions() {
+        //if (this.isDebug) console.log('showMainActions: returning ', (this.displayedActions && this.displayedActions.length > 0));
+        return (this.mainActions && this.mainActions.length > 0);
+    }
+    get showOverflowMenu() {
+        //if (this.isDebug) console.log('showActionMenu: returning ', (this.menuActions && this.menuActions.length > 0));
+        return (this.overflowActions && this.overflowActions.length > 0);
     }
 
     //----------------------------------------------------------------
@@ -259,9 +268,57 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
 
     renderedCallback(){
         if (this.isDebug) console.log('rendered: START');
-
         if (this.isDebug) console.log('rendered: recordId ', this.recordId);
-        if (this.isDebug) console.log('rendered: configDetails ',JSON.stringify(this.configDetails));
+        //if (this.isDebug) console.log('rendered: configDetails ',JSON.stringify(this.configDetails));
+
+        // Responsive handling in horizontal (and constrained mode)
+        if (!this.isVertical) {
+            let actionGroup = this.template.querySelectorAll("[data-type='containGroup']");
+            if (this.isDebug) console.log('rendered: actionGroup queried ',actionGroup);
+            if (this.isDebug) console.log('rendered: actionGroup[0] fetched ',actionGroup[0]);
+            if (this.isDebug) console.log('rendered: actionGroup[0] offsetHeight fetched ',(actionGroup[0])?.offsetHeight);
+
+            if ((actionGroup) && (actionGroup[0])) {
+                //console.log('renderedCallback: actionGroup width determined ',actionGroup[0]?.offsetWidth);
+                let groupHeight = (actionGroup[0])?.offsetHeight || 0;
+                if (this.isDebug) console.log('rendered: actionGroup height determined ',groupHeight);
+                //setTimeout(() => console.log('rendered: actionGroup height refetched ', (actionGroup[0])?.offsetHeight), 0);
+                //if (this.isDebug) console.log('rendered: actionGroup offset height fetched ',actionGroup[0].offsetHeight);
+                // 35 instead of 32
+                if (groupHeight > 35) {
+                    if (this.isDebug) console.log('rendered: reviewing action group size');
+                    if (this.mainActions.length > 0) {
+                        let lastAction =  this.mainActions.pop();
+                        if (this.isDebug) console.log('renderedCallback: lastAction popped ', lastAction);
+                        this.overflowActions.unshift(lastAction);
+                        if (this.isDebug) console.log('renderedCallback: mainActions updated ', this.mainActions);
+                        if (this.isDebug) console.log('renderedCallback: overflowActions updated ', this.overflowActions);
+                    }
+                }
+                //@Todo: refactor this part (work-around because offsetHeight not available directly.)
+                else if (groupHeight == 0) {
+                    if (this.isDebug) console.log('rendered: null size --> waiting for actual rendering');
+                    setTimeout(() => {
+                        console.log('rendered: actionGroup height refetched ', (actionGroup[0])?.offsetHeight);
+                        groupHeight = (actionGroup[0])?.offsetHeight || 0;
+                        if (this.isDebug) console.log('rendered: actionGroup height re-determined ',groupHeight);
+                        if (groupHeight > 35) {
+                            if (this.isDebug) console.log('rendered: reviewing action group size');
+                            if (this.mainActions.length > 0) {
+                                let lastAction =  this.mainActions.pop();
+                                if (this.isDebug) console.log('renderedCallback: lastAction popped ', lastAction);
+                                this.overflowActions.unshift(lastAction);
+                                if (this.isDebug) console.log('renderedCallback: mainActions updated ', this.mainActions);
+                                if (this.isDebug) console.log('renderedCallback: overflowActions updated ', this.overflowActions);
+                            }
+                        }
+                    }, 0);
+                }
+            }
+            else {
+                if (this.isDebug) console.log('renderedCallback: no action directly in action group (yet)');
+            }
+        }
 
         if (this.isDebug) console.log('rendered: END');
     }
@@ -451,6 +508,17 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                 });
             } 
             this.actionList = actionList;
+
+            //Responsive Handling (horizontal)
+            if (!this.isVertical) {
+                if (this.isDebug) console.log('doMerge: maxSize', this.maxSize);
+                this.mainActions = actionList.slice(0,this.maxSize);
+                if (this.isDebug) console.log('doMerge: mainActions init ', this.mainActions);
+                this.overflowActions = actionList.slice(this.maxSize);
+                if (this.isDebug) console.log('doMerge: overflowActions init ', this.overflowActions);
+            }
+
+            //Ready Notification
             let readyEvt = new CustomEvent('ready', null);
             if (this.isDebug) console.log('doMerge: END / triggering readyEvt', JSON.stringify(readyEvt));
             this.dispatchEvent(readyEvt);
@@ -610,6 +678,14 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         //this.executeAction(event.detail.value.action);
         this.processAction(event.detail.value.action,null);
         if (this.isDebug) console.log('handleMenuSelect: END');
+    }
+
+    handleOveflowMenuSelect(event) {
+        if (this.isDebug) console.log('handleOveflowMenuSelect: START with ',JSON.stringify(event.detail));
+        if (this.isDebug) console.log('handleOveflowMenuSelect: recordId ',this.recordId);
+        //this.executeAction(event.detail.value.action);
+        this.processAction(event.detail.value.action,null);
+        if (this.isDebug) console.log('handleOveflowMenuSelect: END');
     }
 
     //----------------------------------------------------------------

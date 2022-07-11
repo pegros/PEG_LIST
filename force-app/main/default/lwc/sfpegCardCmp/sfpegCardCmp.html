@@ -30,7 +30,12 @@
                     </div>
                 </template>
                 <div class="slds-media__body" >
-                    <h3>{cardTitle}</h3>
+                    <h2 class="slds-card__header-title">
+                        <a href="#" class="slds-card__header-link slds-truncate">
+                            <span>{formatTitle}</span>
+                        </a>
+                    </h2>
+                    <!--<h3>{cardTitle}</h3>-->
                 </div>
             </div>
 
@@ -41,6 +46,7 @@
                                         object-api-name={objectApiName}
                                         record-id={recordId}
                                         user-id={userId}
+                                        max-size={maxSize}
                                         is-debug={isDebugFine} >
                 </c-sfpeg-action-bar-cmp>
             </lightning-button-group>
@@ -48,7 +54,7 @@
             <!-- Card Mode Control -->
             <!-- style="position:relative;top:-1px;" -->
             <template if:false={isReadOnly}>
-                <lightning-button-group slot="actions" style="position:relative;top:-1px;">
+                <lightning-button-group slot="actions" style="position:relative;top:-1.5px;">
                     <lightning-button-icon
                         variant={editIconVariant}
                         icon-name={editIconName}

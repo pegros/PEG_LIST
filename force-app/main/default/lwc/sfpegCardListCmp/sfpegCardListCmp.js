@@ -50,6 +50,8 @@ export default class SfpegCardListCmp extends LightningElement {
     @api cardClass;             // CSS Classes for each card in the list
     @api cardSize = 12;         // Width of each card displayed (on a 12 unit range)
     @api buttonSize = 'small';  // Size of the standard header buttons (to align with custom header actions)
+    @api maxSize = 100;         // Header Action list overflow limit
+    @api maxCardSize = 100;     // Card Action list overflow limit
     @api showCount = 'right';   // Items Count display
     @api showRefresh = false;   // Show global refresh button (for the record list, not the cards themselves)
 

@@ -23,7 +23,12 @@
                     </div>
                 </template>
                 <div class="slds-media__body" >
-                    <h3>{formatTitle}</h3>
+                    <!--<h2>{formatTitle}</h3>-->
+                    <h2 class="slds-card__header-title">
+                        <a href="#" class="slds-card__header-link slds-truncate">
+                            <span>{formatTitle}</span>
+                        </a>
+                    </h2>
                 </div>
             </div>
 
@@ -34,13 +39,14 @@
                                         object-api-name={objectApiName}
                                         record-id={recordId}
                                         user-id={userId}
+                                        max-size={maxSize}
                                         is-debug={isDebug}
                                         ondone={handleActionDone}
                                         data-my-id="headerActions">
                 </c-sfpeg-action-bar-cmp>
             </lightning-button-group>
 
-            <lightning-button-group slot="actions">
+            <lightning-button-group slot="actions"  style="position:relative;top:-1.5px;">
                 <!-- Export Action -->
                 <template if:true={showExport}>
                     <lightning-button-icon
@@ -191,6 +197,7 @@
                         <!--<div class="slds-card__body cardContent ">-->
                             <lightning-datatable
                                     data-id="dataTable"
+                                    class="sfpegTable"
                                     key-field={configDetails.display.keyField}
                                     data={resultList}
                                     columns={configDetails.display.columns}
@@ -213,6 +220,7 @@
                         <!--div class="slds-card__body cardContent ">-->
                             <lightning-tree-grid
                                     data-id="treeGrid"
+                                    class="sfpegTable"
                                     key-field={configDetails.display.keyField}
                                     data={resultList}
                                     columns={configDetails.display.columns}
@@ -270,6 +278,7 @@
                                     object-api-name={objectApiName}
                                     record-id={recordId}
                                     user-id={userId}
+                                    is-hidden="true"
                                     is-debug={isDebugFine}
                                     ondone={handleActionDone}
                                     data-my-id="rowActions">

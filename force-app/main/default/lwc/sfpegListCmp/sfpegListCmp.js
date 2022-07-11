@@ -77,6 +77,7 @@ export default class SfpegListCmp extends LightningElement {
     @api showSearch = false;    // Flag to show Filter action in header.
     @api showExport = false;    // Flag to show Export action in header.
     @api displayHeight = 0;     // Max-height of the content Div (0 meaning no limit)
+    @api maxSize = 100;         // Header Action list overflow limit
     @api isCollapsible = false; // Flag to set the list details as collapsible 
     @api isCollapsed = false;   // Flag inddicating the initial/current collapsed state
 

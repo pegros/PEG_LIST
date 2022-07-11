@@ -12,13 +12,14 @@
                                         object-api-name={objectApiName}
                                         record-id={recordId}
                                         user-id={userId}
+                                        max-size={maxSize}
                                         is-debug={isDebugFine}
                                         ondone={handleActionDone} >
                 </c-sfpeg-action-bar-cmp>
             </lightning-button-group>
 
             <template if:false={useLDS}>
-                <lightning-button-group slot="actions">
+                <lightning-button-group slot="actions" style="position:relative;top:-1.5px;">
                     <lightning-button-icon  icon-name="utility:refresh"     size={buttonSize}
                                             variant="border-filled"
                                             alternative-text={refreshTitle} title={refreshTitle}

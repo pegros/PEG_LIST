@@ -46,15 +46,43 @@ containing the details of the buttons and menus to display.
 
 ![Standalone Action Bar Configuration](/media/sfpegActionConfiguration.png)
 
-Additional properties enable to control the CSS of the wrapping div and activate debug mode.
-Via the CSS, it is possible to control the background if the component and the position of the
-[lightning-button-group](https://developer.salesforce.com/docs/component-library/bundle/lightning-button-group/documentation).
-They are set to `slds-theme_shade slds-grid slds-grid_align-end` by default but may
-easily be overriden.
+Additional properties enable to control the CSS of the wrapping div, manage number of displayed
+actions (before overflow in menu at the end) and activate debug mode.
 
-Only **sfpegAction__mdt** custom metadata record applicable to the page _scope_ may be selected
+Only **sfpegAction__mdt** custom metadata records applicable to the page _scope_ may be selected
 in the dropdown displayed for the `Action configuration` property (see configuration principles in
 [SF PEG LIST](https://github.com/pegros/PEG_LIST) introduction).
+
+
+#### Action Bar Alignment
+
+Via the `CSS Class` parameter (`barClass` field), it is possible to control the background if the component
+and the position of the
+[lightning-button-group](https://developer.salesforce.com/docs/component-library/bundle/lightning-button-group/documentation).
+It is set to `slds-theme_shade slds-grid slds-grid_align-end` by default but may
+easily be overriden (by replacing last class by `slds-grid_align-start` to align left
+or `slds-grid_align-center` for center).
+
+
+#### Action Bar Content Overflow (and Responsiveness)
+
+In a standalone **sfpegActionBarCmp**, the width of the component is constrained and the overflow 
+happens automatically upon initial rendering of the page. Only the actually visible actions are taken
+into account. Menus are automatically converted to menu entries with dividers and subheaders.
+
+![Action Bar with no oveflow](/media/sfpegActionBarNoOverflow.png)<br/>
+_Action Bar with no Overflow_
+
+![Action Bar with oveflow](/media/sfpegActionBarWithOverflow.png)<br/>
+_Same Action Bar with Overflow applied_
+
+
+When used as header actions to **[lightning-card](https://developer.salesforce.com/docs/component-library/bundle/lightning-card/documentation)** components components, there is no width constraint.
+Via the `Max. #Actions` parameter (`maxSize` field), it is howver possible to set the max number  of 
+actions displayed in the bar before the overflow is applied.
+It has therefore been added as configuration parameter to multiple other components
+(e.g. **[sfpegCardCmp](/help/sfpegCardCmp.md)** and **[sfpegListCmp](/help/sfpegListCmp.md)**)
+to manually control the set of displayed actions (no automatic responsive behaviour).
 
 
 ### Metadata Configuration
@@ -1281,6 +1309,42 @@ Data must be a simple JSON record containing the field names included as the **C
 ```
 
 _Note_: The `handleAction` controller method enables to handle custom actions configured as `done` ones.
+
+
+### Hidden Mode Usage
+
+Multiple components (e.g. **[sfpegMessageListCmp](/help/sfpegMessageListCmp.md)** or **[sfpegListCmp](/help/sfpegListCmp.md)**)
+use the **sfpegActionBarCmp** in hidden mode to execute the action logic, while displaying buttons or menus
+in a specific way (in messages, data-table rows, tiles).
+
+For these components, a specific `isHidden` boolean parameter is available at the component interface to 
+skip HTML rendering logic of the **sfpegActionBarCmp** component and optimise performances.
+They may also apply the `slds-hide` SLDS class to ensure no HTML overhead is applied.
+```
+<c-sfpeg-action-bar-cmp
+    bar-class= "slds-hide"
+    config-name={configDetails.rowActions}
+    object-api-name={objectApiName}
+    record-id={recordId}
+    user-id={userId}
+    is-hidden="true"
+    is-debug={isDebugFine}
+    ondone={handleActionDone}
+    data-my-id="rowActions">
+</c-sfpeg-action-bar-cmp>
+```
+
+They can later invoke action execution on the instantiated **sfpegActionBarCmp** component by:
+* finding the component
+```
+let rowActionBar = this.template.querySelector('c-sfpeg-action-bar-cmp[data-my-id=rowActions]');
+```
+* invoking one of the available methods:
+    * `executeAction` when the parent component has already all the details of the action
+    tpo execute (e.g. when handling a `next` action after a `done` one)
+    * `executeBarAction` when the parent wishes to trigger one of the actions defined
+    in the action bar configuration (by the `name` defined in the metadata configuration)
+
 
 ---
 

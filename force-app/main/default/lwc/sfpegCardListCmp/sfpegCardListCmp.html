@@ -11,13 +11,14 @@
                                         object-api-name={objectApiName}
                                         record-id={recordId}
                                         user-id={userId}
+                                        max-size={maxSize}
                                         is-debug={isDebugFine} >
                 </c-sfpeg-action-bar-cmp>
             </lightning-button-group>
 
             <!-- Card Mode Control -->
             <template if:true={showRefresh}>
-                <lightning-button-group slot="actions">
+                <lightning-button-group slot="actions"  style="position:relative;top:-1.5px;">
                     <lightning-button-icon  icon-name="utility:refresh"
                                             title="Refresh Record List"
                                             size={buttonSize}
@@ -82,6 +83,7 @@
                                                         object-api-name={iterRecord.object}
                                                         record-id={iterRecord.id}
                                                         user-id={userId}
+                                                        max-size={maxCardSize}
                                                         is-debug={isDebugFine} 
                                                         is-debug-fine={isDebugFine} 
                                                         is-read-only={isReadOnly}>

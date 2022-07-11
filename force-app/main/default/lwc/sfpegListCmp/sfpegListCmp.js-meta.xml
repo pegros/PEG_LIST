@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>51.0</apiVersion>
+    <apiVersion>55.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>SF PEG Custom List</masterLabel>
     <description>This component enables to display a list of reciords fetched via custom logic.</description>
@@ -79,6 +79,10 @@
                         type="String"
                         datasource="apex://sfpegActionSelector_CTL"
                         description="(Developer)Name of the Action Configuration record to be used in header (see sfpegAction__mdt)."/>
+            <property   name="maxSize"
+                        label="Max. #Actions Displayed"
+                        type="Integer"
+                        description="Max number of actions displayed before overflow in menu."/>
 
             <property   name="isDebug"
                         label="Debug?"
@@ -156,6 +160,10 @@
                         type="String"
                         datasource="apex://sfpegActionSelector_CTL"
                         description="(Developer)Name of the Action Configuration record to be used in header (see sfpegAction__mdt)."/>
+            <property   name="maxSize"
+                        label="Max. #Actions Displayed"
+                        type="Integer"
+                        description="Max number of actions displayed before overflow in menu."/>
 
             <property   name="isDebug"
                         label="Debug?"

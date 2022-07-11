@@ -59,6 +59,7 @@ export default class SfpegCardDsp extends LightningElement {
 
     @api configName;            // DeveloperName for the sfpegCard__mdt record to be used
     @api actionConfigName;      // DeveloperName for the sfpegAction__mdt record to be used for header actions
+    @api maxSize = 100;         // Header Action list overflow limit
 
     @api isReadOnly = false;    // Display card in readonly mode
     @api isCollapsible = false; // Collapsible mode activation

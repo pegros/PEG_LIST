@@ -56,7 +56,8 @@ of KPI group definitions, each one consisting in:
     * `label` and `iconName` properties to display in the header title
     * a `size` property to control the width of the group container withiin the component (in sub-units of a 12 column grid)
     * an optional `actions` property to display an action bar in the group header (with the name of an applicable 
-    **sfpegAction__mdt** custom metadata record, see **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** for details)
+    **sfpegAction__mdt** custom metadata record, see **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** for details),
+    with additional `actionMaxSize` and `actionHidden` parameters to control actual display of the action bar.
 * a list of `kpis` configuration items containing
     * a main KPI (via the `name`  property containing a record field API name),
     * an `icon` object with

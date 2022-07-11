@@ -37,7 +37,10 @@ In the App Builder, the configuration of the **sfpegCardListCmp** component cons
 * selecting one of the available **sfpegCardList__mdt** custom metadata record configuring
 how record list is fetched and how they are displayed
 * selecting one of the available **sfpegAction__mdt** custom metadata record containing the 
-configuration of the header action button bar (see the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component for details)
+configuration of the header action button bar (see the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**
+component for details)
+* setting a possible max. number of actions displayed at global header and card header levels
+to control the width of the corresponding action bars
 * setting various behaviour options (_Read-Only_, _Button Size_, _Show #Records?_, _Show Refresh?_...)
 
 ![Record Card List Configuration](/media/sfpegCardListConfig.png)
