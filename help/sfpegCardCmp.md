@@ -48,7 +48,7 @@ consists in
 * selecting one of the available **sfpegCard__mdt** custom metadata record containing the details
 of the main fields and sections displayed in the card body
 * selecting one of the available **sfpegAction__mdt** custom metadata record containing the 
-configuration of the header action button bar (see the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component for details), setting a possible max. number of actions displayed to control its width
+configuration of the header action button bar (see the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component for details), setting a possible max. number of actions displayed to control its width.
 * setting various behaviour options (`read only`, `collapsible`...)
 
 ![Record Card Configuration](/media/sfpegCardConfiguration.png)
