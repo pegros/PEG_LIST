@@ -12,7 +12,10 @@
 
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
-
+            <supportedFormFactors>
+                <supportedFormFactor type="Small" />
+                <supportedFormFactor type="Large" />
+            </supportedFormFactors>
             <property   name="configName"
                         label="Profile Configuration"
                         type="String"
