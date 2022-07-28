@@ -18,8 +18,12 @@
     --sds-c-card-footer-spacing-block-end: 0px;
     /*--sds-c-card-footer-spacing-inline-start: 1px;
     --sds-c-card-footer-spacing-inline-end: 1px;*/
-
     --sds-c-card-footer-text-align: left;
+}
+.headerActions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .cardContent {
     background-color:  var(--lwc-colorBackgroundAlt);
@@ -39,7 +43,7 @@
     width:100%;
 }
 .filterPopup {
-    max-width: calc(100% - 46px) !important;
+    max-width: calc(100% - 46px) !important; 
     /*min-width: 60% !important;*/
     background: var(--lwc-brandDark);
 }

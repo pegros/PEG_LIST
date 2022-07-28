@@ -37,17 +37,27 @@
                         type="String"
                         default="slds-theme_default" 
                         description="CSS classes to set on the wrapping component div"/>
+            <property   name="layoutMode"
+                        label="Layout Mode"
+                        type="String"
+                        default="auto"
+                        description="Layout mode to be used for the display of field labels (inline, stacked or auto, i.e. based on user chosen density)"
+                        datasource="inline,stacked,auto" />
             <property   name="buttonSize"
                         label="Button Size"
                         type="String"
                         datasource="x-small,small,medium"
                         default="small"
                         description="Size of the standard header buttons (to align with custom header actions)"/>
-
+                        
             <property   name="useLDS"
                         label="Use LDS?"
                         type="Boolean"
                         description="Use LDS instead of SOQL for record data fetch (for supported objects)."/>
+            <property   name="showRefresh"
+                        label="Show Refresh?"
+                        type="Boolean"
+                        description="When using DML to fetch data, flag to display a refresh button."/>
 
             <property   name="isDebug"
                         label="Debug?"
@@ -86,6 +96,12 @@
                         type="String"
                         default="slds-theme_default" 
                         description="CSS classes to set on the wrapping component div"/>
+            <property   name="layoutMode"
+                        label="Layout Mode"
+                        type="String"
+                        default="auto"
+                        description="Layout mode to be used for the display of field labels (inline, stacked or auto, i.e. based on user chosen density)"
+                        datasource="inline,stacked,auto" />
             <property   name="buttonSize"
                         label="Button Size"
                         type="String"
@@ -97,6 +113,10 @@
                         label="Use LDS?"
                         type="Boolean"
                         description="Use LDS instead of SOQL for record data fetch (for supported objects)."/>
+            <property   name="showRefresh"
+                        label="Show Refresh?"
+                        type="Boolean"
+                        description="When using DML to fetch data, flag to display a refresh button."/>
 
             <property   name="isDebug"
                         label="Debug?"

@@ -48,9 +48,11 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
     @api cardClass;             // CSS Classes for the wrapping card 
     @api configName;            // DeveloperName of the sfpegList__mdt record to be used
     @api actionConfigName;      // DeveloperName of the sfpegAction__mdt record to be used for header actions
+    @api layoutMode = 'auto';   // Layout mode to be used for field display (auto, inline, stacked)
     @api buttonSize = 'small';  // Size of the standard header buttons (to align with custom header actions)
     @api maxSize = 100;         // Header Action list overflow limit
     @api useLDS = false;        // LDS data fetch activation
+    @api showRefresh = false;   // Flag to activate Refresh button display
     @api isDebug = false;       // Debug mode activation
     @api isDebugFine = false;   // Debug mode activation for all subcomponents.
 
@@ -65,6 +67,8 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
     
     // Display Parameters
     @track tabVariant = 'standard' // Variant of the tab container
+    @track innerClass;          // CSS classes to be applied to the main section
+    @track fieldClass = 'slds-form-element' // CSS classes to be applied to field display containers
     @track cardTitle;           // Title of the wrapping Card
     @track cardIcon;            // Icon of the wrapping Card
     @track mainFields;          // Content of the top section
@@ -101,7 +105,6 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
         if (this.tabList) return true;
         return false;
     }
-    
 
     //----------------------------------------------------------------
     // Component initialisation  
@@ -115,6 +118,19 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
         if (this.isReady) {
             console.warn('connected: END / already ready');
             return;
+        }
+
+        if (this.layoutMode === 'inline') {
+            // slds-form-element_1-col
+            this.fieldClass = 'slds-form-element slds-form-element_horizontal';
+            if (this.isDebug) console.log('connected: inline mode chosen ');
+        }
+        else if (this.layoutMode === 'stacked') {
+            this.fieldClass = 'slds-form-element';
+            if (this.isDebug) console.log('connected: stacked mode chosen ');
+        }
+        else {
+            if (this.isDebug) console.log('connected: auto mode chosen ');
         }
 
         if ((!this.configName) || (this.configName === 'N/A')){
@@ -162,7 +178,41 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
 
     renderedCallback() {
         if (this.isDebug) console.log('renderedCallback: START');
+
+        /*let densityControl = this.template.querySelector('.densityControl');
+        if (this.isDebug) console.log('renderedCallback: densityControl ', densityControl);
+        if (this.isDebug) console.log('renderedCallback: classes ', densityControl.className);
+
+        if (this.isDebug) console.log('renderedCallback: classes STR ', densityControl.className.toString());
+
+        if (densityControl.className.toString()?.includes('slds-form-element_horizontal')) {
+            if (this.isDebug) console.log('renderedCallback: density: compact');
+        }
+        else {
+            if (this.isDebug) console.log('renderedCallback: density: comfy');
+        }*/
         if (this.isDebug) console.log('renderedCallback: END');
+    }
+
+    handleDensity(event) {
+        if (this.isDebug) console.log('handleDensity: START');
+
+        let densityControl = this.template.querySelector('.densityControl');
+        if (this.isDebug) console.log('handleDensity: densityControl ', densityControl);
+        if (this.isDebug) console.log('handleDensity: classes ', densityControl.className);
+
+        if (this.isDebug) console.log('handleDensity: classes STR ', densityControl.className.toString());
+
+        if (densityControl.className.toString()?.includes('slds-form-element_horizontal')) {
+            if (this.isDebug) console.log('handleDensity: density compact --> inline mode ');
+            this.fieldClass = 'slds-form-element slds-form-element_horizontal ';
+        }
+        else {
+            if (this.isDebug) console.log('handleDensity: density: comfy --> stacked mode ');
+            this.fieldClass = 'slds-form-element';
+        }
+
+        if (this.isDebug) console.log('handleDensity: END');
     }
 
     //----------------------------------------------------------------
@@ -336,9 +386,11 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
             if (rawTemplate) {
                 if (this.isDebug) console.log('finalizeDisplay: setting display properties ');
                 this.tabVariant = rawTemplate.variant || 'standard';
-                this.cardTitle = rawTemplate.title || 'NONE';
+                //this.cardTitle = rawTemplate.title || 'NONE';
+                this.cardTitle = rawTemplate.title || '';
                 this.cardIcon = rawTemplate.icon;
                 this.mainFields = rawTemplate.fields;
+                this.innerClass = rawTemplate.innerClass || '';
                 this.tabList = rawTemplate.tabs;
 
                 let currentKey = 0;

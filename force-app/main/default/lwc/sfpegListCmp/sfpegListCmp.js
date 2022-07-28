@@ -358,7 +358,7 @@ export default class SfpegListCmp extends LightningElement {
                             }
                         });
                         if (this.isDebug) console.log('connected: columns configuration updated ',JSON.stringify(this.configDetails.display.columns));
-                        if (this.isDebug) console.log('connected: LIST_CONFIGS[this.configName] state ',JSON.stringify(LIST_CONFIGS[this.configName]));
+                        //if (this.isDebug) console.log('connected: LIST_CONFIGS[this.configName] state ',JSON.stringify(LIST_CONFIGS[this.configName]));
                     }
 
                     if (this.formfactor === "Small") {

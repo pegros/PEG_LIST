@@ -10,3 +10,7 @@
     padding-right: var(--lwc-varSpacingVerticalMedium);
     width:100%;
 }
+.fieldValue {
+    font-size: 0.875rem !important;
+    /*font-size: var(--lwc-fontSize4, 0.875rem) !important;*/
+}

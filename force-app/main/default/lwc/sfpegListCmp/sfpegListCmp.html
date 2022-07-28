@@ -32,112 +32,114 @@
                 </div>
             </div>
 
-            <lightning-button-group slot="actions">
-                <c-sfpeg-action-bar-cmp bar-class= ""
-                                        record-list={selectedRecords}
-                                        config-name={actionConfigName}
-                                        object-api-name={objectApiName}
-                                        record-id={recordId}
-                                        user-id={userId}
-                                        max-size={maxSize}
-                                        is-debug={isDebug}
-                                        ondone={handleActionDone}
-                                        data-my-id="headerActions">
-                </c-sfpeg-action-bar-cmp>
-            </lightning-button-group>
+            <div class="headerActions" slot="actions">
+                <lightning-button-group>
+                    <c-sfpeg-action-bar-cmp bar-class= ""
+                                            record-list={selectedRecords}
+                                            config-name={actionConfigName}
+                                            object-api-name={objectApiName}
+                                            record-id={recordId}
+                                            user-id={userId}
+                                            max-size={maxSize}
+                                            is-debug={isDebug}
+                                            ondone={handleActionDone}
+                                            data-my-id="headerActions">
+                    </c-sfpeg-action-bar-cmp>
+                </lightning-button-group>
 
-            <lightning-button-group slot="actions"  style="position:relative;top:-1.5px;">
-                <!-- Export Action -->
-                <template if:true={showExport}>
-                    <lightning-button-icon
-                            icon-name="utility:download"    size={buttonSize}
-                            variant="border-filled"
-                            alternative-text={exportTitle}  title={exportTitle}
-                            onclick={handleExport}>
-                    </lightning-button-icon>
-                </template>
-
-                <!-- Sort Action (on list display) -->
-                <template if:true={showSort}>
-                    <lightning-button-menu  icon-name="utility:sort"        icon-size={buttonSize}
-                                            variant="border-filled"         menu-alignment="right"
-                                            alternative-text={sortTitle}    title={sortTitle}
-                                            onselect={handleSortSelect} >
-                        <template for:each={sortFields} for:item="iterField">
-                            <lightning-menu-item    key={iterField.fieldName}
-                                                    value={iterField.fieldName}
-                                                    label={iterField.label} 
-                                                    icon-name={iterField.iconName}>
-                            </lightning-menu-item> 
-                        </template>
-                    </lightning-button-menu>
-                </template>
-
-                <!-- Filter Action (if chosen)  -->
-                <template if:true={showSearch}>
-                    <lightning-button-icon-stateful icon-name="utility:filterList"  size={buttonSize}
-                                                    alternative-text={filterTitle}  title={filterTitle}
-                                                    selected={isFiltered}           variant="border-filled"
-                                                    onclick={handleFilterShow}>
-                    </lightning-button-icon-stateful>
-                    <template if:true={showFilter}>
-                        <!-- slds-popover_full-width slds-popover_large slds-theme_shade slds-popover_walkthrough slds-popover_walkthrough-alt slds-popover_brand -->
-                        <section    class="slds-popover slds-nubbin_top-right slds-dynamic-menu slds-popover_full-width filterPopup"
-                                    role="dialog" style="position:absolute;right:22px;top:52px;">
-                            <div class="slds-popover__body slds-var-p-around_medium">
-                                <lightning-button-group class="slds-col slds-text-color_default slds-align_absolute-center">
-                                    <!-- slds-truncate formatSearchScope formatSearchScope variant="border-filled" filterScope.label slds-has-flexi-truncate slds-hyphenate slds-truncate -->
-                                    <lightning-button-menu  class="filterSelect"
-                                                            alternative-text={filterScopeTitle} title={filterScope.label}
-                                                            label={formatSearchScope}           value={filterScope}
-                                                            onselect={handleFilterSelect}>
-                                        <template for:each={filterFields} for:item="iterFilter"> 
-                                            <lightning-menu-item    key={iterFilter.fieldName}
-                                                                    label={iterFilter.label}
-                                                                    value={iterFilter}
-                                                                    checked={iterFilter.selected}>
-                                            </lightning-menu-item>
-                                        </template>
-                                    </lightning-button-menu>
-                                    <!-- slds-button_stretch slds-button_full-width -->
-                                    <div onkeyup={handleFilterReset} class="slds-button_last" >
-                                        <lightning-input    class="filterInput"
-                                                            placeholder={filterPlaceholder}
-                                                            type="search"
-                                                            value={filterString}
-                                                            variant="label-hidden"
-                                                            title={filterString}
-                                                            onchange={handleFilterChange}>
-                                        </lightning-input>
-                                    </div>
-                                    <lightning-button-icon  icon-name="utility:filter"
-                                                            variant="brand"                 class="slds-button_last"
-                                                            alternative-text={filterApply}  title={filterApplyTitle}
-                                                            onclick={handleFilterApply}>
-                                    </lightning-button-icon>
-                                    <lightning-button-icon  icon-name="utility:close"
-                                                            variant="bare-inverse"          class="slds-var-m-left_medium"
-                                                            alternative-text={filterClose}  title={filterCloseTitle}
-                                                            onclick={handleFilterShow}>
-                                    </lightning-button-icon>
-                                </lightning-button-group>
-                                <template if:true={isFiltering}>
-                                    <lightning-spinner alternative-text={searchLabel} size="medium">
-                                    </lightning-spinner>
-                                </template>
-                            </div>
-                        </section>
+                <lightning-button-group>
+                    <!-- Export Action -->
+                    <template if:true={showExport}>
+                        <lightning-button-icon
+                                icon-name="utility:download"    size={buttonSize}
+                                variant="border-filled"
+                                alternative-text={exportTitle}  title={exportTitle}
+                                onclick={handleExport}>
+                        </lightning-button-icon>
                     </template>
-                </template>
 
-                <!-- Refresh Action -->
-                <lightning-button-icon  icon-name="utility:refresh"     size={buttonSize}
-                                        variant="border-filled"
-                                        alternative-text={refreshTitle} title={refreshTitle}
-                                        onclick={handleRefresh}>
-                </lightning-button-icon>
-            </lightning-button-group>
-           
+                    <!-- Sort Action (on list display) -->
+                    <template if:true={showSort}>
+                        <lightning-button-menu  icon-name="utility:sort"        icon-size={buttonSize}
+                                                variant="border-filled"         menu-alignment="right"
+                                                alternative-text={sortTitle}    title={sortTitle}
+                                                onselect={handleSortSelect} >
+                            <template for:each={sortFields} for:item="iterField">
+                                <lightning-menu-item    key={iterField.fieldName}
+                                                        value={iterField.fieldName}
+                                                        label={iterField.label} 
+                                                        icon-name={iterField.iconName}>
+                                </lightning-menu-item> 
+                            </template>
+                        </lightning-button-menu>
+                    </template>
+
+                    <!-- Filter Action (if chosen)  -->
+                    <template if:true={showSearch}>
+                        <lightning-button-icon-stateful icon-name="utility:filterList"  size={buttonSize}
+                                                        alternative-text={filterTitle}  title={filterTitle}
+                                                        selected={isFiltered}           variant="border-filled"
+                                                        onclick={handleFilterShow}>
+                        </lightning-button-icon-stateful>
+                        <template if:true={showFilter}>
+                            <!-- slds-popover_full-width slds-popover_large slds-theme_shade slds-popover_walkthrough slds-popover_walkthrough-alt slds-popover_brand -->
+                            <section    class="slds-popover slds-nubbin_top-right slds-dynamic-menu slds-popover_full-width filterPopup"
+                                        role="dialog" style="position:absolute;right:23px;top:52px;">
+                                <div class="slds-popover__body slds-var-p-around_medium">
+                                    <lightning-button-group class="slds-col slds-text-color_default slds-align_absolute-center">
+                                        <!-- slds-truncate formatSearchScope formatSearchScope variant="border-filled" filterScope.label slds-has-flexi-truncate slds-hyphenate slds-truncate -->
+                                        <lightning-button-menu  class="filterSelect"
+                                                                alternative-text={filterScopeTitle} title={filterScope.label}
+                                                                label={formatSearchScope}           value={filterScope}
+                                                                onselect={handleFilterSelect}>
+                                            <template for:each={filterFields} for:item="iterFilter"> 
+                                                <lightning-menu-item    key={iterFilter.fieldName}
+                                                                        label={iterFilter.label}
+                                                                        value={iterFilter}
+                                                                        checked={iterFilter.selected}>
+                                                </lightning-menu-item>
+                                            </template>
+                                        </lightning-button-menu>
+                                        <!-- slds-button_stretch slds-button_full-width -->
+                                        <div onkeyup={handleFilterReset} class="slds-button_last" >
+                                            <lightning-input    class="filterInput"
+                                                                placeholder={filterPlaceholder}
+                                                                type="search"
+                                                                value={filterString}
+                                                                variant="label-hidden"
+                                                                title={filterString}
+                                                                    onchange={handleFilterChange}>
+                                            </lightning-input>
+                                        </div>
+                                        <lightning-button-icon  icon-name="utility:filter"
+                                                                variant="brand"                 class="slds-button_last"
+                                                                alternative-text={filterApply}  title={filterApplyTitle}
+                                                                onclick={handleFilterApply}>
+                                        </lightning-button-icon>
+                                        <lightning-button-icon  icon-name="utility:close"
+                                                                variant="bare-inverse"          class="slds-var-m-left_medium"
+                                                                alternative-text={filterClose}  title={filterCloseTitle}
+                                                                onclick={handleFilterShow}>
+                                        </lightning-button-icon>
+                                    </lightning-button-group>
+                                    <template if:true={isFiltering}>
+                                        <lightning-spinner alternative-text={searchLabel} size="medium">
+                                        </lightning-spinner>
+                                    </template>
+                                </div>
+                            </section>
+                        </template>
+                    </template>
+
+                    <!-- Refresh Action -->
+                    <lightning-button-icon  icon-name="utility:refresh"     size={buttonSize}
+                                            variant="border-filled"
+                                            alternative-text={refreshTitle} title={refreshTitle}
+                                            onclick={handleRefresh}>
+                    </lightning-button-icon>
+                </lightning-button-group>
+            </div>
+
             <!-- Debug information display -->
             <!-- style="text-align:left; width:100%;" -->
             <template if:true={isDebug}>

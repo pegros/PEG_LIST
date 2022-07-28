@@ -217,6 +217,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             getConfiguration({name: this.configName})
             .then( result => {
                 if (this.isDebug) console.log('connected: configuration received  ',result);
+                if (this.isDebug) console.log('connected: for config ',this.configName);
                 sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
                 try {
                     ACTION_CONFIGS[this.configName] = {
