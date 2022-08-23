@@ -874,8 +874,7 @@ _Note_: Whenever a error occurs, the error message provided is automatically dis
 ### **Notification** Action Types (**utility**, **action** and **notify**)
 
 Three Action Types are available to relay actions to other components leveraging the the
-[Lightning Message Service]
-(https://developer.salesforce.com/docs/component-library/bundle/lightning-message-service/documentation) 
+[Lightning Message Service](https://developer.salesforce.com/docs/component-library/bundle/lightning-message-service/documentation) 
 in default scope. 
 
 * **utility** enables to notify the **sfpegActionHandlerCmp** utility bar component and let it execute an operation.
