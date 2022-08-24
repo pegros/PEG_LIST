@@ -97,9 +97,10 @@
 
                                     <template if:true={headerConfig.details}>
                                         <div class={titleDetailsClass}>
-                                            <ul class="slds-list_horizontal slds-has-dividers_left slds-listbox slds-listbox_horizontal">
+                                            <ul class="slds-list_horizontal slds-has-dividers_right slds-listbox slds-listbox_horizontal">
                                                 <template for:each={headerConfig.details} for:item="iterFieldH">
-                                                    <li key={iterFieldH.name} class="slds-item" title={iterFieldH.label}>
+                                                    <li key={iterFieldH.name}       data-name={iterFieldH.name}
+                                                        title={iterFieldH.label}    class="slds-item headerField">
                                                         <lightning-output-field field-name={iterFieldH.name}
                                                                                 field-class={fieldClass} 
                                                                                 variant="label-hidden" >
@@ -138,7 +139,7 @@
                         <div class={detailsClass}>
                             <!-- Horizontal list display mode -->
                             <template if:false={isGridDisplay}>
-                                <ul class="slds-list_horizontal slds-has-dividers_left slds-listbox slds-listbox_horizontal">
+                                <ul class="slds-list_horizontal slds-has-dividers_right slds-listbox slds-listbox_horizontal">
                                     <template for:each={detailsConfig} for:item="iterField">
                                         <li key={iterField.name} class="slds-item" title={iterField.label}>
                                             <lightning-output-field field-name={iterField.name}

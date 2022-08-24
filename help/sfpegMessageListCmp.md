@@ -183,7 +183,7 @@ the `Message Display` property of the custom metadata record should be configure
 ]
 ```
 
-_Note_: the _value_ progress or path widget and the _iconValue_ of a dynamic icon may be computed
+_Note_: the `value` of a _progress_ or _path_ widget and the `iconValue` of a _dynamic icon_ may be computed
 via a formula field but should follow the format expected by the underlying Lightning base component.
 See technical section for links to the appropriate sub-component used to get more detailed information.
 Beware that some values are text ones and others numbers.
@@ -191,7 +191,7 @@ Beware that some values are text ones and others numbers.
 
 ### Simple Custom Page Header
 
-In the following example, there is a single message presenting a summary of the current record, e.g.
+In the following test example, there is a single message presenting a summary of the current record, e.g.
 for a Community in which the Record Type of the object should be emphasized instead of the Salesforce 
 Object Name.<br/>
 ![Simple Header Message](/media/sfpegMessageHeader.png)

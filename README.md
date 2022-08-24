@@ -58,9 +58,15 @@ For now, all commits are made exclusively by the author.
 You may easily deploy it to your Org via a simple SFDX deploy command from the project folder.
 > sfdx force:source:deploy -u _yourOrgAlias_ -w 10 --verbose -p force-app
 
+**Beware** when deploying new versions of the package on an Org having it already installed!
+If you have already customized on your Org the custom labels or static resources included in the package,
+you may need to retrieve first a copy of their current situations before the new package version deployment
+and redeploy them afterwards.
+
+
 ### Usage Prerequisite
 
-**Beware** to assign to your users the **sfpegListUsage** permission set
+Please assign to your users the **sfpegListUsage** permission set
 provided in the package!
 
 Otherwise component initialisations and data fetches will systematically fail

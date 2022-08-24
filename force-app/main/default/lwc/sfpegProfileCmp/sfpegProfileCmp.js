@@ -524,13 +524,12 @@ export default class SfpegProfileCmp extends LightningElement {
             let badgeValue = (event.detail.records[this.recordId]).fields[this.configDetails.header.badge];
             if (this.isDebug) console.log('handleFormLoad: badgeValue extracted ',JSON.stringify(badgeValue));
 
-            
             let badgeDisplayDiv = this.template.querySelector(".profileBadge");
             if (this.isDebug) console.log('handleFormLoad: badgeDisplayDiv  ',badgeDisplayDiv);
             let badgeDisplayDiv2 = this.template.querySelector("#" + this.configDetails.header.badge);
             if (this.isDebug) console.log('handleFormLoad: badgeDisplayDiv2  ',badgeDisplayDiv2);
             if (badgeDisplayDiv) {
-                if (badgeValue.value) {
+                if (badgeValue?.value) {
                     if (this.isDebug) console.log('handleFormLoad: displaying badge  ');
                     badgeDisplayDiv.classList.remove("slds-hidden");
                 }
@@ -543,6 +542,23 @@ export default class SfpegProfileCmp extends LightningElement {
                 if (this.isDebug) console.log('handleFormLoad: badge div not found');
             }
         }
+
+        const outputFields = this.template.querySelectorAll('.headerField');
+        if (this.isDebug) console.log('handleFormLoad: outputFields fetched',outputFields);
+        if (outputFields) {
+            outputFields.forEach(item => {
+                if (this.isDebug) console.log('handleFormLoad: processing field', item);
+                const fieldName = item.dataset.name;
+                if (this.isDebug) console.log('handleFormLoad: fieldName extracted',fieldName);
+                const fieldValue = (event.detail.records[this.recordId]).fields[fieldName];
+                if (this.isDebug) console.log('handleFormLoad: fieldValue fetched',fieldValue);
+                if (fieldValue?.value == null) {
+                    if (this.isDebug) console.log('handleFormLoad: hiding field');
+                    item.classList.add("slds-hide");
+                }
+            });
+        }
+
         if (this.isDebug) console.log('handleFormLoad: END');
     }
 }
