@@ -89,6 +89,7 @@ export default class SfpegListCmp extends LightningElement {
     // Internal Initialization Parameters
     //----------------------------------------------------------------
     @track isReady = false;         // Initialization state of the component (to control spinner)
+    @track isExpandDone = false;    // Execution state of the expandAll operation (for treeGrid in expandAll property set)
     @track configDetails = null;    // Global configuration of the component
     
     // Internal Query Control Parameters
@@ -397,18 +398,27 @@ export default class SfpegListCmp extends LightningElement {
         }
     }
 
-    /*
     renderedCallback() {
         if (this.isDebug) console.log('renderedCallback: START');
 
-        let divWrapper = this.template.querySelector('.filterPopup');
-        if (this.isDebug) console.log('renderedCallback: divWrapper fetched ', divWrapper);
-        if (this.isDebug) console.log('renderedCallback: divWrapper client width ', divWrapper?.clientWidth);
-        if (this.isDebug) console.log('renderedCallback: divWrapper ofsset width ', divWrapper?.offsetWidth);
+        if ((this.isReady) && (!this.isExpandDone) && (this.configDetails?.type === "TreeGrid") && (this.configDetails?.display?.expandAll)){
+            if (this.isDebug) console.log('renderedCallback: expanding tree grid by default');
+
+            const treeGridCmp =  this.template.querySelector('lightning-tree-grid');
+            if (this.isDebug) console.log('renderedCallback: treeGridCmp fetched ', treeGridCmp);
+
+            if (treeGridCmp) {
+                treeGridCmp.expandAll();
+                this.isExpandDone = true;
+                if (this.isDebug) console.log('renderedCallback: treeGridCmp expanded');
+            }
+            else {
+                if (this.isDebug) console.log('renderedCallback: treeGridCmp not yet rendered');
+            }
+        }
 
         if (this.isDebug) console.log('renderedCallback: END');
     }
-    */
 
     //----------------------------------------------------------------
     // Contextual Data Fetch via LDS
@@ -827,6 +837,7 @@ export default class SfpegListCmp extends LightningElement {
     // Refresh action handling
     handleRefresh(event){
         if (this.isDebug) console.log('handleRefresh: START');
+        this.isExpandDone = false;
         this.executeQuery();
         if (this.isDebug) console.log('handleRefresh: END');
     }

@@ -4,7 +4,7 @@
 
 ## Introduction
 
-The **sfpegActionHandlerCmp** component is bascially the same as the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** 
+The **sfpegActionHandlerCmp** component is basically the same as the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** 
 but includes some specific behaviours specific to the utility bar.<br/>
 ![Action utility](/media/sfpegActionUtility.png) 
 
@@ -25,10 +25,15 @@ When configuring a Lightning App, the **sfpegActionHandlerCmp** component may be
 **Utilities** of the app. It basically requires to select one of the available **sfpegAction__mdt** 
 custom metadata records to define the set of actions to be displayed in the utility bar.
 
-Such a configuration remains optional, only `utility` action types (see herefafter) being handled by
-the component by default. ***Beware*** to opt for automatic component launch in the App Builder
-(`Start automatically` checkbox in the component utility bar configuration), in order to
-properly support this feature even before having opened the action menu in the utility bar.
+Such a configuration remains optional, only `utility` action types (see hereafter) being handled by
+the component if the `Handle Notifications?` property is checked.
+***Beware*** to :
+* opt for automatic component launch in the App Utility Item Settings (standard `Start automatically`
+checkbox in the component configuration) for the component in charge of handling the `utility` action types,
+in order to properly support this feature even before having opened the action menu in the utility bar.
+* check only once the `Handle Notifications?` checkbox if the component is used multiple times in the
+utility bar with different action menus, in order to prevent a same action from being executed multiple
+times.
 
 ---
 

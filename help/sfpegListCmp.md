@@ -135,15 +135,16 @@ the JSON display configuration of the standard
         this field containing the actual icon name to be used) 
         * `cardNbr` and `fieldNbr` to respectively set the number per row of tiles and fields (within a tile,
         if _CardList_ mode is used) 
-    * An optional  `menu` property describing the row action menu (`name`, `label` and optional `icon` of each menu
-    item) to be displayed in each tile / at the end of each data-table /tree-grid row (see `Row Actions` below).
+    * An optional `menu` property describing the row action menu (`name`, `label` and optional `icon` of each menu
+    item) to be displayed in each tile / at the end of each _DataTable_/_TreeGrid_ row (see `Row Actions` below).
     * An optional `variant` property enables to alter the display of the tiles
         * For now, two values are available, i.e. _base_ for default tile box display or _timeline_ for timeline like display (no box, vertical grey border under the icon)
     * An optional `details` property enabling to set a second list of fields (similar to the `fields` one)
         * setting this property activates an expand/collapse on the tile content
         * when expanded, the fields of this list are displayed below the main ones in a _cardList_ mode
+    * An optional `expandAll` property enabling to force all rows of a _TreeGrid_ to be fully expanded by default.
 * `Flatten Results?` to activate fetched data JSON structure ***flattening*** in order to let related record data being
-properly displayed within _DataTree_ or _TreeGrid_ components (which do not support displaying data from JSON sub-objects,
+properly displayed within _DataTable_ or _TreeGrid_ components (which do not support displaying data from JSON sub-objects,
 as when related record fields are fetched)
 * `Row Actions` definining the actions available at row level 
     * It should simply provide the developer name of a **sfpegAction__mdt** custom metadata record containing the actions
