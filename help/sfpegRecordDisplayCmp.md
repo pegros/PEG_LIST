@@ -81,7 +81,7 @@ The main `Display Configuration` property is a JSON object with the following pr
 ⚠️ **Beware** : when using **merge** tokens (see **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** ),
 please pay attention to the possible double quotes within the field values, which completely break the JSON parsing after merge.
 In such cases, explicit **ESCAPE(((...)))** directives are required required. This is especially relevant 
-when using this component especially meant to display text or richtext areas.
+when using this component with to display text or richtext areas.
 
 
 
@@ -103,7 +103,9 @@ For the displayed component example, the configuration is the following.
                 {"value":"ESCAPE((({{{RCD.Messages__c}}})))","type":"richText","label":"Messages","size":6}] },
         {   "label":"Operations",
             "fields":[
-                {"value":"ESCAPE((({{{RCD.Conditions__c}}})))","type":"richText","title":"Conditions"}],
+                {"value":"ESCAPE((({{{RCD.Conditions__c}}})))","type":"richText","title":"Conditions"},
+                {"value": "<a href=\"/{{{RCD.OwnerId}}}\" title=\"{{{RCD.Owner.Name}}}\">{{{RCD.Owner.Name}}}</a>",
+                    "label": "Responsable", "type": "richText","size": 6 }],
             "list":{"name":"soslList","title":"SOSL List"}}
     ]
 }

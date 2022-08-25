@@ -23,7 +23,7 @@ The supported type values are very similar to the ones listed for the standard
 [lightning-datatable](https://developer.salesforce.com/docs/component-library/bundle/lightning-datatable/documentation) component:
 * _boolean_ displays a [lightning-icon](https://developer.salesforce.com/docs/component-library/bundle/lightning-icon/documentation) depending on the value (`utility:check` if true, `utility:step` if false)
 * _email_ displays a [lightning-formatted-email](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-email/documentation) with hidden icon.
-* _phone_displays a [lightning-formatted-phone](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-phone/documentation)
+* _phone_ displays a [lightning-formatted-phone](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-phone/documentation)
 * _number_ displays a [lightning-formatted-number](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-number/documentation) in decimal style
 * _percent_ displays a [lightning-formatted-number](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-number/documentation) in percent style, the provided value being divided by 100
 * _currency_ displays a [lightning-formatted-number](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-number/documentation) in currency style with the user currency

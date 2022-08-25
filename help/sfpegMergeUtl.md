@@ -25,7 +25,7 @@ As a baseline, the ** component provides the following set of token types:
     * `fieldName` should correspond to the API name of the field value to fetch, e.g. RCD.Name for the record Name
     * Lookups may be leveraged, e.g. RCD.Owner.Profile.Name
     * Note: `GEN.recordId` is far more efficient than `RCD.Id` to fetch the current record Id
-    * Values are fetcched via the **[Lightning Data Service](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.data_ui_api)** and this token type only works with
+    * Values are fetched via the **[Lightning Data Service](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.data_ui_api)** and this token type only works with
     [LDS supported objects](https://developer.salesforce.com/docs/atlas.en-us.uiapi.meta/uiapi/ui_api_all_supported_objects.htm) (e.g. Tasks, Events, Knowledge__kav are not) 
 * **USR.fieldName** for data about the current user
     * It behaves exactly like the **RCD** token
@@ -65,8 +65,12 @@ leverages multiple tokens.
 ```
 
 _Note_:
-* When using merge **tokens** for picklist fields, the API value is merged instead of the label!
-* When merging _boolean_ or _numeric_ fields in a configuration, double quotes should not be set around the merge **token**, as it would result in a string instead of 
+* When using merge **tokens** for _picklist_ fields in **USR** of **RCD** tokens, the value _code_ is merged.
+In order to merge the value _label_ instead, please add `.LBL` at the end of the field name
+(e.g. `{{{RCD.Status__c}}}` for the status code vs `{{{RCD.Status__c.LBL}}}` for the status label)
+* When merging _boolean_ or _numeric_ fields in a configuration, double quotes should not be set around
+the merge **token**, as it would result in a string instead of a boolean/number
+(e.g. `"isActive":{{{RCD.IsActive__c}}}` to get `"isActive":true` after merge)
 
 
 ---

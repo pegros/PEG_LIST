@@ -76,29 +76,41 @@ const sfpegMergeUtl = {
             let splitIndex = iterName.indexOf('.');
             let iterDomain = iterName.slice(0, splitIndex);
             let iterField = iterName.slice(splitIndex +1);
+            let iterBase = iterField;
+            let iterUseLabel = false;
+            if (iterField.endsWith('.LBL')) {
+                iterUseLabel = true;
+                iterBase = iterBase.slice(0,-4);
+                iterField = iterBase + '_LBL';
+                if (sfpegMergeUtl.isDebug) console.log('extractTokens: label mode set for picklist ', iterBase);
+            }
             if (!resultTokens[iterDomain]) resultTokens[iterDomain] = {'tokens':[],'ldsFields':[]};
 
             switch (iterDomain) {
                 case 'RCD' : 
                     resultTokens[iterDomain].tokens.push({
-                        "token":    iterKey,
-                        "field":    iterField,
-                        "ldsField": objectName + '.' + iterField
+                        "token":        iterKey,
+                        "field":        iterField,
+                        "soqlField":    iterBase,
+                        "ldsField":     objectName + '.' + iterBase,
+                        "useLabel":     iterUseLabel
                     });
-                    resultTokens[iterDomain].ldsFields.push(objectName + '.' + iterField);
+                    resultTokens[iterDomain].ldsFields.push(objectName + '.' + iterBase);
                     break;
                 case 'USR' :
                     resultTokens[iterDomain].tokens.push({
-                        "token":    iterKey,
-                        "field":    iterField,
-                        "ldsField": 'User.' + iterField
+                        "token":        iterKey,
+                        "field":        iterField,
+                        "soqlField":    iterBase,
+                        "ldsField":     'User.' + iterBase,
+                        "useLabel":     iterUseLabel
                     });
-                    resultTokens[iterDomain].ldsFields.push('User.' + iterField);
+                    resultTokens[iterDomain].ldsFields.push('User.' + iterBase);
                     break;
                 default:
                     resultTokens[iterDomain].tokens.push({
-                        "token":    iterKey,
-                        "field":    iterField
+                        "token":        iterKey,
+                        "field":        iterField
                     });
             }
         });
@@ -188,27 +200,28 @@ const sfpegMergeUtl = {
 
         let resultData = {};
         resultData[domain]={};
-        let recordFields = new Set();
+        let recordFields = new Set();   // Fields missing in the provided recordData
+        let queryFields = new Set();    // Same set but including possible TOLABEL() statements for picklist fields
         (tokenDomain.tokens).forEach(iterField => {
-            //recordFields.push(recordObject + '.' + iterField.field);
-            /*if ((recordData) && (recordData[iterField.field])) {
-                if (sfpegMergeUtl.isDebug) console.log('getRecordData: taking contextual data for field ',iterField.field);
-                (resultData[domain])[iterField.field] = recordData[iterField.field];
-            }
-            else if ((recordData) && (iterField.field in recordData)) {
-                if (sfpegMergeUtl.isDebug) console.log('getRecordData: taking contextual null data for field ',iterField.field);
-                (resultData[domain])[iterField.field] = null;
-            }*/
             if ((recordData) && (iterField.field in recordData)) {
                 if (sfpegMergeUtl.isDebug) console.log('getRecordData: taking contextual data for field ',iterField.field);
                 (resultData[domain])[iterField.field] = recordData[iterField.field];
             }
             else {
                 if (sfpegMergeUtl.isDebug) console.log('getRecordData: registrating field for fetch ',iterField.field);
+                //recordFields.add(iterField.field);
                 recordFields.add(iterField.field);
+                if (iterField.useLabel) {
+                    if (sfpegMergeUtl.isDebug) console.log('getRecordData: fetching picklist labels ');
+                    queryFields.add('TOLABEL(' + iterField.soqlField + ') ' + iterField.field);
+                }
+                else {
+                    queryFields.add(iterField.field);
+                }
             }
         });
         if (sfpegMergeUtl.isDebug) console.log('getRecordData: recordFields init ', JSON.stringify(Array.from(recordFields)));
+        if (sfpegMergeUtl.isDebug) console.log('getRecordData: queryFields init ', JSON.stringify(Array.from(queryFields)));
         if (sfpegMergeUtl.isDebug) console.log('getRecordData: resultData init ', JSON.stringify(resultData));
 
         if (sfpegMergeUtl.isDebug) console.log('getRecordData: END returning promise');
@@ -216,7 +229,7 @@ const sfpegMergeUtl = {
             if (recordFields.size > 0) {
                 if (sfpegMergeUtl.isDebug) console.log('getRecordData: fetching recordFields ');
                 
-                getRecord({ "objectName": objectName,  "recordId": recordId, "fieldNames": Array.from(recordFields) })
+                getRecord({ "objectName": objectName,  "recordId": recordId, "fieldNames": Array.from(queryFields) })
                 .then((resValues) => {
                     if (sfpegMergeUtl.isDebug) console.log('getRecordData: Record data received ',resValues);
                     (recordFields).forEach(iterField => {
@@ -395,17 +408,16 @@ const sfpegMergeUtl = {
 
                     let iterValue = tokenDataMap[iterDomain][iterField.field];
                     if (sfpegMergeUtl.isDebug) console.log('setTokenValues: field value fetched ',iterValue);
-                    
+
+                    let iterRegex = new RegExp(iterField.token, 'g');
                     if ((iterValue !== undefined) && (iterValue !== null))  {
-                        let iterRegex = new RegExp(iterField.token, 'g');
                         mergedTemplate = mergedTemplate.replace(iterRegex,iterValue);
-                        if (sfpegMergeUtl.isDebug) console.log('setTokenValues: merge done');
+                        if (sfpegMergeUtl.isDebug) console.log('setTokenValues: merge done on token ',iterField.token);
                     }
                     else {
                         if (sfpegMergeUtl.isDebug) console.log('setTokenValues: empty/null value to merge');
-                        let iterRegex = new RegExp(iterField.token, 'g');
                         mergedTemplate = mergedTemplate.replace(iterRegex,'');
-                        if (sfpegMergeUtl.isDebug) console.log('setTokenValues: merge done')
+                        if (sfpegMergeUtl.isDebug) console.log('setTokenValues: merge done on token ',iterField.token)
                     }               
                 });
             }
@@ -413,7 +425,7 @@ const sfpegMergeUtl = {
                 console.warn('setTokenValues: ignoring domain (no data provided) ',iterDomain);
             }
         }
-        
+
         if (sfpegMergeUtl.isDebug) console.log('setTokenValues: END OK - returning ',mergedTemplate);
         return mergedTemplate;
     },
@@ -431,7 +443,7 @@ const sfpegMergeUtl = {
         tokenDomain.tokens.forEach(iterField => {
             if (sfpegMergeUtl.isDebug) console.log('convertLdsData: processing field ', JSON.stringify(iterField));
             //if (sfpegMergeUtl.isDebug) console.log('convertLdsData: providing ', JSON.stringify(ldsData.fields));
-            tokenData[iterField.field] = sfpegMergeUtl.getLdsValue(ldsData.fields, iterField.field);
+            tokenData[iterField.field] = sfpegMergeUtl.getLdsValue(ldsData.fields, iterField.soqlField, iterField.useLabel);
         });
         if (sfpegMergeUtl.isDebug) console.log('convertLdsData: END with ', JSON.stringify(tokenData));
         return tokenData;
@@ -580,9 +592,10 @@ const sfpegMergeUtl = {
     // a LDS provided data structure (i.e. with 'value.fields'
     // substructures)
     //#########################################################
-    getLdsValue : function (record,field) {
+    getLdsValue : function (record,field, useLabel) {
         if (sfpegMergeUtl.isDebug) console.log('getLdsValue: START with field ',field);
         if (sfpegMergeUtl.isDebug) console.log('getLdsValue: record provided ',record);
+        if (sfpegMergeUtl.isDebug) console.log('getLdsValue: toLabel provided ',useLabel);
 
         if ((field) && (record)) {
             if (field.includes('.')) {
@@ -594,7 +607,7 @@ const sfpegMergeUtl = {
                 let subFields = field.substring(index+1);
                 if (record[relationField].value) {
                     if (sfpegMergeUtl.isDebug) console.log('getLdsValue: END - fetching next field in relation ',subFields);
-                    return sfpegMergeUtl.getLdsValue(record[relationField].value.fields,subFields);
+                    return sfpegMergeUtl.getLdsValue(record[relationField].value.fields,subFields,useLabel);
                 }
                 else {
                     console.warn('getLdsValue: END - No data for next field in relation',subFields);
@@ -603,7 +616,7 @@ const sfpegMergeUtl = {
             }
             else {
                 if (sfpegMergeUtl.isDebug) console.log('getLdsValue: END - returning simple field ',record[field].value);
-                return record[field].value;
+                return (useLabel ? record[field].displayValue : record[field].value);
             }
         }
         else {
