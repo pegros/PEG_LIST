@@ -67,7 +67,7 @@ display of record number, number of header actions displayed before overflow...)
 
 However, most of the configuration lies in two custom metadata referenced records (see orange zones below):
 * a **sfpegList__mdt** record for the data fetch & display
-* a **sfpegAction__mdt** record for the custom header actions (see **[sfpegActionBarCmp](/help/sfpegActionBar.md)** for details)
+* a **sfpegAction__mdt** record for the custom header actions (see **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** for details)
 
 ![List App Builder Configuration](/media/sfpegListConfiguration.png)
 
@@ -218,7 +218,7 @@ well.
 
 This list of row selected rows is then automatically made available (and updated) to
 the header action component to support the trigger of ***mass actions*** on this base (see 
-**[sfpegActionBarCmp](/help/sfpegActionBar.md)** for details), e.g. to mass edit selected records.
+**[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** for details), e.g. to mass edit selected records.
 
 Hereafter is an example of a mass update form with a ***refresh*** after update.
 ```
@@ -254,7 +254,7 @@ Hereafter is an example of a mass update form with a ***refresh*** after update.
 ### Specific Action Features
 
 The **sfpegListCmp** includes some specific features concerning the action functionality provided
-by the **[sfpegActionBarCmp](/help/sfpegActionBar.md)**
+by the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**
 
 * It provides a specific ***refresh*** action type to force a reload of the displayed data,
 usually called within a `next` action property (e.g. to execute a list reload after a

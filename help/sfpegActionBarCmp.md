@@ -381,8 +381,8 @@ Both action types are actually shortcuts for usual **navigation** one.
 ### **openURL** Action Type
 
 The **openURL** action type enables to force the opening of a Web page in a different browser tab (via a `window.open()` javascript call instead of the Lightning navigation service).
-    * `url` is the main property to define with the target URL to use
-    * some URL rework directives are available but still pending actual large scale use cases to be officially supported (and documented)
+* `url` is the main property to define with the target URL to use
+* some URL rework directives are available but still pending actual large scale use cases to be officially supported (and documented)
 ```
 {
     "name":"search",
@@ -437,7 +437,7 @@ to present information fetched by the query but not displayed in the layout.
 Two Action Types are available to execute direct record operation (create, update, delete), either via the Ligthning Data Service (LDS, preferrable) or via direct database operation (DML, for non LDS supported objects). A confirmation
 popup is usually displayed to the user before executing the operation. 
 
-* **LDS** to trigger a single record direct create/update/delete via the Lightning Data Service
+* **LDS** to trigger a single record direct create/update/delete via the **Lightning Data Service**
     * `title` and `message` properties enable to set the corresponding text elements in the top part of the displayed user confimation popup (default values being applied otherwise, see **sfpegActionDefault...** custom labels).
     * `bypassConfirm` boolean property enable to bypass the confirmation step 
     * `params` property should define the `type` of the LDS action to execute (_create_, _update_ or _delete_) and provide the parameters to be provided to the corresponding [uiRecordApi](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.reference_lightning_ui_api_record) primitive, i.e. create, update or delete.
@@ -514,7 +514,8 @@ popup is usually displayed to the user before executing the operation.
                 }]
             }
         }
-    },
+    }
+},
 {
     "name": "close", "label":"Close",
     "action": {
@@ -606,7 +607,7 @@ base component (updates being then made via LDS)
     `fields` and the LDS standard submission is replaced by a DML on the `record`.
     * All output form field values are applied on the `record` before the DML (with the same API name unless
     a `fieldMapping` JSON object property is provided (`{ "formFieldName": "recordFieldName",....}`).
-    * In the example below, a *TST_TaskProxy__c* custom object has been created with a single *Reason__c* field leveraging the same API name & picklist global value set as the *Reason__c* field configured on the Task object (as the *Task* object is not supportyedd by the LDS).
+    * In the example below, a *TST_TaskProxy__c* custom object has been created with a single *Reason__c* field leveraging the same API name & picklist global value set as the *Reason__c* field configured on the Task object (as the *Task* object is not supported by the LDS).
 ```
 {
     "name": "close", "label": "Close",
@@ -655,7 +656,7 @@ Various properties are available to customise the experience:
 ```
 
 * **apexForm** : PLANNED
-    * Same behaviour as the ldsForm but with the ability to fetch/update data via Apex calls
+    * Same behaviour as the **ldsForm** but with the ability to fetch/update data via Apex calls
     instead of LDS (e.g. to perform callouts to external systems).
 
 _Note_: Whenever a error occurs, the error message provided is automatically displayed in an error toast popup.

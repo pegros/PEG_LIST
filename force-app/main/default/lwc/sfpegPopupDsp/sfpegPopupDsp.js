@@ -354,6 +354,7 @@ export default class SfpegPopupDsp extends LightningElement {
         if (this.isDebug) console.log('handleLoad: START',event);
         if (this.isDebug) console.log('handleLoad: load details ', JSON.stringify(event.detail));
         this.showSpinner = false;
+        if (this.isDebug) console.log('handleLoad: END');
     }
 
     handleSubmit(event){

@@ -14,7 +14,7 @@ All this process is handled on client side in the LWC components using them.
 
 ## Available Default Merge Tokens
 
-As a baseline, the ** component provides the following set of token types:
+As a baseline, the **sfpegMergeUtl** component provides the following set of token types:
 * **GEN.xxx** to fetch some generic elements :
     * `GEN.objectApiName` and `GEN.recordId` for the Object name and Salesforce record Id of the current page (when applicable)
     * `GEN.userId` for the Salesforce record Id of the current User
@@ -23,7 +23,7 @@ As a baseline, the ** component provides the following set of token types:
         * To get these values in user local format (e.g. for message display), `Local` should be appended to the token name (e.g. `GEN.todayLocal`).
 * **RCD.fieldName** for data about the current record (if its object is supported by the Lightning Data Service)
     * `fieldName` should correspond to the API name of the field value to fetch, e.g. RCD.Name for the record Name
-    * Lookups may be leveraged, e.g. RCD.Owner.Profile.Name
+    * Lookups may be leveraged, e.g. `{{{RCD.Owner.Profile.Name}}}`.
     * Note: `GEN.recordId` is far more efficient than `RCD.Id` to fetch the current record Id
     * Values are fetched via the **[Lightning Data Service](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.data_ui_api)** and this token type only works with
     [LDS supported objects](https://developer.salesforce.com/docs/atlas.en-us.uiapi.meta/uiapi/ui_api_all_supported_objects.htm) (e.g. Tasks, Events, Knowledge__kav are not) 
@@ -36,13 +36,13 @@ As a baseline, the ** component provides the following set of token types:
     * This usually applies when a component uses additional contextual data (e.g. a parent record) in addition 
     to other record / user / row data. Currently possible from the **sfpegActionBarCmp** component only via its
     `parentContext` property (more to come soon).
-    * Syntax is similar to **ROW**, **RCCD** and **USR** tokens.
+    * Syntax is similar to **ROW**, **RCD** and **USR** tokens.
 * **LBL.labelName** to retrieve a custom label value in the user language
 * **RT.objectApiName.developerName** to retrieve the Salesforce ID for a given Record Type of an Object
 * **PERM.permissionName** to check if the current user has a given custom permission in its habilitations
     * The result is boolean and is usually used to control the activation of an action/menu
     * The **NPERM** prefix may be used instead of **PERM** to check the opposite (user has not the permission)
-* **VFP.pageName** to get the full URL of a VF page, i.e. with the security token
+* **VFP.pageName** to get the full URL of a VF page, i.e. including the security token
     * This is required when the target page has CSRF protection activated
 
 As an example, the following configuration of a **[sfpegActionBarCmp](/help/sfpegListCmp.md)** component
@@ -70,14 +70,14 @@ In order to merge the value _label_ instead, please add `.LBL` at the end of the
 (e.g. `{{{RCD.Status__c}}}` for the status code vs `{{{RCD.Status__c.LBL}}}` for the status label)
 * When merging _boolean_ or _numeric_ fields in a configuration, double quotes should not be set around
 the merge **token**, as it would result in a string instead of a boolean/number
-(e.g. `"isActive":{{{RCD.IsActive__c}}}` to get `"isActive":true` after merge)
+(e.g. `{"isActive":{{{RCD.IsActive__c}}} }` to get `{"isActive":true }` after merge)
 
 
 ---
 
 ## Post Merge Modifier - Double Quotes **Escape**
 
-As a baseline, the **sfpegMerge** directly replaces the tokens by their value.
+As a baseline, the **sfpegMergeUtl** component directly replaces the tokens by their value.
 
 However, in some cases, some issues may arise when parsing the resulting merged
 string as a JSON list or object. Main origin are the double quotes (") within
