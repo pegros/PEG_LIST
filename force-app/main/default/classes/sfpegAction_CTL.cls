@@ -35,7 +35,7 @@ public with sharing class sfpegAction_CTL {
     * @description  Simple method to fetch configuration details for an Action component.
     *               It provides the set of actions (and menus) as well as the
     *               possible LMS notification channels to subscribe to.
-    * @param        name                DeveloperName of the List configuration record
+    * @param        name                DeveloperName of the Action configuration record
     * @return       Object              sfpegAction__mdt record with Actions__c, NotificationChannels__c,
     *                                   MasterLabel fields filled in.
     * @exception    AuraHandledException    Raised if no configuration found for the provided name
@@ -84,7 +84,7 @@ public with sharing class sfpegAction_CTL {
         }
         System.debug(LoggingLevel.FINEST,'executeAction: className set '  + className);
         System.debug(LoggingLevel.FINEST,'executeAction: methodName set ' + methodName);
-      
+
         Type actionClass = Type.forName(className);
         if (null == actionClass) {
             System.debug(LoggingLevel.WARN,'executeAction: END - action handler not found  for ' + action);

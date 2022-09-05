@@ -273,7 +273,7 @@ export default class SfpegListCmp extends LightningElement {
 
     // Tree Grid mode related getters
     get isTreeGrid() {
-        return (this.configDetails) && (this.configDetails.type === "TreeGrid");
+        return (this.configDetails) && (this.configDetails.type === "TreeGrid") && (this.resultList);
     }
 
     // List mode related getters
@@ -1137,7 +1137,7 @@ export default class SfpegListCmp extends LightningElement {
         this.selectedRecords = event.detail.selectedRows || [];
         if (this.isDebug) console.log('handleRowSelection: selectedRecords updated ',JSON.stringify(this.selectedRecords));
 
-        if (this.isDebug) console.log('handleExport: END');
+        if (this.isDebug) console.log('handleRowSelection: END');
     }
 
     handleExport(event) {

@@ -382,7 +382,8 @@ Both action types are actually shortcuts for usual **navigation** one.
 
 The **openURL** action type enables to force the opening of a Web page in a different browser tab (via a `window.open()` javascript call instead of the Lightning navigation service).
 * `url` is the main property to define with the target URL to use
-* some URL rework directives are available but still pending actual large scale use cases to be officially supported (and documented)
+* some URL rework directives are available (e.g. **SUBSTR()**) but still pending actual large scale use cases to be officially
+supported (and documented).
 ```
 {
     "name":"search",
@@ -395,6 +396,9 @@ The **openURL** action type enables to force the opening of a Web page in a diff
     }
 }
 ```
+
+_Note_: See also [Apex List Retrieval and OpenURL Action with Rework](/help/sfpegListCmp.md) for an example with
+the **SUBSTR()** URL rework directive.
 
 
 ### **showDetails** Action Type
@@ -1012,10 +1016,6 @@ FYI, the configuration of the “*close*” action is the following:
     }
 }
 ```
-
-### OpenURL Action with Rework 
-
-see [Apex List Retrieval and OpenURL Action with Rework](/help/sfpegListCmp.md)
 
 
 ### Custom Action Notification Implementation

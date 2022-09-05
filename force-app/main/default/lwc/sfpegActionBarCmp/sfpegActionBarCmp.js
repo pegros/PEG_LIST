@@ -1268,7 +1268,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                     if (this.isDebug) console.log('triggerMassForm: END / chained error action triggered');
                 }
                 else {
-                    this.showError(error);
+                    this.showError(error,'error','sticky');
                     if (this.isDebug) console.log('triggerMassForm: END / error message displayed');
                 }
             });
@@ -1510,7 +1510,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     //----------------------------------------------------------------
 
     // Error Handling Utilities
-    showError = function(error,severity) {
+    showError = function(error,severity, mode) {
         if (this.isDebug) console.log('showError: START');
 
         if ((!error) || (error.noToast)) {
@@ -1521,6 +1521,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         let errorMessage = {
             title: EXECUTION_ERROR,
             variant: severity || 'error',
+            mode: mode || 'dismissable',
             message : this.parseError(error)
         }
         if (this.isDebug) console.log('showError: errorMessage prepared ', JSON.stringify(errorMessage));
