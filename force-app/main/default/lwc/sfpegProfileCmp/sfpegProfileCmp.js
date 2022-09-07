@@ -551,11 +551,15 @@ export default class SfpegProfileCmp extends LightningElement {
                 const fieldName = item.dataset.name;
                 if (this.isDebug) console.log('handleFormLoad: fieldName extracted',fieldName);
                 const fieldValue = (event.detail.records[this.recordId]).fields[fieldName];
-                if (this.isDebug) console.log('handleFormLoad: fieldValue fetched',fieldValue);
+                if (this.isDebug) console.log('handleFormLoad: fieldValue fetched',JSON.stringify(fieldValue));
                 if (fieldValue?.value == null) {
                     if (this.isDebug) console.log('handleFormLoad: hiding field');
                     item.classList.add("slds-hide");
                 }
+                else {
+                    if (this.isDebug) console.log('handleFormLoad: unhiding field');
+                    item.classList.remove("slds-hide");
+                };
             });
         }
 

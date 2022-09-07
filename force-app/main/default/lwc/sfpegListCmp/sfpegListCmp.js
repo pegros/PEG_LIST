@@ -259,7 +259,7 @@ export default class SfpegListCmp extends LightningElement {
 
     // Data Table mode related getters
     get isDataTable() {
-        return (this.configDetails) && (this.configDetails.type === "DataTable");
+        return (this.configDetails) && (this.configDetails.type === "DataTable"
     }
     get hideCheckbox() {
         return (this.configDetails.display.hideCheckboxColumn == null) || this.configDetails.display.hideCheckboxColumn;
