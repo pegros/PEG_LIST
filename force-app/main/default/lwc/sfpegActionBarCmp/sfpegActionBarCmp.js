@@ -176,11 +176,11 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         return (this.isVertical ? 'slds-m-around_xx-small' : '');
     }
     get showMainActions() {
-        //if (this.isDebug) console.log('showMainActions: returning ', (this.displayedActions && this.displayedActions.length > 0));
+        if (this.isDebug) console.log('showMainActions: returning ', (this.mainActions && this.mainActions.length > 0));
         return (this.mainActions && this.mainActions.length > 0);
     }
     get showOverflowMenu() {
-        //if (this.isDebug) console.log('showActionMenu: returning ', (this.menuActions && this.menuActions.length > 0));
+        if (this.isDebug) console.log('showOverflowMenu: returning ', (this.overflowActions && this.overflowActions.length > 0));
         return (this.overflowActions && this.overflowActions.length > 0);
     }
 
@@ -290,10 +290,10 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                     if (this.isDebug) console.log('rendered: reviewing action group size');
                     if (this.mainActions.length > 0) {
                         let lastAction =  this.mainActions.pop();
-                        if (this.isDebug) console.log('renderedCallback: lastAction popped ', lastAction);
+                        if (this.isDebug) console.log('rendered: lastAction popped ', lastAction);
                         this.overflowActions.unshift(lastAction);
-                        if (this.isDebug) console.log('renderedCallback: mainActions updated ', this.mainActions);
-                        if (this.isDebug) console.log('renderedCallback: overflowActions updated ', this.overflowActions);
+                        if (this.isDebug) console.log('rendered: mainActions updated ', this.mainActions);
+                        if (this.isDebug) console.log('rendered: overflowActions updated ', this.overflowActions);
                     }
                 }
                 //@Todo: refactor this part (work-around because offsetHeight not available directly.)
@@ -307,13 +307,16 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                             if (this.isDebug) console.log('rendered: reviewing action group size');
                             if (this.mainActions.length > 0) {
                                 let lastAction =  this.mainActions.pop();
-                                if (this.isDebug) console.log('renderedCallback: lastAction popped ', lastAction);
+                                if (this.isDebug) console.log('rendered: lastAction popped ', lastAction);
                                 this.overflowActions.unshift(lastAction);
-                                if (this.isDebug) console.log('renderedCallback: mainActions updated ', this.mainActions);
-                                if (this.isDebug) console.log('renderedCallback: overflowActions updated ', this.overflowActions);
+                                if (this.isDebug) console.log('rendered: mainActions updated ', this.mainActions);
+                                if (this.isDebug) console.log('rendered: overflowActions updated ', this.overflowActions);
                             }
                         }
                     }, 0);
+                }
+                else {
+                    if (this.isDebug) console.log('rendered: no action rework required ');
                 }
             }
             else {
@@ -513,10 +516,18 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             //Responsive Handling (horizontal)
             if (!this.isVertical) {
                 if (this.isDebug) console.log('doMerge: maxSize', this.maxSize);
-                this.mainActions = actionList.slice(0,this.maxSize);
-                if (this.isDebug) console.log('doMerge: mainActions init ', this.mainActions);
-                this.overflowActions = actionList.slice(this.maxSize);
-                if (this.isDebug) console.log('doMerge: overflowActions init ', this.overflowActions);
+                if (this.maxSize) {
+                    if (this.isDebug) console.log('doMerge: splitting according to maxSize');
+                    this.mainActions = actionList.slice(0,this.maxSize);
+                    if (this.isDebug) console.log('doMerge: mainActions init ', this.mainActions);
+                    this.overflowActions = actionList.slice(this.maxSize);
+                    if (this.isDebug) console.log('doMerge: overflowActions init ', this.overflowActions);
+                }
+                else {
+                    if (this.isDebug) console.log('doMerge: no split to maxSize required');
+                    this.mainActions = actionList;
+                    if (this.isDebug) console.log('doMerge: mainActions init ', this.mainActions);
+                }
             }
 
             //Ready Notification
@@ -681,12 +692,12 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         if (this.isDebug) console.log('handleMenuSelect: END');
     }
 
-    handleOveflowMenuSelect(event) {
-        if (this.isDebug) console.log('handleOveflowMenuSelect: START with ',JSON.stringify(event.detail));
-        if (this.isDebug) console.log('handleOveflowMenuSelect: recordId ',this.recordId);
+    handleOverflowMenuSelect(event) {
+        if (this.isDebug) console.log('handleOverflowMenuSelect: START with ',JSON.stringify(event.detail));
+        if (this.isDebug) console.log('handleOverflowMenuSelect: recordId ',this.recordId);
         //this.executeAction(event.detail.value.action);
         this.processAction(event.detail.value.action,null);
-        if (this.isDebug) console.log('handleOveflowMenuSelect: END');
+        if (this.isDebug) console.log('handleOverflowMenuSelect: END');
     }
 
     //----------------------------------------------------------------

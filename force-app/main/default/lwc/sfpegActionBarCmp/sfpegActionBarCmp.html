@@ -319,8 +319,9 @@
                             <template if:true={showOverflowMenu}>
                                 <lightning-button-menu  menu-alignment="right"
                                                         icon-size="medium"
+                                                        title="OVERFLOW"
                                                         variant="border-filled"
-                                                        onselect={handleOveflowMenuSelect} >
+                                                        onselect={handleOverflowMenuSelect} >
                                     <template iterator:itermenu={overflowActions} >
                                         <!-- Disabled Action or Menu -->
                                         <template if:false={itermenu.value.hidden}>
