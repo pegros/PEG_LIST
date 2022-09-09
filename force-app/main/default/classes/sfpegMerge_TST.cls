@@ -80,7 +80,8 @@ public class  sfpegMerge_TST {
     * @see  sfpegMerge_CTL
     ***/
 
-    static TestMethod void testGetConfig() {
+    @isTest
+    static void testGetConfig() {
         System.debug('testGetConfig: START');
         Test.startTest();
 
@@ -180,7 +181,8 @@ public class  sfpegMerge_TST {
     * @see  sfpegMerge_CTL
     ***/
 
-    static TestMethod void testGetRecord() {
+    @isTest
+    static void testGetRecord() {
         System.debug('testGetRecord: START');
         Test.startTest();
 
@@ -231,7 +233,8 @@ public class  sfpegMerge_TST {
     * @see  sfpegMerge_CTL
     ***/
 
-    static TestMethod void testReplaceLabelTokens() {
+    @isTest
+    static void testReplaceLabelTokens() {
         System.debug('testReplaceLabelTokens: START');
         Test.startTest();
 
@@ -257,7 +260,8 @@ public class  sfpegMerge_TST {
     * @see  sfpegMerge_CTL
     ***/
 
-    static TestMethod void testReplaceFieldLabelTokens() {
+    @isTest
+    static void testReplaceFieldLabelTokens() {
         System.debug('testReplaceFieldLabelTokens: START');
         Test.startTest();
 
@@ -300,7 +304,8 @@ public class  sfpegMerge_TST {
     * @see  sfpegMergeLabels_VFP
     ***/
 
-    static TestMethod void testGetMergeLabel() {
+    @isTest
+    static void testGetMergeLabel() {
         System.debug('testGetMergeLabel: START');
         Test.startTest();
 

@@ -87,7 +87,8 @@ public class  sfpegList_TST {
     * @see  sfpegList_CTL
     ***/
 
-    static TestMethod void testGetConfiguration() {
+    @isTest
+    static void testGetConfiguration() {
         System.debug('testGetConfiguration: START');
         Test.startTest();
 
@@ -125,7 +126,8 @@ public class  sfpegList_TST {
     * @see  sfpegListTest_SVC
     ***/
 
-    static TestMethod void testGetData() {
+    @isTest
+    static void testGetData() {
         System.debug('testGetData: START');
         Test.startTest();
 
@@ -272,7 +274,8 @@ public class  sfpegList_TST {
     * @see  sfpegListTest_SVC
     ***/
 
-    static TestMethod void testGetCount() {
+    @isTest
+    static void testGetCount() {
         System.debug('testGetCount: START');
         Test.startTest();
 
@@ -378,7 +381,8 @@ public class  sfpegList_TST {
     * @see  sfpegListTest_SVC
     ***/
 
-    static TestMethod void testGetPaginatedData() {
+    @isTest
+    static void testGetPaginatedData() {
         System.debug('testGetPaginatedData: START');
         Test.startTest();
 
@@ -520,7 +524,8 @@ public class  sfpegList_TST {
     * @see sfpegList_CTL
     ***/
 
-    static TestMethod void testPrivateMethods() {
+    @isTest
+    static void testPrivateMethods() {
         System.debug('testPrivateMethods: START');
         Test.startTest();
 
@@ -581,7 +586,8 @@ public class  sfpegList_TST {
     * @see  sfpegListTest_SVC
     ***/
 
-    static TestMethod void testVirtualApexClass() {
+    @isTest
+    static void testVirtualApexClass() {
         System.debug('testVirtualApexClass: START');
         Test.startTest();
 
@@ -659,7 +665,8 @@ public class  sfpegList_TST {
     * @see sfpegActionSelector_CTL
     ***/
 
-    static TestMethod void testGetDefaultValue() {
+    @isTest
+    static void testGetDefaultValue() {
         System.debug('testGetDefaultValue: START');
         Test.startTest();
 
@@ -685,7 +692,8 @@ public class  sfpegList_TST {
     * @see sfpegActionSelector_CTL
     ***/
 
-    static TestMethod void testGetValues() {
+    @isTest
+    static void testGetValues() {
         System.debug('testGetValues: START');
         Test.startTest();
 
