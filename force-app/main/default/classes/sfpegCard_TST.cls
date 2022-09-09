@@ -7,21 +7,21 @@
 * @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
-* 
+*
 * MIT License
-* 
+*
 * Copyright (c) 2021 pegros
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -32,8 +32,8 @@
 ***/
 
 @isTest
-public class  sfpegCard_TST {
-    
+public class sfpegCard_TST {
+
     /***
     * @description Initializes the test context.
     ***/
@@ -47,7 +47,7 @@ public class  sfpegCard_TST {
         Map<ID,PermissionSet> sfpegPSets = new Map<ID,PermissionSet>([SELECT Id, Name FROM PermissionSet WHERE Name LIKE 'sfpeg%']);
         System.debug('testSetup: sfpegPSets fetched ' + sfpegPSets);
 
-        List<PermissionSetAssignment> currentAssignments = [    select PermissionSetId from PermissionSetAssignment 
+        List<PermissionSetAssignment> currentAssignments = [    select PermissionSetId from PermissionSetAssignment
                                                                 where AssigneeId = :currentUserId and PermissionSetId in :sfpegPSets.keySet()];
         System.debug('testSetup: currentAssignments fetched ' + currentAssignments);
         for (PermissionSetAssignment iter : currentAssignments) {
@@ -65,7 +65,7 @@ public class  sfpegCard_TST {
 
         insert newAssignments;
         System.debug('testSetup: newAssignments inserted ' + newAssignments);
-        
+
         System.debug('testSetup: END');
     }
 
@@ -75,9 +75,10 @@ public class  sfpegCard_TST {
     *               check OK case.
     * @see  sfpegCard_CTL
     ***/
-    
-    static TestMethod void testGetConfiguration() {
-        System.debug('testGetConfiguration: START'); 
+
+    @isTest
+    static void testGetConfiguration() {
+        System.debug('testGetConfiguration: START');
         Test.startTest();
 
         try {
@@ -101,7 +102,7 @@ public class  sfpegCard_TST {
         }
 
         Test.stopTest();
-		System.debug('testGetConfiguration: END');    
+		System.debug('testGetConfiguration: END');
     }
 
     /***
@@ -109,12 +110,13 @@ public class  sfpegCard_TST {
     * @see  sfpegCard_CTL
     ***/
 
-    static TestMethod void testUpdateRecord() {
-        System.debug('testUpdateRecord: START'); 
-        sfpegTestObject__c testRcd = new sfpegTestObject__c(Name='TEST'); 
+    @isTest
+    static void testUpdateRecord() {
+        System.debug('testUpdateRecord: START');
+        sfpegTestObject__c testRcd = new sfpegTestObject__c(Name='TEST');
         insert testRcd;
-        System.debug('testUpdateRecord: testRcd inserted ' + testRcd); 
-    
+        System.debug('testUpdateRecord: testRcd inserted ' + testRcd);
+
         Test.startTest();
         testRcd.Name = 'TEST UPD';
         sfpegCard_CTL.updateRecord(testRcd, false, false);
@@ -132,19 +134,20 @@ public class  sfpegCard_TST {
     * @see sfpegActionSelector_CTL
     ***/
 
-    static TestMethod void testGetDefaultValue() {
-        System.debug('testGetDefaultValue: START'); 
+    @isTest
+    static void testGetDefaultValue() {
+        System.debug('testGetDefaultValue: START');
         Test.startTest();
 
         VisualEditor.DesignTimePageContext  testContext = new VisualEditor.DesignTimePageContext();
         testContext.entityName =  'Opportunity';
-        System.debug('testGetDefaultValue: testContext init'); 
+        System.debug('testGetDefaultValue: testContext init');
 
         sfpegCardSelector_CTL controller = new sfpegCardSelector_CTL(testContext);
-        System.debug('testGetDefaultValue: controller init'); 
-    
+        System.debug('testGetDefaultValue: controller init');
+
         VisualEditor.DataRow defVal = controller.getDefaultValue();
-        System.debug('testGetDefaultValue: getDefaultValue called ' + defVal); 
+        System.debug('testGetDefaultValue: getDefaultValue called ' + defVal);
 
         System.assertEquals('N/A',defVal.getValue());
 
@@ -158,24 +161,24 @@ public class  sfpegCard_TST {
     * @see sfpegCardSelector_CTL
     ***/
 
-    static TestMethod void testGetValues() {
-        System.debug('testGetValues: START'); 
+    @isTest
+    static void testGetValues() {
+        System.debug('testGetValues: START');
         Test.startTest();
 
         VisualEditor.DesignTimePageContext  testContext = new VisualEditor.DesignTimePageContext();
         testContext.entityName =  'Opportunity';
-        System.debug('testGetValues: testContext init'); 
+        System.debug('testGetValues: testContext init');
 
         sfpegCardSelector_CTL controller = new sfpegCardSelector_CTL(testContext);
-        System.debug('testGetValues: controller init'); 
-    
+        System.debug('testGetValues: controller init');
+
         VisualEditor.DynamicPickListRows listVal = controller.getValues();
-        System.debug('testGetValues: getValues called ' + listVal); 
+        System.debug('testGetValues: getValues called ' + listVal);
 
         System.assert(listVal.size() > 0);
 
         Test.stopTest();
         System.debug('testGetValues: END');
     }
-
 }
