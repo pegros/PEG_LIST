@@ -32,6 +32,7 @@
 ***/
 
 @isTest
+@SuppressWarnings("PMD.ClassNamingConventions")
 public class  sfpegList_TST {
 
     /***

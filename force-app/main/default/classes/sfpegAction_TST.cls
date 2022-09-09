@@ -33,6 +33,7 @@
 ***/
 
 @isTest
+@SuppressWarnings("PMD.ClassNamingConventions")
 public class sfpegAction_TST {
 
     /***

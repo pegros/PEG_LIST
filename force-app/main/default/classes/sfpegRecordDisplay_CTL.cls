@@ -6,21 +6,21 @@
 * @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
-* 
+*
 * MIT License
-* 
+*
 * Copyright (c) 2021 pegros
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,7 +29,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
 ***/
-
+@SuppressWarnings("PMD.ClassNamingConventions")
 public with sharing class sfpegRecordDisplay_CTL {
 
     /***
@@ -47,12 +47,12 @@ public with sharing class sfpegRecordDisplay_CTL {
         List<sfpegRecordDisplay__mdt> configs = [   SELECT  MasterLabel, DisplayConfig__c
                                                     FROM sfpegRecordDisplay__mdt
                                                     WHERE DeveloperName =  :name    ];
-        
+
         if ((configs == null) || (configs.size() != 1)) {
             System.debug(LoggingLevel.ERROR,'getConfiguration: END KO / configuration not found with name ' + name);
             throw new AuraHandledException('Configuration not found with name ' + name);
         }
-        
+
         if ((configs[0]?.DisplayConfig__c)?.contains('{{{LBL.')) {
             System.debug(LoggingLevel.FINE,'getConfiguration: extracting/replacing custom labels in display config');
             configs[0].DisplayConfig__c = sfpegMerge_CTL.replaceLabelTokens(configs[0].DisplayConfig__c);
@@ -70,7 +70,7 @@ public with sharing class sfpegRecordDisplay_CTL {
         else {
             System.debug(LoggingLevel.FINE,'getConfiguration: no field label in display config');
         }
-        
+
         System.debug(LoggingLevel.FINE,'getConfiguration: END ' + configs[0].MasterLabel);
         return (Object) (configs[0]);
     }

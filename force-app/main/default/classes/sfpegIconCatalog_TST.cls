@@ -31,6 +31,7 @@
 ***/
 
 @isTest
+@SuppressWarnings("PMD.ClassNamingConventions")
 public class  sfpegIconCatalog_TST {
 
     /***
