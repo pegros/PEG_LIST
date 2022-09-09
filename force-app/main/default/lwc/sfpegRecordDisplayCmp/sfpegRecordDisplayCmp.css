@@ -14,3 +14,9 @@
     font-size: 0.875rem !important;
     /*font-size: var(--lwc-fontSize4, 0.875rem) !important;*/
 }
+/*.fieldItem {
+    border-bottom: 1px solid var(--lwc-colorBorderInputDisabled);
+}
+.formItem {
+    border-bottom: 1px solid var(--lwc-colorBorderInputDisabled);
+}*/

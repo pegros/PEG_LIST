@@ -68,7 +68,7 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
     // Display Parameters
     @track tabVariant = 'standard' // Variant of the tab container
     @track innerClass;          // CSS classes to be applied to the main section
-    @track fieldClass = 'slds-form-element' // CSS classes to be applied to field display containers
+    @track fieldClass = 'slds-form-element formItem' // CSS classes to be applied to field display containers
     @track cardTitle;           // Title of the wrapping Card
     @track cardIcon;            // Icon of the wrapping Card
     @track mainFields;          // Content of the top section
@@ -122,11 +122,11 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
 
         if (this.layoutMode === 'inline') {
             // slds-form-element_1-col
-            this.fieldClass = 'slds-form-element slds-form-element_horizontal';
+            this.fieldClass = 'slds-form-element formItem slds-form-element_horizontal';
             if (this.isDebug) console.log('connected: inline mode chosen ');
         }
         else if (this.layoutMode === 'stacked') {
-            this.fieldClass = 'slds-form-element';
+            this.fieldClass = 'slds-form-element formItem';
             if (this.isDebug) console.log('connected: stacked mode chosen ');
         }
         else {
@@ -205,11 +205,11 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
 
         if (densityControl.className.toString()?.includes('slds-form-element_horizontal')) {
             if (this.isDebug) console.log('handleDensity: density compact --> inline mode ');
-            this.fieldClass = 'slds-form-element slds-form-element_horizontal ';
+            this.fieldClass = 'slds-form-element formItem slds-form-element_horizontal ';
         }
         else {
             if (this.isDebug) console.log('handleDensity: density: comfy --> stacked mode ');
-            this.fieldClass = 'slds-form-element';
+            this.fieldClass = 'slds-form-element formItem';
         }
 
         if (this.isDebug) console.log('handleDensity: END');
