@@ -78,7 +78,7 @@ public class  sfpegIconCatalog_TST {
         Test.startTest();
 
         try {
-            Object catalog = sfpegIconCatalog_CTL.getIconList();
+            sfpegIconCatalog_CTL.getIconList();
             System.debug(LoggingLevel.Error,'testGetIconList: catalog properly fetched');
             System.assert(true);
         }
