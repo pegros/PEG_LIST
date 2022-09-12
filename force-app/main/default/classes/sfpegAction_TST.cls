@@ -8,21 +8,21 @@
 * @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
-* 
+*
 * MIT License
-* 
+*
 * Copyright (c) 2021 pegros
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -34,7 +34,7 @@
 
 @isTest
 public class  sfpegAction_TST {
-    
+
     /***
     * @description Initializes the test context.
     ***/
@@ -48,7 +48,7 @@ public class  sfpegAction_TST {
         Map<ID,PermissionSet> sfpegPSets = new Map<ID,PermissionSet>([SELECT Id, Name FROM PermissionSet WHERE Name LIKE 'sfpeg%']);
         System.debug('testSetup: sfpegPSets fetched ' + sfpegPSets);
 
-        List<PermissionSetAssignment> currentAssignments = [    select PermissionSetId from PermissionSetAssignment 
+        List<PermissionSetAssignment> currentAssignments = [    select PermissionSetId from PermissionSetAssignment
                                                                 where AssigneeId = :currentUserId and PermissionSetId in :sfpegPSets.keySet()];
         System.debug('testSetup: currentAssignments fetched ' + currentAssignments);
         for (PermissionSetAssignment iter : currentAssignments) {
@@ -66,7 +66,7 @@ public class  sfpegAction_TST {
 
         insert newAssignments;
         System.debug('testSetup: newAssignments inserted ' + newAssignments);
-        
+
         System.debug('testSetup: END');
     }
 
@@ -76,9 +76,9 @@ public class  sfpegAction_TST {
     *               check OK case.
     * @see  sfpegAction_CTL
     ***/
-    
+
     static TestMethod void testGetConfiguration() {
-        System.debug('testGetConfiguration: START'); 
+        System.debug('testGetConfiguration: START');
         Test.startTest();
 
         try {
@@ -102,7 +102,7 @@ public class  sfpegAction_TST {
         }
 
         Test.stopTest();
-		System.debug('testGetConfiguration: END');    
+		System.debug('testGetConfiguration: END');
     }
 
 
@@ -112,53 +112,53 @@ public class  sfpegAction_TST {
     * @see  sfpegAction_CTL
     * @see  sfpegAction_SVC
     ***/
-    
+
     static TestMethod void testExecuteApex() {
-        System.debug('testExecuteApex: START'); 
+        System.debug('testExecuteApex: START');
         Test.startTest();
 
         try {
-	        Object results = sfpegAction_CTL.executeApex(null, null);
-            System.debug(LoggingLevel.Error,'testExecuteApex: no error raised for for missing Apex action'); 
+	        sfpegAction_CTL.executeApex(null, null);
+            System.debug(LoggingLevel.Error,'testExecuteApex: no error raised for for missing Apex action');
             System.assert(false);
         }
         catch (Exception e) {
             System.debug('testExecuteApex: error properly raised for missing Apex action ' + e.getMessage());
-            System.assert(true);          
+            System.assert(true);
         }
 
         try {
-	        Object results = sfpegAction_CTL.executeApex('SFPEG_DUMMY_ACTION', null);
-            System.debug(LoggingLevel.Error,'testExecuteApex: no error raised for for invalid Apex action'); 
+	        sfpegAction_CTL.executeApex('SFPEG_DUMMY_ACTION', null);
+            System.debug(LoggingLevel.Error,'testExecuteApex: no error raised for for invalid Apex action');
             System.assert(false);
         }
         catch (Exception e) {
             System.debug('testExecuteApex: error properly raised for invalid Apex action ' + e.getMessage());
-            System.assert(true);          
+            System.assert(true);
         }
-         
+
         try {
-	        Object results = sfpegAction_CTL.executeApex('sfpegActionTest_SVC.Test',null);
-            System.debug('testExecuteApex: no error raised for for proper Apex action'); 
+	        sfpegAction_CTL.executeApex('sfpegActionTest_SVC.Test',null);
+            System.debug('testExecuteApex: no error raised for for proper Apex action');
             System.assert(true);
         }
         catch (Exception e) {
             System.debug(LoggingLevel.Error,'testExecuteApex: unexpected error raised for Apex action ' + e.getMessage());
-            System.assert(false);           
+            System.assert(false);
         }
 
         try {
-	        Object results = sfpegAction_CTL.executeApex('sfpegAction_SVC',null);
-            System.debug('testExecuteApex: no error raised for for generic Apex action'); 
+	        sfpegAction_CTL.executeApex('sfpegAction_SVC',null);
+            System.debug('testExecuteApex: no error raised for for generic Apex action');
             System.assert(false);
         }
         catch (Exception e) {
             System.debug(LoggingLevel.Error,'testExecuteApex: proper error raised for generic Apex action ' + e.getMessage());
-            System.assert(true);           
+            System.assert(true);
         }
-        
+
         Test.stopTest();
-		System.debug('testExecuteApex: END'); 
+		System.debug('testExecuteApex: END');
     }
 
 
@@ -166,11 +166,11 @@ public class  sfpegAction_TST {
     * @description  Test method for the sfpegAction_CTL class, checking the "executeDML" method.
     * @see  sfpegAction_CTL
     ***/
-    
+
     static TestMethod void testExecuteDML() {
-        System.debug('testExecuteDML: START'); 
+        System.debug('testExecuteDML: START');
         Test.startTest();
-        
+
         /*List<sObject> rcdList = new List<sObject>();
         Task newRcd1 = new Task(Subject = 'Test', Status = 'Open', ActivityDate = date.newinstance(2021,01,01));
         rcdList.add(newRcd1);
@@ -184,47 +184,47 @@ public class  sfpegAction_TST {
         rcdList.add(newRcd2);
 
         try {
-            List<sObject> resultList = sfpegAction_CTL.executeDML(rcdList, 'insert');
+            sfpegAction_CTL.executeDML(rcdList, 'insert');
             System.debug('testExecuteDML: insert done');
-            System.assert(true);  
+            System.assert(true);
         }
         catch (Exception e) {
             System.debug(LoggingLevel.Error,'testExecuteDML: unexpected error raised on insert ' + e.getMessage());
-            System.assert(false);           
+            System.assert(false);
         }
 
         newRcd1.Name = 'Test #1 Updated';
         newRcd2.Name = 'Test #2 Updated';
         try {
-            List<sObject> resultList = sfpegAction_CTL.executeDML(rcdList, 'update');
-            System.debug('testExecuteDML: update done'); 
-            System.assert(true);  
+            sfpegAction_CTL.executeDML(rcdList, 'update');
+            System.debug('testExecuteDML: update done');
+            System.assert(true);
         }
         catch (Exception e) {
             System.debug(LoggingLevel.Error,'testExecuteDML: unexpected error raised on update ' + e.getMessage());
-            System.assert(false);           
+            System.assert(false);
         }
 
         try {
-            List<sObject> resultList = sfpegAction_CTL.executeDML(rcdList, 'delete');
+            sfpegAction_CTL.executeDML(rcdList, 'delete');
             System.debug('testExecuteDML: delete done');
-            System.assert(true);  
+            System.assert(true);
         }
         catch (Exception e) {
             System.debug(LoggingLevel.Error,'testExecuteDML: unexpected error raised on insert ' + e.getMessage());
-            System.assert(false);           
+            System.assert(false);
         }
 
         try {
-            List<sObject> resultList = sfpegAction_CTL.executeDML(rcdList, 'dummy');
+            sfpegAction_CTL.executeDML(rcdList, 'dummy');
             System.debug(LoggingLevel.Error,'testExecuteDML: unexpected no error raised for dummy operation');
-            System.assert(false);           
+            System.assert(false);
         }
         catch(Exception e) {
             System.debug('testExecuteDML: expected error raised for dummy  operation ' + e.getMessage());
-            System.assert(true);           
+            System.assert(true);
         }
-		
+
 		Test.stopTest();
 		System.debug('testExecuteDML: END');
     }
@@ -236,18 +236,18 @@ public class  sfpegAction_TST {
     ***/
 
     static TestMethod void testGetDefaultValue() {
-        System.debug('testGetDefaultValue: START'); 
+        System.debug('testGetDefaultValue: START');
         Test.startTest();
 
         VisualEditor.DesignTimePageContext  testContext = new VisualEditor.DesignTimePageContext();
         testContext.entityName =  'Opportunity';
-        System.debug('testGetDefaultValue: testContext init'); 
+        System.debug('testGetDefaultValue: testContext init');
 
         sfpegActionSelector_CTL controller = new sfpegActionSelector_CTL(testContext);
-        System.debug('testGetDefaultValue: controller init'); 
-    
+        System.debug('testGetDefaultValue: controller init');
+
         VisualEditor.DataRow defVal = controller.getDefaultValue();
-        System.debug('testGetDefaultValue: getDefaultValue called ' + defVal); 
+        System.debug('testGetDefaultValue: getDefaultValue called ' + defVal);
 
         System.assertEquals('N/A',defVal.getValue());
 
@@ -262,18 +262,18 @@ public class  sfpegAction_TST {
     ***/
 
     static TestMethod void testGetValues() {
-        System.debug('testGetValues: START'); 
+        System.debug('testGetValues: START');
         Test.startTest();
 
         VisualEditor.DesignTimePageContext  testContext = new VisualEditor.DesignTimePageContext();
         testContext.entityName =  'Opportunity';
-        System.debug('testGetValues: testContext init'); 
+        System.debug('testGetValues: testContext init');
 
         sfpegActionSelector_CTL controller = new sfpegActionSelector_CTL(testContext);
-        System.debug('testGetValues: controller init'); 
-    
+        System.debug('testGetValues: controller init');
+
         VisualEditor.DynamicPickListRows listVal = controller.getValues();
-        System.debug('testGetValues: getValues called ' + listVal); 
+        System.debug('testGetValues: getValues called ' + listVal);
 
         System.assert(listVal.size() > 0);
 
