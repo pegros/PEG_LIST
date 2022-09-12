@@ -9,21 +9,21 @@
 * @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
-* 
+*
 * MIT License
-* 
+*
 * Copyright (c) 2021 pegros
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -33,6 +33,7 @@
 * SOFTWARE.
 ***/
 
+@SuppressWarnings('PMD.ClassNamingConventions')
 public with sharing class sfpegList_CTL {
 
     /***
@@ -53,7 +54,7 @@ public with sharing class sfpegList_CTL {
     public static Object getConfiguration(final String name) {
         System.debug(LoggingLevel.FINE,'getConfiguration: START with sfpegList configuration name ' + name);
 
-        List<sfpegList__mdt> configs = [    SELECT MasterLabel, DisplayType__c, DisplayConfig__c, QueryInput__c, DoPagination__c, QueryOrderBy__c,  FlattenResults__c, RowActions__c 
+        List<sfpegList__mdt> configs = [    SELECT MasterLabel, DisplayType__c, DisplayConfig__c, QueryInput__c, DoPagination__c, QueryOrderBy__c,  FlattenResults__c, RowActions__c
                                             FROM sfpegList__mdt
                                             WHERE DeveloperName =  :name];
         if ((configs == null) || (configs.size() != 1)) {
@@ -85,7 +86,7 @@ public with sharing class sfpegList_CTL {
     }
 
     /***
-    * @description  Standard method to fetch the list of records corresponding to a 
+    * @description  Standard method to fetch the list of records corresponding to a
     *               preconfigured sfpegList__mdt query record in a specific context.
     *               SOQL, SOSL and Apex query types are supported.
     *               All records are merge in a single list in case of SOSL.
@@ -208,7 +209,7 @@ public with sharing class sfpegList_CTL {
 
     /***
     * @description  If lazy loading is configured on the List LWC component, all records are not
-    *               returned at once. In such a case the getData() method is not used but 2 
+    *               returned at once. In such a case the getData() method is not used but 2
     *               separate methods arre available to fetch the total number of results and
     *               each result set independently.
     *               This method meets the first need.
@@ -265,7 +266,7 @@ public with sharing class sfpegList_CTL {
 
     /***
     * @description  If lazy loading is configured on the List LWC component, all records are not
-    *               returned at once. In such a case the getData() method is not used but 2 
+    *               returned at once. In such a case the getData() method is not used but 2
     *               separate methods arre available to fetch the total number of results and
     *               each result set independently.
     *               This method meets the second need, an offset being provided to progressively
@@ -289,7 +290,7 @@ public with sharing class sfpegList_CTL {
 
         if (query.QueryType__c == 'SOQL') {
             System.debug(LoggingLevel.FINE,'getPaginatedData: executing count query ' + query.QuerySOQL__c);
-            
+
             if (!(query.QuerySOQL__c).contains('{{{PAGE}}}')) {
                 System.debug(LoggingLevel.WARN,'getPaginatedData: END / KO - Missing {{{PAGE}}} key in configured SOQL query');
                 throw new AuraHandledException('Paginated SOQL Query failure: Missing {{{PAGE}}} key in configured query');
@@ -342,7 +343,7 @@ public with sharing class sfpegList_CTL {
     /***
     * @description Private utility method to fetch processing information for a List
     *              query configuration, given its developer Name.
-    * @param       name             Dev Name of the Query configuration record 
+    * @param       name             Dev Name of the Query configuration record
     * @return      sfpegList__mdt   Query execution details (depending on type)
     * @exception   AuraHandledException If no Configuration found.
     ***/
@@ -350,7 +351,7 @@ public with sharing class sfpegList_CTL {
     private static sfpegList__mdt getConfig(final String name) {
         System.debug(LoggingLevel.FINE,'getConfig: START for name ' + name);
 
-        List<sfpegList__mdt> configs = [    SELECT MasterLabel, QueryType__c, QueryClass__c, QuerySOQL__c, QueryCount__c, QueryOrderBy__c, QueryOrder__c, BypassSharing__c  
+        List<sfpegList__mdt> configs = [    SELECT MasterLabel, QueryType__c, QueryClass__c, QuerySOQL__c, QueryCount__c, QueryOrderBy__c, QueryOrder__c, BypassSharing__c
                                             FROM sfpegList__mdt
                                             WHERE DeveloperName =  :name];
         if ((configs == null) || (configs.size() != 1)) {
@@ -426,7 +427,7 @@ public with sharing class sfpegList_CTL {
         //System.debug(LoggingLevel.FINEST,'getClassInstance: className set '  + className);
         //System.debug(LoggingLevel.FINEST,'getClassInstance: methodName set ' + methodName);
         System.debug(LoggingLevel.FINEST,'getClassInstance: resultMap init ' + resultMap);
-      
+
         Type actionClass = Type.forName(className);
         if (null == actionClass) {
             System.debug(LoggingLevel.WARN,'getClassInstance: END KO / action handler not found for action ' + actionName);
@@ -440,7 +441,7 @@ public with sharing class sfpegList_CTL {
     }
 
     /***
-    * @description  Private utility method to initialize a pagination clause, as a set of 
+    * @description  Private utility method to initialize a pagination clause, as a set of
     *               specific merge tokens & values. For now, only a {{{PAGE}}} token is
     *               considered / initialized.
     * @param        fieldName           API Name of the field used for pagination
@@ -478,11 +479,11 @@ public with sharing class sfpegList_CTL {
     /***
     * @description  Private utility method to fetch the SLDS icon name related to a custom SObject.
     *               It parses all tabs incuded in all apps to try and find the SLDS svg icon name
-    *               associated to teh custom object tab. 
+    *               associated to teh custom object tab.
     *               The object tab should be included at least in one of the apps to become avvailable.
-    *               A default 'custom9' value is returned by default. 
+    *               A default 'custom9' value is returned by default.
     * @param        objectName  API Name of the SObject
-    * @return       String      customXX name of the SLDS icon related 
+    * @return       String      customXX name of the SLDS icon related
     * @exception    none
     ***/
     @TestVisible
@@ -496,12 +497,12 @@ public with sharing class sfpegList_CTL {
             List<Schema.DescribeTabResult> iterTabs = iter.getTabs();
             for (Schema.DescribeTabResult iterTab : iterTabs) {
                 if (iterTab.isCustom()) {
-                    System.debug('getCustomObjectIcon: processing Tab ' + iterTab.getSObjectName()); 
+                    System.debug('getCustomObjectIcon: processing Tab ' + iterTab.getSObjectName());
                     if (iterTab.getSObjectName() == objectName) {
                         System.debug('getCustomObjectIcon: fetching icon ID');
                         List<Schema.DescribeIconResult> iterIcons = iterTab.getIcons();
                         for (Schema.DescribeIconResult iterIcon : iterIcons) {
-                            //System.debug('getData: ' + ' # ' + iterIcon.getContentType()); 
+                            //System.debug('getData: ' + ' # ' + iterIcon.getContentType());
                             if (iterIcon.getContentType() == 'image/svg+xml') {
                                 Integer lastSlash = (iterIcon.getUrl()).lastIndexOf('/') + 1;
                                 Integer lastDot = (iterIcon.getUrl()).lastIndexOf('.');
@@ -514,7 +515,7 @@ public with sharing class sfpegList_CTL {
                     }
                     else {
                         System.debug('getCustomObjectIcon: ignored (different object)');
-                    } 
+                    }
                 }
                 else {
                     System.debug('getCustomObjectIcon: ignored (standard object)');
@@ -529,7 +530,7 @@ public with sharing class sfpegList_CTL {
     * @description  Private utility method to execute a SOQL query
     * @param        query           SOQL query to execute
     * @param        bypassSharing   Boolean flag to bypass sharing
-    * @return       List<sObject>   Result of the SOQL query 
+    * @return       List<sObject>   Result of the SOQL query
     * @exception    none
     ***/
     @TestVisible
@@ -551,7 +552,7 @@ public with sharing class sfpegList_CTL {
     * @description  Private utility method to execute a SOQL count query
     * @param        query           SOQL count query to execute
     * @param        bypassSharing   Boolean flag to bypass sharing
-    * @return       Integer         Result of the SOQL count query 
+    * @return       Integer         Result of the SOQL count query
     * @exception    none
     ***/
     @TestVisible
@@ -573,7 +574,7 @@ public with sharing class sfpegList_CTL {
     * @description  Private utility method to execute a SOQL query
     * @param        query           SOSL query to execute
     * @param        bypassSharing   Boolean flag to bypass sharing
-    * @return       List<List<sObject>> Result of the SOSL query 
+    * @return       List<List<sObject>> Result of the SOSL query
     * @exception    none
     ***/
     @TestVisible

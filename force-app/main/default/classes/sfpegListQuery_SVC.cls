@@ -2,28 +2,28 @@
 * @author       P-E GROS
 * @date         May 2021
 * @description  Virtual handling class used by the sfpegList_CTL generic controller to
-*               implement custom Apex queries. 
+*               implement custom Apex queries.
 *               Provides virtual default implementations of supported methods.
 *               Default implementation throws exceptions to warn about missing implementation.
 * @see          sfpegList_CTL
 * @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
-* 
+*
 * MIT License
-* 
+*
 * Copyright (c) 2021 pegros
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -33,10 +33,11 @@
 * SOFTWARE.
 ***/
 
+@SuppressWarnings('PMD.ClassNamingConventions')
 public virtual class sfpegListQuery_SVC {
 
     /***
-    * @description  Method to overide in Apex the default SOQL query implementation of the 
+    * @description  Method to overide in Apex the default SOQL query implementation of the
     *               sfpegList_CTL class.
     * @param input  Context Object record containing all the input data expected
     *               by the query.
@@ -50,7 +51,7 @@ public virtual class sfpegListQuery_SVC {
         System.debug(LoggingLevel.ERROR,'getData: sfpegListQuery_SVC default implementation called.');
         throw new AuraHandledException('GetData Query action not implemented!');
         //return null;
-    }  
+    }
 
     /***
     * @description  Method to overide in Apex the default SOQL implementation of the sfpegList_CTL class
@@ -67,7 +68,7 @@ public virtual class sfpegListQuery_SVC {
         System.debug(LoggingLevel.ERROR,'getCount: sfpegListQuery_SVC default implementation called.');
         throw new AuraHandledException('GetCount Query action not implemented!');
         //return null;
-    }  
+    }
 
     /***
     * @description  Method to overide in Apex the default SOQL implementation of the sfpegList_CTL class
@@ -85,5 +86,5 @@ public virtual class sfpegListQuery_SVC {
         System.debug(LoggingLevel.ERROR,'getPaginatedData: sfpegListQuery_SVC default implementation called.');
         throw new AuraHandledException('getPaginatedData: Query action not implemented!');
         //return null;
-    }    
+    }
 }
