@@ -7,21 +7,21 @@
 * @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
-* 
+*
 * MIT License
-* 
+*
 * Copyright (c) 2021 pegros
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -32,7 +32,7 @@
 ***/
 
 public with sharing class sfpegMerge_CTL {
-    
+
     /***
     * @description  Method to fetch configuration values for the merge service.
     *               For a list of configuration data grouped by domain, it provides
@@ -63,7 +63,7 @@ public with sharing class sfpegMerge_CTL {
         }
         System.debug('getValues: refMap init ' + refMap);
 
-        
+
         Map<String,Object> returnMap = new Map<String,Object>();
         for (Object iter : configMap.keySet()) {
             System.debug('getValues: processing iter ' + iter);
@@ -77,7 +77,7 @@ public with sharing class sfpegMerge_CTL {
             }
             System.debug('getValues: #Items to process ' + iterList.size());
 
-            
+
             switch on (String)iter {
                 when 'VFP' {
                     System.debug('getValues: processing VF page URLs');
@@ -111,7 +111,7 @@ public with sharing class sfpegMerge_CTL {
                 }
                 when 'RT' {
                     System.debug('getValues: processing Record Types');
-                
+
                     for (Object iterRT : iterList) {
                         System.debug(LoggingLevel.FINE,'getValues: processing RT ' + iterRT);
 
@@ -154,7 +154,7 @@ public with sharing class sfpegMerge_CTL {
                 }
                 when else {
                     System.debug('getValues: processing registered query');
-                    
+
                     sfpegConfiguration__mdt iterConfig = refMap.get((String)iter);
                     if (iterConfig == null) {
                         System.debug(LoggingLevel.WARN,'getValues: END - Unsupported configuration provided for key ' + iter);
@@ -231,7 +231,7 @@ public with sharing class sfpegMerge_CTL {
             String token = lblMatcher.group(0).removeStart('{{{LBL.').removeEnd('}}}');
             lblTokens.add(token);
         }
-        System.debug(LoggingLevel.FINE,'replaceLabelTokens: lblTokens extracted ' + lblTokens);
+        System.debug(LoggingLevel.FINE,'replaceLabelTokens: lblTokens extracted ' + lblTokens);// NOPMD ApexDangerousMethods supress warning
 
         if (lblTokens.size() > 0) {
             //Fetching LBL values
@@ -291,7 +291,7 @@ public with sharing class sfpegMerge_CTL {
             String token = lblMatcher.group(0).removeStart('{{{FLBL.').removeEnd('}}}');
             lblTokens.add(token);
         }
-        System.debug(LoggingLevel.FINE,'replaceFieldLabelTokens: lblTokens extracted ' + lblTokens);
+        System.debug(LoggingLevel.FINE,'replaceFieldLabelTokens: lblTokens extracted ' + lblTokens);// NOPMD ApexDangerousMethods supress warning
 
         //Fetching FLBL values and merging them
         String mergedTemplate = template;

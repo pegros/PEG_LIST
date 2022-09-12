@@ -5,21 +5,21 @@
 * @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
-* 
+*
 * MIT License
-* 
+*
 * Copyright (c) 2021 pegros
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -75,9 +75,9 @@ public with sharing class sfpegCard_CTL {
     @AuraEnabled
     public static void updateRecord(SObject record, Boolean bypassSharingRules, Boolean bypassDuplicateRules) {
         System.debug('updateRecord: START with record ' + record);
-        System.debug('updateRecord: bypass Sharing Rules? ' + bypassSharingRules);
-        System.debug('updateRecord: bypass Duplicate Rules? ' + bypassDuplicateRules);
-        
+        System.debug('updateRecord: bypass Sharing Rules? ' + bypassSharingRules);// NOPMD ApexDangerousMethods supress warning
+        System.debug('updateRecord: bypass Duplicate Rules? ' + bypassDuplicateRules);// NOPMD ApexDangerousMethods supress warning
+
         Database.SaveResult result = null;
         if (bypassSharingRules) {
             System.debug('updateRecord: bypassing Sharing rules');
@@ -86,7 +86,7 @@ public with sharing class sfpegCard_CTL {
         }
         else {
             System.debug('updateRecord: bypassing only Duplicate rules');
-            Database.DMLOptions dmlHeader = new Database.DMLOptions(); 
+            Database.DMLOptions dmlHeader = new Database.DMLOptions();
             dmlHeader.DuplicateRuleHeader.allowSave = true;
             dmlHeader.DuplicateRuleHeader.runAsCurrentUser = true;
             System.debug('updateRecord: DML header set to bypass alert duplicate rules ' + dmlHeader);
@@ -104,7 +104,7 @@ public with sharing class sfpegCard_CTL {
             System.debug('updateRecord (without Sharing): START');
             if (bypassDuplicateRules) {
                 System.debug('updateRecord (without Sharing): bypassing Duplicate rules');
-                Database.DMLOptions dmlHeader = new Database.DMLOptions(); 
+                Database.DMLOptions dmlHeader = new Database.DMLOptions();
                 dmlHeader.DuplicateRuleHeader.allowSave = true;
                 dmlHeader.DuplicateRuleHeader.runAsCurrentUser = true;
                 System.debug('updatupdateRecord (without Sharing): END / updating with DML header set ' + dmlHeader);
