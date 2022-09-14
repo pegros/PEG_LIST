@@ -29,6 +29,7 @@
 * SOFTWARE.
 ***/
 
+@SuppressWarnings('PMD.ClassNamingConventions')
 public with sharing class sfpegCard_CTL {
 
     /***

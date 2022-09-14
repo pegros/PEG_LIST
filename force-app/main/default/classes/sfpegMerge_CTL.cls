@@ -31,6 +31,7 @@
 * SOFTWARE.
 ***/
 
+@SuppressWarnings('PMD.ClassNamingConventions')
 public with sharing class sfpegMerge_CTL {
 
     /***

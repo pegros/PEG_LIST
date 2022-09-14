@@ -33,6 +33,7 @@
 * SOFTWARE.
 ***/
 
+@SuppressWarnings('PMD.ClassNamingConventions')
 public with sharing class sfpegIconCatalog_CTL {
 
     /***

@@ -32,6 +32,7 @@
 ***/
 
 @isTest
+@SuppressWarnings('PMD.ClassNamingConventions')
 public with sharing class sfpegRecordDisplay_TST {
 
     /***

@@ -33,7 +33,8 @@
 ***/
 
 @isTest
-public class  sfpegMerge_TST {
+@SuppressWarnings('PMD.ClassNamingConventions')
+public class sfpegMerge_TST {
 
     /***
     * @description Initializes the test context.

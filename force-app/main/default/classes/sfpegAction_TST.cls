@@ -33,7 +33,8 @@
 ***/
 
 @isTest
-public class sfpegAction_TST {
+@SuppressWarnings('PMD.ClassNamingConventions')
+public class  sfpegAction_TST {
 
     /***
     * @description Initializes the test context.
