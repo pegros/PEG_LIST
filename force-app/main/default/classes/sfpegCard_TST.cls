@@ -32,7 +32,7 @@
 ***/
 
 @isTest
-public class  sfpegCard_TST {
+public class sfpegCard_TST {
 
     /***
     * @description Initializes the test context.
@@ -76,7 +76,8 @@ public class  sfpegCard_TST {
     * @see  sfpegCard_CTL
     ***/
 
-    static TestMethod void testGetConfiguration() {
+    @isTest
+    static void testGetConfiguration() {
         System.debug('testGetConfiguration: START');
         Test.startTest();
 
@@ -109,7 +110,8 @@ public class  sfpegCard_TST {
     * @see  sfpegCard_CTL
     ***/
 
-    static TestMethod void testUpdateRecord() {
+    @isTest
+    static void testUpdateRecord() {
         System.debug('testUpdateRecord: START');
         sfpegTestObject__c testRcd = new sfpegTestObject__c(Name='TEST');
         insert testRcd;
@@ -137,7 +139,8 @@ public class  sfpegCard_TST {
     * @see sfpegActionSelector_CTL
     ***/
 
-    static TestMethod void testGetDefaultValue() {
+    @isTest
+    static void testGetDefaultValue() {
         System.debug('testGetDefaultValue: START');
         Test.startTest();
 
@@ -163,7 +166,8 @@ public class  sfpegCard_TST {
     * @see sfpegCardSelector_CTL
     ***/
 
-    static TestMethod void testGetValues() {
+    @isTest
+    static void testGetValues() {
         System.debug('testGetValues: START');
         Test.startTest();
 
@@ -182,5 +186,4 @@ public class  sfpegCard_TST {
         Test.stopTest();
         System.debug('testGetValues: END');
     }
-
 }
