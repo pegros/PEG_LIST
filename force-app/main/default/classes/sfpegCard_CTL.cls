@@ -75,8 +75,8 @@ public with sharing class sfpegCard_CTL {
     @AuraEnabled
     public static void updateRecord(SObject record, Boolean bypassSharingRules, Boolean bypassDuplicateRules) {
         System.debug('updateRecord: START with record ' + record);
-        System.debug('updateRecord: bypass Sharing Rules? ' + bypassSharingRules);// NOPMD ApexDangerousMethods supress warning
-        System.debug('updateRecord: bypass Duplicate Rules? ' + bypassDuplicateRules);// NOPMD ApexDangerousMethods supress warning
+        System.debug('updateRecord: bypass Sharing Rules? ' + bypassSharingRules);// NOPMD ApexDangerousMethods suppress warning
+        System.debug('updateRecord: bypass Duplicate Rules? ' + bypassDuplicateRules);// NOPMD ApexDangerousMethods suppress warning
 
         Database.SaveResult result = null;
         if (bypassSharingRules) {
