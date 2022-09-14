@@ -4,6 +4,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>sfpegIconCatalogCmp</componentName>
+                <identifier>sfpegIconCatalogCmp</identifier>
             </componentInstance>
         </itemInstances>
         <name>main</name>
