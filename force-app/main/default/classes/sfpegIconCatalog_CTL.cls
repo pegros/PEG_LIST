@@ -36,37 +36,37 @@
 @SuppressWarnings('PMD.ClassNamingConventions')
 public with sharing class sfpegIconCatalog_CTL {
 
-    /***
-    * @description  Simple method to fetch configuration details for a KPI List component.
-    *               It provides the display configuration as well as the actions available.
-    *               Custom and field label tokens are automatically replaced by their
-    *               values in the DisplayConfig__c field (depending on the user language),
-    *               leveraging the replaceLabelTokens() method of the sfpegMerge_CTL class.
-    * @param        name    DeveloperName of the KPI List configuration record
-    * @return       Object  sfpegKpiList__mdt record with DisplayConfig__c,
-    *               MasterLabel fields filled in.
-    * @exception    AuraHandledException    Raised if no configuration found for the provided name
-    ***/
-    @AuraEnabled(cacheable=true)
-    public static Object getIconList() {
-        System.debug('getIconList: START');
+	/***
+	* @description  Simple method to fetch configuration details for a KPI List component.
+	*               It provides the display configuration as well as the actions available.
+	*               Custom and field label tokens are automatically replaced by their
+	*               values in the DisplayConfig__c field (depending on the user language),
+	*               leveraging the replaceLabelTokens() method of the sfpegMerge_CTL class.
+	* @param        name    DeveloperName of the KPI List configuration record
+	* @return       Object  sfpegKpiList__mdt record with DisplayConfig__c,
+	*               MasterLabel fields filled in.
+	* @exception    AuraHandledException    Raised if no configuration found for the provided name
+	***/
+	@AuraEnabled(cacheable=true)
+	public static Object getIconList() {
+		System.debug('getIconList: START');
 
-        StaticResource sr = [select Id, Name, Body from StaticResource where Name = 'sfpegIcons' limit 1];
-        System.debug('getIconList: static resource fetched ' + sr.Body);
-        String srStr = sr.Body.toString();
+		StaticResource sr = [select Id, Name, Body from StaticResource where Name = 'sfpegIcons' limit 1];
+		System.debug('getIconList: static resource fetched ' + sr.Body);
+		String srStr = sr.Body.toString();
 
-        Pattern namePattern = Pattern.compile('<g\\s+id="(\\S+)-(\\S+)"');
-        Matcher nameMatcher = namePattern.matcher(srStr);
-        Map<String,List<String>> nameTokens = new Map<String,List<String>>();
-        while (nameMatcher.find()) {
-            System.debug('getIconList: processing name ' + nameMatcher.group(1) + ' with size ' + nameMatcher.group(2));
-            if (!nameTokens.containsKey(nameMatcher.group(1))) {
-                nameTokens.put(nameMatcher.group(1),new List<String>());
-            }
-            nameTokens.get(nameMatcher.group(1)).add(nameMatcher.group(2));
-        }
+		Pattern namePattern = Pattern.compile('<g\\s+id="(\\S+)-(\\S+)"');
+		Matcher nameMatcher = namePattern.matcher(srStr);
+		Map<String,List<String>> nameTokens = new Map<String,List<String>>();
+		while (nameMatcher.find()) {
+			System.debug('getIconList: processing name ' + nameMatcher.group(1) + ' with size ' + nameMatcher.group(2));
+			if (!nameTokens.containsKey(nameMatcher.group(1))) {
+				nameTokens.put(nameMatcher.group(1),new List<String>());
+			}
+			nameTokens.get(nameMatcher.group(1)).add(nameMatcher.group(2));
+		}
 
-        System.debug('getIconList: END with ' + nameTokens);// NOPMD ApexDangerousMethods suppress warning
-        return nameTokens;
-    }
+		System.debug('getIconList: END with ' + nameTokens);// NOPMD ApexDangerousMethods suppress warning
+		return nameTokens;
+	}
 }

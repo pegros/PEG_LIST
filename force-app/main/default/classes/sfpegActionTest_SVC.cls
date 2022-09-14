@@ -34,9 +34,9 @@
 @SuppressWarnings('PMD.ClassNamingConventions')
 public with sharing class sfpegActionTest_SVC extends sfpegAction_SVC {
 
-    public override Object execute(final Object input, final String method) {
-        System.debug('execute: START');
-        System.debug('execute: END');
-        return true;
-    }
+	public override Object execute(final Object input, final String method) {
+		System.debug('execute: START');
+		System.debug('execute: END');
+		return true;
+	}
 }

@@ -33,46 +33,46 @@
 @SuppressWarnings('PMD.ClassNamingConventions')
 public with sharing class sfpegRecordDisplay_CTL {
 
-    /***
-    * @description  Simple method to fetch configuration details for a Record Display component.
-    *               It provides the display configuration as well as the actions available.
-    * @param        name    DeveloperName of the Profile configuration record
-    * @return       Object  sfpegRecordDisplay__mdt record with DisplayConfig__c and MasterLabel
-    *               fields filled in.
-    * @exception    AuraHandledException    Raised if no configuration found for the provided name
-    ***/
-    @AuraEnabled(cacheable=true)
-    public static Object getConfiguration(final String name) {
-        System.debug(LoggingLevel.FINE,'getConfiguration: START with sfpegRecordDisplay configuration name ' + name);
+	/***
+	* @description  Simple method to fetch configuration details for a Record Display component.
+	*               It provides the display configuration as well as the actions available.
+	* @param        name    DeveloperName of the Profile configuration record
+	* @return       Object  sfpegRecordDisplay__mdt record with DisplayConfig__c and MasterLabel
+	*               fields filled in.
+	* @exception    AuraHandledException    Raised if no configuration found for the provided name
+	***/
+	@AuraEnabled(cacheable=true)
+	public static Object getConfiguration(final String name) {
+		System.debug(LoggingLevel.FINE,'getConfiguration: START with sfpegRecordDisplay configuration name ' + name);
 
-        List<sfpegRecordDisplay__mdt> configs = [   SELECT  MasterLabel, DisplayConfig__c
-                                                    FROM sfpegRecordDisplay__mdt
-                                                    WHERE DeveloperName =  :name    ];
+		List<sfpegRecordDisplay__mdt> configs = [	SELECT  MasterLabel, DisplayConfig__c
+													FROM sfpegRecordDisplay__mdt
+													WHERE DeveloperName =  :name    ];
 
-        if ((configs == null) || (configs.size() != 1)) {
-            System.debug(LoggingLevel.ERROR,'getConfiguration: END KO / configuration not found with name ' + name);
-            throw new AuraHandledException('Configuration not found with name ' + name);
-        }
+		if ((configs == null) || (configs.size() != 1)) {
+			System.debug(LoggingLevel.ERROR,'getConfiguration: END KO / configuration not found with name ' + name);
+			throw new AuraHandledException('Configuration not found with name ' + name);
+		}
 
-        if ((configs[0]?.DisplayConfig__c)?.contains('{{{LBL.')) {
-            System.debug(LoggingLevel.FINE,'getConfiguration: extracting/replacing custom labels in display config');
-            configs[0].DisplayConfig__c = sfpegMerge_CTL.replaceLabelTokens(configs[0].DisplayConfig__c);
-            System.debug(LoggingLevel.FINE,'getConfiguration: custom labels replaced in display config');
-        }
-        else {
-            System.debug(LoggingLevel.FINE,'getConfiguration: no custom label in display config');
-        }
+		if ((configs[0]?.DisplayConfig__c)?.contains('{{{LBL.')) {
+			System.debug(LoggingLevel.FINE,'getConfiguration: extracting/replacing custom labels in display config');
+			configs[0].DisplayConfig__c = sfpegMerge_CTL.replaceLabelTokens(configs[0].DisplayConfig__c);
+			System.debug(LoggingLevel.FINE,'getConfiguration: custom labels replaced in display config');
+		}
+		else {
+			System.debug(LoggingLevel.FINE,'getConfiguration: no custom label in display config');
+		}
 
-        if ((configs[0]?.DisplayConfig__c)?.contains('{{{FLBL.')) {
-            System.debug(LoggingLevel.FINE,'getConfiguration: extracting/replacing field labels in display config');
-            configs[0].DisplayConfig__c = sfpegMerge_CTL.replaceFieldLabelTokens(configs[0].DisplayConfig__c);
-            System.debug(LoggingLevel.FINE,'getConfiguration: field labels replaced in display config');
-        }
-        else {
-            System.debug(LoggingLevel.FINE,'getConfiguration: no field label in display config');
-        }
+		if ((configs[0]?.DisplayConfig__c)?.contains('{{{FLBL.')) {
+			System.debug(LoggingLevel.FINE,'getConfiguration: extracting/replacing field labels in display config');
+			configs[0].DisplayConfig__c = sfpegMerge_CTL.replaceFieldLabelTokens(configs[0].DisplayConfig__c);
+			System.debug(LoggingLevel.FINE,'getConfiguration: field labels replaced in display config');
+		}
+		else {
+			System.debug(LoggingLevel.FINE,'getConfiguration: no field label in display config');
+		}
 
-        System.debug(LoggingLevel.FINE,'getConfiguration: END ' + configs[0].MasterLabel);
-        return (Object) (configs[0]);
-    }
+		System.debug(LoggingLevel.FINE,'getConfiguration: END ' + configs[0].MasterLabel);
+		return (Object) (configs[0]);
+	}
 }
