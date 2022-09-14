@@ -120,7 +120,7 @@ public class  sfpegAction_TST {
         Test.startTest();
 
         try {
-	        Object results = sfpegAction_CTL.executeApex(null, null);
+	        sfpegAction_CTL.executeApex(null, null);
             System.debug(LoggingLevel.Error,'testExecuteApex: no error raised for for missing Apex action');
             System.assert(false);
         }
@@ -130,7 +130,7 @@ public class  sfpegAction_TST {
         }
 
         try {
-	        Object results = sfpegAction_CTL.executeApex('SFPEG_DUMMY_ACTION', null);
+	        sfpegAction_CTL.executeApex('SFPEG_DUMMY_ACTION', null);
             System.debug(LoggingLevel.Error,'testExecuteApex: no error raised for for invalid Apex action');
             System.assert(false);
         }
@@ -140,7 +140,7 @@ public class  sfpegAction_TST {
         }
 
         try {
-	        Object results = sfpegAction_CTL.executeApex('sfpegActionTest_SVC.Test',null);
+	        sfpegAction_CTL.executeApex('sfpegActionTest_SVC.Test',null);
             System.debug('testExecuteApex: no error raised for for proper Apex action');
             System.assert(true);
         }
@@ -150,7 +150,7 @@ public class  sfpegAction_TST {
         }
 
         try {
-	        Object results = sfpegAction_CTL.executeApex('sfpegAction_SVC',null);
+	        sfpegAction_CTL.executeApex('sfpegAction_SVC',null);
             System.debug('testExecuteApex: no error raised for for generic Apex action');
             System.assert(false);
         }
@@ -187,7 +187,7 @@ public class  sfpegAction_TST {
         rcdList.add(newRcd2);
 
         try {
-            List<sObject> resultList = sfpegAction_CTL.executeDML(rcdList, 'insert');
+            sfpegAction_CTL.executeDML(rcdList, 'insert');
             System.debug('testExecuteDML: insert done');
             System.assert(true);
         }
@@ -199,7 +199,7 @@ public class  sfpegAction_TST {
         newRcd1.Name = 'Test #1 Updated';
         newRcd2.Name = 'Test #2 Updated';
         try {
-            List<sObject> resultList = sfpegAction_CTL.executeDML(rcdList, 'update');
+            sfpegAction_CTL.executeDML(rcdList, 'update');
             System.debug('testExecuteDML: update done');
             System.assert(true);
         }
@@ -209,7 +209,7 @@ public class  sfpegAction_TST {
         }
 
         try {
-            List<sObject> resultList = sfpegAction_CTL.executeDML(rcdList, 'delete');
+            sfpegAction_CTL.executeDML(rcdList, 'delete');
             System.debug('testExecuteDML: delete done');
             System.assert(true);
         }
@@ -219,7 +219,7 @@ public class  sfpegAction_TST {
         }
 
         try {
-            List<sObject> resultList = sfpegAction_CTL.executeDML(rcdList, 'dummy');
+            sfpegAction_CTL.executeDML(rcdList, 'dummy');
             System.debug(LoggingLevel.Error,'testExecuteDML: unexpected no error raised for dummy operation');
             System.assert(false);
         }

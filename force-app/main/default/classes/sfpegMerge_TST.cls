@@ -87,7 +87,7 @@ public class sfpegMerge_TST {
         Test.startTest();
 
         try {
-            Map<String,Object> configData = sfpegMerge_CTL.getConfig(null);
+            sfpegMerge_CTL.getConfig(null);
             System.debug(LoggingLevel.Error,'testGetConfig: TST#KO-1 - no exception raised for null merge config');
             System.assert(false);
         }
@@ -101,7 +101,7 @@ public class sfpegMerge_TST {
         };
         System.debug('testGetConfig: badListMap init ' + badListMap);
         try {
-            Map<String,Object> configData = sfpegMerge_CTL.getConfig(badListMap);
+            sfpegMerge_CTL.getConfig(badListMap);
             System.debug(LoggingLevel.Error,'testGetConfig: TST#KO-2 - no exception raised for bad token list merge config');
             System.assert(false);
         }
@@ -115,7 +115,7 @@ public class sfpegMerge_TST {
         };
         System.debug('testGetConfig: badRtMap init ' + badRtMap);
         try {
-            Map<String,Object> configData = sfpegMerge_CTL.getConfig(badRtMap);
+            sfpegMerge_CTL.getConfig(badRtMap);
             System.debug(LoggingLevel.Error,'testGetConfig: TST#KO-3 - no exception raised for bad RT merge config');
             System.assert(false);
         }
@@ -129,7 +129,7 @@ public class sfpegMerge_TST {
         };
         System.debug('testGetConfig: unknownRtMap init ' + unknownRtMap);
         try {
-            Map<String,Object> configData = sfpegMerge_CTL.getConfig(unknownRtMap);
+            sfpegMerge_CTL.getConfig(unknownRtMap);
             System.debug(LoggingLevel.Error,'testGetConfig: TST#KO-4 - no exception raised for unknown RT merge config');
             System.assert(false);
         }
@@ -143,7 +143,7 @@ public class sfpegMerge_TST {
         };
         System.debug('testGetConfig: unknownTokenMap init ' + unknownTokenMap);
         try {
-            Map<String,Object> configData = sfpegMerge_CTL.getConfig(unknownTokenMap);
+            sfpegMerge_CTL.getConfig(unknownTokenMap);
             System.debug(LoggingLevel.Error,'testGetConfig: TST#KO-5 - no exception raised for unknown token merge config');
             System.assert(false);
         }
@@ -193,7 +193,7 @@ public class sfpegMerge_TST {
         ID testRecordId = testRecord.Id;
 
         try {
-	        Object recordData = sfpegMerge_CTL.getRecord('DUMMY_OBJECT', 'DUMMY_ID', new List<String>());
+	        sfpegMerge_CTL.getRecord('DUMMY_OBJECT', 'DUMMY_ID', new List<String>());
             System.debug(LoggingLevel.Error,'testGetRecord: no error raised for for missing field names');
             System.assert(false);
         }
@@ -203,7 +203,7 @@ public class sfpegMerge_TST {
         }
 
         try {
-            Object recordData = sfpegMerge_CTL.getRecord('sfpegTestObject__c',testRecordId, new List<String>{'Name'});
+            sfpegMerge_CTL.getRecord('sfpegTestObject__c',testRecordId, new List<String>{'Name'});
             System.debug('testGetRecord: no error raised for proper record');
             System.assert(true);
         }
@@ -215,7 +215,7 @@ public class sfpegMerge_TST {
         delete testRecord;
         System.debug('testGetRecord: testRecord deleted ');
         try {
-            Object recordData = sfpegMerge_CTL.getRecord('sfpegTestObject__c',testRecordId, new List<String>{'Name'});
+            sfpegMerge_CTL.getRecord('sfpegTestObject__c',testRecordId, new List<String>{'Name'});
             System.debug(LoggingLevel.Error,'testGetRecord: no error raised for deleted record');
             System.assert(false);
         }

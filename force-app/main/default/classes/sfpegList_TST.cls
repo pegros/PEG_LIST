@@ -146,7 +146,7 @@ public class sfpegList_TST {
 
         // Wrong Name case
         try {
-            List<Object> resultList = sfpegList_CTL.getData('DUMMY_LIST',null);
+            sfpegList_CTL.getData('DUMMY_LIST',null);
             System.debug(LoggingLevel.Error,'testGetData: no error raised for dummy List config name');
             System.assert(false);
         }
@@ -157,7 +157,7 @@ public class sfpegList_TST {
 
         // Missing Input case
         try {
-            List<Object> resultList = sfpegList_CTL.getData('sfpegTestSoql',null);
+            sfpegList_CTL.getData('sfpegTestSoql',null);
             System.debug(LoggingLevel.Error,'testGetData: no error raised for missing input');
             System.assert(false);
         }
@@ -168,7 +168,7 @@ public class sfpegList_TST {
 
         // Bad SOQL
         try {
-            List<Object> resultList = sfpegList_CTL.getData('sfpegTestSoqlKO',inputData);
+            sfpegList_CTL.getData('sfpegTestSoqlKO',inputData);
             System.debug(LoggingLevel.Error,'testGetData: no error raised for bad SOQL');
             System.assert(false);
         }
@@ -179,7 +179,7 @@ public class sfpegList_TST {
 
         // SOQL OK case
         try {
-            List<Object> resultList = sfpegList_CTL.getData('sfpegTestSoql',inputData);
+            sfpegList_CTL.getData('sfpegTestSoql',inputData);
             System.debug('testGetData: sfpegTestSoql List config properly executed');
             System.assert(true);
         }
@@ -190,7 +190,7 @@ public class sfpegList_TST {
 
         // SOQL Bypass OK case
         try {
-            List<Object> resultList = sfpegList_CTL.getData('sfpegTestSoqlBypass',inputData);
+            sfpegList_CTL.getData('sfpegTestSoqlBypass',inputData);
             System.debug('testGetData: sfpegTestSoqlBypass List config properly executed');
             System.assert(true);
         }
@@ -201,7 +201,7 @@ public class sfpegList_TST {
 
         // Apex OK case
         try {
-            List<Object> resultList = sfpegList_CTL.getData('sfpegTestApex',inputData);
+            sfpegList_CTL.getData('sfpegTestApex',inputData);
             System.debug('testGetData: sfpegTestApex List config properly executed');
             System.assert(true);
         }
@@ -212,7 +212,7 @@ public class sfpegList_TST {
 
         // Apex KO case
         try {
-            List<Object> resultList = sfpegList_CTL.getData('sfpegTestApexUnknown',inputData);
+            sfpegList_CTL.getData('sfpegTestApexUnknown',inputData);
             System.debug(LoggingLevel.Error,'testGetData: no error raised for bad Apex class');
             System.assert(false);
         }
@@ -231,7 +231,7 @@ public class sfpegList_TST {
 
         // SOSL OK case
         try {
-            List<Object> resultList = sfpegList_CTL.getData('sfpegTestSosl',inputData);
+            sfpegList_CTL.getData('sfpegTestSosl',inputData);
             System.debug('testGetData: sfpegTestSosl List config properly executed');
             System.assert(true);
         }
@@ -242,7 +242,7 @@ public class sfpegList_TST {
 
         // Bad SOSL
         try {
-            List<Object> resultList = sfpegList_CTL.getData('sfpegTestSoslKO',inputData);
+            sfpegList_CTL.getData('sfpegTestSoslKO',inputData);
             System.debug(LoggingLevel.Error,'testGetData: no error raised for unsupported SOSL ');
             System.assert(false);
         }
@@ -253,7 +253,7 @@ public class sfpegList_TST {
 
         // SOSL Bypass OK case
         try {
-            List<Object> resultList = sfpegList_CTL.getData('sfpegTestSoslBypass',inputData);
+            sfpegList_CTL.getData('sfpegTestSoslBypass',inputData);
             System.debug('testGetData: sfpegTestSoslBypass List config properly executed');
             System.assert(true);
         }
@@ -294,7 +294,7 @@ public class sfpegList_TST {
 
         // Wrong Name case
         try {
-            Integer rcdCount = sfpegList_CTL.getCount('DUMMY_LIST',null);
+            sfpegList_CTL.getCount('DUMMY_LIST',null);
             System.debug(LoggingLevel.Error,'testGetCount: no error raised for dummy List config name');
             System.assert(false);
         }
@@ -305,7 +305,7 @@ public class sfpegList_TST {
 
         // Missing Input case
         try {
-            Integer rcdCount = sfpegList_CTL.getCount('sfpegTestSoqlPaginated',null);
+            sfpegList_CTL.getCount('sfpegTestSoqlPaginated',null);
             System.debug(LoggingLevel.Error,'testGetCount: no error raised for missing input');
             System.assert(false);
         }
@@ -316,7 +316,7 @@ public class sfpegList_TST {
 
         // Wrong Type SOSL
         try {
-            Integer rcdCount = sfpegList_CTL.getCount('sfpegTestSosl',null);
+            sfpegList_CTL.getCount('sfpegTestSosl',null);
             System.debug(LoggingLevel.Error,'testGetCount: no error raised for SOSL ');
             System.assert(false);
         }
@@ -326,9 +326,8 @@ public class sfpegList_TST {
         }
 
         // Bad Paginated SOQL
-        String lastRecordId = null;
         try {
-            Integer rcdCount = sfpegList_CTL.getCount('sfpegTestSoqlPaginatedKO',inputData);
+            sfpegList_CTL.getCount('sfpegTestSoqlPaginatedKO',inputData);
             System.debug(LoggingLevel.Error,'testGetPaginatedData: no error raised for bad SOQL count');
             System.assert(false);
         }
@@ -339,7 +338,7 @@ public class sfpegList_TST {
 
         // SOQL OK case
         try {
-            Integer rcdCount = sfpegList_CTL.getCount('sfpegTestSoqlPaginated',inputData);
+            sfpegList_CTL.getCount('sfpegTestSoqlPaginated',inputData);
             System.debug('testGetCount: sfpegTestSoqlPaginated List config properly executed');
             System.assert(true);
         }
@@ -350,7 +349,7 @@ public class sfpegList_TST {
 
         // SOQL Bypass OK case
         try {
-            Integer rcdCount = sfpegList_CTL.getCount('sfpegTestSoqlPaginatedBypass',inputData);
+            sfpegList_CTL.getCount('sfpegTestSoqlPaginatedBypass',inputData);
             System.debug('testGetCount: sfpegTestSoqlPaginatedBypass List config properly executed');
             System.assert(true);
         }
@@ -361,7 +360,7 @@ public class sfpegList_TST {
 
         // Apex OK case
         try {
-            Integer rcdCount = sfpegList_CTL.getCount('sfpegTestApexPaginated',inputData);
+            sfpegList_CTL.getCount('sfpegTestApexPaginated',inputData);
             System.debug('testGetCount: sfpegTestApexPaginated List config properly executed');
             System.assert(true);
         }
@@ -402,7 +401,7 @@ public class sfpegList_TST {
 
         // Wrong Name case
         try {
-            List<Object> resultList = sfpegList_CTL.getPaginatedData('DUMMY_LIST',null,null);
+            sfpegList_CTL.getPaginatedData('DUMMY_LIST',null,null);
             System.debug(LoggingLevel.Error,'testGetPaginatedData: no error raised for dummy List config name');
             System.assert(false);
         }
@@ -413,7 +412,7 @@ public class sfpegList_TST {
 
         // Missing Input case
         try {
-            List<Object> resultList = sfpegList_CTL.getPaginatedData('sfpegTestSoqlPaginated',null,null);
+            sfpegList_CTL.getPaginatedData('sfpegTestSoqlPaginated',null,null);
             System.debug(LoggingLevel.Error,'testGetPaginatedData: no error raised for missing input');
             System.assert(false);
         }
@@ -425,7 +424,7 @@ public class sfpegList_TST {
         // Wrong Type (SOSL)
         String lastRecordId = null;
         try {
-            List<Object> resultList = sfpegList_CTL.getPaginatedData('sfpegTestSosl',inputData,lastRecordId);
+            sfpegList_CTL.getPaginatedData('sfpegTestSosl',inputData,lastRecordId);
             System.debug(LoggingLevel.Error,'testGetPaginatedData: no error raised for bad type (SOSL)');
             System.assert(false);
         }
@@ -436,7 +435,7 @@ public class sfpegList_TST {
 
         // Bad Paginated SOQL
         try {
-            List<Object> resultList = sfpegList_CTL.getPaginatedData('sfpegTestSoqlPaginatedKO',inputData,lastRecordId);
+            sfpegList_CTL.getPaginatedData('sfpegTestSoqlPaginatedKO',inputData,lastRecordId);
             System.debug(LoggingLevel.Error,'testGetPaginatedData: no error raised for bad paginated SOQL');
             System.assert(false);
         }
@@ -476,7 +475,7 @@ public class sfpegList_TST {
 
         // SOQL OK case - First page
         try {
-            List<Object> resultList = sfpegList_CTL.getPaginatedData('sfpegTestSoqlPaginatedBypass',inputData,null);
+            sfpegList_CTL.getPaginatedData('sfpegTestSoqlPaginatedBypass',inputData,null);
             System.debug('testGetPaginatedData: sfpegTestSoqlPaginatedBypass List config properly executed');
             System.assert(true);
         }
