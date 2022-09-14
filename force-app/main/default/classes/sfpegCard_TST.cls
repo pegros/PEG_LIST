@@ -122,9 +122,14 @@ public class sfpegCard_TST {
         sfpegCard_CTL.updateRecord(testRcd, false, false);
         sfpegCard_CTL.updateRecord(testRcd, true, false);
         sfpegCard_CTL.updateRecord(testRcd, false, true);
+
+        String newName = 'New value';
+        testRcd.Name = newName;
         sfpegCard_CTL.updateRecord(testRcd, true, true);
         Test.stopTest();
 
+        testRcd = [SELECT Name FROM sfpegTestObject__c WHERE Id=:testRcd.Id];
+        System.assertEquals(newName, testRcd.Name, 'Name should be updated');
         System.debug('testUpdateRecord: END');
     }
 
