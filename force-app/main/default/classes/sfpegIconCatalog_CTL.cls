@@ -65,7 +65,7 @@ public with sharing class sfpegIconCatalog_CTL {
             nameTokens.get(nameMatcher.group(1)).add(nameMatcher.group(2));
         }
 
-        System.debug('getIconList: END with ' + nameTokens);// NOPMD ApexDangerousMethods supress warning
+        System.debug('getIconList: END with ' + nameTokens);// NOPMD ApexDangerousMethods suppress warning
         return nameTokens;
     }
 }
