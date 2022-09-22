@@ -34,62 +34,62 @@
 @SuppressWarnings('PMD.ClassNamingConventions')
 public class  sfpegIconCatalog_TST {
 
-    /***
-    * @description Initializes the test context.
-    ***/
-    @testSetup
-    static void testSetup() {
-        System.debug('testSetup: START');
+	/***
+	* @description Initializes the test context.
+	***/
+	@testSetup
+	static void testSetup() {
+		System.debug('testSetup: START');
 
-        String currentUserId = UserInfo.getUserId();
-        System.debug('testSetup: currentUserId fetched ' + currentUserId);
+		String currentUserId = UserInfo.getUserId();
+		System.debug('testSetup: currentUserId fetched ' + currentUserId);
 
-        Map<ID,PermissionSet> sfpegPSets = new Map<ID,PermissionSet>([SELECT Id, Name FROM PermissionSet WHERE Name LIKE 'sfpeg%']);
-        System.debug('testSetup: sfpegPSets fetched ' + sfpegPSets);
+		Map<ID,PermissionSet> sfpegPSets = new Map<ID,PermissionSet>([SELECT Id, Name FROM PermissionSet WHERE Name LIKE 'sfpeg%']);
+		System.debug('testSetup: sfpegPSets fetched ' + sfpegPSets);
 
-        List<PermissionSetAssignment> currentAssignments = [    select PermissionSetId from PermissionSetAssignment
-                                                                where AssigneeId = :currentUserId and PermissionSetId in :sfpegPSets.keySet()];
-        System.debug('testSetup: currentAssignments fetched ' + currentAssignments);
-        for (PermissionSetAssignment iter : currentAssignments) {
-            System.debug('testSetup: removing PermissionSet ' + iter.PermissionSetId);
-            sfpegPSets.remove(iter.PermissionSetId);
-        }
-        System.debug('testSetup: sfpegPSets revised ' + sfpegPSets);
+		List<PermissionSetAssignment> currentAssignments = [	select PermissionSetId from PermissionSetAssignment
+																where AssigneeId = :currentUserId and PermissionSetId in :sfpegPSets.keySet()];
+		System.debug('testSetup: currentAssignments fetched ' + currentAssignments);
+		for (PermissionSetAssignment iter : currentAssignments) {
+			System.debug('testSetup: removing PermissionSet ' + iter.PermissionSetId);
+			sfpegPSets.remove(iter.PermissionSetId);
+		}
+		System.debug('testSetup: sfpegPSets revised ' + sfpegPSets);
 
-        List<PermissionSetAssignment> newAssignments = new List<PermissionSetAssignment>();
-        for (PermissionSet iter : sfpegPSets.values()) {
-            System.debug('testSetup: sfpegPSets processing PSet ' + iter);
-            newAssignments.add(new PermissionSetAssignment(AssigneeId = currentUserId, PermissionSetId = iter.Id));
-        }
-        System.debug('testSetup: newAssignments init ' + newAssignments);
+		List<PermissionSetAssignment> newAssignments = new List<PermissionSetAssignment>();
+		for (PermissionSet iter : sfpegPSets.values()) {
+			System.debug('testSetup: sfpegPSets processing PSet ' + iter);
+			newAssignments.add(new PermissionSetAssignment(AssigneeId = currentUserId, PermissionSetId = iter.Id));
+		}
+		System.debug('testSetup: newAssignments init ' + newAssignments);
 
-        insert newAssignments;
-        System.debug('testSetup: newAssignments inserted ' + newAssignments);
+		insert newAssignments;
+		System.debug('testSetup: newAssignments inserted ' + newAssignments);
 
-        System.debug('testSetup: END');
-    }
+		System.debug('testSetup: END');
+	}
 
-    /***
-    * @description  Test method for the sfpegIconCatalog_CTL class, checking the "getIconList" method
-    * @see  sfpegIconCatalog_CTL
-    ***/
+	/***
+	* @description  Test method for the sfpegIconCatalog_CTL class, checking the "getIconList" method
+	* @see  sfpegIconCatalog_CTL
+	***/
 
-    @isTest
-    static void testGetIconList() {
-        System.debug('testGetIconList: START');
-        Test.startTest();
+	@isTest
+	static void testGetIconList() {
+		System.debug('testGetIconList: START');
+		Test.startTest();
 
-        try {
-            sfpegIconCatalog_CTL.getIconList();
-            System.debug(LoggingLevel.Error,'testGetIconList: catalog properly fetched');
-            System.assert(true);
-        }
-        catch (Exception e) {
-            System.debug('testGetIconList: exception raised when fetching catalog ' + e.getMessage());
-            System.assert(false);
-        }
+		try {
+			sfpegIconCatalog_CTL.getIconList();
+			System.debug(LoggingLevel.Error,'testGetIconList: catalog properly fetched');
+			System.assert(true);
+		}
+		catch (Exception e) {
+			System.debug('testGetIconList: exception raised when fetching catalog ' + e.getMessage());
+			System.assert(false);
+		}
 
-        Test.stopTest();
-        System.debug('testGetConfiguration: END');
-    }
+		Test.stopTest();
+		System.debug('testGetConfiguration: END');
+	}
 }

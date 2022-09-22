@@ -35,73 +35,73 @@
 @SuppressWarnings('PMD.ClassNamingConventions')
 global with sharing class sfpegRecordDisplaySelector_CTL extends VisualEditor.DynamicPickList {
 
-    /***
-    * @description Context of the Lightning page calling the picklist controller.
-    ***/
-    VisualEditor.DesignTimePageContext pageContext;
+	/***
+	* @description Context of the Lightning page calling the picklist controller.
+	***/
+	VisualEditor.DesignTimePageContext pageContext;
 
-    /***
-    * @description Constructor enabling to fetch the Lightning page context (and especially
-    *              the entityName of the record being displayed in the page).
-    * @param       VisualEditor.DesignTimePageContext   Current page context
-    * @exception   none really specific.
-    ***/
+	/***
+	* @description Constructor enabling to fetch the Lightning page context (and especially
+	*              the entityName of the record being displayed in the page).
+	* @param       VisualEditor.DesignTimePageContext   Current page context
+	* @exception   none really specific.
+	***/
 
-    global sfpegRecordDisplaySelector_CTL(VisualEditor.DesignTimePageContext pageContext) {
-        System.debug(LoggingLevel.FINEST,'Constructor START with sfpegRecordDisplay page context ' + pageContext);
-        System.debug(LoggingLevel.FINEST,'Constructor entityName ' + pageContext.entityName);
-        this.pageContext = pageContext;
-    }
+	global sfpegRecordDisplaySelector_CTL(VisualEditor.DesignTimePageContext pageContext) {
+		System.debug(LoggingLevel.FINEST,'Constructor START with sfpegRecordDisplay page context ' + pageContext);
+		System.debug(LoggingLevel.FINEST,'Constructor entityName ' + pageContext.entityName);
+		this.pageContext = pageContext;
+	}
 
 
-    /***
-    * @description Override of the method providing the default value.
-    * @return      VisualEditor.DataRow   Always returns the default ('---','N/A') value.
-    * @exception   none really specific.
-    ***/
-    global override VisualEditor.DataRow getDefaultValue() {
-        System.debug(LoggingLevel.FINEST,'getDefaultValue START Number');
-        return new VisualEditor.DataRow('---','N/A');
-    }
+	/***
+	* @description Override of the method providing the default value.
+	* @return      VisualEditor.DataRow   Always returns the default ('---','N/A') value.
+	* @exception   none really specific.
+	***/
+	global override VisualEditor.DataRow getDefaultValue() {
+		System.debug(LoggingLevel.FINEST,'getDefaultValue START Number');
+		return new VisualEditor.DataRow('---','N/A');
+	}
 
-    /***
-    * @description Override of the method providing the set of picklist values.
-    *              Returns label / names couples for all field sets
-    *              defined on entity. Includes a default ('---','N/A') value.
-    * @return      VisualEditor.DynamicPickListRows  List of field set names for datasource.
-    * @exception   none really specific.
-    ***/
-    global override VisualEditor.DynamicPickListRows getValues() {
-        System.debug(LoggingLevel.FINEST,'getValues: START for sfpegRecordDisplay');
+	/***
+	* @description Override of the method providing the set of picklist values.
+	*              Returns label / names couples for all field sets
+	*              defined on entity. Includes a default ('---','N/A') value.
+	* @return      VisualEditor.DynamicPickListRows  List of field set names for datasource.
+	* @exception   none really specific.
+	***/
+	global override VisualEditor.DynamicPickListRows getValues() {
+		System.debug(LoggingLevel.FINEST,'getValues: START for sfpegRecordDisplay');
 
-        VisualEditor.DynamicPickListRows picklistValues = new VisualEditor.DynamicPickListRows();
-        picklistValues.addRow(new VisualEditor.DataRow('---','N/A'));
-        System.debug(LoggingLevel.FINEST,'getValues: picklistValues init ' + picklistValues);
+		VisualEditor.DynamicPickListRows picklistValues = new VisualEditor.DynamicPickListRows();
+		picklistValues.addRow(new VisualEditor.DataRow('---','N/A'));
+		System.debug(LoggingLevel.FINEST,'getValues: picklistValues init ' + picklistValues);
 
-        System.debug(LoggingLevel.FINEST,'getValues: entity name fetched ' + pageContext.entityName);
-        Map<ID,sfpegRecordDisplay__mdt> configurations = new Map<ID,sfpegRecordDisplay__mdt>(
-            [   select MasterLabel,  DeveloperName
-                from sfpegRecordDisplay__mdt
-                where Scope__c LIKE '%RECORDS%']);
-        if (! String.isEmpty(pageContext.entityName)) {
-            System.debug(LoggingLevel.FINEST,'getValues: fetching Record and object specific queries');
-            String entityPattern = '%' + pageContext.entityName + '%';
-            configurations.putAll(new Map<ID,sfpegRecordDisplay__mdt>(
-                [   select MasterLabel,  DeveloperName
-                    from sfpegRecordDisplay__mdt
-                    where Scope__c LIKE :entityPattern]));
-        }
-        System.debug(LoggingLevel.FINEST,'getValues: configurations initialized ' + configurations);
+		System.debug(LoggingLevel.FINEST,'getValues: entity name fetched ' + pageContext.entityName);
+		Map<ID,sfpegRecordDisplay__mdt> configurations = new Map<ID,sfpegRecordDisplay__mdt>(
+			[   select MasterLabel,  DeveloperName
+				from sfpegRecordDisplay__mdt
+				where Scope__c LIKE '%RECORDS%']);
+		if (! String.isEmpty(pageContext.entityName)) {
+			System.debug(LoggingLevel.FINEST,'getValues: fetching Record and object specific queries');
+			String entityPattern = '%' + pageContext.entityName + '%';
+			configurations.putAll(new Map<ID,sfpegRecordDisplay__mdt>(
+				[   select MasterLabel,  DeveloperName
+					from sfpegRecordDisplay__mdt
+					where Scope__c LIKE :entityPattern]));
+		}
+		System.debug(LoggingLevel.FINEST,'getValues: configurations initialized ' + configurations);
 
-        for (ID iter : configurations.keySet()){
-            sfpegRecordDisplay__mdt configIter = configurations.get(iter);
-            System.debug(LoggingLevel.FINEST,'getValues: processing query ' + configIter);
-            picklistValues.addRow(new VisualEditor.DataRow(
-                configIter.MasterLabel,
-                configIter.DeveloperName));
-        }
-        System.debug(LoggingLevel.FINEST,'getValues: picklistValues completed ' + picklistValues);
-        System.debug(LoggingLevel.FINE,'getValues: END with #Items ' + picklistValues.size());
-        return picklistValues;
-    }
+		for (ID iter : configurations.keySet()){
+			sfpegRecordDisplay__mdt configIter = configurations.get(iter);
+			System.debug(LoggingLevel.FINEST,'getValues: processing query ' + configIter);
+			picklistValues.addRow(new VisualEditor.DataRow(
+				configIter.MasterLabel,
+				configIter.DeveloperName));
+		}
+		System.debug(LoggingLevel.FINEST,'getValues: picklistValues completed ' + picklistValues);
+		System.debug(LoggingLevel.FINE,'getValues: END with #Items ' + picklistValues.size());
+		return picklistValues;
+	}
 }

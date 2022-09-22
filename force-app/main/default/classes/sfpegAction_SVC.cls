@@ -36,20 +36,19 @@
 @SuppressWarnings('PMD.ClassNamingConventions')
 public virtual class sfpegAction_SVC {
 
-    /***
-    * @description  Method to provide an Apex logic implementation for the
-    *               sfpegAction_CTL generic controller class.
-    * @param input  Context Object record containing all the input data expected
-    *               by the action.
-    * @param method Text name of the method (optional) if the same Apex class
-    *               is used to implement multiple business logics.
-    * @return Object  Object record containing the output of the Apex logic.
-    * @exception AuraHandledException   Returned systematically by default with a warning message
-    *                                   to inform that real implementation is not available.
-    ***/
-    public virtual Object execute(final Object input, final String method) {
-        System.debug(LoggingLevel.ERROR,'execute: sfpegAction_SVC default implementation called.');
-        throw new AuraHandledException('Execute Apex action not implemented!');
-        //return null;
-    }
+	/***
+	* @description  Method to provide an Apex logic implementation for the
+	*               sfpegAction_CTL generic controller class.
+	* @param input  Context Object record containing all the input data expected
+	*               by the action.
+	* @param method Text name of the method (optional) if the same Apex class
+	*               is used to implement multiple business logics.
+	* @return Object  Object record containing the output of the Apex logic.
+	* @exception AuraHandledException   Returned systematically by default with a warning message
+	*                                   to inform that real implementation is not available.
+	***/
+	public virtual Object execute(final Object input, final String method) {
+		System.debug(LoggingLevel.ERROR,'execute: sfpegAction_SVC default implementation called.');
+		throw new AuraHandledException('Execute Apex action not implemented!');
+	}
 }

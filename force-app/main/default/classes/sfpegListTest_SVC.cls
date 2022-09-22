@@ -34,52 +34,52 @@
 @SuppressWarnings('PMD.ClassNamingConventions')
 public with sharing class sfpegListTest_SVC extends sfpegListQuery_SVC {
 
-    public override List<Object> getData(final Object input, final String query) {
-        System.debug('getData: START (Apex) with query ' + query);
+	public override List<Object> getData(final Object input, final String query) {
+		System.debug('getData: START (Apex) with query ' + query);
 
-        if (query == 'TEST') {
-            System.debug('getData: fetching test records');
-            List<Object> resultList = (List<Object>) [select Name from sfpegTestObject__c];
-            System.debug('getData: END OK returning ' + resultList);
-            return resultList;
-        }
-        System.debug(LoggingLevel.Error,'getData: END KO / Missing method name ');
-        throw new DmlException('Missing method name');
-    }
+		if (query == 'TEST') {
+			System.debug('getData: fetching test records');
+			List<Object> resultList = (List<Object>) [select Name from sfpegTestObject__c];
+			System.debug('getData: END OK returning ' + resultList);
+			return resultList;
+		}
+		System.debug(LoggingLevel.Error,'getData: END KO / Missing method name ');
+		throw new DmlException('Missing method name');
+	}
 
-    public override Integer getCount(final Object input, final String query) {
-        System.debug('getCount: START (Apex) with query ' + query);
+	public override Integer getCount(final Object input, final String query) {
+		System.debug('getCount: START (Apex) with query ' + query);
 
-        if (query == 'TEST') {
-            System.debug('getCount: fetching test records');
-            Integer result = [select count() from sfpegTestObject__c];
-            System.debug('getCount: END OK returning ' + result);
-            return result;
-        }
-        System.debug(LoggingLevel.Error,'getData: END KO / Missing method name ');
-        throw new DmlException('Missing method name');
-    }
+		if (query == 'TEST') {
+			System.debug('getCount: fetching test records');
+			Integer result = [select count() from sfpegTestObject__c];
+			System.debug('getCount: END OK returning ' + result);
+			return result;
+		}
+		System.debug(LoggingLevel.Error,'getData: END KO / Missing method name ');
+		throw new DmlException('Missing method name');
+	}
 
-    public override List<Object> getPaginatedData(final Object input, final String query, final String lastValue) {
-        System.debug('getPaginatedData: START (Apex) with query ' + query);
-        System.debug('getPaginatedData: query is ' + query);
-        System.debug('getPaginatedData: lastValue is ' + lastValue);
+	public override List<Object> getPaginatedData(final Object input, final String query, final String lastValue) {
+		System.debug('getPaginatedData: START (Apex) with query ' + query);
+		System.debug('getPaginatedData: query is ' + query);
+		System.debug('getPaginatedData: lastValue is ' + lastValue);
 
-        if (query == 'TEST') {
-            if (lastValue == null) {
-                System.debug('getPaginatedData: fetching page #1 of test records');
-                List<Object> resultList = (List<Object>) [select Name, Owner.Name from sfpegTestObject__c order by Id asc limit 2];
-                 System.debug('getPaginatedData: END OK returning ' + resultList);
-                return resultList;
-            }
-            else {
-                System.debug('getPaginatedData: fetching page #2 of test records');
-                List<Object> resultList = (List<Object>) [select Name, Owner.Name from sfpegTestObject__c where Id > :lastValue order by Id asc limit 2];
-                 System.debug('getPaginatedData: END OK returning ' + resultList);
-                return resultList;
-            }
-        }
-        System.debug(LoggingLevel.Error,'getData: END KO / Missing method name ');
-        throw new DmlException('Missing method name');
-    }
+		if (query == 'TEST') {
+			if (lastValue == null) {
+				System.debug('getPaginatedData: fetching page #1 of test records');
+				List<Object> resultList = (List<Object>) [select Name, Owner.Name from sfpegTestObject__c order by Id asc limit 2];
+				 System.debug('getPaginatedData: END OK returning ' + resultList);
+				return resultList;
+			}
+			else {
+				System.debug('getPaginatedData: fetching page #2 of test records');
+				List<Object> resultList = (List<Object>) [select Name, Owner.Name from sfpegTestObject__c where Id > :lastValue order by Id asc limit 2];
+				 System.debug('getPaginatedData: END OK returning ' + resultList);
+				return resultList;
+			}
+		}
+		System.debug(LoggingLevel.Error,'getData: END KO / Missing method name ');
+		throw new DmlException('Missing method name');
+	}
 }

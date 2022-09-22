@@ -32,31 +32,30 @@
 @SuppressWarnings('PMD.ClassNamingConventions')
 public with sharing class sfpegCardList_CTL {
 
-    /***
-    * @description  Simple method to fetch configuration details for a Card List component.
-    *               It provides the required displayed fields (and section).
-    * @param        name                DeveloperName of the List configuration record
-    * @return       Object              sfpegCardList__mdt record with Query__c, RecordIdField__c, RecordNameField__c,
-    *                                   CardContext__c, IconName__c, IconNameField__c, ObjectName__c, ObjectNameField__c,
-    *                                   CardConfig__c, CardConfigField__c, CardActions__c, CardActionsField__c
-    *                                   and MasterLabel fields filled in.
-    * @exception    AuraHandledException    Raised if no configuration found for the provided name
-    ***/
-    @AuraEnabled(cacheable=true)
-    public static Object getConfiguration(final String name) {
-        System.debug(LoggingLevel.FINE,'getConfiguration: START with sfpegCardList configuration name ' + name);
+	/***
+	* @description  Simple method to fetch configuration details for a Card List component.
+	*               It provides the required displayed fields (and section).
+	* @param        name                DeveloperName of the List configuration record
+	* @return       Object              sfpegCardList__mdt record with Query__c, RecordIdField__c, RecordNameField__c,
+	*                                   CardContext__c, IconName__c, IconNameField__c, ObjectName__c, ObjectNameField__c,
+	*                                   CardConfig__c, CardConfigField__c, CardActions__c, CardActionsField__c
+	*                                   and MasterLabel fields filled in.
+	* @exception    AuraHandledException    Raised if no configuration found for the provided name
+	***/
+	@AuraEnabled(cacheable=true)
+	public static Object getConfiguration(final String name) {
+		System.debug(LoggingLevel.FINE,'getConfiguration: START with sfpegCardList configuration name ' + name);
 
-        List<sfpegCardList__mdt> configs = [    select  Query__c, RecordIdField__c, RecordNameField__c, CardContext__c,
-                                                        IconName__c, IconNameField__c, ObjectName__c, ObjectNameField__c,
-                                                        CardConfig__c, CardConfigField__c, CardActions__c, CardActionsField__c,  MasterLabel
-                                                from sfpegCardList__mdt
-                                                where DeveloperName =  :name    ];
-        if ((configs == null) || (configs.size() != 1)) {
-            System.debug(LoggingLevel.ERROR,'getConfiguration: END - Missing/wrong configuration ' + name);
-            throw new AuraHandledException('Configuration not found with name ' + name);
-        }
-        //System.debug(LoggingLevel.FINEST,'getConfiguration: END with configuration name ' + configs[0]);
-        System.debug(LoggingLevel.FINE,'getConfiguration: END ' + configs[0].MasterLabel);
-        return (Object) (configs[0]);
-    }
+		List<sfpegCardList__mdt> configs = [	select  Query__c, RecordIdField__c, RecordNameField__c, CardContext__c,
+														IconName__c, IconNameField__c, ObjectName__c, ObjectNameField__c,
+														CardConfig__c, CardConfigField__c, CardActions__c, CardActionsField__c,  MasterLabel
+												from sfpegCardList__mdt
+												where DeveloperName =  :name];
+		if ((configs == null) || (configs.size() != 1)) {
+			System.debug(LoggingLevel.ERROR,'getConfiguration: END - Missing/wrong configuration ' + name);
+			throw new AuraHandledException('Configuration not found with name ' + name);
+		}
+		System.debug(LoggingLevel.FINE,'getConfiguration: END ' + configs[0].MasterLabel);
+		return (Object) (configs[0]);
+	}
 }

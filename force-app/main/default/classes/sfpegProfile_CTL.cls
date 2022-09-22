@@ -33,31 +33,30 @@
 @SuppressWarnings('PMD.ClassNamingConventions')
 public with sharing class sfpegProfile_CTL {
 
-    /***
-    * @description  Simple method to fetch configuration details for a Record Profile component.
-    *               It provides the display configuration as well as the actions available.
-    * @param        name    DeveloperName of the Profile configuration record
-    * @return       Object  sfpegProfile__mdt record with ProfileBanner__c, ProfileAvatar__c, ProfileHeader__c,
-    *               ProfileActions__c, ProfileDetails__c, MasterLabel fields filled in.
-    * @exception    AuraHandledException    Raised if no configuration found for the provided name
-    ***/
-    @AuraEnabled(cacheable=true)
-    public static Object getConfiguration(final String name) {
-        System.debug(LoggingLevel.FINE,'getConfiguration: START with sfpegProfile configuration name ' + name);
+	/***
+	* @description  Simple method to fetch configuration details for a Record Profile component.
+	*               It provides the display configuration as well as the actions available.
+	* @param        name    DeveloperName of the Profile configuration record
+	* @return       Object  sfpegProfile__mdt record with ProfileBanner__c, ProfileAvatar__c, ProfileHeader__c,
+	*               ProfileActions__c, ProfileDetails__c, MasterLabel fields filled in.
+	* @exception    AuraHandledException    Raised if no configuration found for the provided name
+	***/
+	@AuraEnabled(cacheable=true)
+	public static Object getConfiguration(final String name) {
+		System.debug(LoggingLevel.FINE,'getConfiguration: START with sfpegProfile configuration name ' + name);
 
-        List<sfpegProfile__mdt> configs = [ SELECT  MasterLabel, ProfileBanner__c, ProfileAvatar__c, ProfileHeader__c,
-                                                    ProfileActions__c, ProfileDetails__c
-                                            FROM sfpegProfile__mdt
-                                            WHERE DeveloperName =  :name];
+		List<sfpegProfile__mdt> configs = [ SELECT  MasterLabel, ProfileBanner__c, ProfileAvatar__c, ProfileHeader__c,
+													ProfileActions__c, ProfileDetails__c
+											FROM sfpegProfile__mdt
+											WHERE DeveloperName =  :name];
 
-        if ((configs == null) || (configs.size() != 1)) {
-            System.debug(LoggingLevel.ERROR,'getConfiguration: END KO / configuration not found with name ' + name);
-            throw new AuraHandledException('Configuration not found with name ' + name);
-        }
+		if ((configs == null) || (configs.size() != 1)) {
+			System.debug(LoggingLevel.ERROR,'getConfiguration: END KO / configuration not found with name ' + name);
+			throw new AuraHandledException('Configuration not found with name ' + name);
+		}
 
-        //System.debug(LoggingLevel.FINEST,'getConfiguration: END with configuration name ' + configs[0]);
-        System.debug(LoggingLevel.FINE,'getConfiguration: END ' + configs[0].MasterLabel);
-        return (Object) (configs[0]);
-    }
+		System.debug(LoggingLevel.FINE,'getConfiguration: END ' + configs[0].MasterLabel);
+		return (Object) (configs[0]);
+	}
 
 }

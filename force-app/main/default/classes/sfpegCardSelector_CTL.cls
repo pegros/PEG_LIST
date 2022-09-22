@@ -35,78 +35,77 @@
 @SuppressWarnings('PMD.ClassNamingConventions')
 global with sharing class sfpegCardSelector_CTL extends VisualEditor.DynamicPickList {
 
-    /***
-    * @description Context of the Lightning page calling the picklist controller.
-    ***/
-        VisualEditor.DesignTimePageContext pageContext;
+	/***
+	* @description Context of the Lightning page calling the picklist controller.
+	***/
+	VisualEditor.DesignTimePageContext pageContext;
 
-    /***
-    * @description Constructor enabling to fetch the Lightning page context (and especially
-    *              the entityName of the record being displayed in the page).
-    * @param       VisualEditor.DesignTimePageContext   Current page context
-    * @exception   none really specific.
-    ***/
+	/***
+	* @description Constructor enabling to fetch the Lightning page context (and especially
+	*              the entityName of the record being displayed in the page).
+	* @param       VisualEditor.DesignTimePageContext   Current page context
+	* @exception   none really specific.
+	***/
 
-        global sfpegCardSelector_CTL(VisualEditor.DesignTimePageContext pageContext) {
-            System.debug(LoggingLevel.FINEST,'Constructor START with sfpegCard page context ' + pageContext);
-            System.debug(LoggingLevel.FINEST,'Constructor entityName ' + pageContext.entityName);
-            this.pageContext = pageContext;
-        }
+	global sfpegCardSelector_CTL(VisualEditor.DesignTimePageContext pageContext) {
+		System.debug(LoggingLevel.FINEST,'Constructor START with sfpegCard page context ' + pageContext);
+		System.debug(LoggingLevel.FINEST,'Constructor entityName ' + pageContext.entityName);
+		this.pageContext = pageContext;
+	}
+
+	/***
+	* @description Override of the method providing the default value.
+	* @return      VisualEditor.DataRow   Always returns the default ('---','N/A') value.
+	* @exception   none really specific.
+	***/
+	global override VisualEditor.DataRow getDefaultValue() {
+		System.debug(LoggingLevel.FINEST,'getDefaultValue START Number');
+		return new VisualEditor.DataRow('---','N/A');
+	}
+
+	/***
+	* @description Override of the method providing the set of picklist values.
+	*              Returns label / names couples for all field sets
+	*              defined on entity. Includes a default ('---','N/A') value.
+	* @return      VisualEditor.DynamicPickListRows  List of field set names for datasource.
+	* @exception   none really specific.
+	***/
+	global override VisualEditor.DynamicPickListRows getValues() {
+		System.debug(LoggingLevel.FINEST,'getValues: START for sfpegCard');
+
+		VisualEditor.DynamicPickListRows picklistValues = new VisualEditor.DynamicPickListRows();
+		picklistValues.addRow(new VisualEditor.DataRow('---','N/A'));
+		System.debug(LoggingLevel.FINEST,'getValues: picklistValues init ' + picklistValues);
 
 
-    /***
-    * @description Override of the method providing the default value.
-    * @return      VisualEditor.DataRow   Always returns the default ('---','N/A') value.
-    * @exception   none really specific.
-    ***/
-        global override VisualEditor.DataRow getDefaultValue() {
-            System.debug(LoggingLevel.FINEST,'getDefaultValue START Number');
-            return new VisualEditor.DataRow('---','N/A');
-        }
+		System.debug(LoggingLevel.FINEST,'getValues: entity name fetched ' + pageContext.entityName);
+		Map<ID,sfpegCard__mdt> queries = new Map<ID,sfpegCard__mdt>(
+			[   select MasterLabel,  DeveloperName
+				from sfpegCard__mdt
+				where Scope__c LIKE '%GLOBAL%'  ]);
+		if (! String.isEmpty(pageContext.entityName)) {
+			System.debug(LoggingLevel.FINEST,'getValues: fetching GLOBAL, Record and object specific queries');
+			queries.putAll(new Map<ID,sfpegCard__mdt>(
+				[   select MasterLabel,  DeveloperName
+					from sfpegCard__mdt
+					where Scope__c LIKE '%RECORDS%']));
+			String entityPattern = '%' + pageContext.entityName + '%';
+			queries.putAll(new Map<ID,sfpegCard__mdt>(
+				[   select MasterLabel,  DeveloperName
+					from sfpegCard__mdt
+					where Scope__c LIKE :entityPattern]));
+		}
+		System.debug(LoggingLevel.FINEST,'getValues: queries initialized ' + queries);
 
-    /***
-    * @description Override of the method providing the set of picklist values.
-    *              Returns label / names couples for all field sets
-    *              defined on entity. Includes a default ('---','N/A') value.
-    * @return      VisualEditor.DynamicPickListRows  List of field set names for datasource.
-    * @exception   none really specific.
-    ***/
-        global override VisualEditor.DynamicPickListRows getValues() {
-            System.debug(LoggingLevel.FINEST,'getValues: START for sfpegCard');
-
-            VisualEditor.DynamicPickListRows picklistValues = new VisualEditor.DynamicPickListRows();
-            picklistValues.addRow(new VisualEditor.DataRow('---','N/A'));
-            System.debug(LoggingLevel.FINEST,'getValues: picklistValues init ' + picklistValues);
-
-
-            System.debug(LoggingLevel.FINEST,'getValues: entity name fetched ' + pageContext.entityName);
-            Map<ID,sfpegCard__mdt> queries = new Map<ID,sfpegCard__mdt>(
-                [   select MasterLabel,  DeveloperName
-                    from sfpegCard__mdt
-                    where Scope__c LIKE '%GLOBAL%'  ]);
-            if (! String.isEmpty(pageContext.entityName)) {
-                System.debug(LoggingLevel.FINEST,'getValues: fetching GLOBAL, Record and object specific queries');
-                queries.putAll(new Map<ID,sfpegCard__mdt>(
-                    [   select MasterLabel,  DeveloperName
-                        from sfpegCard__mdt
-                        where Scope__c LIKE '%RECORDS%']));
-                String entityPattern = '%' + pageContext.entityName + '%';
-                queries.putAll(new Map<ID,sfpegCard__mdt>(
-                    [   select MasterLabel,  DeveloperName
-                        from sfpegCard__mdt
-                        where Scope__c LIKE :entityPattern]));
-            }
-            System.debug(LoggingLevel.FINEST,'getValues: queries initialized ' + queries);
-
-            for (ID iter : queries.keySet()){
-                sfpegCard__mdt queryIter = queries.get(iter);
-                System.debug(LoggingLevel.FINEST,'getValues: processing query ' + queryIter);
-                picklistValues.addRow(new VisualEditor.DataRow(
-                        queryIter.MasterLabel,
-                        queryIter.DeveloperName));
-            }
-            System.debug(LoggingLevel.FINEST,'getValues: picklistValues completed ' + picklistValues);
-            System.debug(LoggingLevel.FINE,'getValues: END with #Items ' + picklistValues.size());
-            return picklistValues;
-        }
-    }
+		for (ID iter : queries.keySet()){
+			sfpegCard__mdt queryIter = queries.get(iter);
+			System.debug(LoggingLevel.FINEST,'getValues: processing query ' + queryIter);
+			picklistValues.addRow(new VisualEditor.DataRow(
+					queryIter.MasterLabel,
+					queryIter.DeveloperName));
+		}
+		System.debug(LoggingLevel.FINEST,'getValues: picklistValues completed ' + picklistValues);
+		System.debug(LoggingLevel.FINE,'getValues: END with #Items ' + picklistValues.size());
+		return picklistValues;
+	}
+}
