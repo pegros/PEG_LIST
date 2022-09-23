@@ -362,11 +362,15 @@ export default class SfpegPopupDsp extends LightningElement {
         if (this.isDebug) console.log('handleSubmit: event ', event);
         if (this.isDebug) console.log('handleSubmit: submit details ', JSON.stringify(event.detail));
 
+        this.showSpinner = true;
+        let buttons = this.template.querySelectorAll('lightning-button');
+        if (this.isDebug) console.log('handleSubmit: deactivating #buttons ',buttons.length);
+        buttons.forEach(item => {item.disabled = true;});
+
         if (this.checkRequiredFieldsFilled()) {
             if (this.isDebug) console.log('handleSubmit: all required field set ');
             if (this.doSubmit) {
                 if (this.isDebug) console.log('handleSubmit: submitting form');
-                this.showSpinner = true;
                 let editForm = this.template.querySelector('lightning-record-edit-form');
                 editForm.submit();
                 if (this.isDebug) console.log('handleSubmit: END / form submitted');
@@ -395,12 +399,20 @@ export default class SfpegPopupDsp extends LightningElement {
                     }
                 }
                 catch(error) {
-                    console.warn('handleSubmit: END - Submission error ',error);
+                    console.warn('handleSubmit: Submission error ',error);
+                    this.showSpinner = false;
+                    let buttons = this.template.querySelectorAll('lightning-button');
+                    if (this.isDebug) console.log('handleSubmit:  END / reactivating #buttons ',buttons.length);
+                    buttons.forEach(item => {item.disabled = false;});
                 }
             } 
         }
         else {
-            if (this.isDebug) console.log('handleSubmit: END / KO Missing required field(s)');
+            if (this.isDebug) console.log('handleSubmit: KO Missing required field(s)');
+            this.showSpinner = false;
+            let buttons = this.template.querySelectorAll('lightning-button');
+            if (this.isDebug) console.log('handleSubmit: END / reactivating #buttons ',buttons.length);
+            buttons.forEach(item => {item.disabled = false;});
         }
     }
 
@@ -408,6 +420,10 @@ export default class SfpegPopupDsp extends LightningElement {
         if (this.isDebug) console.log('handleError: START',event);
         if (this.isDebug) console.log('handleError: error details ', JSON.stringify(event.detail));
         this.showSpinner = false;
+        let buttons = this.template.querySelectorAll('lightning-button');
+        if (this.isDebug) console.log('handleError: reactivating #buttons ',buttons.length);
+        buttons.forEach(item => {item.disabled = false;});
+        if (this.isDebug) console.log('handleError: END',event);
     }
 
     handleSave(event){
@@ -423,12 +439,14 @@ export default class SfpegPopupDsp extends LightningElement {
             if (this._resolve) {
                 if (this.isDebug) console.log('handleSave: calling promise handler');
                 // waiting for refresh / propagation of LDS cache if there is a next action
-                this.showSpinner = true;
+                //this.showSpinner = true;
                 setTimeout(() => {
                     this._resolve();
-                    if (this.isDebug) console.log('handleSave: promise handler called');
-                    this.resetCmp();
-                    if (this.isDebug) console.log('handleSave: END / component reset');
+                    if (this.isDebug) console.log('handleSave: promise handler called', Date.now());
+                    setTimeout(() => {
+                        this.resetCmp();
+                        if (this.isDebug) console.log('handleSave: END / component reset', Date.now());
+                    },100);
                 },2000);
                 if (this.isDebug) console.log('handleSave: waiting');
             }
@@ -517,7 +535,6 @@ export default class SfpegPopupDsp extends LightningElement {
     resetCmp = function() {
         if (this.isDebug) console.log('resetCmp: START ');
         this.showPopup = false;
-        this.showSpinner = false;
         this.showConfirmation = false;
         this.showForm = false;
         this.showUpload = false;
@@ -532,7 +549,8 @@ export default class SfpegPopupDsp extends LightningElement {
         //this.showSaveNew = false;
         this._reject = null;
         this._resolve = null;
-        if (this.isDebug) console.log('resetCmp: END ');
+        this.showSpinner = false;
+        if (this.isDebug) console.log('resetCmp: END ', Date.now());
     }
 
 }

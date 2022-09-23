@@ -5,6 +5,7 @@
         <div    class="modal-glass slds-backdrop fadein slds-backdrop--open backgroundContainer"
                 tabindex="-1" data-aura-rendered-by="3230:0" style="opacity: 0.8;">
         </div>
+
         <!-- Popup Display -->
         <section    role="dialog"   class={popupClass}>
             <div class="slds-modal__container popupContainer"  >
@@ -161,7 +162,7 @@
                             <lightning-button   variant="neutral"   label={closeLabel}
                                                 onclick={handleClose} ></lightning-button>
                         </template>
-                        <!-- Detail Close Buttons-->
+                        <!-- Upload Close Buttons-->
                         <template if:true={showUpload}>
                             <lightning-button   variant="neutral"   label={closeLabel}
                                                 onclick={handleClose} ></lightning-button>
