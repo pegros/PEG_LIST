@@ -552,10 +552,10 @@ const sfpegMergeUtl = {
                 if (sfpegMergeUtl.isDebug) console.log('mergeTokens: merge done ',mergeResult);
 
                 if (mergeResult.includes('ESCAPE(((')) {
-                    if (this.isDebug) console.log('mergeTokens: escaping required ');
+                    if (this.isDebug) console.log('mergeTokens: HTML escaping required ');
 
                     let escapeMatches = [...mergeResult.matchAll(/ESCAPE(\(\(\()(.*?)(\)\)\))/gms)];
-                    if (this.isDebug) console.log('mergeTokens: escapeMatches found ',escapeMatches);
+                    if (this.isDebug) console.log('mergeTokens: HTML escapeMatches found ',escapeMatches);
     
                     escapeMatches.forEach(matchIter => {
                         if (this.isDebug) console.log('mergeTokens: processing matchIter ',matchIter);
@@ -571,10 +571,43 @@ const sfpegMergeUtl = {
                         mergeResult = mergeResult.replace(matchIter[0],newMatchValue);
                         //if (this.isDebug) console.log('mergeTokens: mergeResult updated ', mergeResult);
                     });
-                    if (this.isDebug) console.log('finalizeDisplay: mergeResult escaped');
+                    if (this.isDebug) console.log('mergeTokens: mergeResult HTML escaped');
                 }
                 else {
-                    if (this.isDebug) console.log('finalizeDisplay: no escaping required ');
+                    if (this.isDebug) console.log('mergeTokens: no HTML escaping required ');
+                }
+
+                if (mergeResult.includes('UTF(((')) {
+                    if (this.isDebug) console.log('mergeTokens: UTF escaping required ');
+
+                    let escapeMatches = [...mergeResult.matchAll(/UTF(\(\(\()(.*?)(\)\)\))/gms)];
+                    if (this.isDebug) console.log('mergeTokens: UTF escapeMatches found ',escapeMatches);
+    
+                    escapeMatches.forEach(matchIter => {
+                        if (this.isDebug) console.log('mergeTokens: processing matchIter ',matchIter);
+                        //if (this.isDebug) console.log('mergeTokens: match considered ',matchIter[0]);
+                        //if (this.isDebug) console.log('mergeTokens: value considered ',matchIter[2]);
+                        //if (this.isDebug) console.log('mergeTokens: submatches ',[...(matchIter[2]).matchAll(/"/g)]);
+                        let newMatchValue = (matchIter[2]).replaceAll('+','%2B');
+                        if (this.isDebug) console.log('mergeTokens: + char replaced ',newMatchValue);
+                        newMatchValue = (newMatchValue).replaceAll(',','%2C');
+                        if (this.isDebug) console.log('mergeTokens: , char replaced ',newMatchValue);
+                        //newMatchValue = (newMatchValue).replace(/\\/gms,'%5C');
+                        //newMatchValue = (newMatchValue).replaceAll('\\\\','%5C');
+                        newMatchValue = (newMatchValue).replaceAll('\\','%5C');
+                        if (this.isDebug) console.log('mergeTokens: \\ char replaced ',newMatchValue);
+                        //newMatchValue = (newMatchValue).replace(/[\\]/gms,'%5C');
+                        //newMatchValue = (newMatchValue).replace(/[\r]/gms,'\\r');
+                        //newMatchValue = (newMatchValue).replace(/[\n]/gms,'\\n');
+                        //newMatchValue = (newMatchValue).replace(/[\t]/gms,'\\t');
+                        if (this.isDebug) console.log('mergeTokens: newMatchValue ', newMatchValue);
+                        mergeResult = mergeResult.replace(matchIter[0],newMatchValue);
+                        //if (this.isDebug) console.log('mergeTokens: mergeResult updated ', mergeResult);
+                    });
+                    if (this.isDebug) console.log('mergeTokens: mergeResult URL escaped');
+                }
+                else {
+                    if (this.isDebug) console.log('mergeTokens: no URL escaping required ');
                 }
 
                 if (sfpegMergeUtl.isDebug) console.log('mergeTokens: END OK - returning ',mergeResult);

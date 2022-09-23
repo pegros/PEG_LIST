@@ -831,11 +831,11 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             let regexp = /[^,]([\w]+=(,|$))/gi;
             //let newDefaults = (targetPageRef.state.defaultFieldValues).replaceAll(regexp,'');
             let newDefaults = (targetPageRef.state.defaultFieldValues).replace(regexp,'');
-            if (this.isDebug) console.log('triggerNavigate: setting new default values ',newDefaults);
+            if (this.isDebug) console.log('triggerNavigate: empty default values removed ',newDefaults);
             // Hack to be able to modify data set by other method.
             targetPageRef = JSON.parse(JSON.stringify(targetPageRef));
             targetPageRef.state.defaultFieldValues = newDefaults;
-            if (this.isDebug) console.log('triggerNavigate: new default values set');
+            if (this.isDebug) console.log('triggerNavigate: new default values set ',JSON.stringify(targetPageRef));
         }
         
         //this[NavigationMixin.GenerateUrl](targetPageRef).then(url => {

@@ -75,13 +75,16 @@ the merge **token**, as it would result in a string instead of a boolean/number
 
 ---
 
-## Post Merge Modifier - Double Quotes **Escape**
+## Post Merge Modifier
 
 As a baseline, the **sfpegMergeUtl** component directly replaces the tokens by their value.
 
 However, in some cases, some issues may arise when parsing the resulting merged
-string as a JSON list or object. Main origin are the double quotes (") within
-text fields which then break the JSON parsing operation.
+string as a JSON list or object. 
+
+### Double Quotes **ESCAPE**
+
+Main JSON parsing issues arise from double quotes (") within text fields which then break the JSON parsing operation.
 
 Richtext fields are a key source of problems, e.g. for the **[sfpegMessageListCmp](/help/sfpegMessageListCmp.md)** 
 or the **[sfpegRecordDisplayCmp](/help/sfpegRecordDisplayCmp.md)** components, especially the 
@@ -93,7 +96,7 @@ double quotes induced by HTML formatting.
 Text fields may also raise the same issue, as double quotes in their content are indeed not escaped (via '&quot;')
 as in the richtext field case. 
 
-In order to prevent these fields to break the configuration parsing, a special **ESCAPE(((...)))** directive
+In order to prevent these fields to break the configuration parsing, a special `ESCAPE(((...)))` directive
 is available. Such a directive is applied after the initial merge and replaces all '"' character occurrences
 by '\\"' ones. This enables to escape these double quotes for the JSON parsing and restore their original
 value for display afterwards.
@@ -123,9 +126,46 @@ global JSON parsing be executed correctly. Escaping is here applied only to text
 }
 ```
 
-_Note_: This feature has been extended to also replace by a white space other characters breaking
+***Note***: This feature has been extended to also replace by a white space other characters breaking
 the Javascript JSON parsing, such as `\r`, `\n`, `\t`.
 
+
+### **UTF** Special Characters Replacement
+
+In some special cases, issues arise from some special characters (such as comma, plus sign, backslash)
+breaking the JSON parsing or ignored.
+
+This arises among others when setting default values for `navigation` actions within
+**[sfpegActionBarCmp](/help/sfpegMessageListCmp.md)** configurations. The following
+configuration would indeed:
+* ignore the plus sign in the resulting _Subject_ string
+* cut the _Subject_ string after the comma
+* actually fail JSON parsing because of the backslash
+```
+    "state": {
+        "defaultFieldValues": "WhatId=a1F5E00000JVRaXUAX,Subject=Start + middle1 \ middle2 , end",
+        "nooverride": "1"
+    }
+```
+
+In order to prevent these fields to break the configuration parsing, a special `UTF(((...)))` directive
+is available. Such a directive is applied after the initial merge and replaces the special character occurrences
+by their UTF codes.
+
+In the previous example, the following configuration 
+```
+"state": {
+    "defaultFieldValues": "WhatId={{{GEN.recordId}}},Subject=UTF((({{{RCD.Description__c}}})))",
+    "nooverride": "1"
+}
+```
+would lead to the following properly acceptable output for the navigation action: 
+```
+    "state": {
+        "defaultFieldValues": "WhatId=a1F5E00000JVRaXUAX,Subject=Start %2B middle1 %5C middle2 %2C end",
+        "nooverride": "1"
+    }
+```
 
 ---
 
