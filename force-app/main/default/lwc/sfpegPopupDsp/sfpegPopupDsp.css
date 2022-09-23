@@ -29,3 +29,8 @@
 .formField {
     margin-bottom: var(--lwc-spacingSmall) !important;
 }
+.formMessages {
+    position: sticky;
+    top: -15px;
+    z-index: 10;
+} 
