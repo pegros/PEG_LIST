@@ -133,7 +133,13 @@ public with sharing class sfpegAction_CTL {
 			}
 			return records;
 		}
+		catch (DmlException e) {
+			System.debug(LoggingLevel.WARN, 'executeDML : DML exception raised ' + e);
+			System.debug(LoggingLevel.WARN, 'executeDML : END KO / returning DML error ' + e.getDmlMessage(0));
+			throw new AuraHandledException(e.getDmlMessage(0));
+		}
 		catch (Exception e) {
+			System.debug(LoggingLevel.WARN, 'executeDML : exception raised ' + e);
 			System.debug(LoggingLevel.WARN, 'executeDML : END KO / returning error ' + e.getMessage());
 			throw new AuraHandledException(e.getMessage());
 		}
