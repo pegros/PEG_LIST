@@ -20,6 +20,23 @@
                 <div class="slds-media__body">
                     <!-- Tile Header -->
                     <div class="slds-media slds-media_center">
+                        <!-- Details expand/collapse Icon display -->
+                        <template if:true={cardDetails}>
+                            <div class="slds-media__figure slds-m-right_xx-small">
+                                <lightning-button-icon  if:false={isExpanded}
+                                                        class="expandCollapse"
+                                                        variant="bare"
+                                                        icon-name="utility:chevronright"
+                                                        onclick={handleExpandCollapse}></lightning-button-icon>
+                                <lightning-button-icon  if:true={isExpanded}
+                                                        class="expandCollapse"
+                                                        variant="bare"
+                                                        icon-name="utility:chevrondown"
+                                                        onclick={handleExpandCollapse}></lightning-button-icon>
+                            </div>
+                        </template>
+
+                        <!-- Main Title display -->
                         <div class="slds-media__body">
                             <div class="slds-truncate" title={cardTitleLabel} >
                                 <template if:true={hasTitleLink}>
@@ -36,6 +53,8 @@
                                 </template>
                             </div>
                         </div>
+
+                        <!-- Actions display -->
                         <template if:true={hasActions}>
                             <div class="slds-media__figure slds-media__figure_reverse">
                                 <lightning-button-menu  icon-size="x-small"               variant="border"
@@ -68,8 +87,9 @@
                     <!-- Tile Content -->
                     <div class="slds-media slds-var-m-bottom_xx-small slds-var-m-top_xx-small">
                         <!-- expand/collapse Icon display -->
+                        <!--
                         <template if:true={cardDetails}>
-                            <div class="slds-media__figure">
+                            <div class="slds-media__figure slds-m-right_xx-small">
                                 <lightning-button-stateful  class="expandCollapse"
                                                             variant="text"
                                                             selected={isExpanded}
@@ -79,6 +99,7 @@
                                 </lightning-button-stateful>
                             </div>
                         </template>
+                        -->
 
                         <div class="slds-media__body">
                             <!-- Main Content fields -->

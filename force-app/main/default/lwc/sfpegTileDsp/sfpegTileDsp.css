@@ -16,6 +16,8 @@
 }
 .expandCollapse{
     --sds-c-button-line-height : 0px !important;
+    --sds-c-button-spacing-block-start : 0px !important;
+    --sds-c-button-spacing-block-end : 0px !important;
 }
 .leftBorder {
     /*border-left-width: var(--lwc-borderRadiusMedium) !important;

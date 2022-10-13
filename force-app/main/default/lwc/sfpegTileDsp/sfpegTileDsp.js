@@ -224,7 +224,7 @@ export default class SfpegTileDsp extends LightningElement {
             this.cardDetails = [];
             this.configDetails.details.forEach(item => {
                 if (item.fieldName !== titleFieldName) {
-                    if (this.isDebug) console.log('resetDisplayData: procesing item ', item);
+                    if (this.isDebug) console.log('resetDisplayData: processing item ', item);
                     if (this._recordData[item.fieldName] != null) {
                         if (this.isDebug) console.log('resetDisplayData: registering standard field ', item.fieldName);
                         this.cardDetails.push({
@@ -245,6 +245,7 @@ export default class SfpegTileDsp extends LightningElement {
                     if (this.isDebug) console.log('resetDisplayData: ignoring title field ', item.fieldName);
                 }
             });
+            if (this.cardDetails.length == 0) this.cardDetails = null;
             if (this.isDebug) console.log('resetDisplayData: card details init', this.cardDetails);  
         }
         else {
