@@ -57,7 +57,8 @@ export default class SfpegTileDsp extends LightningElement {
 
     // Internal technical fields
     @track isReady = false;      // Flag to control the initilisation fo the component
-    @track wrapperClass = "slds-box slds-box_x-small slds-var-m-around_small"; // CSS class for the wrapping div
+    //@track wrapperClass = "slds-box slds-box_x-small slds-var-m-around_small"; // CSS class for the wrapping div
+    @track wrapperClass = "slds-box slds-box_x-small slds-m-around_xx-small"; // CSS class for the wrapping div
     @track cardIcon = null;      // Displayed icon name (if any)
     @track cardIconSize = 'small'; // Displayed icon size (if any)
     @track cardIconVariant;     // Displayed icon size (if any)
