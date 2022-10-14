@@ -1,7 +1,10 @@
 <template>
 
     <!-- Utilities -->
-    <c-sfpeg-popup-dsp  is-debug={isDebug}>
+    <c-sfpeg-popup-dsp  is-debug={isDebug}
+                        object-api-name={objectApiName}
+                        record-id={recordId}
+                        user-id={userId}>
     </c-sfpeg-popup-dsp>
 
     <template if:false={isHidden}>

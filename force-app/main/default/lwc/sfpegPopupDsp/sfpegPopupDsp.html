@@ -52,11 +52,42 @@
                                 <template for:each={formFields} for:item="iterForm">
                                     <lightning-layout-item  key={iterForm.name}  size={formFieldSize} 
                                                             alignment-bump="left" >
-                                        <lightning-input-field  field-name={iterForm.name}
-                                                                required={iterForm.required}
-                                                                disabled={iterForm.disabled}
-                                                                value={iterForm.value} >
-                                        </lightning-input-field>
+                                        <template if:false={iterForm.dataSource}>
+                                            <lightning-input-field  field-name={iterForm.name}
+                                                                    required={iterForm.required}
+                                                                    disabled={iterForm.disabled}
+                                                                    value={iterForm.value} >
+                                            </lightning-input-field>
+                                        </template>
+                                        <template if:true={iterForm.dataSource}>
+                                            <template if:false={iterForm.disabled}>
+                                                <lightning-input-field  class="slds-hide"
+                                                                        field-name={iterForm.name}
+                                                                        data-field-name={iterForm.name}
+                                                                        required={iterForm.required}
+                                                                        disabled={iterForm.disabled}
+                                                                        value={iterForm.value} >
+                                                </lightning-input-field>
+                                                <c-sfpeg-picklist-input-dsp     field-name={iterForm.name}
+                                                                                data-field-name={iterForm.name}
+                                                                                config-name={iterForm.dataSource}
+                                                                                object-api-name={objectApiName}
+                                                                                record-id={recordId}
+                                                                                user-id={userId}
+                                                                                is-debug={isDebug}
+                                                                                required={iterForm.required}
+                                                                                onfieldchange={handlePicklistChange}>
+                                                </c-sfpeg-picklist-input-dsp>
+                                            </template>
+                                            <template if:true={iterForm.disabled}>
+                                                <lightning-input-field  field-name={iterForm.name}
+                                                                        data-field-name={iterForm.name}
+                                                                        required={iterForm.required}
+                                                                        disabled={iterForm.disabled}
+                                                                        value={iterForm.value} >
+                                                </lightning-input-field>
+                                            </template>
+                                        </template>
                                     </lightning-layout-item>
                                 </template>
                                 <div class="slds-hide">
@@ -101,7 +132,7 @@
                             <lightning-file-upload  label={uploadLabel}
                                                     class="slds-align_absolute-center"
                                                     accept={fileFormats}
-                                                    record-id={recordId}
+                                                    record-id={fileRecordId}
                                                     multiple
                                                     onuploadfinished={handleUploadFinished}
                                                     onclick={handleUploadStart} >
@@ -111,7 +142,7 @@
                             <lightning-file-upload  label={uploadLabel}
                                                     class="slds-align_absolute-center"
                                                     accept={fileFormats}
-                                                    record-id={recordId}
+                                                    record-id={fileRecordId}
                                                     onuploadfinished={handleUploadFinished}
                                                     onclick={handleUploadStart} >
                             </lightning-file-upload>

@@ -41,14 +41,24 @@ import FORMATS_TITLE    from '@salesforce/label/c.sfpegPopupFormatsTitle';
 
 export default class SfpegPopupDsp extends LightningElement {
 
-    // Configuration parameters
+    //###########################################################
+    //  Configuration parameters
+    //###########################################################
     @api isDebug = false;
 
-    // Internal parameters
+    //###########################################################
+    //  Internal parameters
+    //###########################################################
+    // Popup management
     @track showPopup = false;           // Main flag controlling the display of the popup
     @track popupTitle = '';             // Popup display title
     @track popupMessage = '';           // Popup display message
     popupSize;                          // Popup display size : null (standard), small, medium or large
+
+    // Context
+    @api objectApiName;                 // API Name of the current Object
+    @api recordId;                      // ID of the current Object
+    @api userId;                        // ID of the current User
 
     // Spinner & Confirmation mode parameters
     @track showSpinner = false;         // Flag controlling the display of the popup spinner
@@ -71,7 +81,7 @@ export default class SfpegPopupDsp extends LightningElement {
 
     // File Upload parameters
     @track showUpload = false;          // Flag to toggle File Upload mode display
-    @track recordId;                    // Id of the record to which files should be related
+    @track fileRecordId;                // Id of the record to which files should be related
     @track uploadLabel;                 // Label displayed within the file upload widget
     @track fileFormats = [];            // List of file extensions allowed for upload.
     @track allowMultiple = false;       // Flag to allow multiple simultaneous uploads
@@ -169,7 +179,7 @@ export default class SfpegPopupDsp extends LightningElement {
         this.popupMessage = message;
         this.popupSize = size;
         this.uploadLabel = uploadLabel;
-        this.recordId = recordId;
+        this.fileRecordId = recordId;
         this.allowMultiple = allowMultiple;
         //this.fileFormats = formats || ['.jpg', '.png', '.jpeg', '.pdf'];
         this.fileFormats = formats;
@@ -353,6 +363,23 @@ export default class SfpegPopupDsp extends LightningElement {
     handleLoad(event){
         if (this.isDebug) console.log('handleLoad: START',event);
         if (this.isDebug) console.log('handleLoad: load details ', JSON.stringify(event.detail));
+
+        let picklistFields = this.template.querySelectorAll('c-sfpeg-picklist-input-dsp');
+        if (this.isDebug) console.log('handleLoad: picklistFields found ',picklistFields);
+
+        if (picklistFields) {
+            if (this.isDebug) console.log('handleLoad: initialising picklist fields');
+            picklistFields.forEach(item => {
+                if (this.isDebug) console.log('handleLoad: processing picklist ', item);
+                item.label = event.detail.objectInfos[this.formRecord.ObjectApiName].fields[item.fieldName]?.label;
+                if (this.isDebug) console.log('handleLoad: label set ', item.label);
+                let itemSource = this.template.querySelector('c-sfpeg-picklist-input-dsp[data-field-name="' + item.fieldName + '"]');
+                item.value =  itemSource?.value;
+                if (this.isDebug) console.log('handleLoad: value set ', item.value);
+            });
+            console.log('handleLoad: picklist fields initialized');
+        }
+
         this.showSpinner = false;
         if (this.isDebug) console.log('handleLoad: END');
     }
@@ -419,6 +446,25 @@ export default class SfpegPopupDsp extends LightningElement {
     handleError(event){
         if (this.isDebug) console.log('handleError: START',event);
         if (this.isDebug) console.log('handleError: error details ', JSON.stringify(event.detail));
+
+        let fieldErrors = event.detail.output?.fieldErrors;
+        if (fieldErrors) {
+            for (let item in fieldErrors) {
+                console.log('handleError: processing error on field ',item);
+                console.log('handleError: with details ',fieldErrors[item]);
+
+                let picklistFieldQuery = 'c-sfpeg-picklist-input-dsp[data-field-name="' + item + '"]';
+                console.log('handleFieldChange: searching inputField ',picklistFieldQuery);
+                let picklistField = this.template.querySelector(picklistFieldQuery);
+                console.log('handleFieldChange: picklistField found ',picklistField);
+
+                if (picklistField) {
+                    console.log('handleFieldChange: setting error ',fieldErrors[item][0].message);
+                    picklistField.setError(fieldErrors[item][0].message);
+                }
+            }
+        }
+
         this.showSpinner = false;
         let buttons = this.template.querySelectorAll('lightning-button');
         if (this.isDebug) console.log('handleError: reactivating #buttons ',buttons.length);
@@ -465,6 +511,24 @@ export default class SfpegPopupDsp extends LightningElement {
             console.warn('handleSave: error raised while saving ', JSON.stringify(error));
             this.showSpinner = false;
         }
+    }
+
+    handlePicklistChange(event) {
+        console.log('handlePicklistChange: START with ',event);
+        console.log('handlePicklistChange: details ',JSON.stringify(event.detail));
+
+        //lightning-input-field[field-name="OwnerId"]
+
+        let inputFieldQuery = 'lightning-input-field[data-field-name="' + event.detail.fieldName + '"]';
+        console.log('handlePicklistChange: searching inputFieldQuery ',inputFieldQuery);
+        let inputField = this.template.querySelector(inputFieldQuery);
+        console.log('handlePicklistChange: inputField found ',inputField);
+
+        if (inputField) {
+            console.log('handleFieldChange: updating inputField to value ',event.detail.value);
+            inputField.value = event.detail.value; 
+        }
+        console.log('handleFieldChange: END');
     }
 
     /*handleSaveNew(event) {

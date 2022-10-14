@@ -1,0 +1,5 @@
+.lookupContainer {
+    padding-left: 4px;
+    padding-right: 4px;
+    margin-bottom: var(--lwc-spacingXSmall);
+}

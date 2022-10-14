@@ -1,0 +1,22 @@
+<template>
+	<lightning-combobox if:true={displayOptions}
+                        name={fieldName}
+					    label={label}
+					    value={value}
+                        class="lookupContainer"
+          			    options={displayOptions}
+                        required={required}
+					    onchange={handleChange}></lightning-combobox>
+
+    <div class="slds-hide" if:true={configName} >
+        <c-sfpeg-list-cmp   object-api-name={objectApiName}
+                            user-id={userId}
+                            record-id={recordId}
+                            card-title="Drop Down"
+                            config-name={configName}
+                            action-config-name="N/A"
+                            is-debug={isDebug}
+                            onload={handleOptionsLoad} >
+        </c-sfpeg-list-cmp>
+    </div>
+</template>
