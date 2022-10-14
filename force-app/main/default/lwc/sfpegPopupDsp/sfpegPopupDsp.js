@@ -344,6 +344,7 @@ export default class SfpegPopupDsp extends LightningElement {
                 if (this.isDebug) console.log('showRecordForm: showing field ',JSON.stringify(iterField));
                 if (iterField.disabled) fieldDesc.disabled = iterField.disabled;
                 if (iterField.required) fieldDesc.required = iterField.required;
+                if (iterField.dataSource) fieldDesc.dataSource = iterField.dataSource;
                 this.formFields.push(fieldDesc);
             }
             if (this.isDebug) console.log('showRecordForm: fieldDesc init ',JSON.stringify(fieldDesc));
@@ -373,7 +374,8 @@ export default class SfpegPopupDsp extends LightningElement {
                 if (this.isDebug) console.log('handleLoad: processing picklist ', item);
                 item.label = event.detail.objectInfos[this.formRecord.ObjectApiName].fields[item.fieldName]?.label;
                 if (this.isDebug) console.log('handleLoad: label set ', item.label);
-                let itemSource = this.template.querySelector('c-sfpeg-picklist-input-dsp[data-field-name="' + item.fieldName + '"]');
+                let itemSource = this.template.querySelector('lightning-input-field[data-field-name="' + item.fieldName + '"]');
+                if (this.isDebug) console.log('handleLoad: lookup input fetched ', itemSource);
                 item.value =  itemSource?.value;
                 if (this.isDebug) console.log('handleLoad: value set ', item.value);
             });

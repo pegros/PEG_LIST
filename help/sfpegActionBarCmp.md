@@ -665,7 +665,6 @@ Various properties are available to customise the experience:
 
 _Note_: Whenever a error occurs, the error message provided is automatically displayed in an error toast popup.
 
-
 ### **Mass** Action Types (**massForm** and **massDML**)
 
 Two Action Types are available to execute operations (create, update, delete) on a selection of records, either
@@ -1344,6 +1343,56 @@ let rowActionBar = this.template.querySelector('c-sfpeg-action-bar-cmp[data-my-i
     tpo execute (e.g. when handling a `next` action after a `done` one)
     * `executeBarAction` when the parent wishes to trigger one of the actions defined
     in the action bar configuration (by the `name` defined in the metadata configuration)
+
+
+### Special Feature for Lookup Filter Handling
+
+In record creation forms, there is currently a limitation in the standard **lightning-input-field**
+components concerning the lookup filters (they are ignored). This is especially applicable to 
+**ldsForm**, **DmlForm** and **massForm** actions.
+
+As a workaround, a specific `dataSource` property is proposed when configuring lookup fields for the forms
+in order to limit the set of records to choose from.
+
+In such a case, the standard lookup input is replaced by a combobox, the set of values of which is
+fetched through a standard **[sfpegListCmp](/help/sfpegListCmp.md)** component.
+
+Hereafter, the `dataSource`property is specified for the `ProxyOwner__c` input field
+(also a work-around to be able to change the OwnerId of the record in Apex trigger).
+```
+{
+    "name": "changeOwner", "label": "Change Owner",
+    "action": {
+        "type": "massForm",
+        "params": {
+            "title": "Change the Owner",
+            "message": "Please fill in the following information",
+            "removeRT": true,
+            "columns": 1,
+            "record": {
+                "ObjectApiName": "{{{GEN.objectApiName}}}"
+            },
+            "fields": [
+                { "name": "ProxyOwner__c", "dataSource": "AllowedOwnersList" }
+            ]
+        },
+        "next": {
+            "type": "done",
+            "params": {
+                "type": "refresh"
+            }
+        }
+    }
+}
+```
+
+The referenced **sfpegList** metadata record `AllowedOwnersList` needs simply to return 
+the `Id` and the `Name` of the **User** records to choose from.
+* Query Input: `{"AGENCY":"{{{RCD.Branch__c}}}"}`
+* Query Template:  `select Name, Id from User where (Branch__c like '%{{{AGENCY}}}%')`
+* Display Configuration: `{ "keyField":"Id", "columns": [{"label":"Name", "fieldName": "Name"}]}`
+
+**Beware** to keep the list short to fit into a small combobox!
 
 
 ---
