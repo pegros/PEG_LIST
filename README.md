@@ -272,7 +272,7 @@ This applies to the following features:
 For component usage in Communities (Experience Cloud), 2 additional properties are displayed at the bottom
 of the component configuration panel in the Experience Builder:
 * `recordId` to feed the ID of the current record (via the default `{!recordId}` value)
-* `objectApiName` to feed the Object API Name of th current record (via the default `{!objectApiName}` value)
+* `objectApiName` to feed the Object API Name of the current record (via the default `{!objectApiName}` value)
 
 _Note_: The `{!objectApiName}` value seems to be sometimes not valued when initializing the components. In order 
 to mitigate such issues, and if possible, a fixed test value (e.g. `Account`)is then preferrable.
