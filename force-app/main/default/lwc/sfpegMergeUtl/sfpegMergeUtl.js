@@ -277,6 +277,9 @@ const sfpegMergeUtl = {
                     case 'recordId':
                         resultData[iterField.field] = recordId;
                         break;
+                    case 'baseUrl':
+                        resultData[iterField.field] = window.location.origin;
+                        break;
                     case 'now':
                         resultData[iterField.field] = (new Date()).toISOString();
                         break;

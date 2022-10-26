@@ -951,12 +951,46 @@ triggering via a `utility` action type followed by a `notify` one to refresh the
 **[sfpegListCmp](/help/sfpegListCmp.md)** component.
 
 
+### **clipboard** Action Type
+
+The **clipboard** action type enables to copy a preconfigured string to the user clipboard, enabling
+to paste it in other applications (or emails).
+
+The `params` property should be a standard text string providing the content to be written in the user
+clipboard.
+
+Typical use cases are to copy a record name or a link to a given record to be pasted in an email or
+message.
+```
+[
+{
+    "label": "Clip Name",
+    "name": "ClipName",
+    "action": {
+        "type": "clipboard",
+        "params": "{{{RCD.Name}}}"
+    }
+},
+{
+    "label": "Clip URL",
+    "name": "ClipUrl",
+    "action": {
+        "type": "clipboard",
+        "params": "{{{GEN.baseUrl}}}/lightning/r/{{{GEN.objectApiName}}}/{{{GEN.recordId}}}/view"
+    }
+}
+]
+```
+
+
 ### Action Types from Other Components (Flow Popup, Aura Application Event, List Refresh, List Filter...)
 
 Other action types (or triggering contexts) are available from other components via various triggering mechanisms:
 * **[sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md)** actions may be triggered within a **utility** action type
 * **[sfpegActionUtilityCmp](/help/sfpegActionUtilityCmp.md)** actions may be triggered within a **utility** action type
 * **[sfpegListCmp](/help/sfpegListCmp.md)** actions may be triggered within a **done** action type
+
+
 
 
 ---

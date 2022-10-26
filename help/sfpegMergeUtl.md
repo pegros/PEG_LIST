@@ -18,6 +18,7 @@ As a baseline, the **sfpegMergeUtl** component provides the following set of tok
 * **GEN.xxx** to fetch some generic elements :
     * `GEN.objectApiName` and `GEN.recordId` for the Object name and Salesforce record Id of the current page (when applicable)
     * `GEN.userId` for the Salesforce record Id of the current User
+    * `GEN.baseUrl` for the Salesforce base URL of the current application
     * `GEN.now` to get current timestamp (in ISO format)
     * `GEN.today`, `GEN.yesterday`, `GEN.tomorrow`, `GEN.lastWeek`, `GEN.nextWeek`,  `GEN.lastMonth`, `GEN.nextMonth`,  `GEN.lastQuarter`, `GEN.nextQuarter`,  `GEN.lastYear`, `GEN.nextYear` to get dates in delta to current day, value being provided in ISO format
         * To get these values in user local format (e.g. for message display), `Local` should be appended to the token name (e.g. `GEN.todayLocal`).

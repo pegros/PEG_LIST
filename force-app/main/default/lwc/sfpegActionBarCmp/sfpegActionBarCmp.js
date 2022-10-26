@@ -802,6 +802,10 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                 if (this.isDebug) console.log('processAction: notifying action to other component via channel ',action.channel);
                 this.triggerCustomNotification(action.params,action.channel);
                 break;
+            case 'clipboard':
+                if (this.isDebug) console.log('processAction: processing clipboard action');
+                this.triggerClipboard(action.params);
+                break;
             default:
                 console.warn('processAction: END / no/bad action type provided',action.type);
                 return;
@@ -1514,6 +1518,32 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             this.showError({message: 'Missing channel property in custom notification!'});
             console.warn('triggerCustomNotification: END KO / Missing channel in action');
         }
+    }
+
+    triggerClipboard = function(textContent) {
+        if (this.isDebug) console.log('triggerClipboard: START with ',JSON.stringify(textContent));
+
+        if (!textContent)  {
+            console.warn('triggerClipboard: END KO / Missing textContent property');
+            throw "Missing textContent in clipboard copy operation params!";
+        }
+
+        if (this.isDebug) console.log('triggerClipboard: navigator found ',navigator);
+        if (navigator?.clipboard) {
+            if (this.isDebug) console.log('triggerClipboard: triggering navigator copy on clipboard ',navigator.clipboard);
+            navigator.clipboard.writeText(textContent);
+        }
+        else {
+            if (this.isDebug) console.log('triggerClipboard: triggering legacy copy on clipboard');
+            let hiddenInput = document.createElement("input");
+            hiddenInput.setAttribute("value", textContent);
+            document.body.appendChild(hiddenInput);
+            hiddenInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(hiddenInput); 
+        }
+
+        if (this.isDebug) console.log('triggerClipboard: END');
     }
 
     //----------------------------------------------------------------
