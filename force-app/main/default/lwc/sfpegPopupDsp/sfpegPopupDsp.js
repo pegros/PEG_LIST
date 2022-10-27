@@ -78,7 +78,8 @@ export default class SfpegPopupDsp extends LightningElement {
     @track detailConfig = null;         // Tile configuration to apply
     @track recordData = null;           // Record Data to display
     @track detailFieldClass;            // CSS to apply to each field display (to control the number of columns)
-
+    @track detailNext;                  // Label of the optional detail "next" action trigger
+ 
     // File Upload parameters
     @track showUpload = false;          // Flag to toggle File Upload mode display
     @track fileRecordId;                // Id of the record to which files should be related
@@ -134,12 +135,13 @@ export default class SfpegPopupDsp extends LightningElement {
     //###########################################################
     // Record Details popup display
     //###########################################################
-    @api showRecordDetails(title,message,fields,columns,size) {
+    @api showRecordDetails(title,message,fields,columns,size,nextLabel) {
         if (this.isDebug) console.log('showRecordDetails: START with ',title);
         if (this.isDebug) console.log('showRecordDetails: message provided ',message);
         if (this.isDebug) console.log('showRecordDetails: fields provided ',JSON.stringify(fields));
         if (this.isDebug) console.log('showRecordDetails: columns provided ',columns);
         if (this.isDebug) console.log('showRecordDetails: size provided ',size);
+        if (this.isDebug) console.log('showRecordDetails: next action label provided ',nextLabel);
 
         this.showPopup = true;
         this.showDetails = true;
@@ -147,6 +149,7 @@ export default class SfpegPopupDsp extends LightningElement {
         this.popupMessage = message;
         this.popupSize = size;
         this.recordData = fields;
+        this.detailNext = nextLabel;
 
         this.detailFieldClass = "slds-col slds-form-element slds-size_1-of-" + (columns || 1) +  " slds-form-element_stacked formField" ;
         if (this.isDebug) console.log('showDetails: detailFieldClass init ',this.detailFieldClass);
@@ -160,6 +163,22 @@ export default class SfpegPopupDsp extends LightningElement {
         });
     }
 
+    handleDetailNext(event) {
+        if (this.isDebug) console.log('handleDetailNext: START');
+
+        if (this._resolve) {
+            if (this.isDebug) console.log('handleDetailNext: END - calling resolve handler');
+            this._resolve({message:'Next action triggered by user'});
+        }
+        else if (this._reject) {
+            if (this.isDebug) console.log('handleDetailNext: END - calling reject handler');
+            this._reject({noToast: true, message:'Next action trigger by user failed'});
+        }
+        else {
+            if (this.isDebug) console.log('handleDetailNext: END - no resolve / reject handler available');
+        }
+        this.resetCmp();
+    }
 
     //###########################################################
     // File Upload popup display
@@ -242,7 +261,7 @@ export default class SfpegPopupDsp extends LightningElement {
     handleClose(event){
         if (this.isDebug) console.log('handleClose: START');
 
-        if (this.showDetails) {
+        if ((this.showDetails) && (!this.detailNext)) {
             if (this._resolve) {
                 if (this.isDebug) console.log('handleClose: END - calling resolve handler');
                 this._resolve({message:'Popup closed by user'});
@@ -610,6 +629,7 @@ export default class SfpegPopupDsp extends LightningElement {
         this.popupSize = null;
         this.formFieldSize = 12;
         this.showDetails = false;
+        this.detailNext = null;
         this.detailConfig = null;
         this.recordData = null;
         //this.showSaveNew = false;

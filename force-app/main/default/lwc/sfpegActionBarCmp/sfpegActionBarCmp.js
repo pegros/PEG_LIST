@@ -1063,7 +1063,8 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         if (this.isDebug) console.log('triggerShowDetails: popupUtil fetched ', popupUtil);
 
         popupUtil.showRecordDetails(    recordDetails.title || DEFAULT_POPUP_HEADER, recordDetails.message,
-                                        recordDetails.fields , recordDetails.columns, recordDetails.size)
+                                        recordDetails.fields , recordDetails.columns, recordDetails.size,
+                                        recordDetails.next?.label)
         .then(() => {
             if (this.isDebug) console.log('triggerShowDetails: END - display closed');
             if (recordDetails.next) {

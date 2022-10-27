@@ -435,6 +435,44 @@ The action should be configured as follows:
 _Note_: this example is used as a row action in a **[sfpegListCmp](/help/sfpegListCmp.md)** component
 to present information fetched by the query but not displayed in the layout.
 
+By default, a single **Close** button is displayed to close the popup. Leveraging the action
+chaining mechanism (via the `next`property), it is possible to:
+* execute an action each time the popup closes or
+* display a second button with a configurable label to execute this action (the **close** button
+simply closing the popup)
+This enables e.g. to redirect the User to the displayed record page, as with the following configuration.
+The label of the second button displayed comes then from the `label`property in the `next` configuration.
+```
+{
+    "label": "See Owner",
+    "name": "SeeOwner",
+    "action": {
+        "type": "showDetails",
+        "params": {
+            "columns":2,
+            "title":"Owner of {{{RCD.Name}}}",
+            "message":"Detailed information about {{{RCD.Owner.Name}}}",
+            "fields":[
+                {"label":"Username","value":"{{{RCD.Owner.Username}}}"},
+                {"label":"Title","value":"{{{RCD.Owner.Title}}}"},
+                {"label":"Profile","value":"{{{RCD.Owner.Profile.Name}}}"}
+            ],
+            "next": {
+                "type": "navigation",
+                "label":"See more",
+                "params": {
+                    "type": "standard__recordPage",
+                    "attributes": {
+                        "recordId": "{{{RCD.OwnerId}}}",
+                        "objectApiName": "User",
+                        "actionName": "view"
+                    }
+                }
+            }
+        }
+    }
+}
+```
 
 ### **LDS** and **DML** Action Types 
 

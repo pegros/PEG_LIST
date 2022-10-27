@@ -192,6 +192,10 @@
                         <template if:true={showDetails}>
                             <lightning-button   variant="neutral"   label={closeLabel}
                                                 onclick={handleClose} ></lightning-button>
+                            <lightning-button   if:true={detailNext}
+                                                variant="brand"     label={detailNext}
+                                                class="slds-m-left_small"
+                                                onclick={handleDetailNext} ></lightning-button>
                         </template>
                         <!-- Upload Close Buttons-->
                         <template if:true={showUpload}>
