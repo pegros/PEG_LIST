@@ -473,6 +473,8 @@ The label of the second button displayed comes then from the `label`property in 
     }
 }
 ```
+_Note_: Beware that, if no `label`is set on the `next`configuration, this action is systematically
+executed upon closing of the popup.
 
 ### **LDS** and **DML** Action Types 
 
