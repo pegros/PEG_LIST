@@ -118,9 +118,11 @@
 
                             <!-- Stand-alone fields -->
                             <!--   horizontal-align="end" -->
-                            <lightning-layout   multiple-rows="true"   >
+                            <lightning-layout   multiple-rows="true" pull-to-boundary="medium" >
                                 <template for:each={configDetails.fields} for:item="iterField">
-                                    <lightning-layout-item  key={iterField.name}  size={iterField.size} alignment-bump="right" >
+                                    <!-- alignment-bump="right" -->
+                                    <lightning-layout-item  key={iterField.name}        size={iterField.size}
+                                                            padding="horizontal-medium" class="slds-var-m-bottom_xxx-small fieldItem" >
                                         <div class="slds-media slds-p-horizontal_x-small">
                                             <template if:true={iterField.icon}>
                                                 <!-- slds-p-top_x-small -->
@@ -159,9 +161,11 @@
                                     </h3>
                                     <!--   horizontal-align="end"  -->
                                     <div class="slds-section__content">
-                                    <lightning-layout   multiple-rows="true"  >
+                                    <lightning-layout   multiple-rows="true" pull-to-boundary="medium" >
                                         <template for:each={iterSection.fields} for:item="iterSectionField">
-                                            <lightning-layout-item  key={iterSectionField.name}  size={iterSectionField.size}  alignment-bump="right">
+                                            <!-- alignment-bump="right" -->
+                                            <lightning-layout-item  key={iterSectionField.name} size={iterSectionField.size}
+                                                                    padding="horizontal-medium" class="slds-var-m-bottom_xxx-small fieldItem">
                                                 <div class="slds-media slds-p-horizontal_x-small">
                                                     <template if:true={iterSectionField.icon}>
                                                         <!-- slds-p-top_x-small -->
@@ -198,9 +202,11 @@
 
                             <!-- Stand-alone fields -->
                             <!--   horizontal-align="end" -->
-                            <lightning-layout   multiple-rows="true"   >
+                            <lightning-layout   multiple-rows="true" pull-to-boundary="medium" >
                                 <template for:each={configDetails.fields} for:item="iterField">
-                                    <lightning-layout-item  key={iterField.name}  size={iterField.size} alignment-bump="right" >
+                                    <!-- alignment-bump="right" -->
+                                    <lightning-layout-item  key={iterField.name}        size={iterField.size} 
+                                                            padding="horizontal-medium" class="slds-var-m-bottom_xxx-small fieldItem" >
                                         <div class="slds-media slds-p-horizontal_x-small">
                                             <template if:true={iterField.icon}>
                                                 <!-- slds-p-top_x-small -->
@@ -211,11 +217,16 @@
                                                 </div>
                                             </template>
                                             <div class="slds-media__body">
-                                                <lightning-input-field  field-name={iterField.name} 
+                                                <lightning-input-field  if:false={iterField.disabled} 
+                                                                        field-name={iterField.name}
                                                                         required={iterField.required}
                                                                         disabled={iterField.disabled} 
                                                                         variant={configDetails.variant} >
                                                 </lightning-input-field>
+                                                <lightning-output-field if:true={iterField.disabled}
+                                                                        field-name={iterField.name}
+                                                                        variant={configDetails.variant}>
+                                                </lightning-output-field>
                                             </div>
                                         </div>
                                     </lightning-layout-item>
@@ -230,9 +241,11 @@
                                     </h3>
                                     <!--   horizontal-align="end"  -->
                                     <div class="slds-section__content">
-                                    <lightning-layout   multiple-rows="true">
+                                    <lightning-layout   multiple-rows="true" pull-to-boundary="medium" >
                                         <template for:each={iterSection.fields} for:item="iterSectionField">
-                                            <lightning-layout-item  key={iterSectionField.name}  size={iterSectionField.size} alignment-bump="right" >
+                                            <!-- alignment-bump="right" -->
+                                            <lightning-layout-item  key={iterSectionField.name} size={iterSectionField.size}
+                                                                    padding="horizontal-medium" class="slds-var-m-bottom_xxx-small fieldItem" >
                                                <div class="slds-media slds-p-horizontal_x-small">
                                                     <template if:true={iterSectionField.icon}>
                                                         <!-- slds-p-top_x-small -->
@@ -243,11 +256,16 @@
                                                         </div>
                                                     </template>
                                                     <div class="slds-media__body">
-                                                        <lightning-input-field  field-name={iterSectionField.name} 
+                                                        <lightning-input-field  if:false={iterSectionField.disabled} 
+                                                                                field-name={iterSectionField.name}
                                                                                 required={iterSectionField.required}
                                                                                 disabled={iterSectionField.disabled} 
                                                                                 variant={configDetails.variant} >
                                                         </lightning-input-field>
+                                                        <lightning-output-field if:true={iterSectionField.disabled}
+                                                                                field-name={iterSectionField.name}
+                                                                                variant={configDetails.variant}>
+                                                        </lightning-output-field>
                                                     </div>
                                                 </div>
                                             </lightning-layout-item>
