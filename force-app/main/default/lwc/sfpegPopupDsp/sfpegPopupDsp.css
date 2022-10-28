@@ -14,9 +14,6 @@
     top: unset;
     left: 25vw;*/
 }
-.popupForm {
-    min-height: 33vh !important; /* to handle picklist fields expanding below the footer ! */
-}
 .fullWidth {
     width:100% !important;
 }
@@ -33,4 +30,13 @@
     position: sticky;
     top: -15px;
     z-index: 10;
-} 
+}
+.formHeight-small {
+    min-height: 25vh !important;
+}
+.formHeight-medium {
+    min-height: calc(45vh) !important;
+}
+.formHeight-large {
+    min-height: calc(100vh - 350px) !important;
+}

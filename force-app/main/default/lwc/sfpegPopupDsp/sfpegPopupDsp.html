@@ -38,7 +38,7 @@
 
                     <!-- Unitary Create/Edit Form Display -->
                     <template if:true={showForm}>
-                        <div class="popupForm">
+                        <div class={formClass} >
                         <lightning-record-edit-form record-id={formRecord.Id}
                                                     object-api-name={formRecord.ObjectApiName}
                                                     record-type-id={formRecord.RecordTypeId}

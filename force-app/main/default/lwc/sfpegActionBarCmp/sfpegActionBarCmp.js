@@ -1131,7 +1131,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         if (this.isDebug) console.log('triggerLdsForm: popupUtil fetched ', popupUtil);
 
         popupUtil.showRecordForm(   formAction.title || DEFAULT_POPUP_HEADER, formAction.message || DEFAULT_POPUP_MESSAGE,
-                                    formAction.record , formAction.fields, formAction.columns, true, formAction.size)
+                                    formAction.record , formAction.fields, formAction.columns, true, formAction.size, formAction.height)
         .then(() => {
             if (this.isDebug) console.log('triggerLdsForm: END - create/edit done');
             if (formAction.next) {
@@ -1172,7 +1172,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         if (this.isDebug) console.log('triggerDmlForm: popupUtil fetched ', popupUtil);
 
         popupUtil.showRecordForm(   formAction.title || DEFAULT_POPUP_HEADER, formAction.message || DEFAULT_POPUP_MESSAGE,
-                                    formAction.formRecord, formAction.formFields, formAction.columns, false, formAction.size)
+                                    formAction.formRecord, formAction.formFields, formAction.columns, false, formAction.size, formAction.height)
         .then((userInput) => {
             if (this.isDebug) console.log('triggerDmlForm: user input received',JSON.stringify(userInput));
             
@@ -1242,7 +1242,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             if (this.isDebug) console.log('triggerMassForm: popupUtil fetched ', popupUtil);
 
             popupUtil.showRecordForm(   (formAction.title || DEFAULT_MASS_POPUP_HEADER) + ' (' + this._recordList.length + ')', formAction.message || DEFAULT_MASS_POPUP_MESSAGE,
-                                        formAction.record , formAction.fields, formAction.columns, false, formAction.size)
+                                        formAction.record , formAction.fields, formAction.columns, false, formAction.size, formAction.height)
             .then((record) => {
                 if (this.isDebug) console.log('triggerMassForm: END - user input done', JSON.stringify(record));
 

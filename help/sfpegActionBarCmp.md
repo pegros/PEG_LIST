@@ -410,6 +410,7 @@ It is a solution to easily replace the record summary on hover for standard look
 
 The action should be configured as follows:
 * `title` and `message` for the popup header
+* `size` (`standard`, `small`, `medium` or `large`) property enables to control the width of the popup
 * `columns` to indicate how many fields should be displayed per row
 * `fields` to list the fields to display (with their _value_, _type_ and _label_)
 ```
@@ -607,6 +608,8 @@ either via the Lightning Data Service (LDS, preferrable) or via direct database 
 [lightning-record-edit-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-edit-form/documentation)
 base component (updates being then made via LDS)
     * `title` and `message` properties enable to set the corresponding text elements in the top part of the displayed form popup (default values being applied otherwise, see **sfpegActionDefault...** custom labels).
+    * `size` (`standard`, `small`, `medium` or `large`) property enables to control the width of the popup (`standard` being default)
+    * `height` (`auto`, `small`, `medium` or `large`) property enables to control the mininmal height of the popup, e.g. to ensure that picklist dropdown are properly accessible (`auto`being default)
     * `columns` property defines how many fields are displayed per line in the popup form,
     * `record` property enables to set contextual elements for the form,
         * `Id`, `RecordTypeId` and `ObjectApiName` sub-properties are a must to initialize the appropriate form

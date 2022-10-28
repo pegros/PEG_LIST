@@ -54,6 +54,7 @@ export default class SfpegPopupDsp extends LightningElement {
     @track popupTitle = '';             // Popup display title
     @track popupMessage = '';           // Popup display message
     popupSize;                          // Popup display size : null (standard), small, medium or large
+    popupHeight;                        // Popup display size : null (auto), medium or large
 
     // Context
     @api objectApiName;                 // API Name of the current Object
@@ -102,6 +103,9 @@ export default class SfpegPopupDsp extends LightningElement {
     //Custom getters
     get popupClass() {
         return "slds-modal slds-fade-in-open slds-modal_" + this.popupSize;
+    }
+    get formClass() {
+        return "formHeight-" + this.popupHeight;
     }
     get showClose() {
         return (this.showConfirmation || this.showDetails || this.showUpload);
@@ -313,11 +317,15 @@ export default class SfpegPopupDsp extends LightningElement {
     //###########################################################
     // Asynchronous Edit / Create popup display (depends on presence of ID on record)
     //###########################################################
-    @api showRecordForm(title,message,record,fields,columns,doSubmit,size,showSaveNew) {
+    @api showRecordForm(title,message,record,fields,columns,doSubmit,size,height,showSaveNew) {
         if (this.isDebug) console.log('showRecordForm: START with submit? ',doSubmit);
+        if (this.isDebug) console.log('showRecordForm: size provided ',size);
+        if (this.isDebug) console.log('showRecordForm: height provided ',height);
+
         this.showPopup = true;
         this.doSubmit = doSubmit;
         this.popupSize = size;
+        this.popupHeight = height;
 
         if (this.isDebug) console.log('showRecordForm: record provided ',JSON.stringify(record));
         if (record.Id) {
@@ -627,6 +635,7 @@ export default class SfpegPopupDsp extends LightningElement {
         this.popupTitle = '';
         this.popupMessage = '';
         this.popupSize = null;
+        this.popupHeight = null;
         this.formFieldSize = 12;
         this.showDetails = false;
         this.detailNext = null;
