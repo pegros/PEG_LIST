@@ -75,3 +75,6 @@
 .sfpegTable {
     --slds-c-button-line-height : 1rem !important;
 }
+.showTopBorder {
+    border-top: var(--lwc-borderWidthThin,1px) solid rgb(201, 201, 201) !important;
+}
