@@ -197,19 +197,26 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
     handleDensity(event) {
         if (this.isDebug) console.log('handleDensity: START');
 
-        let densityControl = this.template.querySelector('.densityControl');
-        if (this.isDebug) console.log('handleDensity: densityControl ', densityControl);
-        if (this.isDebug) console.log('handleDensity: classes ', densityControl.className);
+        if (this.layoutMode === 'auto') {
+            if (this.isDebug) console.log('handleDensity: processing auto mode');
+            
+            let densityControl = this.template.querySelector('.densityControl');
+            if (this.isDebug) console.log('handleDensity: densityControl ', densityControl);
+            if (this.isDebug) console.log('handleDensity: classes ', densityControl.className);
 
-        if (this.isDebug) console.log('handleDensity: classes STR ', densityControl.className.toString());
+            if (this.isDebug) console.log('handleDensity: classes STR ', densityControl.className.toString());
 
-        if (densityControl.className.toString()?.includes('slds-form-element_horizontal')) {
-            if (this.isDebug) console.log('handleDensity: density compact --> inline mode ');
-            this.fieldClass = 'slds-form-element formItem slds-form-element_horizontal ';
+            if (densityControl.className.toString()?.includes('slds-form-element_horizontal')) {
+                if (this.isDebug) console.log('handleDensity: density compact --> inline mode ');
+                this.fieldClass = 'slds-form-element formItem slds-form-element_horizontal ';
+            }
+            else {
+                if (this.isDebug) console.log('handleDensity: density: comfy --> stacked mode ');
+                this.fieldClass = 'slds-form-element formItem';
+            }
         }
         else {
-            if (this.isDebug) console.log('handleDensity: density: comfy --> stacked mode ');
-            this.fieldClass = 'slds-form-element formItem';
+            if (this.isDebug) console.log('handleDensity: ignoring non auto mode ',this.layoutMode);
         }
 
         if (this.isDebug) console.log('handleDensity: END');

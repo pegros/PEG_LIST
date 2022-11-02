@@ -49,6 +49,7 @@ Within the App Builder, the configuration is quite simple and mainly consists in
 ![Record Display Configuration](/media/sfpegRecordDisplayConfig.png)
 
 Other properties enable to activate debug mode and slightly adapt the CSS for the wrapping container.
+Please note that the _auto_ `Layout Mode` takes into account the density setting value chosen by the User.
 
 
 ### Metadata Configuration
@@ -77,12 +78,12 @@ The main `Display Configuration` property is a JSON object with the following pr
         * `title` and `icon` (optional) respectively provide the label and icon displayed in the list card header
         * `name` provides the developer name of the **sfpegList__mdt** custom metadata record to use for the list
         * `actions` (optional) provides the developer name of the **sfpegAction__mdt** custom metadata record to use for the list header actions
+* `innerClass` enables to set **SLDS** CSS classes around the header section (containing the `fields`)
 
 ⚠️ **Beware** : when using **merge** tokens (see **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** ),
 please pay attention to the possible double quotes within the field values, which completely break the JSON parsing after merge.
 In such cases, explicit **ESCAPE(((...)))** directives are required required. This is especially relevant 
 when using this component with to display text or richtext areas.
-
 
 
 ---

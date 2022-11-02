@@ -20,3 +20,6 @@
 .formItem {
     border-bottom: 1px solid var(--lwc-colorBorderInputDisabled);
 }*/
+div .tabContainer {
+    margin-top: var(--lwc-varSpacingVerticalSmall);
+}
