@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BypassFLS__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Flag to bypass the FLS filtering in the SOQL result list (see Security.stripInaccessible())</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Flag to bypass the FLS filtering in the SOQL result list</inlineHelpText>
+    <label>Bypass FLS?</label>
+    <type>Checkbox</type>
+</CustomField>

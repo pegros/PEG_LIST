@@ -105,12 +105,12 @@ public with sharing class sfpegList_CTL {
 
 		if (query.QueryType__c == 'SOQL') {
 			System.debug(LoggingLevel.FINE,'getData: executing SOQL query ' + query.QuerySOQL__c);
-			String mergedQuery = mergeQuery(query.QuerySOQL__c, (Map<Object,Object>) input);
+			String mergedQuery = mergeQuery(query.QuerySOQL__c, (Map<Object,Object>) input, query.BypassEscaping__c);
 			System.debug(LoggingLevel.FINE,'getData: SOQL query merged ' + mergedQuery);
 
 			try {
 				System.debug('getData: END / triggering mergedQuery');
-				return executeSoql(mergedQuery, query.BypassSharing__c);
+				return executeSoql(mergedQuery, query.BypassSharing__c, query.BypassFLS__c);
 			}
 			catch (Exception error) {
 				System.debug(LoggingLevel.WARN,'getData: END / KO - ' + error.getMessage());
@@ -133,12 +133,12 @@ public with sharing class sfpegList_CTL {
 		}
 		else if (query.QueryType__c == 'SOSL') {
 			System.debug(LoggingLevel.FINE,'getData: executing SOSL query ' + query.QuerySOQL__c);
-			String mergedQuery = mergeQuery(query.QuerySOQL__c, (Map<Object,Object>) input);
+			String mergedQuery = mergeQuery(query.QuerySOQL__c, (Map<Object,Object>) input, query.BypassEscaping__c);
 			System.debug(LoggingLevel.FINE,'getData: SOSL query merged ' + mergedQuery);
 
 			try {
 				System.debug('getData: triggering SOSL mergedQuery');
-				List<List<sObject>> soslResults = executeSosl(mergedQuery, query.BypassSharing__c);
+				List<List<sObject>> soslResults = executeSosl(mergedQuery, query.BypassSharing__c, query.bypassFLS__c);
 				System.debug('getData: SOSL results received' + soslResults);
 
 				List<Object> soslMergedList = new List<Object>();
@@ -199,7 +199,7 @@ public with sharing class sfpegList_CTL {
 
 		if (query.QueryType__c == 'SOQL') {
 			System.debug(LoggingLevel.FINE,'getCount: executing count query ' + query.QueryCount__c);
-			String mergedQuery = mergeQuery(query.QueryCount__c, (Map<Object,Object>) input);
+			String mergedQuery = mergeQuery(query.QueryCount__c, (Map<Object,Object>) input, query.BypassEscaping__c);
 			System.debug(LoggingLevel.FINE,'getCount: count query merged ' + mergedQuery);
 
 			try {
@@ -268,12 +268,12 @@ public with sharing class sfpegList_CTL {
 			pageInput.putAll((Map<Object,Object>)input);
 			System.debug(LoggingLevel.FINE,'getPaginatedData: pagination Input init ' + pageInput);
 
-			String mergedQuery = mergeQuery(query.QuerySOQL__c, pageInput);
+			String mergedQuery = mergeQuery(query.QuerySOQL__c, pageInput, query.BypassEscaping__c);
 			System.debug(LoggingLevel.FINE,'getPaginatedData: paginated SOQL query merged ' + mergedQuery);
 
 			try {
 				System.debug('getPaginatedData: END / triggering mergedQuery');
-				return executeSoql(mergedQuery, query.BypassSharing__c);
+				return executeSoql(mergedQuery, query.BypassSharing__c, query.BypassFLS__c);
 			}
 			catch (Exception error) {
 				System.debug(LoggingLevel.WARN,'getPaginatedData: END / KO - ' + error.getMessage());
@@ -316,7 +316,9 @@ public with sharing class sfpegList_CTL {
 	private static sfpegList__mdt getConfig(final String name) {
 		System.debug(LoggingLevel.FINE,'getConfig: START for name ' + name);
 
-		List<sfpegList__mdt> configs = [    SELECT MasterLabel, QueryType__c, QueryClass__c, QuerySOQL__c, QueryCount__c, QueryOrderBy__c, QueryOrder__c, BypassSharing__c
+		List<sfpegList__mdt> configs = [    SELECT	MasterLabel, QueryType__c, QueryClass__c, QuerySOQL__c,
+													QueryCount__c, QueryOrderBy__c, QueryOrder__c,
+													BypassSharing__c, BypassEscaping__c, BypassFLS__c
 											FROM sfpegList__mdt
 											WHERE DeveloperName =  :name];
 		if ((configs == null) || (configs.size() != 1)) {
@@ -330,14 +332,18 @@ public with sharing class sfpegList_CTL {
 	* @description  Private utility method to merge the context inputs withing a query
 	*               template. It executes tag replacement for all tokens mentioned within
 	*               the input map.
+	*				Single quotes in token values are systematically escaped (as \\'),
+	*				except for the pagination 'PAGE' one or if bypassEscaping property is
+	*				set to true.
 	* @param        queryTemplate   SOSL or SOQL query string template containing merge
 	*                               tokens (as {{{XXX.xxxxx}}} tags) to be replaced.
 	* @param        inputMap        Map of input tokens by domain
+	* @param        bypassEscaping	Flag to bypass single quote escaping when merging tokens
 	* @return       String          Merged query.
 	* @exception    AuraHandledException If no queryTemplate provided.
 	***/
 	@TestVisible
-	private static String mergeQuery(final String queryTemplate, Map<Object,Object> inputMap) {
+	private static String mergeQuery(final String queryTemplate, final Map<Object,Object> inputMap, final Boolean bypassEscaping) {
 		System.debug('mergeQuery: START with ' + queryTemplate);
 		System.debug(LoggingLevel.FINE,'mergeQuery: inputMap provided ' + inputMap);
 
@@ -349,10 +355,16 @@ public with sharing class sfpegList_CTL {
 		String mergedQuery = queryTemplate;
 		for (Object iter : inputMap.keySet()) {
 			System.debug(LoggingLevel.FINEST,'mergeQuery: processing token ' + iter);
-			String iterValue = String.escapeSingleQuotes(String.escapeSingleQuotes((string)(inputMap.get(iter))));
+			String iterValue;
+			if ((bypassEscaping) || (iter == 'PAGE')){
+				iterValue = (string)(inputMap.get(iter));
+			}
+			else {
+				iterValue = String.escapeSingleQuotes(String.escapeSingleQuotes((string)(inputMap.get(iter))));
+			}
 			System.debug(LoggingLevel.FINEST,'mergeQuery: value retrieved ' + iterValue);
 			mergedQuery = mergedQuery.replaceAll('\\{\\{\\{' + iter + '\\}\\}\\}',iterValue);
-			System.debug(LoggingLevel.FINEST,'mergeQuery: mergedQuery updated ' + mergedQuery);
+			//System.debug(LoggingLevel.FINEST,'mergeQuery: mergedQuery updated ' + mergedQuery);
 		}
 		System.debug('mergeQuery: END with  ' + mergedQuery);
 		return mergedQuery;
@@ -439,9 +451,9 @@ public with sharing class sfpegList_CTL {
 
 	/***
 	* @description  Private utility method to fetch the SLDS icon name related to a custom SObject.
-	*               It parses all tabs incuded in all apps to try and find the SLDS svg icon name
-	*               associated to teh custom object tab.
-	*               The object tab should be included at least in one of the apps to become avvailable.
+	*               It parses all tabs included in all apps to try and find the SLDS SVG icon name
+	*               associated to the custom object tab.
+	*               The object tab should be included at least in one of the apps to become available.
 	*               A default 'custom9' value is returned by default.
 	* @param        objectName  API Name of the SObject
 	* @return       String      customXX name of the SLDS icon related
@@ -490,21 +502,34 @@ public with sharing class sfpegList_CTL {
 	* @description  Private utility method to execute a SOQL query
 	* @param        query           SOQL query to execute
 	* @param        bypassSharing   Boolean flag to bypass sharing
+	* @param        bypassFLS   	Boolean flag to bypass FLS field stripping
 	* @return       List<sObject>   Result of the SOQL query
 	* @exception    none
 	***/
 	@TestVisible
-	private static list<sObject> executeSoql(final String query, final Boolean bypassSharing) {
+	private static list<sObject> executeSoql(final String query, final Boolean bypassSharing, final Boolean bypassFLS) {
 		System.debug('executeSoql: START');
 
+		list<sObject> results;
 		if (bypassSharing) {
-			System.debug('executeSoql: END / executing without sharing request');
+			System.debug('executeSoql: executing without sharing request');
 			sfpegBypassSharing_CTL subHandler = new sfpegBypassSharing_CTL();
-			return subHandler.querySoql(query);
+			results = subHandler.querySoql(query);
 		}
 		else {
-			System.debug('executeSoql: END / executing with sharing request');
-			return Database.query(query);
+			System.debug('executeSoql: executing with sharing request');
+			results = Database.query(query);
+		}
+
+		if (bypassFLS) {
+			System.debug('executeSoql:END / FLS field stripping bypassed');
+			return results;
+		}
+		else {
+			System.debug('executeSoql: enforcing FLS field stripping');
+			SObjectAccessDecision securityDecision = Security.stripInaccessible(AccessType.READABLE, results);
+			System.debug('executeSoql:END');
+			return securityDecision.getRecords();
 		}
 	}
 
@@ -534,21 +559,38 @@ public with sharing class sfpegList_CTL {
 	* @description  Private utility method to execute a SOQL query
 	* @param        query           SOSL query to execute
 	* @param        bypassSharing   Boolean flag to bypass sharing
+	* @param        bypassFLS   	Boolean flag to bypass FLS field stripping
 	* @return       List<List<sObject>> Result of the SOSL query
 	* @exception    none
 	***/
 	@TestVisible
-	private static List<List<sObject>> executeSosl(final String query, final Boolean bypassSharing) {
+	private static List<List<sObject>> executeSosl(final String query, final Boolean bypassSharing, final Boolean bypassFLS) {
 		System.debug('executeSosl: START');
 
+		List<List<sObject>> results;
 		if (bypassSharing) {
 			System.debug('executeSosl: END / executing without sharing request');
 			sfpegBypassSharing_CTL subHandler = new sfpegBypassSharing_CTL();
-			return subHandler.querySosl(query);
+			results = subHandler.querySosl(query);
 		}
 		else {
 			System.debug('executeSosl: END / executing with sharing request');
-			return Search.query(query);
+			results = Search.query(query);
+		}
+
+		if (bypassFLS) {
+			System.debug('executeSosl:END / FLS field stripping bypassed');
+			return results;
+		}
+		else {
+			System.debug('executeSosl: enforcing FLS field stripping');
+			List<List<sObject>> filteredResults = new List<List<sObject>>();
+			for (List<sObject> iter : results) {
+				SObjectAccessDecision securityDecision = Security.stripInaccessible(AccessType.READABLE, iter);
+				filteredResults.add(securityDecision.getRecords());
+			}
+			System.debug('executeSosl:END');
+			return filteredResults;
 		}
 	}
 

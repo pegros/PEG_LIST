@@ -3,6 +3,18 @@
     <label>sfpegTestSoqlPaginatedKO</label>
     <protected>false</protected>
     <values>
+        <field>BypassEscaping__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>BypassFLS__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>BypassSharing__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>Description__c</field>
         <value xsi:type="xsd:string">Test of the List component</value>
     </values>

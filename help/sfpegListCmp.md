@@ -94,8 +94,10 @@ The **Query** section defines how data are retrieved:
     * `Query Class` (if _Apex_ mode is chosen) to specify the name of the Apex class to call 
     (implementing **sfpegListQuery_SVC** virtual class) 
     * `Query Template` (formely `Query SOQL`) to specify the SOQL/SOSL query to execute (when these modes are chosen).
-    * `Bypass Sharing ?` to check if the SOSL or SOQL query should be executed without record sharing applied.
-* Inputs required to contextualise the fetch 
+    * `Bypass FLS ?` to bypass FLS controls (see standard **[Security.stripInaccessible()](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_classes_with_security_stripInaccessible.htm)** method) in the SOQL or SOSL results.
+    * `Bypass Escaping ?` to bypass quote escaping when merging Input data in the Query template (protection against SOQL injection).
+    * `Bypass Sharing ?` to bypass Sharing when executing a SOSL or SOQL query.
+* Inputs required to contextualise the fetch
     * `Query Input` to specify a single JSON context object to contextualise the query or
     be passed as input to the Apex class fetch method
     * For the `Query Template`, the properties of this JSON object are to be merged via 

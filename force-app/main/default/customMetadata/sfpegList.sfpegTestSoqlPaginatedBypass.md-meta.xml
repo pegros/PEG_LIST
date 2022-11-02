@@ -3,6 +3,14 @@
     <label>sfpegTestSoqlPaginatedBypass</label>
     <protected>false</protected>
     <values>
+        <field>BypassEscaping__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>BypassFLS__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
         <field>BypassSharing__c</field>
         <value xsi:type="xsd:boolean">true</value>
     </values>

@@ -520,7 +520,7 @@ public class sfpegList_TST {
 
 		// mergeQuery() errors
 		try {
-			sfpegList_CTL.mergeQuery(null,null);
+			sfpegList_CTL.mergeQuery(null,null,null);
 			System.debug(LoggingLevel.Error,'testPrivateMethods: no exception raised for mergeQuery with bad params ');
 			System.assert(false);
 		}

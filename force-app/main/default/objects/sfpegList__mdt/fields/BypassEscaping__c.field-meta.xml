@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BypassEscaping__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Flag to bypass input parameter signe quotes escaping when merging them in the query template.</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Flag to bypass input parameter signe quotes escaping when merging them in the query template.</inlineHelpText>
+    <label>Bypass Escaping?</label>
+    <type>Checkbox</type>
+</CustomField>
