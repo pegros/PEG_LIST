@@ -349,7 +349,10 @@ public with sharing class sfpegList_CTL {
 		String mergedQuery = queryTemplate;
 		for (Object iter : inputMap.keySet()) {
 			System.debug(LoggingLevel.FINEST,'mergeQuery: processing token ' + iter);
-			mergedQuery = mergedQuery.replaceAll('\\{\\{\\{' + iter + '\\}\\}\\}', '' + inputMap.get(iter));
+			String iterValue = String.escapeSingleQuotes(String.escapeSingleQuotes((string)(inputMap.get(iter))));
+			System.debug(LoggingLevel.FINEST,'mergeQuery: value retrieved ' + iterValue);
+			mergedQuery = mergedQuery.replaceAll('\\{\\{\\{' + iter + '\\}\\}\\}',iterValue);
+			System.debug(LoggingLevel.FINEST,'mergeQuery: mergedQuery updated ' + mergedQuery);
 		}
 		System.debug('mergeQuery: END with  ' + mergedQuery);
 		return mergedQuery;
