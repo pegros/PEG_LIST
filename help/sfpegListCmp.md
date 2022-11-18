@@ -464,7 +464,10 @@ display the set of Opportunities and Quotes related to an Account.
 The configuration of this component relies on a simple SOQL query with embedded
 subqueries (`Query Template`property);
 ```
-select Name, Amount__c, StageStatus__c, (select Name, Amount__c, StageStatus__c, IsSyncing from Quotes) from Opportunity where AccountId = '{{{ID}}}'
+SELECT Name, Amount__c, StageStatus__c,
+(select Name, Amount__c, StageStatus__c, IsSyncing from Quotes)
+FROM Opportunity
+WHERE AccountId = '{{{ID}}}'
 ```
 The ID of the current Account is fetched by setting the `Query Input` property to 
 ```
@@ -485,7 +488,8 @@ The `Display Configuration` may then be set as follows:
     "hierarchyFields":["Quotes"],
     "widthMode":"auto",
     "columns": [
-        { "label":"Name", "fieldName": "Name", "type": "button", "sortable": "true", "initialWidth": 250, "typeAttributes":{"label":{"fieldName": "Name"},"name":"open","variant":"base"}},
+        { "label":"Name", "fieldName": "Name", "type": "button", "sortable": "true", "initialWidth": 250,
+            "typeAttributes":{"label":{"fieldName": "Name"},"name":"open","variant":"base"}},
         { "label": "Stage / Status", "fieldName": "StageStatus__c", "sortable": true},
         { "label": "Amount", "fieldName": "Amount__c", "type":"currency", "sortable": true},
         { "label": "#Quotes", "fieldName": "Quotes._length", "sortable": true},
