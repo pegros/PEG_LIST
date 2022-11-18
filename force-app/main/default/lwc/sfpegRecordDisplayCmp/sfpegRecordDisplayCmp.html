@@ -49,7 +49,7 @@
                                                         class="slds-var-m-bottom_xxx-small fieldItem" >
                                     <div class={fieldClass}>
                                         <template if:true={iterField.label}>
-                                            <label class="slds-form-element__label">{iterField.label}</label>
+                                            <label class="slds-p-top_none slds-form-element__label slds-truncate" title={iterField.label}>{iterField.label}</label>
                                         </template>
                                         <div class="slds-form-element__control fieldValue">
                                             <c-sfpeg-field-dsp  field-type={iterField.type}
@@ -84,7 +84,7 @@
                                                                         class="slds-var-m-bottom_xxx-small fieldItem" >
                                                     <div class={fieldClass}>
                                                         <template if:true={iterTabField.label}>
-                                                            <label class="slds-form-element__label">{iterTabField.label}</label>
+                                                            <label class="slds-p-top_none slds-form-element__label slds-truncate" title={iterTabField.label}>{iterTabField.label}</label>
                                                         </template>
                                                         <div class="slds-form-element__control fieldValue">
                                                             <c-sfpeg-field-dsp  field-type={iterTabField.type}
