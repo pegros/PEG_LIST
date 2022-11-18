@@ -20,6 +20,7 @@
 .formItem {
     border-bottom: 1px solid var(--lwc-colorBorderInputDisabled);
 }*/
-div .tabContainer {
+div .rcdTabContainer {
     margin-top: var(--lwc-varSpacingVerticalSmall);
+    max-width: 100%;
 }

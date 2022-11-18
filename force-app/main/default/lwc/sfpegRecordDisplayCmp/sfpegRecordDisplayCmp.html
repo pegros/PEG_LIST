@@ -67,7 +67,7 @@
         
             <!-- Tabs Display -->
             <template if:true={hasTabData}>
-                <div class="slds-p-horizontal_small tabContainer">
+                <div class="slds-p-horizontal_small rcdTabContainer">
                     <lightning-tabset variant={tabVariant}>
                         <template for:each={tabList} for:item="iterTab">  
                             <template if:false={iterTab.hidden}>
