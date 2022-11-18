@@ -501,7 +501,7 @@ The `Display Configuration` may then be set as follows:
             "typeAttributes":{"label":{"fieldName": "Name"},"name":"open","variant":"base"}},
         { "label": "Stage / Status", "fieldName": "StageStatus__c", "sortable": true},
         { "label": "Amount", "fieldName": "Amount__c", "type":"currency", "sortable": true},
-        { "label": "#Quotes", "fieldName": "Quotes._length", "sortable": true},
+        { "label": "#Quotes", "fieldName": "Quotes._length", "type":"number", "sortable": true},
         { "label": "Synced?", "fieldName": "IsSyncing", "type":"boolean"},
         { "iconName":"utility:settings","type": "button-icon", "initialWidth": 10,
             "typeAttributes": {"title": "Edit record","name": "edit","iconName": "utility:edit","variant": "bare" }},
@@ -528,8 +528,8 @@ actual definition of the 3 actions used, i.e. _open_, _edit_ and _synchQuote_.
 ```
 
 _Notes_:
-* ***Beware*** to check the `Flatten Results ?` checkbox to let the relationships properly roll-up
-in the data-tree.
+* ***Beware*** to check the `Flatten Results ?` checkbox to let the relationships properly map
+in the data-tree (and generate the `Quotes._length`property)
 * You may here use the out-of-the-box _sfpegOpenEdit_ action configuration as `Row Actions` if you 
 only need the _open_ and _edit_ actions.
 
