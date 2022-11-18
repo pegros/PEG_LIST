@@ -454,6 +454,53 @@ action with rework feature activated).<br/>
 }
 ```
 
+### Simple SOQL Based DataTree Display Configuration
+
+In that example,the **sfpegListCmp** component is configured in _TreeGrid_ mode to 
+display the set of Opportunities and Quotes related to an Account.
+
+![SOQL DataTree](/media/sfpegListDataTreeSOQL.png)
+
+The configuration of this component relies on a simple SOQL query with embedded
+subqueries (`Query Template`property);
+```
+select Name, Amount__c, StageStatus__c, (select Name, Amount__c, StageStatus__c, IsSyncing from Quotes) from Opportunity where AccountId = '{{{ID}}}'
+```
+The ID of the current Account is fetched by setting the `Query Input` property to 
+```
+{"ID":"{{{GEN.recordId}}}"}
+```
+
+As Quotes and Opportunities have different names for Amounts and Stage/Status, the 
+strategy is to define formula fields with exactly the same API name on both objets:
+* `StageStatus__c` respectively mapped to the Opportunity `StageName` and Quote `Status` 
+* `Amount__c` respectively mapped to the Opportunity `Amount` and Quote `TotalPrice` 
+
+The `Display Configuration` may then be set as follows:
+```
+{
+    "keyField":"Id",
+    "widthMode":"auto",
+    "hideCheckboxColumn": true,
+    "hierarchyFields":["Quotes"],
+    "widthMode":"auto",
+    "columns": [
+        { "label":"Name", "fieldName": "Name", "type": "button", "sortable": "true", "initialWidth": 250, "typeAttributes":{"label":{"fieldName": "Name"},"name":"open","variant":"base"}},
+        { "label": "Stage / Status", "fieldName": "StageStatus__c", "sortable": true},
+        { "label": "Amount", "fieldName": "Amount__c", "type":"currency", "sortable": true},
+        { "label": "#Quotes", "fieldName": "Quotes._length", "sortable": true},
+        { "label": "Synced?", "fieldName": "IsSyncing", "type":"boolean"}
+    ]
+}
+```
+
+_Notes_:
+* ***Beware*** to check the `Flatten Results ?` checkbox to let the relationships properly roll-up
+in the data-tree.
+* You may here use the out-of-the-box _sfpegOpenEdit_ action configuration as `Row Actions` to support
+the navigation action to the Opportunity/Quote record.
+* Other row level actions may be defined, e.g. to directly select/update the quote to synchronise to
+its parent Opportunity.
 
 ### DataTree Display Configuration & Apex Data Fetch
 
