@@ -457,15 +457,19 @@ action with rework feature activated).<br/>
 ### Simple SOQL Based DataTree Display Configuration
 
 In that example,the **sfpegListCmp** component is configured in _TreeGrid_ mode to 
-display the set of Opportunities and Quotes related to an Account.
+display the set of Opportunities and Quotes related to an Account. From this component,
+the user may directly open a record by clicking on its name, edit it (via the standard
+edit layout in a popup) via the edit button icon or even directly change the quote
+synced with the opportunity via the sync button icon (available depending on the 
+quote synch status).
 
 ![SOQL DataTree](/media/sfpegListDataTreeSOQL.png)
 
 The configuration of this component relies on a simple SOQL query with embedded
 subqueries (`Query Template`property);
 ```
-SELECT Name, Amount__c, StageStatus__c,
-(select Name, Amount__c, StageStatus__c, IsSyncing from Quotes)
+SELECT Name, Amount__c, StageStatus__c, inactiveSync__c,
+(select Name, Amount__c, StageStatus__c, IsSyncing, inactiveSync__c, OpportunityId from Quotes)
 FROM Opportunity
 WHERE AccountId = '{{{ID}}}'
 ```
@@ -477,7 +481,12 @@ The ID of the current Account is fetched by setting the `Query Input` property t
 As Quotes and Opportunities have different names for Amounts and Stage/Status, the 
 strategy is to define formula fields with exactly the same API name on both objets:
 * `StageStatus__c` respectively mapped to the Opportunity `StageName` and Quote `Status` 
-* `Amount__c` respectively mapped to the Opportunity `Amount` and Quote `TotalPrice` 
+* `Amount__c` respectively mapped to the Opportunity `Amount` and Quote `TotalPrice`
+
+In order to deactivate the synch button for all Opportunity records, another `DisableSync__c`
+formula field is defined  
+* always _true_ for Opportunity
+* equal to `IsSynced` for Quote
 
 The `Display Configuration` may then be set as follows:
 ```
@@ -493,18 +502,36 @@ The `Display Configuration` may then be set as follows:
         { "label": "Stage / Status", "fieldName": "StageStatus__c", "sortable": true},
         { "label": "Amount", "fieldName": "Amount__c", "type":"currency", "sortable": true},
         { "label": "#Quotes", "fieldName": "Quotes._length", "sortable": true},
-        { "label": "Synced?", "fieldName": "IsSyncing", "type":"boolean"}
+        { "label": "Synced?", "fieldName": "IsSyncing", "type":"boolean"},
+        { "iconName":"utility:settings","type": "button-icon", "initialWidth": 10,
+            "typeAttributes": {"title": "Edit record","name": "edit","iconName": "utility:edit","variant": "bare" }},
+        { "type": "button-icon", "initialWidth": 10,
+            "typeAttributes": {"title": "Synchronize Quote","name": "synchQuote","iconName": "utility:sync","variant": "bare","disabled": { "fieldName": "DisableSync__c" } }}
     ]
 }
+```
+
+The `Row Actions` should provide the name of a **sfpegAction** metadata record containing the
+actual definition of the 3 actions used, i.e. _open_, _edit_ and _synchQuote_.
+```
+[
+    {"name": "open","action": {"type": "open"}},
+    {"name": "edit","action": {"type": "edit"}},
+    {"name": "synchQuote",
+        "action": {"type": "LDS",
+            "params": {"type": "update",
+                "title": "Synchronizing the Quote with its parent opportunity",
+                "bypassConfirm": true,
+                "params": {"fields": {"Id": "{{{ROW.OpportunityId}}}","SyncedQuoteId": "{{{ROW.Id}}}"}},
+                "next": {"type": "done","params": {"type": "refresh"} } } } }
+]
 ```
 
 _Notes_:
 * ***Beware*** to check the `Flatten Results ?` checkbox to let the relationships properly roll-up
 in the data-tree.
-* You may here use the out-of-the-box _sfpegOpenEdit_ action configuration as `Row Actions` to support
-the navigation action to the Opportunity/Quote record.
-* Other row level actions may be defined, e.g. to directly select/update the quote to synchronise to
-its parent Opportunity.
+* You may here use the out-of-the-box _sfpegOpenEdit_ action configuration as `Row Actions` if you 
+only need the _open_ and _edit_ actions.
 
 ### DataTree Display Configuration & Apex Data Fetch
 
