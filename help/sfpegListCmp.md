@@ -454,6 +454,63 @@ action with rework feature activated).<br/>
 }
 ```
 
+### Custom Experience Site Result Search Page
+
+In that example, the query template is based on a SOSL multi-object request to filter the files and knowledge articles
+applicable to the considered Experience Site. By default, Salesforce Search returns all possible results the user has access
+to and this induce the possible display of records corresponding to other Experience Sites (depending on record sharing).
+
+![Experience Site Search Results](/media/sfpegListExperienceSearch.png)
+
+The solution consists in using the **sfpegListCmp** in the Search result page while injecting the search terms set by the 
+user into the input context to a SOSL query leveraging additional standard filtering capabilities (via `WHERE` clauses).
+
+In the **Experience Builder**, the most important configuration is to set the value of the `Query Context` property to
+the Experience Search Site page `{!term}` variable, as shown below.
+
+![Experience Site Search Configuration](/media/sfpegListExperienceSearchConfig.png)
+
+This context may then be reused as input to the SOSL query in the **sfpegList** record's `Query Template`property
+via the `{{{CONTEXT}}}` merge token.
+```
+FIND '{{{CONTEXT}}}' IN ALL FIELDS RETURNING
+Knowledge__kav(Title,CreatedDate,TOLABEL(Niveau__c), Summary,Description__c WHERE Type__c = 'FAQ'),
+ContentDocument(Title, FileType, Description, ContentSize WHERE FileType IN ('PDF','DOCX','PPTX') and Type__c = 'FAQ' )
+```
+
+Filtering relies here on custom `Type__c` fields set on Files and Knowledge articles to define the visibility scope
+(this Experience Site displaying only **FAQ** records).
+
+The Display configuration leverages the `ObjectIcon` field automatically set when executing the SOSL query. This
+configuration may be used in _DataTable_ or _TileList_ modes (the second being used in the example displayed before).
+```
+{
+    "keyField": "Id",
+    "hideCheckboxColumn": true,
+    "widthMode": "auto",
+    "cardNbr": 1,
+    "title": {"label": "Titre","fieldName": "Title","action": "open"},
+    "icon": {"label": "Type","fieldName": "ObjectIcon"},
+    "columns": [
+        {"label": "Titre","fieldName": "Title","sortable": "true","wrapText": false,
+            "cellAttributes": {"iconName": {"fieldName": "ObjectIcon"}}},
+        {"label": "Date de création","fieldName": "CreatedDate","type": "date","initialWidth": 150,"sortable": true},
+        {"label": "Niveau","fieldName": "Niveau__c","initialWidth": 150,"sortable": true},
+        {"label": "Type","fieldName": "FileType","initialWidth": 100, "sortable": true},
+        {"label": "Taille (en Octets)","fieldName": "ContentSize","type": "number","initialWidth": 150,"sortable": true},
+        {"type": "button-icon","initialWidth": 50,
+            "typeAttributes": {"iconName": "utility:open","name": "open","variant": "bare","iconClass": "slds-text-color_success"}}
+    ],
+    "details": [
+        {"label": "Sommaire","fieldName": "Description__c","sortable": true,"type" : "richText"},
+        {"label": "Description","fieldName": "Description","sortable": true}
+    ]
+}
+```
+
+The `Row Actions` may be set to `sfpegOpenEdit` in order to support the **open** actions configured.
+
+
 ### Simple SOQL Based DataTree Display Configuration
 
 In that example,the **sfpegListCmp** component is configured in _TreeGrid_ mode to 
