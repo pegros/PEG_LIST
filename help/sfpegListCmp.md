@@ -39,19 +39,19 @@ on selected rows, navigate to a report or dashboard...)
 Hereafter are provided examples of various display types.
 
 ![List as tiles](/media/sfpegListTiles.png)<br/>
-_Display as list of Tiles (1 tile per row)_
+<center>_Display as list of Tiles (1 tile per row)_</center>
 
 ![List as tile cards](/media/sfpegListCards.png)<br/>
-_Display as list of Tile Cards (2 tiles per row)_
+<center>_Display as list of Tile Cards (2 tiles per row)_</center>
 
 ![List as timeline](/media/sfpegListTimeline.png)<br/>
-_Display as list of Tiles in timeline variant (1 tile per row)_
+<center>_Display as list of Tiles in timeline variant (1 tile per row)_</center>
 
 ![List as data table](/media/sfpegListTable.png)<br/>
-_Display as Data Table_
+<center>_Display as Data Table_</center>
 
 ![List as tree grid](/media/sfpegListTree.png) <br/>
-_Display as Tree Grid_
+<center>_Display as Tree Grid_</center>
 
 _Note_:In the last _TreeGrid_ example, fetching data with custom Apex enables to fetch
 a whole multi-level record hierarchy in a single call (while SOQL only supports 1 level of
