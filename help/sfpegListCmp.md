@@ -456,7 +456,7 @@ action with rework feature activated).<br/>
 
 ### Custom Experience Site Result Search Page
 
-In that example, the query template is based on a SOSL multi-object request to filter the files and knowledge articles
+In that example, the query template is based on a SOSL multi-object request to filter the **Files** and **Knowledge** articles
 applicable to the considered Experience Site. By default, Salesforce Search returns all possible results the user has access
 to and this induce the possible display of records corresponding to other Experience Sites (depending on record sharing).
 
