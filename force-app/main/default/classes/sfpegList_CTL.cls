@@ -37,6 +37,24 @@
 public with sharing class sfpegList_CTL {
 
 	/***
+    * @description Static Map providing the actual icon name for some special objects 
+    ***/
+    final static Map<String,String> OBJECT_ICON_MAP = new Map<String,String>{
+		'ContentDocument' => 'standard:file',
+        'ContentDocumentLink' => 'standard:file',
+        'AttachedContentDocument' => 'standard:file',
+        'AttachedContentNote' => 'standard:note',
+        'ActivityHistory' => 'standard:task2',
+        'OpenActivity' => 'standard:event',
+        'TopicAssignment' => 'standard:topic',
+        'EmailMessage' => 'standard:email',
+        'ActionPlan' => 'standard:entitlement',
+        'CampaignMember' => 'standard:campaign_members',
+		'BranchUnitRelatedRecord' => 'custom:custom16',
+		'Knowledge__kav' => 'standard:article'
+    };
+
+	/***
 	* @description  Simple method to fetch configuration details for a List component.
 	*               It provides the required input fields, the type of display (datatable...)
 	*               and the corresponding display configuration.
@@ -146,12 +164,20 @@ public with sharing class sfpegList_CTL {
 					if (iter.size() > 0) {
 						Schema.DescribeSObjectResult objectDesc = ((iter[0]).getSObjectType()).getDescribe();
 						System.debug('getData: registering results for object type ' + objectDesc);
+
 						String objectName = objectDesc.getName();
 						String objectLabel = objectDesc.getLabel();
-						String objectIcon = 'standard:' +  objectName.toLowerCase();
-						if (objectDesc.isCustom()) {
+						String objectIcon;
+						if (OBJECT_ICON_MAP.containsKey(objectName)) {
+							objectIcon = OBJECT_ICON_MAP.get(objectName);
+						}
+						else if (objectDesc.isCustom()) {
 							objectIcon = 'custom:' + getCustomObjectIcon(objectName);
 						}
+						else {
+							objectIcon = 'standard:' +  objectName.toLowerCase();
+						}
+
 						List<Object> iterList = (List<Object>) (JSON.deserializeUntyped(JSON.serialize(iter)));
 						for (Object iterObj : iterList) {
 							Map<String,Object> iterMap = ((Map<String,Object>)iterObj);
