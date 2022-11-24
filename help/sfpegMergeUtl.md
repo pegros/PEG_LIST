@@ -213,6 +213,12 @@ In this example, roles may be referenced in creation actions with the `{{{ROLE.<
 * _Query_ should provide the SOQL query template to be used by the **sfpegMergeUtl** component to fetch the values (the list of field values requested being automatically added after the `in` keyword).
 
 
+_Notes_:
+* An interesting use case is to leverage the standard **Network** object to retrieve the IDs of the Experience Sites
+(e.g. in a **NW** merge token) in order to be able redirections between sites with automatic session revalidation,
+leveraging the network switch endpoint `/servlet/networks/switch?networkId={{{NW.ExperienceSiteName}}}&startURL=...` 
+
+
 ---
 
 ## Server Side Merge Logic for Label Tokens
