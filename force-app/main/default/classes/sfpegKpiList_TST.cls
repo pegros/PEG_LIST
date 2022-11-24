@@ -45,7 +45,7 @@ public class  sfpegKpiList_TST {
 		String currentUserId = UserInfo.getUserId();
 		System.debug('testSetup: currentUserId fetched ' + currentUserId);
 
-		Map<ID,PermissionSet> sfpegPSets = new Map<ID,PermissionSet>([SELECT Id, Name FROM PermissionSet WHERE Name LIKE 'sfpeg%']);
+		Map<ID,PermissionSet> sfpegPSets = new Map<ID,PermissionSet>([SELECT Name FROM PermissionSet WHERE Name LIKE 'sfpeg%']);
 		System.debug('testSetup: sfpegPSets fetched ' + sfpegPSets);
 
 		List<PermissionSetAssignment> currentAssignments = [    select PermissionSetId from PermissionSetAssignment
