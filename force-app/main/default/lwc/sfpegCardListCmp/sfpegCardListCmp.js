@@ -66,6 +66,46 @@ export default class SfpegCardListCmp extends LightningElement {
 
 
     //----------------------------------------------------------------
+    // Custom Context (e.g. to provide default additional context for CTX merge tokens) 
+    //----------------------------------------------------------------
+    _parentContext = {};
+    // Implementation with setter to handle context changes.
+    @api
+    get parentContext() {
+        return this._parentContext || {};
+    }
+    set parentContext(value) {
+        if (this.isDebug) console.log('setParentContext: START set ');
+        this._parentContext = value;
+        if (this.isDebug) console.log('setParentContext: parent Context updated ', JSON.stringify(this._parentContext));
+
+        let actionBar = this.template.querySelector('c-sfpeg-action-bar-cmp');
+        if (this.isDebug) console.log('setParentContext: action bar fetched ', actionBar);
+        if (actionBar) {
+            actionBar.parentContext = this._parentContext;
+            if (this.isDebug) console.log('setParentContext: parent Context updated on action bar ', actionBar);
+        }
+
+        let listCmp = this.template.querySelector('c-sfpeg-list-cmp');
+        if (this.isDebug) console.log('setParentContext: listCmp fetched ', listCmp);
+        if (listCmp) {
+            listCmp.parentContext = this._parentContext;
+            if (this.isDebug) console.log('setParentContext: parent Context updated on listCmp ', listCmp);
+        }
+
+        let subCards = this.template.querySelectorAll('c-sfpeg-card-cmp');
+        if (this.isDebug) console.log('setParentContext: subCards fetched ', subCards);
+        if (subCards?.length > 0) {
+            subCards.forEach(item => {
+                item.parentContext = this._parentContext;
+            });
+            if (this.isDebug) console.log('setParentContext: parent Context updated on subCards ', subCards);
+        }
+
+        if (this.isDebug) console.log('setParentContext: END (final) ');
+    }
+
+    //----------------------------------------------------------------
     // Internal Initialization Parameters
     //----------------------------------------------------------------
     @track isReady = false;         // Initialization state of the component (to control spinner)
@@ -214,11 +254,21 @@ export default class SfpegCardListCmp extends LightningElement {
     }
 
     //----------------------------------------------------------------
+    // Interface actions
+    //----------------------------------------------------------------
+    // Parent action execution service (for parent components)
+    @api doRefresh() {
+        if (this.isDebug) console.log('doRefresh: START');
+        this.handleRefresh(null);
+        if (this.isDebug) console.log('doRefresh: END');
+    }
+
+    //----------------------------------------------------------------
     // Event handlers
     //----------------------------------------------------------------
     // Refresh action handling
     handleRefresh(event){
-        if (this.isDebug) console.log('handleRefresh: START with ',JSON.stringify(event.detail));
+        if (this.isDebug) console.log('handleRefresh: START ');
 
         let listCmp = this.template.querySelector('c-sfpeg-list-cmp');
         console.log('handleRefresh: listCmp fetched ',listCmp);
@@ -232,6 +282,32 @@ export default class SfpegCardListCmp extends LightningElement {
             console.warn('handleRefresh: END KO / refresh execution failed!', JSON.stringify(error));
             this.errorMsg = JSON.stringify(error);
         }
+    }
+
+    handleActionDone(event) {
+        if (this.isDebug) console.log('handleActionDone: START with ',JSON.stringify(event.detail));
+
+        let nextAction;
+        if (event.detail.type === 'refresh') {
+            if (this.isDebug) console.log('handleActionDone: refreshing list');
+            this.handleRefresh(event);
+            nextAction = event.detail.next;
+        }
+        else {
+            if (this.isDebug) console.log('handleActionDone: unsupported type --> forwarding to parent ',event.detail.type);
+            nextAction = event.detail;
+        }
+
+        if (nextAction) {
+            let doneEvent = new CustomEvent('done', {
+                "detail": nextAction
+            });
+            if (this.isDebug) console.log('handleActionDone: doneEvent init',JSON.stringify(doneEvent));   
+            this.dispatchEvent(doneEvent);
+            if (this.isDebug) console.log('handleActionDone: doneEvent dispatched'); 
+        }
+
+        if (this.isDebug) console.log('handleActionDone: END');
     }
 
 }

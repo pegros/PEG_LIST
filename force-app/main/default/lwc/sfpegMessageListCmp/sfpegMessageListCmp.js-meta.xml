@@ -28,7 +28,7 @@
                         label="Wrapping CSS"
                         description="CSS classes to set on the wrapping component div"
                         type="String"
-                        default="slds-box slds-theme_default" />
+                        default="slds-box slds-box_x-small slds-theme_default" />
 
             <property   name="isDebug"
                         label="Debug?"

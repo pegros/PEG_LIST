@@ -1,10 +1,10 @@
 <template>
     <!-- Component Display -->
-    <div  class={wrappingClass}>
+    <div  class={wrappingClass} if:true={showComponent}>
 
         <!-- Error Message display -->
         <template if:true={errorMsg}>
-            <div class="slds-card__body slds-var-p-horizontal_small slds-card__body_inner cardContent slds-var-p-vertical_medium slds-media slds-media_center">
+            <div class="slds-card__body slds-var-p-horizontal_small slds-card__body_inner cardContent slds-var-p-vertical_medium slds-media slds-media_center slds-theme_default">
                 <div    class="slds-media__figure">
                     <lightning-icon icon-name="utility:warning"
                                     size="small"
@@ -19,7 +19,7 @@
         </template>
 
         <!-- Display of List of Messages -->
-        <template if:true={isReady}>
+        <template if:true={isDisplayed}>
             <div class="slds-grid slds-grid_align-spread slds-wrap  slds-grid_vertical-align-start slds-gutters_xx-small slds-grid_pull-padded-xx-small gridContainer">
                 <template for:each={displayedMessages} for:item="iterMessage">
                     <template if:false={iterMessage._isHidden}>
@@ -111,18 +111,23 @@
                                         object-api-name={objectApiName}
                                         record-id={recordId}
                                         user-id={userId}
+                                        parent-context={parentContext}
                                         is-hidden="true"
-                                        is-debug={isDebugFine}>
+                                        ondone={handleActionDone}
+                                        is-debug={isDebugFine}
+                                        is-debug-fine={isDebugFine}>
                 </c-sfpeg-action-bar-cmp>
             </template>
         </template>
 
         <!-- Debug Information Display -->
         <template if:true={isDebug}>
-            <div class="slds-box slds-theme_default slds-m-top_small"  >
+            <div class="slds-box slds-theme_default slds-m-top_x-small"  >
                 <dl class="slds-dl_horizontal">
                     <dt class="slds-dl_horizontal__label slds-truncate">Configuration:</dt>
                     <dd class="slds-dl_horizontal__detail">{configName}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">#Messages:</dt>
+                    <dd class="slds-dl_horizontal__detail">{displayedMessages.length} --> at least 1 displayed ? {isDisplayed}</dd>
                     <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
                     <dd class="slds-dl_horizontal__detail">
                         <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegMessageListCmp.md"

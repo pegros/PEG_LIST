@@ -110,9 +110,12 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         if (!this.isReady) {
             if (this.isDebug) console.log('setParentContext: END / waiting for initial init completion');
         }
-        else {
+        else if (!this.errorMsg) {
             if (this.isDebug) console.log('setParentContext: END / calling merge');
             this.doMerge();
+        }
+        else {
+            if (this.isDebug) console.log('setParentContext: END / no merge because of error state ',this.errorMsg);
         }
         if (this.isDebug) console.log('setParentContext: END (final) ');
     }

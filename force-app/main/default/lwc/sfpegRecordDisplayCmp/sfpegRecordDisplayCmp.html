@@ -13,6 +13,7 @@
                                         record-id={recordId}
                                         user-id={userId}
                                         max-size={maxSize}
+                                        parent-context={parentContext}
                                         is-debug={isDebugFine}
                                         ondone={handleActionDone} >
                 </c-sfpeg-action-bar-cmp>
@@ -119,7 +120,8 @@
                                                             config-name={iterTab.list.name} action-config-name={iterTab.list.actions}
                                                             show-search=true
                                                             is-debug={isDebugFine}          is-debug-fine={isDebugFine}
-                                                            record-id={recordId}            object-api-name={objectApiName} >
+                                                            record-id={recordId}            object-api-name={objectApiName}
+                                                            parent-context={parentContext} >
                                         </c-sfpeg-list-cmp>
                                     </template>
                                 </lightning-tab>

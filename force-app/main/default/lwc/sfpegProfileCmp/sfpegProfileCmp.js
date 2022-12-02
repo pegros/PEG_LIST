@@ -68,6 +68,32 @@ export default class SfpegProfileCmp extends LightningElement {
     @api userId = currentUserId;// ID of current User
 
     //----------------------------------------------------------------
+    // Custom Context (e.g. to provide default additional context for CTX merge tokens) 
+    //----------------------------------------------------------------
+    _parentContext = {};
+    // Implementation with setter to handle context changes.
+    @api
+    get parentContext() {
+        return this._parentContext || {};
+    }
+    set parentContext(value) {
+        if (this.isDebug) console.log('setParentContext: START set ');
+        this._parentContext = value;
+        if (this.isDebug) console.log('setParentContext: parent Context updated ', JSON.stringify(this._parentContext));
+
+        let actionBars = this.template.querySelectorAll('c-sfpeg-action-bar-cmp');
+        if (this.isDebug) console.log('setParentContext: action bars fetched ', actionBars);
+        if (actionBars?.length > 0)  {
+            actionBars.forEach(item => {
+                item.parentContext = this._parentContext;
+            });
+            if (this.isDebug) console.log('setParentContext: parent Context updated on action bars ', actionBars);
+        }
+
+        if (this.isDebug) console.log('setParentContext: END (final) ');
+    }
+
+    //----------------------------------------------------------------
     // Internal Initialization Parameters
     //----------------------------------------------------------------
     @track isReady = false;     // Initialization state of the component (to control spinner)
@@ -565,4 +591,19 @@ export default class SfpegProfileCmp extends LightningElement {
 
         if (this.isDebug) console.log('handleFormLoad: END');
     }
+
+    // Handler for done  event from actions (to forward them to parent)
+    handleActionDone(event) {
+        if (this.isDebug) console.log('handleActionDone: START with event ',JSON.stringify(event.detail));
+
+        let doneEvent = new CustomEvent('done', {
+            "detail": event.detail
+        });
+        if (this.isDebug) console.log('handleActionDone: doneEvent init',JSON.stringify(doneEvent));   
+        this.dispatchEvent(doneEvent);
+        if (this.isDebug) console.log('handleActionDone: doneEvent dispatched'); 
+
+        if (this.isDebug) console.log('handleActionDone: END / doneEvent dispatched'); 
+    }
+
 }

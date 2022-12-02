@@ -66,7 +66,7 @@ Each message definition is a JSON object with the following properties:
     * a `label` or `iconName` for the button
 * `isHidden` (optional): display condition for message, which should have a boolean value but may be alternatively defined as a string containing a Javascript formula evaluated at runtime by the component (no need then to define custom formula fields on the User or current Object).
 
-If actions are used in the message list (via the _action_ message property), a ***pegAction__mdt** custom metadata record name
+If actions are used in the message list (via the _action_ message property), a **sfpegAction__mdt** custom metadata record name
 must be specified in the `Message Actions` property.
 * This record should contain all the actions possibly triggered by the message list.
 * see **[sfpegAction](/help/sfpegActionBarCmp.md)** for details about available actions

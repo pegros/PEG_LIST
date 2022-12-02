@@ -56,6 +56,51 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
     @api isDebug = false;       // Debug mode activation
     @api isDebugFine = false;   // Debug mode activation for all subcomponents.
 
+    //----------------------------------------------------------------
+    // Custom Context (e.g. to provide default additional context for CTX merge tokens) 
+    //----------------------------------------------------------------
+    _parentContext = {};
+    // Implementation with setter to handle context changes.
+    @api
+    get parentContext() {
+        return this._parentContext || {};
+    }
+    set parentContext(value) {
+        if (this.isDebug) console.log('setParentContext: START set ');
+        this._parentContext = value;
+        if (this.isDebug) console.log('setParentContext: parent Context updated ', JSON.stringify(this._parentContext));
+
+
+        let actionBar = this.template.querySelector('c-sfpeg-action-bar-cmp');
+        if (this.isDebug) console.log('setParentContext: action bar fetched ', actionBar);
+        if (actionBar)  {
+            actionBar.parentContext = this._parentContext;
+            if (this.isDebug) console.log('setParentContext: parent Context updated on action bar ', actionBar);
+        }
+
+        let listCmps = this.template.querySelectorAll('c-sfpeg-list-cmp');
+        if (this.isDebug) console.log('setParentContext: list cmps fetched ', listCmps);
+        if (listCmps?.length > 0)  {
+            listCmps.forEach(item => {
+                item.parentContext = this._parentContext;
+            });
+            if (this.isDebug) console.log('setParentContext: parent Context updated on list cmps ', listCmps);
+        }
+
+        if (!this.isReady) {
+            if (this.isDebug) console.log('setParentContext: waiting for initial init completion');
+        }
+        else if (!this.errorMsg) {
+            if (this.isDebug) console.log('setParentContext: calling merge');
+            this.finalizeDisplay();
+        }
+        else {
+            if (this.isDebug) console.log('setParentContext: no merge because of error state ', this.errorMsg);
+        }
+
+
+        if (this.isDebug) console.log('setParentContext: END (final) ');
+    }
 
     //----------------------------------------------------------------
     // Internal Initialization Parameters
@@ -383,7 +428,7 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
         this.errorMsg = '';
 
         sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
-        sfpegMergeUtl.sfpegMergeUtl.mergeTokens(this.configDetails.template,this.configDetails.tokens,this.userId,this.userData,this.objectApiName,this.recordId,this.recordData,null)
+        sfpegMergeUtl.sfpegMergeUtl.mergeTokens(this.configDetails.template,this.configDetails.tokens,this.userId,this.userData,this.objectApiName,this.recordId,this.recordData,null,this._parentContext)
         .then( value => {
             if (this.isDebug) console.log('finalizeDisplay: context merged within display template ',value);
 
@@ -455,6 +500,16 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
     }
 
     //----------------------------------------------------------------
+    // Interface actions
+    //----------------------------------------------------------------
+    // Parent action execution service (for parent components)
+    @api doRefresh() {
+        if (this.isDebug) console.log('doRefresh: START');
+        this.handleRefresh(null);
+        if (this.isDebug) console.log('doRefresh: END');
+    }
+    
+    //----------------------------------------------------------------
     // Event Handlers  
     //----------------------------------------------------------------      
     // Standard Action handling
@@ -467,6 +522,13 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
     // Header action handling
     handleActionDone(event) {
         if (this.isDebug) console.log('handleActionDone: START');
+
+        let doneEvent = new CustomEvent('done', {
+            "detail": event.detail
+        });
+        if (this.isDebug) console.log('handleActionDone: doneEvent init',JSON.stringify(doneEvent));   
+        this.dispatchEvent(doneEvent);
+        if (this.isDebug) console.log('handleActionDone: doneEvent dispatched'); 
 
         if (this.isDebug) console.log('handleActionDone: END');
     }

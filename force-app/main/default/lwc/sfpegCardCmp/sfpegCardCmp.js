@@ -71,14 +71,38 @@ export default class SfpegCardDsp extends LightningElement {
     @api useDML = false;        // DML (instead of LDS) mode activation 
 
     //----------------------------------------------------------------
-    // Other configuration fields (for component embedding)
+    // Custom Context (e.g. to provide default additional context for CTX merge tokens) 
     //----------------------------------------------------------------
-    @api parentRecord;              // Parent record
+    _parentContext = {};
+    // Implementation with setter to handle context changes.
+    @api
+    get parentContext() {
+        return this._parentContext || {};
+    }
+    set parentContext(value) {
+        if (this.isDebug) console.log('setParentContext: START set ');
+        let parentContext = {...value};
+        if (this.recordId) parentContext._recordId = this.recordId;
+        if (this.objectApiName) parentContext._objectApiName = this.objectApiName;
+        this._parentContext = parentContext;
+        if (this.isDebug) console.log('setParentContext: parent Context updated ', JSON.stringify(this._parentContext));
 
-    //Button Labels from custom labels
-    cancelLabel = CANCEL_LABEL;
-    saveLabel = SAVE_LABEL;
-    forceSaveLabel = FORCE_SAVE_LABEL;
+        let actionBar = this.template.querySelector('c-sfpeg-action-bar-cmp');
+        if (this.isDebug) console.log('setParentContext: action bar fetched ', actionBar);
+        if (actionBar) {
+            actionBar.parentContext = this._parentContext;
+            if (this.isDebug) console.log('setParentContext: parent Context updated on action bar ', actionBar);
+        }
+
+        if (this.isDebug) console.log('setParentContext: END (final) ');
+    }
+
+    //----------------------------------------------------------------
+    // Button Labels from custom labels
+    //----------------------------------------------------------------
+    cancelLabel     = CANCEL_LABEL;
+    saveLabel       = SAVE_LABEL;
+    forceSaveLabel  = FORCE_SAVE_LABEL;
     modeToggleTitle = MODE_TOGGLE;
 
     //----------------------------------------------------------------
@@ -305,7 +329,6 @@ export default class SfpegCardDsp extends LightningElement {
         this.formObjectApiName = this.configDetails.target.objectApiName || this.objectApiName;
         if (this.isDebug) console.log('initFormTarget: formObjectApiName init ', this.formObjectApiName);
 
-
         if (!this.configDetails.target.recordIdField) {
             this.formRecordId = this.recordId;
             if (this.isDebug) console.log('initFormTarget: formRecordId set to recordId ', this.formRecordId);
@@ -521,5 +544,19 @@ export default class SfpegCardDsp extends LightningElement {
         /*let sectionCmp = this.template.querySelector('div[data-name=' + sectionData.label +']');
         if (this.isDebug) console.log('handleExpandCollapse: sectionCmp found ',sectionCmp);*/
         if (this.isDebug) console.log('handleExpandCollapse: END ');
+    }
+
+    // Handler for done  event from actions (to forward them to parent)
+    handleActionDone(event) {
+        if (this.isDebug) console.log('handleActionDone: START with event ',JSON.stringify(event.detail));
+
+        let doneEvent = new CustomEvent('done', {
+            "detail": event.detail
+        });
+        if (this.isDebug) console.log('handleActionDone: doneEvent init',JSON.stringify(doneEvent));   
+        this.dispatchEvent(doneEvent);
+        if (this.isDebug) console.log('handleActionDone: doneEvent dispatched'); 
+
+        if (this.isDebug) console.log('handleActionDone: END / doneEvent dispatched'); 
     }
 }

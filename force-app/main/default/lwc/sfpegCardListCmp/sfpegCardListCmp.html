@@ -12,6 +12,8 @@
                                         record-id={recordId}
                                         user-id={userId}
                                         max-size={maxSize}
+                                        parent-context={parentContext}
+                                        ondone={handleActionDone}
                                         is-debug={isDebugFine} >
                 </c-sfpeg-action-bar-cmp>
             </lightning-button-group>
@@ -65,6 +67,7 @@
                     <div class="slds-hide">
                         <c-sfpeg-list-cmp   object-api-name={objectApiName} record-id={recordId} user-id={userId}
                                             config-name={configDetails.query}
+                                            parent-context={parentContext}
                                             onload={handleRecordLoad}>
                         </c-sfpeg-list-cmp>
                     </div>
@@ -84,6 +87,8 @@
                                                         record-id={iterRecord.id}
                                                         user-id={userId}
                                                         max-size={maxCardSize}
+                                                        parent-context={parentContext}
+                                                        ondone={handleActionDone}
                                                         is-debug={isDebugFine} 
                                                         is-debug-fine={isDebugFine} 
                                                         is-read-only={isReadOnly}>

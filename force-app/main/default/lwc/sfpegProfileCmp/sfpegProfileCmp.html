@@ -81,12 +81,14 @@
                                                     <div class={titleActionClass}>
                                                         <lightning-button-group class="slds-col ">
                                                             <c-sfpeg-action-bar-cmp bar-class=""
-                                                                config-name={configDetails.actions}
-                                                                object-api-name={objectApiName}
-                                                                record-id={recordId}
-                                                                user-id={userId}
-                                                                max-size={maxSize}
-                                                                is-debug={isDebugFine}>
+                                                                                    config-name={configDetails.actions}
+                                                                                    object-api-name={objectApiName}
+                                                                                    record-id={recordId}
+                                                                                    user-id={userId}
+                                                                                    max-size={maxSize}
+                                                                                    parent-context={parentContext}
+                                                                                    ondone={handleActionDone}
+                                                                                    is-debug={isDebugFine}>
                                                             </c-sfpeg-action-bar-cmp>
                                                         </lightning-button-group>
                                                     </div>
@@ -127,6 +129,8 @@
                                                             record-id={recordId}
                                                             user-id={userId}
                                                             max-size={maxSize}
+                                                            parent-context={parentContext}
+                                                            ondone={handleActionDone}
                                                             is-debug={isDebugFine}>
                                         </c-sfpeg-action-bar-cmp>
                                 </lightning-button-group>

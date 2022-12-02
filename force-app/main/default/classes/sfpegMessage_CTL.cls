@@ -45,10 +45,11 @@ public with sharing class sfpegMessage_CTL {
 	public static Object getConfiguration(final String name) {
 		System.debug(LoggingLevel.FINE,'getConfiguration: START with sfpegMessage configuration name ' + name);
 
-		List<sfpegMessage__mdt> configs = [ SELECT MasterLabel, MessageDisplay__c, MessageActions__c
+		List<sfpegMessage__mdt> configs = [ SELECT MasterLabel, MessageDisplay__c, DoConditionEval__c, MessageActions__c
 											FROM sfpegMessage__mdt
 											WHERE DeveloperName =  :name];
 		if ((configs == null) || (configs.size() != 1)) {
+			System.debug(LoggingLevel.ERROR,'getConfiguration: END - Missing/wrong configuration');
 			throw new AuraHandledException('Configuration not found with name ' + name);
 		}
 		System.debug(LoggingLevel.FINE,'getConfiguration: END ' + configs[0].MasterLabel);

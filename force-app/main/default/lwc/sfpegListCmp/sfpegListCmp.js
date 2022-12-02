@@ -86,6 +86,46 @@ export default class SfpegListCmp extends LightningElement {
 
 
     //----------------------------------------------------------------
+    // Custom Context (e.g. to provide default additional context for CTX merge tokens) 
+    //----------------------------------------------------------------
+    _parentContext = {};
+    // Implementation with setter to handle context changes.
+    @api
+    get parentContext() {
+        return this._parentContext || {};
+    }
+    set parentContext(value) {
+        if (this.isDebug) console.log('setParentContext: START set ');
+        let parentContext = {...value};
+        if (this.recordId) parentContext._recordId = this.recordId;
+        if (this.objectApiName) parentContext._objectApiName = this.objectApiName;
+        this._parentContext = parentContext;
+        if (this.isDebug) console.log('setParentContext: parent Context updated ', JSON.stringify(this._parentContext));
+
+        let actionBars = this.template.querySelectorAll('c-sfpeg-action-bar-cmp');
+        if (this.isDebug) console.log('setParentContext: action bars fetched ', actionBars);
+        if (actionBars?.length > 0) {
+            actionBars.forEach(item => {
+                item.parentContext = this._parentContext;
+            });
+            if (this.isDebug) console.log('setParentContext: parent Context updated on action bars ', actionBars);
+        }
+
+        if (!this.isReady) {
+            if (this.isDebug) console.log('setParentContext: waiting for initial init completion');
+        }
+        else if (!this.errorMsg) {
+            if (this.isDebug) console.log('setParentContext: calling merge');
+            this.executeQuery();
+        }
+        else {
+            if (this.isDebug) console.log('setParentContext: no merge because of error state ', this.errorMsg);
+        }
+        
+        if (this.isDebug) console.log('setParentContext: END (final) ');
+    }
+
+    //----------------------------------------------------------------
     // Internal Initialization Parameters
     //----------------------------------------------------------------
     @track isReady = false;         // Initialization state of the component (to control spinner)
@@ -657,7 +697,7 @@ export default class SfpegListCmp extends LightningElement {
             // PAGINATED CASE HANDLING
             if (this.isDebug) console.log('executeQuery: processing paginated query');
             let inputData = null;
-            sfpegMergeUtl.sfpegMergeUtl.mergeTokens(this.configDetails.input.template,this.configDetails.input.tokens,this.userId,this.userData,this.objectApiName,this.recordId,this.recordData,null)
+            sfpegMergeUtl.sfpegMergeUtl.mergeTokens(this.configDetails.input.template,this.configDetails.input.tokens,this.userId,this.userData,this.objectApiName,this.recordId,this.recordData,null,this._parentContext)
             .then( value => {
                 sfpegMergeUtl.sfpegMergeUtl.isDebug = false;
                 if (this.isDebug) console.log('executeQuery: context merged within configuration ',value);
@@ -752,7 +792,7 @@ export default class SfpegListCmp extends LightningElement {
         else {
             // STANDARD NON-PAGINATED CASE HANDLING
             if (this.isDebug) console.log('executeQuery: processing non paginated query');
-            sfpegMergeUtl.sfpegMergeUtl.mergeTokens(this.configDetails.input.template,this.configDetails.input.tokens,this.userId,this.userData,this.objectApiName,this.recordId,this.recordData,null)
+            sfpegMergeUtl.sfpegMergeUtl.mergeTokens(this.configDetails.input.template,this.configDetails.input.tokens,this.userId,this.userData,this.objectApiName,this.recordId,this.recordData,null,this._parentContext)
             .then( value => {
                 sfpegMergeUtl.sfpegMergeUtl.isDebug = false;
                 if (this.isDebug) console.log('executeQuery: context merged within configuration ',value);
@@ -1230,49 +1270,60 @@ export default class SfpegListCmp extends LightningElement {
     handleActionDone(event) {
         if (this.isDebug) console.log('handleActionDone: START with ',JSON.stringify(event.detail));
 
-        if (event.detail.type) {
-            if (event.detail.type === 'refresh') {
-                if (this.isDebug) console.log('handleActionDone: refreshing list');
-                this.executeQuery();
-            }
-            else if (event.detail.type === 'filter') {
-                if (this.isDebug) console.log('handleActionDone: setting filter');
+        let nextAction;
+        if (event.detail.type === 'refresh') {
+            if (this.isDebug) console.log('handleActionDone: refreshing list');
+            this.executeQuery();
+            nextAction = event.detail.next;
+        }
+        else if (event.detail.type === 'filter') {
+            if (this.isDebug) console.log('handleActionDone: setting filter');
 
-                if (event.detail.params) {
-                    this.showFilter = false;
-                    if (this.isDebug) console.log('handleActionDone: closing filter popup if needed');
-                    if (this.isDebug) console.log('handleActionDone: current filterFields fetched',JSON.stringify(this.filterFields));
+            if (event.detail.params) {
+                this.showFilter = false;
+                if (this.isDebug) console.log('handleActionDone: closing filter popup if needed');
+                if (this.isDebug) console.log('handleActionDone: current filterFields fetched',JSON.stringify(this.filterFields));
 
-                    let filterScopeName = event.detail.params.scope || 'ALL';
-                    if (this.isDebug) console.log('handleActionDone: provided filter scope name ',filterScopeName);
-                    let newScope = this.filterFields.find(item => item.fieldName === filterScopeName);                
-                    if (this.isDebug) console.log('handleActionDone: filter scope reset',JSON.stringify(newScope));
+                let filterScopeName = event.detail.params.scope || 'ALL';
+                if (this.isDebug) console.log('handleActionDone: provided filter scope name ',filterScopeName);
+                let newScope = this.filterFields.find(item => item.fieldName === filterScopeName);                
+                if (this.isDebug) console.log('handleActionDone: filter scope reset',JSON.stringify(newScope));
                     
-                    if (!newScope) {
-                        console.warn('handleActionDone: END / unavailable scope name',filterScopeName );
-                        return;
-                    }
-
-                    this.filterScope = newScope;
-                    //this.filterFields.forEach(item => item.selected = (item.fieldName === this.filterScope.fieldName));
-                    this.filterFields.forEach(item => item.selected = (item.fieldName === filterScopeName));
-                    if (this.isDebug) console.log('handleActionDone: filterFields updated ',JSON.stringify(this.filterFields));
-                    
-                    this.filterString = event.detail.params.string || '';
-                    if (this.isDebug) console.log('handleActionDone: filter string reset ', this.filterString);
-                    this.filterRecords()
-                    .then(() => {
-                        if (this.isDebug) console.log('handleActionDone: list filtered');
-                    });
-                    if (this.isDebug) console.log('handleActionDone: filtering triggered');
+                if (!newScope) {
+                    console.warn('handleActionDone: END / unavailable scope name',filterScopeName );
+                    return;
                 }
+
+                this.filterScope = newScope;
+                //this.filterFields.forEach(item => item.selected = (item.fieldName === this.filterScope.fieldName));
+                this.filterFields.forEach(item => item.selected = (item.fieldName === filterScopeName));
+                if (this.isDebug) console.log('handleActionDone: filterFields updated ',JSON.stringify(this.filterFields));
+                
+                this.filterString = event.detail.params.string || '';
+                if (this.isDebug) console.log('handleActionDone: filter string reset ', this.filterString);
+                this.filterRecords()
+                .then(() => {
+                    if (this.isDebug) console.log('handleActionDone: list filtered');
+                });
+                if (this.isDebug) console.log('handleActionDone: filtering triggered');
+                nextAction = event.detail.next;
             }
             else {
                 console.warn('handleActionDone: missing params on filter action');
             }
         }
         else {
-            console.warn('handleActionDone: no notification type');
+            if (this.isDebug) console.log('handleActionDone: unsupported type --> forwarding to parent ',event.detail.type);
+            nextAction = event.detail;
+        }
+
+        if (nextAction) {
+            let doneEvent = new CustomEvent('done', {
+                "detail": nextAction
+            });
+            if (this.isDebug) console.log('handleActionDone: doneEvent init',JSON.stringify(doneEvent));   
+            this.dispatchEvent(doneEvent);
+            if (this.isDebug) console.log('handleActionDone: doneEvent dispatched'); 
         }
 
         if (this.isDebug) console.log('handleActionDone: END');

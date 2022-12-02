@@ -49,7 +49,10 @@
                                         record-id={recordId}
                                         user-id={userId}
                                         max-size={maxSize}
-                                        is-debug={isDebugFine} >
+                                        parent-context={parentContext}
+                                        ondone={handleActionDone}
+                                        is-debug={isDebugFine}
+                                        is-debug-fine={isDebugFine} >
                 </c-sfpeg-action-bar-cmp>
             </lightning-button-group>
 

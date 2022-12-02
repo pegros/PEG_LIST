@@ -107,10 +107,46 @@ export default class SfpegMessageListCmp extends LightningElement {
     //----------------------------------------------------------------
     // Configuration parameters
     //----------------------------------------------------------------
-    @api wrappingClass = 'slds-box slds-box_x-small slds-theme_default'; // CSS class for the wrapping div
+    @api wrappingClass ;        // CSS class for the wrapping div
     @api configName;            // DeveloperName fo the sfpegMessage__mdt record to be used to configure the messages    
     @api isDebug = false;       // Activates logs
     @api isDebugFine = false;   // Debug mode activation for all subcomponents.
+
+    //----------------------------------------------------------------
+    // Custom Context (e.g. to provide default additional context for CTX merge tokens) 
+    //----------------------------------------------------------------
+    _parentContext = {};
+    // Implementation with setter to handle context changes.
+    @api
+    get parentContext() {
+        return this._parentContext || {};
+    }
+    set parentContext(value) {
+        if (this.isDebug) console.log('setParentContext: START set ');
+        this._parentContext = value;
+        if (this.isDebug) console.log('setParentContext: parent Context updated ', JSON.stringify(this._parentContext));
+
+        let actionBar = this.template.querySelector('c-sfpeg-action-bar-cmp');
+        if (this.isDebug) console.log('setParentContext: action bar fetched ', actionBar);
+        if (actionBar) {
+            actionBar.parentContext = this._parentContext;
+            if (this.isDebug) console.log('setParentContext: parent Context updated on action bar ', actionBar);
+        }
+
+        if (this.isDebug) console.log('setParentContext: is ready ?? ', this.isReady);
+
+        if (!this.isReady) {
+            if (this.isDebug) console.log('setParentContext: waiting for initial init completion');
+        }
+        else if (!this.errorMsg) {
+            if (this.isDebug) console.log('setParentContext: calling merge');
+            this.finalizeMessages();
+        }
+        else {
+            if (this.isDebug) console.log('setParentContext: no merge because of error state ', this.errorMsg);
+        }
+        if (this.isDebug) console.log('setParentContext: END (final) ');
+    }
 
     //----------------------------------------------------------------
     // Internal Initialization Parameters
@@ -123,6 +159,7 @@ export default class SfpegMessageListCmp extends LightningElement {
     //----------------------------------------------------------------
     @track configDetails = null;    // Global configuration of the component
     @track displayedMessages = [];  // Displayed message list (after contextual data merge & condition evaluation)
+    @track isDisplayed = false;     // Flag indicating that at least one message should be displayed.
 
     //----------------------------------------------------------------
     // Internal Context fetch parameters
@@ -147,6 +184,10 @@ export default class SfpegMessageListCmp extends LightningElement {
         let result = (this.configDetails) && (this.configDetails.actions);
         if (this.isDebug) console.log('hasActions: END with ', result);
         return result;
+    }
+
+    get showComponent() {
+        return this.isDisplayed || this.isDebug || this.errorMsg;
     }
 
     //----------------------------------------------------------------
@@ -184,6 +225,7 @@ export default class SfpegMessageListCmp extends LightningElement {
                 try {
                     MSG_LIST_CONFIGS[this.configName] = {
                         template: (result.MessageDisplay__c || '{}'),
+                        doEval : (result.DoConditionEval__c),
                         actions: (result.MessageActions__c || 'N/A'),
                         tokens: sfpegMergeUtl.sfpegMergeUtl.extractTokens((result.MessageDisplay__c || '{}'),this.objectApiName)
                     };
@@ -202,24 +244,12 @@ export default class SfpegMessageListCmp extends LightningElement {
             })
             .catch( error => {
                 console.warn('connected: END / configuration fetch error ',error);
-                this.errorMsg = 'Configuration fetch error: ' + error;
+                this.errorMsg = 'Configuration fetch error: ' + (error?.body?.message || JSON.stringify(error));
                 this.isReady = true;
             });
             if (this.isDebug) console.log('connected: request sent');
         }
     }
-
-    /*
-    renderedCallback(){
-        if (this.isDebug) console.log('rendered: START');
-
-        if (this.isDebug) console.log('rendered: recordId ', this.recordId);
-        if (this.isDebug) console.log('rendered: recordData ',JSON.stringify(this.recordData));
-        if (this.isDebug) console.log('rendered: displayedMessages ',JSON.stringify(this.displayedMessages));
-
-        if (this.isDebug) console.log('rendered: END');
-    }
-    */
    
     //----------------------------------------------------------------
     // Contextual Data Fetch via LDS
@@ -298,6 +328,8 @@ export default class SfpegMessageListCmp extends LightningElement {
     //Configuration finalisation
     finalizeConfig = function() {
         if (this.isDebug) console.log('finalizeConfig: START');
+        if (this.isDebug) console.log('finalizeConfig: recordId ',this.recordId);
+        if (this.isDebug) console.log('finalizeConfig: parent Context ',JSON.stringify(this._parentContext));
 
         try {
             let ldsFetchRequired = false;
@@ -358,6 +390,8 @@ export default class SfpegMessageListCmp extends LightningElement {
     //Message content merge and display conditions evaluation
     finalizeMessages = function() {
         if (this.isDebug) console.log('finalizeMessages: START');
+        if (this.isDebug) console.log('finalizeMessages: recordId ',this.recordId);
+        if (this.isDebug) console.log('finalizeMessages: parent Context ',JSON.stringify(this._parentContext));
 
         if (this.recordFields && !this.recordData) {
             if (this.isDebug) console.log('finalizeMessages: END / missing Record Data');
@@ -372,13 +406,14 @@ export default class SfpegMessageListCmp extends LightningElement {
         this.errorMsg = '';
 
         sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
-        sfpegMergeUtl.sfpegMergeUtl.mergeTokens(this.configDetails.template,this.configDetails.tokens,this.userId,this.userData,this.objectApiName,this.recordId,this.recordData,null)
+        sfpegMergeUtl.sfpegMergeUtl.mergeTokens(this.configDetails.template,this.configDetails.tokens,this.userId,this.userData,this.objectApiName,this.recordId,this.recordData,null,this._parentContext)
         .then( value => {
             if (this.isDebug) console.log('finalizeMessages: context merged within message template ',value);
             let rawMessages = JSON.parse(value);
             if (this.isDebug) console.log('finalizeMessages: message template parsed ',JSON.stringify(rawMessages));
             if (rawMessages) {
                 let currentKey = 0;
+                let isDisplayed = false;
                 if (this.isDebug) console.log('finalizeMessages: evaluating conditions ');
                 rawMessages.forEach(message => {
                     if (this.isDebug) console.log('finalizeMessages: processing message ',message);
@@ -387,7 +422,6 @@ export default class SfpegMessageListCmp extends LightningElement {
 
                     message._key = currentKey++;
                     message._msgWrapClass = (message.size ? ' slds-size_' + message.size + '-of-12 ' : ' slds-shrink-none slds-grow ') + ' slds-col  slds-grid_vertical-stretch msgWrapper';
-                    //@TODO regex to include before executing eval()
                     message._isHidden = this.evalValue(message.isHidden);
                     message.msgClass = (message.msgClass || 'slds-box slds-box_x-small slds-m-vertical_xx-small') + ' slds-media slds-media_center ' + variantConfig.theme;
                     message.iconName = message.iconName || variantConfig.iconName;
@@ -396,20 +430,25 @@ export default class SfpegMessageListCmp extends LightningElement {
                     message.iconValue = message.iconValue;
                     message.textClass =  "slds-media__body " + variantConfig.textVariant;
                     if (this.isDebug) console.log('finalizeMessages: message updated ',message);
+                    isDisplayed = isDisplayed || !message._isHidden;
                 });
                 this.displayedMessages = rawMessages;
+                this.isDisplayed = isDisplayed;
+                if (this.isDebug) console.log('finalizeMessages: displaying message ? ',this.isDisplayed);
                 if (this.isDebug) console.log('finalizeMessages: END / message finalized ',JSON.stringify(this.displayedMessages));
                 this.isReady = true;
             }
             else {
                 if (this.isDebug) console.log('finalizeMessages: END / empty parsed message ');
                 this.displayedMessages = [];
+                this.isDisplayed = false;
                 this.isReady = true;
             }
         })
         .catch( error => {
             console.warn('finalizeMessages: END / KO ', JSON.stringify(error));
             this.displayedMessages = [];
+            this.isDisplayed = false;
             this.errorMsg = 'Message finalization issue: ' + ((error.body || error).message || error);
             this.isReady = true;
         });
@@ -421,7 +460,7 @@ export default class SfpegMessageListCmp extends LightningElement {
     // Boolean condition evaluation
     evalValue =  function(condition) {
         //@TODO : check eval() via regex first
-        if (typeof condition == "string") {
+        if ((this.configDetails?.doEval) && (typeof condition == "string")) {
             if (this.isDebug) console.log('evalValue: String eval ', JSON.stringify(condition));
             return eval(condition);
         }
@@ -452,4 +491,17 @@ export default class SfpegMessageListCmp extends LightningElement {
         }
     }
 
+    // Handler for done  event from actions (to forward them to parent)
+    handleActionDone(event) {
+        if (this.isDebug) console.log('handleActionDone: START with event ',JSON.stringify(event.detail));
+
+        let doneEvent = new CustomEvent('done', {
+            "detail": event.detail
+        });
+        if (this.isDebug) console.log('handleActionDone: doneEvent init',JSON.stringify(doneEvent));   
+        this.dispatchEvent(doneEvent);
+        if (this.isDebug) console.log('handleActionDone: doneEvent dispatched'); 
+
+        if (this.isDebug) console.log('handleActionDone: END / doneEvent dispatched'); 
+    }
 }

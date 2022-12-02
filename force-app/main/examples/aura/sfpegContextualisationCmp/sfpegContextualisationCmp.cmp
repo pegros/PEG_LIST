@@ -1,0 +1,156 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"
+                access="global">
+	<aura:attribute name="optionsA" type="List" default="[
+    				{'label': 'Label A1', 'value': 'A1'},
+    				{'label': 'Label A2', 'value': 'A2'},
+    				{'label': 'Label A3', 'value': 'A3'}]"/>
+    <aura:attribute name="optionsB" type="List" default="[
+    				{'label': 'Label B1', 'value': 'B1'},
+    				{'label': 'Label B2', 'value': 'B2'}]"/>
+    <aura:attribute name="userId" type="String"/>
+    <aura:attribute name="context" type="Object"/>
+	<aura:attribute name="message" type="String"/>
+    
+    <aura:handler   name="init" value="{!this}" action="{!c.doInit}"
+                    description="Init of component: determination of console/standard mode + fetch of current UserId."/>
+    
+    <div class="slds-box slds-theme_default">
+        <lightning:layout multipleRows="true">
+			<lightning:layoutItem size="11">
+				<p class="slds-text-title_bold">Parent Component</p>
+			</lightning:layoutItem>
+			<lightning:layoutItem size="1">
+				<lightning:buttonIcon	iconName="utility:refresh"
+										variant="border-filled"
+										alternativeText="Refresh"
+										onclick="{!c.handleRefresh}" />
+			</lightning:layoutItem>
+            <lightning:layoutItem size="6">
+        		<lightning:combobox name="statusA"
+		                            aura:id="statusA"
+        		                    id="statusA"
+                		            label="Status A"
+                                    class="slds-m-right_x-small "
+									value="{#v.context.statusA}"
+                        		    options="{! v.optionsA }"
+                            		onchange="{! c.handleChange }"/>
+            </lightning:layoutItem>
+			<lightning:layoutItem size="6">
+		        <lightning:combobox name="statusB"
+									aura:id="statusB"
+									id="statusB"
+                        		    label="Status B"
+									value="{#v.context.statusB}"
+                                    class="slds-m-left_x-small "
+		                            options="{! v.optionsB }"
+        		                    onchange="{! c.handleChange }"/>
+            </lightning:layoutItem>
+			<lightning:layoutItem size="12">
+				<p class="slds-text-color_error slds-m-top_x-small">Last Action: {!v.message}</p>
+			</lightning:layoutItem>
+        </lightning:layout>
+    </div>
+    
+    <lightning:layout class="slds-m-top_small" multipleRows="true">
+		<lightning:layoutItem size="4">
+		    <c:sfpegMessageListCmp	wrappingClass=""
+    								configName="tstLwcMessages"
+    								recordId="{!v.recordId}"
+    								objectApiName="{!v.sObjectName}"
+    								ondone="{!c.handleMsgAction}"
+    								parentContext="{!v.context}" 
+									isDebug="true"
+        							isDebugFine="true"/>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="2">
+    		<c:sfpegActionBarCmp	barClass="slds-m-top_xx-small slds-m-horizontal_x-small slds-box slds-box_small slds-theme_default slds-align_absolute-center"
+    								configName="tstLwcActions"
+    								recordId="{!v.recordId}"
+    								objectApiName="{!v.sObjectName}"
+    								ondone="{!c.handleAction}"
+									parentContext="{!v.context}"
+        							isDebug="true"
+        							isDebugFine="true"/>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="6">
+    		<c:sfpegCardCmp	cardTitle="Current User"
+                            cardClass="slds-m-top_xx-small slds-card slds-theme_default"
+    						configName="tstLwcCard"
+    						recordId="{!v.userId}"
+    						objectApiName="User"
+							actionConfigName="tstLwcActions"
+    						ondone="{!c.handleCardAction}"
+							parentContext="{!v.context}"
+        					isDebug="true"
+        					isDebugFine="true"/>
+        </lightning:layoutItem>
+		<lightning:layoutItem size="12" class="slds-box slds-box_small slds-theme_default slds-m-top_x-small">
+			<lightning:tabset>
+				<lightning:tab label="List">
+    				<c:sfpegListCmp	cardTitle="TEST PEGs"
+            						cardClass="slds-card slds-theme_default"
+    								configName="tstLwcList"
+									actionConfigName="tstLwcActions"
+    								userId="{!v.userId}"
+    								ondone="{!c.handleListAction}"
+									parentContext="{!v.context}"
+        							isDebug="true"
+		        					isDebugFine="true"
+									aura:id="c:sfpegListCmp"/>
+				</lightning:tab>
+				<lightning:tab label="Card List">
+    				<c:sfpegCardListCmp	cardTitle="Users"
+										mainCardClass=""
+										cardClass="slds-card slds-card_boundary slds-var-m-around_xxx-small"
+    									configName="tstLwcCardList"
+										cardSize="6"
+										showRefresh="true"
+										actionConfigName="tstLwcActions"
+    									recordId="{!v.userId}"
+    									objectApiName="User"
+		    							userId="{!v.userId}"
+    									ondone="{!c.handleCardListAction}"
+										parentContext="{!v.context}"
+        								isDebug="true"
+        								isDebugFine="true"
+										aura:id="c:sfpegCardListCmp"/>
+				</lightning:tab>
+				<lightning:tab label="Profile">
+		    		<c:sfpegProfileCmp	wrappingClass="slds-card slds-theme_default"
+    									configName="tstLwcProfile"
+										objectApiName="User"
+										recordId="{!v.userId}"
+    									userId="{!v.userId}"
+		    							ondone="{!c.handleProfileAction}"
+										parentContext="{!v.context}"
+        								isDebug="true"
+        								isDebugFine="true"/>
+				</lightning:tab>
+				<lightning:tab label="Display">
+		    		<c:sfpegRecordDisplayCmp	cardClass="slds-box slds-box_small slds-theme_default"
+    											configName="tstLwcDisplay"
+												actionConfigName="tstLwcActions"
+												objectApiName="TEST_PEG__c"
+												recordId="a1F5E00000MWpLfUAL"
+			    								userId="{!v.userId}"
+    											ondone="{!c.handleDisplayAction}"
+												parentContext="{!v.context}"
+		        								isDebug="true"
+					        					isDebugFine="true"
+												aura:id="c:sfpegRecordDisplayCmp"/>
+				</lightning:tab>
+				<lightning:tab label="KPIs">
+		    		<c:sfpegKpiListCmp	wrapperClass="slds-box slds-box_small slds-theme_default"
+    									configName="tstLwcKPIs"
+										objectApiName="TEST_PEG__c"
+										recordId="a1F5E00000MWpLfUAL"
+		    							userId="{!v.userId}"
+    									ondone="{!c.handleKpiAction}"
+										parentContext="{!v.context}"
+        								isDebug="true"
+        								isDebugFine="true"/>
+				</lightning:tab>
+			</lightning:tabset>
+		</lightning:layoutItem>
+    </lightning:layout>
+</aura:component>
