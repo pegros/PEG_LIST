@@ -75,8 +75,9 @@ The following properties are available to configure the different profile widget
     * A dynamic behaviour (i.e. value depending on the page record) may be defined instead, in which case its value should be a JSON object providing the record specific image to display via two possible properties: 
         * `fileFieldName` defines the API Name of a field providing the Salesforce ID of the file (ContentDocument) to use
         * `fieldName` defines the API Name of a field providing the image file name (within the **sfpegBanners** static resource) to use
+        (e.g. via a formula field based on other record properties)
         * Both may be set simultaneously (e.g. as `{"fieldName":"avatar__c", "fileFieldName":"avatarFileId__c"}`) in which
-        case the displayed banner comes from `fileFieldName` if its value is not null on teh record and `fieldName`otherwise
+        case the displayed banner comes from `fileFieldName` if its value is not null on the record and `fieldName`otherwise
         (kind of fallback mechanism).
     * Custom `.jpg` or `.png` image files may added to the **sfpegBanners**  static resource and later referenced in this configuration.
     * The **sfpegFileManagerCmp** component (see **(PEG_MISC)[https://github.com/pegros/PEG_MISC]** package) may be leveraged
