@@ -55,6 +55,7 @@ export default class SfpegProfileCmp extends LightningElement {
     @api actionAlignment = 'end'; // Action bar alignment mode (start, center, end)
     @api maxSize = 100;         // Action list overflow limit
     @api isInverseMode = false; // Flag to trigger inverse mode activation for text fields
+    @api basePath;              // Base path of the community (if used in community context)
     @api isDebug = false;       // Debug mode activation
     @api isDebugFine = false;   // Debug mode activation for all subcomponents.
 
@@ -100,12 +101,13 @@ export default class SfpegProfileCmp extends LightningElement {
     @track configDetails = {};  // Global configuration of the component
     @track errorMsg = null;     // Initialisation error message
 
-    @track bannerImage = null;              // Banner background Icon URL (may depend on record)
-    @track avatarImage = null;              // Avatar Icon URL (may depend on record)
+    @track bannerImage = null;  // Banner background Icon URL (may depend on record)
+    @track avatarImage = null;  // Avatar Icon URL (may depend on record)
     //badgeTextClass ="slds-badge slds-badge_lightest";   // CSS class for the badge content
     //titleClass = "slds-text-heading_small"; // Text CSS for title field
     //fieldClass = "slds-text-body_small";    // Text CSS for details fields
     fieldVariant = "label-hidden";          // Output variant for details fields
+    fileRootUrl;                // Base image file download URL (may depend on community)
 
     //----------------------------------------------------------------
     // Custom Getters for UI
@@ -224,6 +226,14 @@ export default class SfpegProfileCmp extends LightningElement {
             return;
         }
 
+        let rootUrl = 'https://' + window.location.hostname;
+        if (this.basePath) {
+            if (this.isDebug) console.log('connected: community basePath defined ', this.basePath);
+            rootUrl += '/' +  this.basePath + '/s';
+        }
+        this.fileRootUrl = rootUrl + '/sfc/servlet.shepherd/document/download/';
+        if (this.isDebug) console.log('connected: fileRootUrl init ', this.fileRootUrl);
+
         if (PROFILE_CONFIGS[this.configName]) {
             if (this.isDebug) console.log('connected: END / configuration already available');
             this.configDetails = PROFILE_CONFIGS[this.configName];
@@ -249,19 +259,33 @@ export default class SfpegProfileCmp extends LightningElement {
                         labelFieldsOK: {}
                         //tokens: sfpegMergeUtl.sfpegMergeUtl.extractTokens((result.MessageDisplay__c || '{}'),this.objectApiName)
                     };
-                    if ((result.ProfileBanner__c) && (result.ProfileBanner__c.includes('fieldName'))) {
+                    if ((result.ProfileBanner__c) && (result.ProfileBanner__c.includes('ieldName"'))) {
                         if (this.isDebug) console.log('connected: registering dynamic banner field ',result.ProfileBanner__c);
                         let bannerObj = JSON.parse(result.ProfileBanner__c);
-                        (PROFILE_CONFIGS[this.configName].recordFields.raw).push(bannerObj.fieldName);
-                        (PROFILE_CONFIGS[this.configName]).banner.isStatic = false;
-                        (PROFILE_CONFIGS[this.configName]).banner.fieldName = bannerObj.fieldName;
+                        if (bannerObj.fieldName) {
+                            (PROFILE_CONFIGS[this.configName].recordFields.raw).push(bannerObj.fieldName);
+                            (PROFILE_CONFIGS[this.configName]).banner.isStatic = false;
+                            (PROFILE_CONFIGS[this.configName]).banner.fieldName = bannerObj.fieldName;
+                        }
+                        if (bannerObj.fileFieldName) {
+                            (PROFILE_CONFIGS[this.configName].recordFields.raw).push(bannerObj.fileFieldName);
+                            (PROFILE_CONFIGS[this.configName]).banner.isStatic = false;
+                            (PROFILE_CONFIGS[this.configName]).banner.fileFieldName = bannerObj.fileFieldName;
+                        }
                     }
-                    if ((result.ProfileAvatar__c) && (result.ProfileAvatar__c.includes('fieldName'))) {
+                    if ((result.ProfileAvatar__c) && (result.ProfileAvatar__c.includes('ieldName"'))) {
                         if (this.isDebug) console.log('connected: registering dynamic avatar field ',result.ProfileAvatar__c);
                         let avatarObj = JSON.parse(result.ProfileAvatar__c);
-                        (PROFILE_CONFIGS[this.configName].recordFields.raw).push(avatarObj.fieldName);
-                        (PROFILE_CONFIGS[this.configName]).avatar.isStatic = false;
-                        (PROFILE_CONFIGS[this.configName]).avatar.fieldName = avatarObj.fieldName;
+                        if (avatarObj.fieldName) {
+                            (PROFILE_CONFIGS[this.configName].recordFields.raw).push(avatarObj.fieldName);
+                            (PROFILE_CONFIGS[this.configName]).avatar.isStatic = false;
+                            (PROFILE_CONFIGS[this.configName]).avatar.fieldName = avatarObj.fieldName;
+                        }
+                        if (avatarObj.fileFieldName) {
+                            (PROFILE_CONFIGS[this.configName].recordFields.raw).push(avatarObj.fileFieldName);
+                            (PROFILE_CONFIGS[this.configName]).avatar.isStatic = false;
+                            (PROFILE_CONFIGS[this.configName]).avatar.fileFieldName = avatarObj.fileFieldName;
+                        }
                     }
 
                     if (result.ProfileHeader__c) {
@@ -336,7 +360,7 @@ export default class SfpegProfileCmp extends LightningElement {
             }
             else {
                 if (this.isDebug) console.log('finalizeConfig: dynamic banner / setting default image while loading ', this.configDetails.banner.fieldName);
-                this.bannerImage = BANNER_RSC + '/banner1.png'; 
+                this.bannerImage = BANNER_RSC + '/banner7.png'; 
             }
         }
         else {
@@ -350,7 +374,7 @@ export default class SfpegProfileCmp extends LightningElement {
             }
             else {
                 if (this.isDebug) console.log('finalizeConfig: dynamic avatar / setting default image while loading ', this.configDetails.avatar.fieldName);
-                this.avatarImage = AVATAR_RSC + '/avatar1.jpg'; 
+                this.avatarImage = AVATAR_RSC + '/avatar5.jpg'; 
             }
         }
         else {
@@ -404,23 +428,33 @@ export default class SfpegProfileCmp extends LightningElement {
             if (this.isDebug) console.log('wiredRecord: data fetch OK', JSON.stringify(data));
 
             if (!this.configDetails.banner.isStatic) {
-                if (this.isDebug) console.log('wiredRecord: setting dynamic banner based on ',this.configDetails.banner.fieldName);
-                if (data.fields[this.configDetails.banner.fieldName]) {
+                if ((this.configDetails.banner.fileFieldName) && (data.fields[this.configDetails.banner.fileFieldName]?.value)) {
+                    if (this.isDebug) console.log('wiredRecord: setting dynamic banner based on ',this.configDetails.banner.fileFieldName);
+                    this.bannerImage = this.fileRootUrl + data.fields[this.configDetails.banner.fileFieldName].value; 
+                    if (this.isDebug) console.log('wiredRecord: dynamic banner updated from file ',this.bannerImage);
+                }
+                else if ((this.configDetails.banner.fieldName) && (data.fields[this.configDetails.banner.fieldName]?.value)){
+                    if (this.isDebug) console.log('wiredRecord: setting dynamic banner based on ',this.configDetails.banner.fieldName);
                     this.bannerImage = BANNER_RSC + '/' + data.fields[this.configDetails.banner.fieldName].value; 
-                    if (this.isDebug) console.log('wiredRecord: dynamic banner updated ',this.bannerImage);
+                    if (this.isDebug) console.log('wiredRecord: dynamic banner updated from resource ',this.bannerImage);
                 }
                 else {
-                    if (this.isDebug) console.log('wiredRecord: dynamic banner value not available ');
+                    console.warn('wiredRecord: dynamic banner value not available ');
                 }
             }
             if (!this.configDetails.avatar.isStatic) {
-                if (this.isDebug) console.log('wiredRecord: setting dynamic avatar based on ',this.configDetails.avatar.fieldName);
-                if (data.fields[this.configDetails.avatar.fieldName]) {
+                if ((this.configDetails.avatar.fileFieldName) && (data.fields[this.configDetails.avatar.fileFieldName]?.value)) {
+                    if (this.isDebug) console.log('wiredRecord: setting dynamic avatar based on ',this.configDetails.avatar.fileFieldName);
+                    this.avatarImage = this.fileRootUrl + data.fields[this.configDetails.avatar.fileFieldName].value; 
+                    if (this.isDebug) console.log('wiredRecord: dynamic avatar updated from file ',this.avatarImage);
+                }
+                else if ((this.configDetails.avatar.fieldName) && (data.fields[this.configDetails.avatar.fieldName]?.value)) {
+                    if (this.isDebug) console.log('wiredRecord: setting dynamic avatar based on ',this.configDetails.avatar.fieldName);
                     this.avatarImage = AVATAR_RSC + '/' + data.fields[this.configDetails.avatar.fieldName].value; 
-                    if (this.isDebug) console.log('wiredRecord: dynamic avatar updated ',this.avatarImage);
+                    if (this.isDebug) console.log('wiredRecord: dynamic avatar updated from resource ',this.avatarImage);
                 }
                 else {
-                    if (this.isDebug) console.log('wiredRecord: dynamic avatar value not available ');
+                    console.warn('wiredRecord: dynamic avatar value not available ');
                 }
             }
             if (this.isDebug) console.log('wiredRecord: END ');

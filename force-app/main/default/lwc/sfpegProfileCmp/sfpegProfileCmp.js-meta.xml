@@ -133,6 +133,11 @@
                         type="String"
                         default="{!recordId}"
                         description="ID of current Record"/>
+
+            <property   name="basePath"
+                        label="Base Path"
+                        type="String"
+                        description="Community Name set in the URL path (required if files are used for banner and/or avatar)"/>
         </targetConfig>
 
     </targetConfigs>

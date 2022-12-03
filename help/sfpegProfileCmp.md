@@ -72,9 +72,15 @@ The **sfpegProfile__mdt** custom metadata provides most if not all configuration
 The following properties are available to configure the different profile widgets:
 * `Profile Banner` defines the name of the background image to display
     * Its value may be a static text (i.e. same value for all component instances)
-    * A dynamic behaviour (i.e. value depending on the page record) may be defined instead, in which case its value should be a JSON object providing the record `fieldName` (e.g. a formula field) used to get the image name (as `{"fieldName":"<fieldApiName>"}`)
-    * The resulting image name should match one of the files available within the **sfpegBanners** static resource.
-    * Custom `.jpg` or `.png` image files may added to this static resources and later referenced in this configuration.
+    * A dynamic behaviour (i.e. value depending on the page record) may be defined instead, in which case its value should be a JSON object providing the record specific image to display via two possible properties: 
+        * `fileFieldName` defines the API Name of a field providing the Salesforce ID of the file (ContentDocument) to use
+        * `fieldName` defines the API Name of a field providing the image file name (within the **sfpegBanners** static resource) to use
+        * Both may be set simultaneously (e.g. as `{"fieldName":"avatar__c", "fileFieldName":"avatarFileId__c"}`) in which
+        case the displayed banner comes from `fileFieldName` if its value is not null on teh record and `fieldName`otherwise
+        (kind of fallback mechanism).
+    * Custom `.jpg` or `.png` image files may added to the **sfpegBanners**  static resource and later referenced in this configuration.
+    * The **sfpegFileManagerCmp** component (see **(PEG_MISC)[https://github.com/pegros/PEG_MISC]** package) may be leveraged
+    to upload and register ContentDocument files on the records.
     * No value hides the background widget.
 * `Profile Avatar` defines the name of the avatar image to display
     * It follows the same principles as `Profile Banner` but uses the **sfpegAvatars** static resource instead.
