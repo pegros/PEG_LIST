@@ -50,6 +50,8 @@ as well as a possible max. number of actions displayed to control its width
 
 ![Profile Component Layout](/media/sfpegProfileLayout.png) 
 
+Banner and avatar images may either come from standard static resources provided by the package (**sfpegAvatars** or
+**sfpegBanners**) or from standard asset files or even any related file.
 
 ### App Builder Configuration
 
@@ -74,11 +76,11 @@ The following properties are available to configure the different profile widget
     * Its value may be a static text (i.e. same value for all component instances)
     * A dynamic behaviour (i.e. value depending on the page record) may be defined instead, in which case its value should be a JSON object providing the record specific image to display via two possible properties: 
         * `fileFieldName` defines the API Name of a field providing the Salesforce ID of the file (ContentDocument) to use
+        * `assetFieldName` defines the API Name of a field providing the name of and asset file to use
         * `fieldName` defines the API Name of a field providing the image file name (within the **sfpegBanners** static resource) to use
         (e.g. via a formula field based on other record properties)
-        * Both may be set simultaneously (e.g. as `{"fieldName":"avatar__c", "fileFieldName":"avatarFileId__c"}`) in which
-        case the displayed banner comes from `fileFieldName` if its value is not null on the record and `fieldName`otherwise
-        (kind of fallback mechanism).
+        * All may be set simultaneously (e.g. as `{"fieldName":"avatar__c", "fileFieldName":"avatarFileId__c", "assetFieldName":"avatarAssetName__c"}`) in which
+        case the displayed banner comes from `fileFieldName` if its value is not null on the record, then from `assetFieldName` and `fieldName` otherwise (kind of fallback mechanism).
     * Custom `.jpg` or `.png` image files may added to the **sfpegBanners**  static resource and later referenced in this configuration.
     * The **sfpegFileManagerCmp** component (see **(PEG_MISC)[https://github.com/pegros/PEG_MISC]** package) may be leveraged
     to upload and register ContentDocument files on the records.

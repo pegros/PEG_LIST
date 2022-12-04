@@ -107,7 +107,8 @@ export default class SfpegProfileCmp extends LightningElement {
     //titleClass = "slds-text-heading_small"; // Text CSS for title field
     //fieldClass = "slds-text-body_small";    // Text CSS for details fields
     fieldVariant = "label-hidden";          // Output variant for details fields
-    fileRootUrl;                // Base image file download URL (may depend on community)
+    fileRootUrl;                // Base image file download URL (may depend on community) for Content Documents
+    assetRootUrl;               // Base image file download URL (may depend on community) for Asset Files
 
     //----------------------------------------------------------------
     // Custom Getters for UI
@@ -233,6 +234,8 @@ export default class SfpegProfileCmp extends LightningElement {
         }
         this.fileRootUrl = rootUrl + '/sfc/servlet.shepherd/document/download/';
         if (this.isDebug) console.log('connected: fileRootUrl init ', this.fileRootUrl);
+        this.assetRootUrl = rootUrl + '/file-asset/';
+        if (this.isDebug) console.log('connected: assetRootUrl init ', this.assetRootUrl);
 
         if (PROFILE_CONFIGS[this.configName]) {
             if (this.isDebug) console.log('connected: END / configuration already available');
@@ -272,6 +275,11 @@ export default class SfpegProfileCmp extends LightningElement {
                             (PROFILE_CONFIGS[this.configName]).banner.isStatic = false;
                             (PROFILE_CONFIGS[this.configName]).banner.fileFieldName = bannerObj.fileFieldName;
                         }
+                        if (bannerObj.assetFieldName) {
+                            (PROFILE_CONFIGS[this.configName].recordFields.raw).push(bannerObj.assetFieldName);
+                            (PROFILE_CONFIGS[this.configName]).banner.isStatic = false;
+                            (PROFILE_CONFIGS[this.configName]).banner.assetFieldName = bannerObj.assetFieldName;
+                        }
                     }
                     if ((result.ProfileAvatar__c) && (result.ProfileAvatar__c.includes('ieldName"'))) {
                         if (this.isDebug) console.log('connected: registering dynamic avatar field ',result.ProfileAvatar__c);
@@ -285,6 +293,11 @@ export default class SfpegProfileCmp extends LightningElement {
                             (PROFILE_CONFIGS[this.configName].recordFields.raw).push(avatarObj.fileFieldName);
                             (PROFILE_CONFIGS[this.configName]).avatar.isStatic = false;
                             (PROFILE_CONFIGS[this.configName]).avatar.fileFieldName = avatarObj.fileFieldName;
+                        }
+                        if (avatarObj.assetFieldName) {
+                            (PROFILE_CONFIGS[this.configName].recordFields.raw).push(avatarObj.assetFieldName);
+                            (PROFILE_CONFIGS[this.configName]).avatar.isStatic = false;
+                            (PROFILE_CONFIGS[this.configName]).avatar.assetFieldName = avatarObj.assetFieldName;
                         }
                     }
 
@@ -433,6 +446,11 @@ export default class SfpegProfileCmp extends LightningElement {
                     this.bannerImage = this.fileRootUrl + data.fields[this.configDetails.banner.fileFieldName].value; 
                     if (this.isDebug) console.log('wiredRecord: dynamic banner updated from file ',this.bannerImage);
                 }
+                else if ((this.configDetails.banner.assetFieldName) && (data.fields[this.configDetails.banner.assetFieldName]?.value)){
+                    if (this.isDebug) console.log('wiredRecord: setting dynamic banner based on ',this.configDetails.banner.assetFieldName);
+                    this.bannerImage = this.assetRootUrl + data.fields[this.configDetails.banner.assetFieldName].value; 
+                    if (this.isDebug) console.log('wiredRecord: dynamic banner updated from asset ',this.bannerImage);
+                }
                 else if ((this.configDetails.banner.fieldName) && (data.fields[this.configDetails.banner.fieldName]?.value)){
                     if (this.isDebug) console.log('wiredRecord: setting dynamic banner based on ',this.configDetails.banner.fieldName);
                     this.bannerImage = BANNER_RSC + '/' + data.fields[this.configDetails.banner.fieldName].value; 
@@ -447,6 +465,11 @@ export default class SfpegProfileCmp extends LightningElement {
                     if (this.isDebug) console.log('wiredRecord: setting dynamic avatar based on ',this.configDetails.avatar.fileFieldName);
                     this.avatarImage = this.fileRootUrl + data.fields[this.configDetails.avatar.fileFieldName].value; 
                     if (this.isDebug) console.log('wiredRecord: dynamic avatar updated from file ',this.avatarImage);
+                }
+                else if ((this.configDetails.avatar.assetFieldName) && (data.fields[this.configDetails.avatar.assetFieldName]?.value)){
+                    if (this.isDebug) console.log('wiredRecord: setting dynamic avatar based on ',this.configDetails.avatar.assetFieldName);
+                    this.avatarImage = this.assetRootUrl + data.fields[this.configDetails.avatar.assetFieldName].value; 
+                    if (this.isDebug) console.log('wiredRecord: dynamic avatar updated from asset ',this.avatarImage);
                 }
                 else if ((this.configDetails.avatar.fieldName) && (data.fields[this.configDetails.avatar.fieldName]?.value)) {
                     if (this.isDebug) console.log('wiredRecord: setting dynamic avatar based on ',this.configDetails.avatar.fieldName);
