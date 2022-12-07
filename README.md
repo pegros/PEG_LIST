@@ -1,6 +1,4 @@
----
-# SFPEG LIST Components
----
+# ![Logo](/media/Logo.png) &nbsp; SFPEG **LIST** Components
 
 
 ## Introduction

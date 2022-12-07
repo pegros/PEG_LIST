@@ -1,6 +1,4 @@
----
-# sfpegRecordDisplayCmp Component
----
+# ![Logo](/media/Logo.png) &nbsp; **sfpegRecordDisplayCmp** Component
 
 ## Introduction
 

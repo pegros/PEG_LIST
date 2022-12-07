@@ -1,6 +1,4 @@
----
-# sfpegMessageListCmp Component
----
+# ![Logo](/media/Logo.png) &nbsp; **sfpegMessageListCmp** Component
 
 ## Introduction
 

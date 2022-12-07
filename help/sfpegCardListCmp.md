@@ -1,6 +1,4 @@
----
-# sfpegCardListCmp Component
----
+# ![Logo](/media/Logo.png) &nbsp; **sfpegCardListCmp** Component
 
 ## Introduction
 

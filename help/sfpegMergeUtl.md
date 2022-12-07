@@ -1,6 +1,4 @@
----
-# sfpegMergeUtl Utility
----
+# ![Logo](/media/Logo.png) &nbsp; **sfpegMergeUtl** Utility
 
 ## Introduction
 

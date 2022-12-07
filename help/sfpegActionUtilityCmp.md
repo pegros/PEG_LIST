@@ -1,6 +1,4 @@
----
-# sfpegActionUtilityCmp component
----
+# ![Logo](/media/Logo.png) &nbsp; **sfpegActionUtilityCmp** component
 
 ## Introduction
 

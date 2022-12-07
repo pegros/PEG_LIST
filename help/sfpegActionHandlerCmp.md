@@ -1,6 +1,4 @@
----
-# sfpegActionHandlerCmp Component
----
+# ![Logo](/media/Logo.png) &nbsp; **sfpegActionHandlerCmp** Component
 
 ## Introduction
 

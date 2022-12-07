@@ -1,6 +1,4 @@
----
-# sfpegIconDsp Component
----
+# ![Logo](/media/Logo.png) &nbsp; **sfpegIconDsp** Component
 
 ## Introduction
 

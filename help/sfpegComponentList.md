@@ -1,7 +1,4 @@
-
----
-# SFPEG LIST Components
----
+# ![Logo](/media/Logo.png) &nbsp; Misc. SFPEG **LIST** Components
 
 In addition to the main components already presented in the [Introduction](https://github.com/pegros/PEG_LIST),
 the **PEG_LIST** package contains a whole set of metadata listed hereafter by type.

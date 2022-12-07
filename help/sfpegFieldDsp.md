@@ -1,6 +1,4 @@
----
-# sfpegFieldDsp Component
----
+# ![Logo](/media/Logo.png) &nbsp; **sfpegFieldDsp** Component
 
 ## Introduction
 
