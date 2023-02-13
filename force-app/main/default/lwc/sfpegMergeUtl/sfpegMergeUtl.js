@@ -33,6 +33,7 @@
 //import { getRecord } from 'lightning/uiRecordApi';
 import getConfig from '@salesforce/apex/sfpegMerge_CTL.getConfig';
 import getRecord from '@salesforce/apex/sfpegMerge_CTL.getRecord';
+import LANG from '@salesforce/i18n/lang';
 
 const sfpegMergeUtl = {
 
@@ -360,6 +361,9 @@ const sfpegMergeUtl = {
                         break;
                     case 'nextYearLocal':
                         resultData[iterField.field] = (new Date(new Date().setMonth(new Date().getMonth() + 12))).toLocaleDateString();
+                        break;
+                    case 'lang':
+                        resultData[iterField.field] = LANG;
                         break;
                     default:
                         console.warn('getGenericData: unsupported field ',iterField.field);

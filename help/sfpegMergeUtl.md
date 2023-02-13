@@ -20,6 +20,7 @@ As a baseline, the **sfpegMergeUtl** component provides the following set of tok
     * `GEN.now` to get current timestamp (in ISO format)
     * `GEN.today`, `GEN.yesterday`, `GEN.tomorrow`, `GEN.lastWeek`, `GEN.nextWeek`,  `GEN.lastMonth`, `GEN.nextMonth`,  `GEN.lastQuarter`, `GEN.nextQuarter`,  `GEN.lastYear`, `GEN.nextYear` to get dates in delta to current day, value being provided in ISO format
         * To get these values in user local format (e.g. for message display), `Local` should be appended to the token name (e.g. `GEN.todayLocal`).
+    * `GEN.lang` to get the current user langage locale
 * **RCD.fieldName** for data about the current record (if its object is supported by the Lightning Data Service)
     * `fieldName` should correspond to the API name of the field value to fetch, e.g. RCD.Name for the record Name
     * Lookups may be leveraged, e.g. `{{{RCD.Owner.Profile.Name}}}`.
