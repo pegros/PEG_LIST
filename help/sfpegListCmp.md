@@ -510,8 +510,8 @@ The `Row Actions` may be set to `sfpegOpenEdit` in order to support the **open**
 
 _Notes_:
 * When handling SObjects with different Name fields (e.g. Title, Subject and standard Name) as results 
-of a same SOSL query, you may specify `{"useName":true}` as `title` property to automatically set the 
-tile title as the proper Name field value depending on the SObject. Alternatively, you may define
+of a same SOSL query, you may specify `"title":{"useName":true}` to automatically set the 
+tile title with the proper Name field value depending on the SObject. Alternatively, you may define
 custom fields with exactly same names on the different SObjects.
 * If the `ObjectIcon` value returned by the SOSL search is empty or incorrect, you may need to 
 define a custom tab for the custom object for the Apex logic to find it or register the actual
