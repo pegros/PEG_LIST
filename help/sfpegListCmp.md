@@ -508,6 +508,15 @@ configuration may be used in _DataTable_ or _TileList_ modes (the second being u
 
 The `Row Actions` may be set to `sfpegOpenEdit` in order to support the **open** actions configured.
 
+_Notes_:
+* When handling SObjects with different Name fields (e.g. Title, Subject and standard Name) as results 
+of a same SOSL query, you may specify `{"useName":true}` as `title` property to automatically set the 
+tile title as the proper Name field value depending on the SObject. Alternatively, you may define
+custom fields with exactly same names on the different SObjects.
+* If the `ObjectIcon` value returned by the SOSL search is empty or incorrect, you may need to 
+define a custom tab for the custom object for the Apex logic to find it or register the actual
+valid icon name for the standard object in the `OBJECT_ICON_MAP` static map of the `sfpegList_CTL` class
+(this may often happen with Industry or technical standard objects).
 
 ### Simple SOQL Based DataTree Display Configuration
 

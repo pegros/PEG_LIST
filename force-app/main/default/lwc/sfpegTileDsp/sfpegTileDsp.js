@@ -136,7 +136,14 @@ export default class SfpegTileDsp extends LightningElement {
         if (this.isDebug) console.log('resetDisplayData: title provided ', JSON.stringify(this.configDetails.title));
         let titleFieldName = null;
         if (this.configDetails.title) {
-            if (this.configDetails.title.fieldName) {
+            if (this.configDetails.title.useName) {
+                if (this.isDebug) console.log('resetDisplayData: using dynamic title name field ',this._recordData.NameField);
+                this.cardTitle = this._recordData[this._recordData.NameField];
+                if (this.isDebug) console.log('resetDisplayData: using dynamic title label ',this._recordData.NameLabel);
+                this.cardTitleLabel = this._recordData[this._recordData.NameLabel];
+                titleFieldName = this._recordData.NameField;
+            }
+            else if (this.configDetails.title.fieldName) {
                 if (this.isDebug) console.log('resetDisplayData: title field');
                 this.cardTitle = this._recordData[this.configDetails.title.fieldName];
                 this.cardTitleLabel = this.configDetails.title.label;

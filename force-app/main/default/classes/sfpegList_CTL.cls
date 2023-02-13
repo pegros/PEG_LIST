@@ -51,7 +51,8 @@ public with sharing class sfpegList_CTL {
         'ActionPlan' => 'standard:entitlement',
         'CampaignMember' => 'standard:campaign_members',
 		'BranchUnitRelatedRecord' => 'custom:custom16',
-		'Knowledge__kav' => 'standard:article'
+		'Knowledge__kav' => 'standard:article',
+		'TrnCourse' => 'custom:custom91'
     };
 
 	/***
@@ -178,12 +179,39 @@ public with sharing class sfpegList_CTL {
 							objectIcon = 'standard:' +  objectName.toLowerCase();
 						}
 
+						Map<String, Schema.SObjectField> objectFieldMap = objectDesc.fields.getMap();
+						System.debug('getData: Object fields extracted ' + objectFieldMap.keySet());
+						String nameField;
+						String nameFieldLabel;
+						if (objectFieldMap.containsKey('Name') && objectFieldMap.get('Name').getDescribe().isnameField()) {
+							System.debug('getData: registering standard Name field ');
+							nameField = 'Name';
+							nameFieldLabel = objectFieldMap.get('Name').getDescribe().getLabel();
+						}
+						else {
+							System.debug('getData: looking for Name field ');
+							DescribeFieldResult iterFieldDesc;
+							for (String iterField : objectFieldMap.keySet()) {
+								System.debug(LoggingLevel.FINEST,'getData: processing field ' + iterField);
+								iterFieldDesc = objectFieldMap.get(iterField).getDescribe();
+								//System.debug(LoggingLevel.FINE,'getData: description extracted ' + iterFieldDesc);
+								if (iterFieldDesc.isnameField()) {
+									System.debug('getData: Name field found ' + iterFieldDesc.getLocalName());
+									nameField = iterFieldDesc.getLocalName();
+									nameFieldLabel = iterFieldDesc.getLabel();
+									break;
+								}
+							}
+						}
+
 						List<Object> iterList = (List<Object>) (JSON.deserializeUntyped(JSON.serialize(iter)));
 						for (Object iterObj : iterList) {
 							Map<String,Object> iterMap = ((Map<String,Object>)iterObj);
 							iterMap.put('ObjectApiName',objectName);
 							iterMap.put('ObjectLabel', objectLabel);
 							iterMap.put('ObjectIcon', objectIcon);
+							iterMap.put('NameField', nameField);
+							iterMap.put('NameLabel', nameFieldLabel);
 							iterMap.remove('attributes');
 						}
 						soslMergedList.addAll(iterList);
