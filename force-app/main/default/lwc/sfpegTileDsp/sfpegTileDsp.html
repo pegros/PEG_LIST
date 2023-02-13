@@ -63,20 +63,22 @@
                                                         onselect={handleActionSelect} >
                                     <!--<template for:each={configActions} for:item="iterAction">-->
                                     <template for:each={cardMenu} for:item="iterAction">
-                                        <template if:true={iterAction.disabled}>
-                                            <lightning-menu-item    key={iterAction.name}
-                                                                    value={iterAction}
-                                                                    label={iterAction.label} 
-                                                                    disabled
-                                                                    icon-name={iterAction.iconName} >
-                                            </lightning-menu-item> 
-                                        </template>
-                                        <template if:false={iterAction.disabled}>
-                                            <lightning-menu-item    key={iterAction.name}
-                                                                    value={iterAction}
-                                                                    label={iterAction.label} 
-                                                                    icon-name={iterAction.iconName} >
-                                            </lightning-menu-item> 
+                                        <template if:false={iterAction.hidden}>
+                                            <template if:true={iterAction.disabled}>
+                                                <lightning-menu-item    key={iterAction.name}
+                                                                        value={iterAction}
+                                                                        label={iterAction.label} 
+                                                                        disabled
+                                                                        icon-name={iterAction.iconName} >
+                                                </lightning-menu-item> 
+                                            </template>
+                                            <template if:false={iterAction.disabled}>
+                                                <lightning-menu-item    key={iterAction.name}
+                                                                        value={iterAction}
+                                                                        label={iterAction.label} 
+                                                                        icon-name={iterAction.iconName} >
+                                                </lightning-menu-item> 
+                                            </template>
                                         </template>
                                     </template>
                                 </lightning-button-menu>

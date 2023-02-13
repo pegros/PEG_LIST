@@ -280,6 +280,17 @@ export default class SfpegTileDsp extends LightningElement {
                             //newItem.disabled = eval(iterItem.disabled);
                         }
                     }
+                    if (iterItem.hidden) {
+                        if (iterItem.hidden.fieldName) {
+                            if (this.isDebug) console.log('resetDisplayData: setting dynamic hidden value ');
+                            newItem.hidden = this._recordData[(iterItem.hidden.fieldName)];
+                        }
+                        else {
+                            if (this.isDebug) console.log('resetDisplayData: setting static hidden value ');
+                            newItem.hidden = (String(iterItem.hidden).toLowerCase() == "true");
+                            //newItem.disabled = eval(iterItem.disabled);
+                        }
+                    }
                     newMenu.push(newItem);
                 });
                 this.cardMenu = newMenu;

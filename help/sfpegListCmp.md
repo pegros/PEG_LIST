@@ -143,6 +143,8 @@ the JSON display configuration of the standard
         * setting this property activates an expand/collapse on the tile content
         * when expanded, the fields of this list are displayed below the main ones in a _cardList_ mode
     * An optional `expandAll` property enabling to force all rows of a _TreeGrid_ to be fully expanded by default.
+    * An optional `stacked` property enabling to enforce a stacked field display (with labels above values)
+    for `details` and `columns` fields (when in _cardList_ mode for the second)
 * `Flatten Results?` to activate fetched data JSON structure ***flattening*** in order to let related record data being
 properly displayed within _DataTable_ or _TreeGrid_ components (which do not support displaying data from JSON sub-objects,
 as when related record fields are fetched)
@@ -335,7 +337,7 @@ to be used for sorting and a second time within the `label` property of the butt
 actually displayed in the button.
 * the button `title` may also be specified dynamically to display contextual additional information upon
 hovering (no compact layout preview available for now but PLANNED).
-* the `name` property in the button `typeAttributes` should idenfy the name of the row action to be triggered
+* the `name` property in the button `typeAttributes` should identify the name of the row action to be triggered
 (which should match one of the actions available in the **sfpegAction__mdt** record referenced in the `Row Actions`
 property of the current **sfpegList__mdt** record)
 
@@ -698,17 +700,21 @@ column types. Among others it does not for row actions set in the `menu` propert
 **[lightning-datatable](https://developer.salesforce.com/docs/component-library/bundle/lightning-datatable/documentation)** component limitation.
 
 
-For the _CardList_ and _TileList_ modes, any entry in the `menu` property may be dynamically disabled
-in a similar way. However the `isDynamicMenu` boolean property needs to be explicitly set to `true` in
-the configuration:
+For the _CardList_ and _TileList_ modes, any entry in the `menu` property may be dynamically _disabled_
+or _hidden_ in a similar way. However the `isDynamicMenu` boolean property needs to be explicitly set
+to `true` in the configuration:
 ```
 ...
 "isDynamicMenu":true,
 "menu": [
     ...
     {
-        "label": "Edit (DML)", "name": "editDml", "iconName":"utility:edit",
+        "label": "Set Reason", "name": "editReason",
         "disabled":{"fieldName":"HasReason__c"}
+    },
+    {
+        "label": "Edit", "name": "edit", "iconName":"utility:edit",
+        "hidden":{"fieldName":"IsTerminated__c"}
     }
     ...
 ]
