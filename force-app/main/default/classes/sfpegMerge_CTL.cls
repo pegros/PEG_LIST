@@ -251,6 +251,14 @@ public with sharing class sfpegMerge_CTL {
 					'lang' => userLanguage,
 					'labels' => JSON.serialize(new List<String>(lblTokens))
 				});
+
+				String labelPage = (labelPageRef.getContent()).tostring();
+                System.debug('replaceLabelTokens: labelPage evaluated ' + labelPage);
+                if labelPage.contains('\\\'') { 
+					labelPage = labelPage.replace('\\\'','\'');
+                	System.debug('replaceLabelTokens: labelPage reworked ' + labelPage);
+                }
+
 				labelMap = (Map<String, Object>)JSON.deserializeUntyped((labelPageRef.getContent()).tostring());
 				labelMap.remove('END');
 			   System.debug('replaceLabelTokens: custom label values fetched ' + labelMap);
