@@ -254,7 +254,7 @@ public with sharing class sfpegMerge_CTL {
 
 				String labelPage = (labelPageRef.getContent()).tostring();
                 System.debug('replaceLabelTokens: labelPage evaluated ' + labelPage);
-                if labelPage.contains('\\\'') { 
+                if (labelPage.contains('\\\'')) { 
 					labelPage = labelPage.replace('\\\'','\'');
                 	System.debug('replaceLabelTokens: labelPage reworked ' + labelPage);
                 }
