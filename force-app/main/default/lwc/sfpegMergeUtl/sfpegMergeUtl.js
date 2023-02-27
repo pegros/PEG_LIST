@@ -59,7 +59,6 @@ const sfpegMergeUtl = {
 
         // eslint-disable-next-line no-useless-escape
         let regexp = /\{\{\{([\.\w_-]*)\}\}\}/gi;
-        //console.log('parseString: regexp', regexp);
         let mergeKeys = templateString.match(regexp);
         if (sfpegMergeUtl.isDebug) console.log('extractTokens: mergeKeys extracted ', mergeKeys);
 
@@ -462,7 +461,7 @@ const sfpegMergeUtl = {
     // user and record data fetched if not already provided.
     // It simply calls "extractTokens" method before "mergeTokens".
     //#########################################################
-    mergeString : function(templateString, userId, userData, objectName, recordId, recordData, rowData) {
+    mergeString : function(templateString, userId, userData, objectName, recordId, recordData, rowData, contextData) {
         if (sfpegMergeUtl.isDebug) console.log('mergeString: START with templateString ',templateString);
 
         if (!(templateString.includes('{{{'))) {
@@ -473,17 +472,17 @@ const sfpegMergeUtl = {
             });
         }
 
-        let tokenMap = sfpegMergeUtl.parseString(templateString,objectName);
+        let tokenMap = sfpegMergeUtl.extractTokens(templateString,objectName);
         if (sfpegMergeUtl.isDebug) console.log('mergeString: tokens extracted ',JSON.stringify(tokenMap));
 
         if (sfpegMergeUtl.isDebug) console.log('mergeString: END triggering token merge ');
-        return sfpegMergeUtl.mergeTokens(templateString, tokenMap, userId, userData, objectName, recordId, recordData, rowData);
+        return sfpegMergeUtl.mergeTokens(templateString, tokenMap, userId, userData, objectName, recordId, recordData, rowData, contextData);
     },
 
     //#########################################################
     // Utility method to merge contextual data within a template
     // string, leveraging tokens previously extracted from the
-    // template (via the parseString method).
+    // template (via the extractTokens method).
     //#########################################################
     mergeTokens : function(templateString, tokenMap, userId, userData, objectName, recordId, recordData, rowData, contextData) {
         if (sfpegMergeUtl.isDebug) console.log('mergeTokens: START with templateString ',templateString);

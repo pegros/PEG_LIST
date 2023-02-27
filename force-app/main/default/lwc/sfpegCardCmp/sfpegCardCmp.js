@@ -39,6 +39,7 @@ import updateRecord     from '@salesforce/apex/sfpegCard_CTL.updateRecord';
 import currentUserId    from '@salesforce/user/Id';
 import { getRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
 //import LightningPrompt from 'lightning/prompt';
+import sfpegMergeUtl    from 'c/sfpegMergeUtl';
 
 import SAVE_LABEL       from '@salesforce/label/c.sfpegCardSave';
 import FORCE_SAVE_LABEL from '@salesforce/label/c.sfpegCardForceSave';
@@ -185,7 +186,20 @@ export default class SfpegCardDsp extends LightningElement {
             return;
         }
 
-        //if (this.cardClass?.includes('useDML')) this.useDML = true;
+        if (this.cardTitle.includes('{{{LBL.')) {
+            if (this.isDebug) console.log('connected: merging custom label in title ', this.cardTitle);
+
+            sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
+            sfpegMergeUtl.sfpegMergeUtl.mergeString(this.cardTitle,this.userId,null,this.objectApiName,this.recordId,null,null,this._parentContext)
+            .then( value => {
+                if (this.isDebug) console.log('connected: title merged ', value);
+                sfpegMergeUtl.sfpegMergeUtl.isDebug = false;
+                this.cardTitle = value;
+            }).catch( error => {
+                console.warn('connected: custom label merging failed ', error);
+                sfpegMergeUtl.sfpegMergeUtl.isDebug = false;
+            });
+        }
 
         if (this.isDebug) console.log('connected: config name fetched ', this.configName);
         if (CARD_CONFIGS[this.configName]) {
