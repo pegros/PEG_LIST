@@ -45,7 +45,7 @@ import FORCE_SAVE_LABEL from '@salesforce/label/c.sfpegCardForceSave';
 import CANCEL_LABEL     from '@salesforce/label/c.sfpegCardCancel';
 import SAVE_ERROR       from '@salesforce/label/c.sfpegCardSaveError';
 import MODE_TOGGLE      from '@salesforce/label/c.sfpegCardModeToggle';
-
+import CLOSE_MESSAGE    from '@salesforce/label/c.sfpegCardCloseMessage';
 
 var CARD_CONFIGS = {};
 
@@ -71,6 +71,8 @@ export default class SfpegCardDsp extends LightningElement {
     @api isDebugFine = false;   // Debug mode activation for all subcomponents.
 
     @api useDML = false;        // DML (instead of LDS) mode activation 
+    @api isConfirmed = false;   // Confirmation popup activation in case of component disconnection with pending changes
+                                // Only works in console mode for now.
 
     //----------------------------------------------------------------
     // Custom Context (e.g. to provide default additional context for CTX merge tokens) 
@@ -346,11 +348,12 @@ export default class SfpegCardDsp extends LightningElement {
         if (this.isDebug) console.log('initFormTarget: END');
     }
 
-    async disconnectedCallback() {
+    //async
+    disconnectedCallback() {
         if (this.isDebug) console.log('disconnected: START');
 
-        if (this.isEditMode) {
-            if (this.isDebug) console.log('disconnected: component in edit mode');
+        if ((this.isEditMode) && (this.isConfirmed)) {
+            if (this.isDebug) console.log('disconnected: pending changes to control');
             let inputFields = this.template.querySelectorAll('lightning-input-field');
             inputFields.forEach(item => {
                 if (this.isDebug) console.log('disconnected: input item',item);
@@ -363,7 +366,11 @@ export default class SfpegCardDsp extends LightningElement {
                 theme: 'warning'
             });
             */
-            let doSave = window.confirm('Your card "' + this.cardTitle + '" is in edit mode.\nDo you want to save before closing it?');
+            let closeMsg = CLOSE_MESSAGE.replace('{0}',this.cardTitle);
+            if (this.isDebug) console.log('disconnected: closeMsg merged ',closeMsg);
+            if (this.isDebug) console.log('disconnected: Your card "' + this.cardTitle + '" is in edit mode.\nDo you want to save before closing it?');
+            let doSave = window.confirm(closeMsg);
+            //let doSave = window.confirm('Your card "' + this.cardTitle + '" is in edit mode.\nDo you want to save before closing it?');
             if (this.isDebug) console.log('disconnected: user doSave? decision ',doSave);
 
             if (doSave) {

@@ -296,4 +296,12 @@
         <shortDescription>sfpegCardSaveError</shortDescription>
         <value>Record Update failed</value>
     </labels>
+    <labels>
+        <fullName>sfpegCardCloseMessage</fullName>
+        <categories>PEG Component LWC Confirmation Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegCardCloseMessage</shortDescription>
+        <value>The "{0}" card is still in edit mode.&#10;Do you want to save before closing it?</value>
+    </labels>
 </CustomLabels>

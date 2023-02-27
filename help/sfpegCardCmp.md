@@ -51,8 +51,12 @@ configuration of the header action button bar (see the **[sfpegActionBarCmp](/he
 
 ![Record Card Configuration](/media/sfpegCardConfiguration.png)
 
-_Note_ : For some specific cases (e.g. Contact modifications in Custom Community), it is possible to opt
+_Notes_ :
+* For some specific cases (e.g. Contact modifications in Custom Community), it is possible to opt
 for a without sharing DML update instead of standard LDS update via the `Use DML?` checkbox.
+* When in console mode , it is possible to set the `Confirm Pending Changes?`checkbox to ask the user
+to confirm pending changes if the component is still in edit mode when closing the tab. This feature
+does not work properly in standard mode yet and should not be activated in such applications.
 
 
 ### Metadata Configuration

@@ -72,6 +72,12 @@
                         default="false"
                         description="Flag to force the use of without sharing DML instead of standard LDS."/>
 
+            <property   name="isConfirmed"
+                        label="Confirm Pending Changes?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to ask user for confirmation upon page close if changes are pending (for console mode only)."/>
+
             <property   name="isDebug"
                         label="Debug?"
                         type="Boolean"
@@ -140,6 +146,11 @@
                         type="Boolean"
                         default="false"
                         description="Flag to force the use of without sharing DML instead of standard LDS."/>
+            <property   name="isConfirmed"
+                        label="Confirm Pending Changes?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to ask user for confirmation upon page close if changes are pending (for console mode only)."/>
 
             <property   name="isDebug"
                         label="Debug?"
