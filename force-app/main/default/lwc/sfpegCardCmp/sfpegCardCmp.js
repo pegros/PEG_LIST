@@ -360,6 +360,7 @@ export default class SfpegCardDsp extends LightningElement {
             });
 
             /*
+            // Option abandonned as not synchronous 
             let result = await LightningPrompt.open({
                 label: 'Your card is in edit mode', 
                 message: 'Do you want to save your changes before closing?',
@@ -368,9 +369,7 @@ export default class SfpegCardDsp extends LightningElement {
             */
             let closeMsg = CLOSE_MESSAGE.replace('{0}',this.cardTitle);
             if (this.isDebug) console.log('disconnected: closeMsg merged ',closeMsg);
-            if (this.isDebug) console.log('disconnected: Your card "' + this.cardTitle + '" is in edit mode.\nDo you want to save before closing it?');
             let doSave = window.confirm(closeMsg);
-            //let doSave = window.confirm('Your card "' + this.cardTitle + '" is in edit mode.\nDo you want to save before closing it?');
             if (this.isDebug) console.log('disconnected: user doSave? decision ',doSave);
 
             if (doSave) {
