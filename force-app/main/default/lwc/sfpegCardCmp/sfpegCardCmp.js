@@ -38,6 +38,8 @@ import getConfiguration from '@salesforce/apex/sfpegCard_CTL.getConfiguration';
 import updateRecord     from '@salesforce/apex/sfpegCard_CTL.updateRecord';
 import currentUserId    from '@salesforce/user/Id';
 import { getRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
+//import LightningPrompt from 'lightning/prompt';
+
 import SAVE_LABEL       from '@salesforce/label/c.sfpegCardSave';
 import FORCE_SAVE_LABEL from '@salesforce/label/c.sfpegCardForceSave';
 import CANCEL_LABEL     from '@salesforce/label/c.sfpegCardCancel';
@@ -344,6 +346,34 @@ export default class SfpegCardDsp extends LightningElement {
         if (this.isDebug) console.log('initFormTarget: END');
     }
 
+    async disconnectedCallback() {
+        if (this.isDebug) console.log('disconnected: START');
+
+        if (this.isEditMode) {
+            if (this.isDebug) console.log('disconnected: component in edit mode');
+            let inputFields = this.template.querySelectorAll('lightning-input-field');
+            inputFields.forEach(item => {
+                if (this.isDebug) console.log('disconnected: input item',item);
+            });
+
+            /*
+            let result = await LightningPrompt.open({
+                label: 'Your card is in edit mode', 
+                message: 'Do you want to save your changes before closing?',
+                theme: 'warning'
+            });
+            */
+            let doSave = window.confirm('Your card "' + this.cardTitle + '" is in edit mode.\nDo you want to save before closing it?');
+            if (this.isDebug) console.log('disconnected: user doSave? decision ',doSave);
+
+            if (doSave) {
+                if (this.isDebug) console.log('disconnected: forcing save ');
+                this.handleFormForceSubmit();
+            }
+        }
+        if (this.isDebug) console.log('disconnected: END');
+    }
+
     //----------------------------------------------------------------
     // Event Handlers  
     //---------------------------------------------------------------- 
@@ -376,7 +406,7 @@ export default class SfpegCardDsp extends LightningElement {
 
         if (this.useDML) {
             if (this.isDebug) console.log('handleFormSubmit: triggering DML update ');
-            event.preventDefault();
+            event?.preventDefault();
             this.isUpdating = true;
 
             let recordData = { ObjectApiName: this.objectApiName, Id:this.recordId };
@@ -424,7 +454,7 @@ export default class SfpegCardDsp extends LightningElement {
     handleFormForceSubmit(event) {
         if (this.isDebug) console.log('handleFormForceSubmit: START ',event);
 
-        event.preventDefault();
+        event?.preventDefault();
         this.isUpdating = true;
 
         let recordData = { ObjectApiName: this.objectApiName, Id:this.recordId };
