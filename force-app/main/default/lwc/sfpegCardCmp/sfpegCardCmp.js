@@ -186,7 +186,7 @@ export default class SfpegCardDsp extends LightningElement {
             return;
         }
 
-        if (this.cardTitle.includes('{{{LBL.')) {
+        if (this.cardTitle?.includes('{{{LBL.')) {
             if (this.isDebug) console.log('connected: merging custom label in title ', this.cardTitle);
 
             sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
