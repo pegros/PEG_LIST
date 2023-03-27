@@ -38,7 +38,7 @@ public with sharing class sfpegRestCallout_SVC extends sfpegListQuery_SVC {
         System.debug('getData: request prepared ' + calloutRequest);
 
         // SAQL query execution
-        List<Object> results = doCallout(calloutRequest);
+        List<Object> results = doCallout(requestConfig,calloutRequest);
         System.debug('getData: END returning #items = ' + results.size());
         return results;
     }
@@ -127,7 +127,7 @@ public with sharing class sfpegRestCallout_SVC extends sfpegListQuery_SVC {
         // setting body
         String body = (string) requestConfig.get('body'); // e.g. '{"query":"select Name, Status from Account limit 10"}'
         if (String.isNotBlank(body)) {
-            request.setMethod(mergeContext(body,context));
+            request.setBody(mergeContext(body,context));
             System.debug(LoggingLevel.FINE,'prepareRequest: body set');
         }
 
@@ -166,7 +166,7 @@ public with sharing class sfpegRestCallout_SVC extends sfpegListQuery_SVC {
     /***
     * @description  Private utility method to execute a SAQL query
     ***/
-    private List<Object> doCallout(final HttpRequest request) {
+    private List<Object> doCallout(final Map<String,Object> requestConfig, final HttpRequest request) {
         System.debug('doCallout: START');
 
         Http http = new Http();
@@ -185,15 +185,27 @@ public with sharing class sfpegRestCallout_SVC extends sfpegListQuery_SVC {
         }
         System.debug('doCallout: response received ' + response);
 
-        if (response.getStatus() != 'OK') {
+        // (response.getStatus() != 'OK')
+        if ((response.getStatusCode() < 200) || (response.getStatusCode() > 299)) {
             System.debug(LoggingLevel.ERROR,'doCallout: END KO / request execution failed' + response);
             System.debug(LoggingLevel.ERROR,'doCallout: error details ' + response.getBody());
             throw new StringException('Callout request failure: ' + response.getBody());
         }
         System.debug('doCallout: results returned ' + response.getBody());
 
-        List<Object> results = (List<Object>) (JSON.deserializeUntyped(response.getBody()));
-        System.debug('doCallout: results parsed ' + results);
+        List<Object> results;
+        String resultField = (string) requestConfig.get('resultField'); 
+        System.debug('doCallout: resultField configured ' + resultField);
+        if (String.isBlank(resultField)) {
+            results = (List<Object>) (JSON.deserializeUntyped(response.getBody()));
+            System.debug('doCallout: result list parsed ' + results);
+        }
+        else {
+            Map<String,Object> resultMap = (Map<String,Object>) (JSON.deserializeUntyped(response.getBody()));
+            System.debug('doCallout: result object parsed ' + resultMap);
+            results = (List<Object>) (resultMap.get(resultField));
+            System.debug('doCallout: result list extracted ' + results);
+        }
         
         System.debug('doCallout: END / returning #items ' + results.size());
         return results;

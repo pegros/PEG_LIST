@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>locationHierarchy</label>
+    <protected>false</protected>
+    <values>
+        <field>BypassEscaping__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>BypassFLS__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>BypassSharing__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">Data tree for the sub-Locations</value>
+    </values>
+    <values>
+        <field>DisplayConfig__c</field>
+        <value xsi:type="xsd:string">{
+&quot;keyField&quot;: &quot;Id&quot;,
+&quot;hierarchyFields&quot;: [&quot;ChildLocations&quot;],
+&quot;widthMode&quot;: &quot;auto&quot;,
+&quot;cardNbr&quot;: 2,
+&quot;fieldNbr&quot;: 2,
+&quot;stacked&quot;: false,
+&quot;columns&quot;: [{
+&quot;label&quot;: &quot;Nom&quot;,
+&quot;fieldName&quot;: &quot;Name&quot;,
+&quot;type&quot;: &quot;button&quot;,
+&quot;sortable&quot;: &quot;true&quot;,
+&quot;initialWidth&quot;: 600,
+&quot;typeAttributes&quot;: {
+&quot;label&quot;: {
+&quot;fieldName&quot;: &quot;Name&quot;
+},
+&quot;name&quot;: &quot;open&quot;,
+&quot;variant&quot;: &quot;base&quot;
+}
+},
+{
+&quot;label&quot;: &quot;Type&quot;,
+&quot;fieldName&quot;: &quot;LocationType&quot;,
+&quot;sortable&quot;: true
+},
+{
+&quot;label&quot;: &quot;#Enfants&quot;,
+&quot;fieldName&quot;: &quot;ChildLocations._length&quot;,
+&quot;sortable&quot;: true
+},
+{
+&quot;label&quot;: &quot;Niveau&quot;,
+&quot;fieldName&quot;: &quot;LocationLevel&quot;,
+&quot;type&quot;: &quot;number&quot;,
+&quot;sortable&quot;: true
+}
+]
+}</value>
+    </values>
+    <values>
+        <field>DisplayType__c</field>
+        <value xsi:type="xsd:string">TreeGrid</value>
+    </values>
+    <values>
+        <field>DoPagination__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>FlattenResults__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>QueryClass__c</field>
+        <value xsi:type="xsd:string">sfpegLocationTree_SVC</value>
+    </values>
+    <values>
+        <field>QueryCount__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>QueryInput__c</field>
+        <value xsi:type="xsd:string">{ &quot;RootId&quot;:&quot;{{{GEN.recordId}}}&quot; }</value>
+    </values>
+    <values>
+        <field>QueryOrderBy__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>QueryOrder__c</field>
+        <value xsi:type="xsd:string">ASC</value>
+    </values>
+    <values>
+        <field>QuerySOQL__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>QueryType__c</field>
+        <value xsi:type="xsd:string">Apex</value>
+    </values>
+    <values>
+        <field>RowActions__c</field>
+        <value xsi:type="xsd:string">sfpegOpenEdit</value>
+    </values>
+    <values>
+        <field>Scope__c</field>
+        <value xsi:type="xsd:string">Location</value>
+    </values>
+</CustomMetadata>
