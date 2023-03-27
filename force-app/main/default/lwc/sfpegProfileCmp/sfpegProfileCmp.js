@@ -41,6 +41,10 @@ import getConfiguration     from '@salesforce/apex/sfpegProfile_CTL.getConfigura
 import BANNER_RSC           from '@salesforce/resourceUrl/sfpegBanners';
 import AVATAR_RSC           from '@salesforce/resourceUrl/sfpegAvatars';
 
+import LANG from '@salesforce/i18n/lang';
+/*import communityId          from '@salesforce/community/Id';
+import communityPath        from '@salesforce/community/basePath';*/
+
 var PROFILE_CONFIGS = {};
 
 export default class SfpegProfileCmp extends LightningElement {
@@ -131,10 +135,10 @@ export default class SfpegProfileCmp extends LightningElement {
         return "profileBadge-" + this.size;
     }
     get badgeItemClass(){
-        return "profileBadge " + (this.configDetails?.header?.badgeClass || "slds-badge slds-badge_lightest");
+        return " profileBadge " + (this.configDetails?.header?.badgeClass || "slds-badge slds-badge_lightest");
     }
     get badgeTextClass() {
-        return "slds-text-title_bold profileBadgeText " + ((this.configDetails?.header?.badgeClass && this.configDetails?.header?.badgeClass?.includes("inverse")) ? "slds-text-color_inverse" : "");
+        return " profileBadgeText slds-text-title_bold " + ((this.configDetails?.header?.badgeClass && this.configDetails?.header?.badgeClass?.includes("inverse")) ? "slds-text-color_inverse" : "");
     }
     get titleDetailsClass(){
         return (this.avatarImage ? "" : "slds-var-p-horizontal_" + this.detailsPadding);
@@ -214,6 +218,9 @@ export default class SfpegProfileCmp extends LightningElement {
     //----------------------------------------------------------------
     connectedCallback(){
         if (this.isDebug) console.log('connected: START with config ', this.configName);
+
+        if (this.isDebug) console.log('connected: LANG fetched ', LANG);
+
         //this.errorMsg = 'Component initialized.';
         if (this.isReady) {
             console.warn('connected: END / already ready');
@@ -227,14 +234,20 @@ export default class SfpegProfileCmp extends LightningElement {
             return;
         }
 
-        let rootUrl = 'https://' + window.location.hostname;
+        /*if (this.isDebug) console.log('connected: community id fetched ', this.communityId);
+        if (this.isDebug) console.log('connected: community basePath fetched ', communityPath);*/
+
+        let rootUrl = ''; //'https://' + window.location.hostname;
         if (this.basePath) {
             if (this.isDebug) console.log('connected: community basePath defined ', this.basePath);
-            rootUrl += '/' +  this.basePath + '/s';
+            //rootUrl += '/' +  this.basePath + '/s';
+            rootUrl += '/' +  this.basePath ;
         }
         this.fileRootUrl = rootUrl + '/sfc/servlet.shepherd/document/download/';
+        //this.fileRootUrl = rootUrl + '/s/sfc/servlet.shepherd/document/download/';
         if (this.isDebug) console.log('connected: fileRootUrl init ', this.fileRootUrl);
         this.assetRootUrl = rootUrl + '/file-asset/';
+        //this.assetRootUrl =  '/file-asset/';
         if (this.isDebug) console.log('connected: assetRootUrl init ', this.assetRootUrl);
 
         if (PROFILE_CONFIGS[this.configName]) {

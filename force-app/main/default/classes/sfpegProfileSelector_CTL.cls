@@ -80,14 +80,16 @@ global with sharing class sfpegProfileSelector_CTL extends VisualEditor.DynamicP
 
 		System.debug(LoggingLevel.FINEST,'getValues: entity name fetched ' + pageContext.entityName);
 		Map<ID,sfpegProfile__mdt> profiles = new Map<ID,sfpegProfile__mdt>();
-		if (! String.isEmpty(pageContext.entityName)) {
-			System.debug(LoggingLevel.FINEST,'getValues: fetching Record and object specific profiles');
-			profiles.putAll(new Map<ID,sfpegProfile__mdt>(
+
+		System.debug(LoggingLevel.FINEST,'getValues: fetching RECORDS profiles');
+		profiles.putAll(new Map<ID,sfpegProfile__mdt>(
 				[   select MasterLabel,  DeveloperName
 					from sfpegProfile__mdt
 					where Scope__c LIKE '%RECORDS%']));
+		if (! String.isEmpty(pageContext.entityName)) {
+			System.debug(LoggingLevel.FINEST,'getValues: fetching object specific profiles for ' + pageContext.entityName);
 			String entityPattern = '%' + pageContext.entityName + '%';
-			profiles.putAll(new Map<ID,sfpegProfile__mdt>(
+				profiles.putAll(new Map<ID,sfpegProfile__mdt>(
 				[   select MasterLabel,  DeveloperName
 					from sfpegProfile__mdt
 					where Scope__c LIKE :entityPattern]));

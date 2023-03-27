@@ -222,6 +222,7 @@ export default class SfpegMessageListCmp extends LightningElement {
             getConfiguration({name: this.configName})
             .then( result => {
                 if (this.isDebug) console.log('connected: configuration received  ',result);
+                sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
                 try {
                     MSG_LIST_CONFIGS[this.configName] = {
                         template: (result.MessageDisplay__c || '{}'),
@@ -330,6 +331,7 @@ export default class SfpegMessageListCmp extends LightningElement {
         if (this.isDebug) console.log('finalizeConfig: START');
         if (this.isDebug) console.log('finalizeConfig: recordId ',this.recordId);
         if (this.isDebug) console.log('finalizeConfig: parent Context ',JSON.stringify(this._parentContext));
+        if (this.isDebug) console.log('finalizeConfig: configuration ',JSON.stringify(this.configDetails));
 
         try {
             let ldsFetchRequired = false;

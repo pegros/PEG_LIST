@@ -526,6 +526,13 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                     this.overflowActions = actionList.slice(this.maxSize);
                     if (this.isDebug) console.log('doMerge: overflowActions init ', this.overflowActions);
                 }
+                else if (this.maxSize == 0) {
+                    if (this.isDebug) console.log('doMerge: all actions set in overflow');
+                    this.mainActions = null;
+                    if (this.isDebug) console.log('doMerge: mainActions init ', this.mainActions);
+                    this.overflowActions = actionList;
+                    if (this.isDebug) console.log('doMerge: overflowActions init ', this.overflowActions);
+                }
                 else {
                     if (this.isDebug) console.log('doMerge: no split to maxSize required');
                     this.mainActions = actionList;
@@ -538,7 +545,8 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             if (this.isDebug) console.log('doMerge: END / triggering readyEvt', JSON.stringify(readyEvt));
             this.dispatchEvent(readyEvt);
         }).catch( error => {
-            console.warn('doMerge: KO ',error);
+            console.warn('doMerge: KO ',JSON.stringify(error));
+            //console.warn('doMerge: KO ',error);
             this.displayMsg = JSON.stringify(error);
         }).finally( () => {
             //sfpegMergeUtl.sfpegMergeUtl.isDebug = false;
@@ -652,15 +660,15 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
 
     // Action execution handler for notifications from external components (no merge done)
     handleNotification(message) {
-        console.log('handleNotification: START with message ',JSON.stringify(message));
+        if (this.isDebug) console.log('handleNotification: START with message ',JSON.stringify(message));
 
         if (message.channel) {
             if (this.configDetails.channels.includes(message.channel)) {
-                console.log('handleMessage: END / processing message on subscribed channel ',message.channel);
+                if (this.isDebug) console.log('handleMessage: END / processing message on subscribed channel ',message.channel);
                 this.processAction(message.action,null);
             }
             else {
-                console.log('handleMessage: END / message ignored as on unsubscribed channel ',message.channel);
+                if (this.isDebug) console.log('handleMessage: END / message ignored as on unsubscribed channel ',message.channel);
             }
         }
         else {
@@ -721,13 +729,14 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                 this.triggerNavigate(action.params);
                 break;
             case 'open':
-                if ((context) && (context.Id)){
-                    if (this.isDebug) console.log('processAction: processing record open action on context record');
+                let recordIdString = (context == null ? this.recordId : context.Id);
+                if (recordIdString){
+                    if (this.isDebug) console.log('processAction: processing record open action on ',recordIdString);
                     this.triggerNavigate({  type:"standard__recordPage",
-                                            attributes:{'recordId':context.Id, 'actionName':"view"}});
+                                            attributes:{'recordId':recordIdString, 'actionName':"view"}});
                 }
                 else {
-                    console.warn('processAction: record open action requires a context object with Id field');
+                    console.warn('processAction: record open action requires a current record Id or a context object with Id field');
                 }
                 break;
             case 'edit':

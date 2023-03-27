@@ -110,9 +110,13 @@
     object-position     :   50% 50%;
     z-index             :   50;
     position            :   relative;
+    background-color    :   white;
 }
 
 /* BADGE Classes */
+.profileBadge {
+    line-height : 1 !important;
+}
 .profileBadge-large {
     min-height      :   26px;
     text-align      :   right;    
@@ -145,9 +149,12 @@
     --sds-c-input-text-color: white !important;
     color: var(--lwc-varColorTextInverse) !important;
 }*/
-
+.profileBadgeField {
+    margin-bottom: 0px !important;
+}
 .profileBadgeText {
     font-weight : var(--lwc-fontWeightBold) !important;
+    line-height : 1 !important;
 }
 
 /* HEADER CONTENT Classes */

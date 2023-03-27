@@ -375,6 +375,9 @@ Both action types are actually shortcuts for usual **navigation** one.
 }
 ```
 
+⚠️ Beware that these actions do not work in LWR Experience, as the `objectApiName` property of the navigation
+field becomes mandatory in that case. Standard **navigation** actions to record pages are then required.
+
 
 ### **openURL** Action Type
 

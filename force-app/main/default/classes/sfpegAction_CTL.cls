@@ -101,12 +101,12 @@ public with sharing class sfpegAction_CTL {
 	/***
 	* @description  Method to execute a DML operation.
 	* @param        records         List of SObject on which to execute a DML
-	* @param        operation       Name of the DML operation to execute (insert, update, delet).
+	* @param        operation       Name of the DML operation to execute (insert, update, delete).
 	* @return       List<sObject>   Same list of SObjects after the DML (e.g. with IDs after insert)
 	* @exception    AuraHandledException    Raised if no configuration found for the provided name.
 	***/
 	@AuraEnabled
-	public static List<sObject> executeDML(list<sObject> records, string operation) {
+	public static List<sObject> executeDML(list<sObject> records, final string operation) {
 		System.debug('executeDML : START operation ' + operation);
 		System.debug('executeDML : itemList provided ' + records);
 
@@ -124,6 +124,20 @@ public with sharing class sfpegAction_CTL {
 					delete records;
 					System.debug('executeDML : END itemList deleted ' + records);
 				}
+				/*when 'upsert' {
+					if (String.isBlank(extIdField)) {
+					upsert records;
+						System.debug('executeDML : END itemList upserted (via ID match) ' + records);
+					}
+					else {
+						Schema.DescribeSObjectResult objType = records[0].getSObjectType().getDescribe();
+						System.debug('executeDML : object type identified ' + objType.getName());
+						Schema.SObjectField extId = objType.fields.getMap().get(extIdField);
+						System.debug('executeDML : external ID field found ' + extId.getDescribe().getName());
+						database.upsert(records,extId);
+						System.debug('executeDML : END itemList upserted (via external ID match) ' + records);
+					}
+				}*/
 				when else {
 					System.debug('executeDML : unsupported operation ' + operation);
 					StringException  errInvalid = new StringException();

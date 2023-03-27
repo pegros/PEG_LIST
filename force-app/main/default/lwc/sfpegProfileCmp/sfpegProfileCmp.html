@@ -15,6 +15,7 @@
 
             <lightning-record-view-form record-id={recordId}
                                         object-api-name={objectApiName}
+                                        density="compact"
                                         onload={handleFormLoad}>
                 <div class="profileForm">
 
@@ -48,6 +49,7 @@
                                             <div class={badgeItemClass}>
                                                 <lightning-output-field field-name={headerConfig.badge.name}
                                                                         field-class={badgeTextClass} 
+                                                                        class="profileBadgeField"
                                                                         variant="label-hidden" >
                                                 </lightning-output-field>
                                             </div>
@@ -241,10 +243,18 @@
                     <dd class="slds-dl_horizontal__detail slds-wrap">{configName}</dd>
                     <dt class="slds-dl_horizontal__label slds-truncate">Size</dt>
                     <dd class="slds-dl_horizontal__detail slds-wrap" style="word-wrap: break-word !important;">Component: {size} / Icons: {fieldIconSize} / Padding: {detailsPadding}</dd>
-                    <dt class="slds-dl_horizontal__label slds-truncate">Banner</dt>
+                    <dt class="slds-dl_horizontal__label slds-truncate">File Root URL</dt>
+                    <dd class="slds-dl_horizontal__detail slds-wrap" style="word-wrap: break-word !important;">{fileRootUrl}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Asset Root URL</dt>
+                    <dd class="slds-dl_horizontal__detail slds-wrap" style="word-wrap: break-word !important;">{assetRootUrl}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Banner Source</dt>                    
                     <dd class="slds-dl_horizontal__detail slds-wrap" style="word-wrap: break-word !important;">{bannerSrc}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Banner Image</dt>                    
+                    <dd class="slds-dl_horizontal__detail slds-wrap" style="word-wrap: break-word !important;">{bannerImage}</dd>
                     <dt class="slds-dl_horizontal__label slds-truncate">Avatar</dt>
                     <dd class="slds-dl_horizontal__detail slds-wrap" style="word-wrap: break-word !important;">{avatarSrc}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Avatar Image</dt>                    
+                    <dd class="slds-dl_horizontal__detail slds-wrap" style="word-wrap: break-word !important;">{avatarImage}</dd>
                     <dt class="slds-dl_horizontal__label slds-truncate">Header</dt>
                     <dd class="slds-dl_horizontal__detail slds-wrap" style="word-wrap: break-word !important;">{headerSrc}</dd>
                     <dt class="slds-dl_horizontal__label slds-truncate">Actions</dt>

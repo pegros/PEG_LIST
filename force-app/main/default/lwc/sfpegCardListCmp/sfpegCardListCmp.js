@@ -55,8 +55,8 @@ export default class SfpegCardListCmp extends LightningElement {
     @api showCount = 'right';   // Items Count display
     @api showRefresh = false;   // Show global refresh button (for the record list, not the cards themselves)
 
-    @api configName;            // DeveloperName fo the sfpegCardList__mdt record to be used
-    @api actionConfigName;      // DeveloperName fo the sfpegAction__mdt record to be used for header actions
+    @api configName;            // DeveloperName of the sfpegCardList__mdt record to be used
+    @api actionConfigName;      // DeveloperName of the sfpegAction__mdt record to be used for header actions
 
     @api isDebug = false;       // Debug mode activation
     @api isDebugFine = false;   // Debug mode activation for all subcomponents.
