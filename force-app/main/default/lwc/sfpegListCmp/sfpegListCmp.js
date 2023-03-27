@@ -338,6 +338,11 @@ export default class SfpegListCmp extends LightningElement {
         return 12 / (this.configDetails.display.cardNbr || 1);
     }
 
+    // Interface Getters
+    @api get configuration() {
+        return this.configDetails;
+    }
+
     //----------------------------------------------------------------
     // Component initialisation  
     //----------------------------------------------------------------      
