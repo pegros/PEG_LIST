@@ -1472,6 +1472,13 @@ the `Id` and the `Name` of the **User** records to choose from.
 
 **Beware** to keep the list short to fit into a small combobox!
 
+By default, the picklist relies on the `Id` and `Name` of each record to provide the value and label
+of each picklist option. If the targeted object has another naming field (e.g. `Subject`or `Title`),
+it is still possible to override this default behaviour by setting an aditional `dataLabel` property
+with the name of the field to be used as label, e.g.
+```
+{ "name": "MyLookup__c", "dataSource": "AllowedRecords",  "dataLabel": "Title" }
+```
 
 ---
 

@@ -43,8 +43,8 @@ export default class SfpegPicklistInputDsp extends LightningElement {
     @api required;          // Flag to mark the input widget as required
     @api value;             // Current value of the field 
     @api configName;        // Name of the sfpegList configuration to be used to fetch the picklist values
-    @api valueField = "Id";     // Field name in the list results to be used as code / value for each combo-box option
-    @api labelField = "Name";   // Field name in the list results to be used as label for each combo-box option
+    @api valueField;        // Field name in the list results to be used as code / value for each combo-box option (default is Id)
+    @api labelField;        // Field name in the list results to be used as label for each combo-box option (default is Name)
 
     // Context Data
     @api userId;            // ID of the current user
@@ -77,22 +77,31 @@ export default class SfpegPicklistInputDsp extends LightningElement {
     //###########################################################
     // Component Initialisation
     //###########################################################
-    /*connectedCallback(){
-        console.log('connectedCallback: START ',this.label);
-        console.log('connectedCallback: configName ',this.configName);
-        console.log('connectedCallback: objectApiName ',this.objectApiName);
-        console.log('connectedCallback: recordId ',this.recordId);
-        console.log('connectedCallback: END ');
-    }
+    connectedCallback(){
+        if (this.isDebug) console.log('connected: START picklist config ',this.configName);
+        if (this.isDebug) console.log('connected: label ',this.label);
+        if (this.isDebug) console.log('connected: objectApiName ',this.objectApiName);
+        if (this.isDebug) console.log('connected: recordId ',this.recordId);
 
+        this.labelField = this.labelField || 'Name';
+        if (this.isDebug) console.log('connected: labelField ',this.labelField);
+
+        this.valueField = this.valueField || 'Id';
+        if (this.isDebug) console.log('connected: labelField ',this.valueField);
+        
+        if (this.isDebug) console.log('connected: END picklist');
+    }
+    /*
     renderedCallback(){
-        console.log('renderedCallback: START');
-        console.log('renderedCallback: END');
+        console.log('rendered: START picklist config ',this.configName);
+        console.log('rendered: END picklist',this.configName);
     }*/
 
     handleOptionsLoad(event){
-        if (this.isDebug) console.log('handleOptionsLoad: START',event);
-        if (this.isDebug)console.log('handleOptionsLoad: details',JSON.stringify(event.detail));
+        if (this.isDebug) console.log('handleOptionsLoad: START', event);
+        if (this.isDebug) console.log('handleOptionsLoad: details', JSON.stringify(event.detail));
+        if (this.isDebug) console.log('handleOptionsLoad: label field ',this.labelField);
+        if (this.isDebug) console.log('handleOptionsLoad: value field ',this.valueField);
         //this.options = event.detail;
    
         let displayOptions = [];
@@ -100,7 +109,7 @@ export default class SfpegPicklistInputDsp extends LightningElement {
             displayOptions.push({label: item[this.labelField], value: item[this.valueField]});
         });
         this.displayOptions = displayOptions;
-        if (this.isDebug) console.log('handleOptionsLoad: END with ',this.displayOptions);
+        if (this.isDebug) console.log('handleOptionsLoad: END with ',JSON.stringify(this.displayOptions));
     }
 
 
