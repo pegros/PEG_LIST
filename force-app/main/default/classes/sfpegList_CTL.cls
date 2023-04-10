@@ -104,7 +104,7 @@ public with sharing class sfpegList_CTL {
 			System.debug(LoggingLevel.FINE,'getConfiguration: empty display config');
 		}
 
-		System.debug(LoggingLevel.FINE,'getConfiguration: END ' + configs[0].MasterLabel);
+		System.debug(LoggingLevel.FINE,'getConfiguration: END with label ' + configs[0].MasterLabel);
 		return (Object) (configs[0]);
 	}
 
