@@ -113,8 +113,8 @@ public with sharing class sfpegSearch_SVC extends sfpegListQuery_SVC {
                 System.debug('executeSOSL: processing WHERE clause ' + iter);
                 String iterClause = buildWhere((Map<String,Object>)whereClause.get(iter),context);
                 System.debug('executeSOSL: WHERE clause init ' + iterClause);
-                if (iterClause == null) iterClause = '';
-                context.put(iter,'WHERE ' + iterClause);
+                iterClause = ((iterClause == null) ? '' : 'WHERE ' + iterClause);
+                context.put(iter,iterClause);
             }
             System.debug('executeSOSL: context updated ' + context);
         }
@@ -155,8 +155,8 @@ public with sharing class sfpegSearch_SVC extends sfpegListQuery_SVC {
                 System.debug('executeSOQL: processing WHERE clause ' + iter);
                 String iterClause = buildWhere((Map<String,Object>)whereClause.get(iter),context);
                 System.debug('executeSOQL: WHERE clause init ' + iterClause);
-                if (iterClause == null) iterClause = '';
-                context.put(iter, 'WHERE ' + iterClause);
+                iterClause = ((iterClause == null) ? '' : 'WHERE ' + iterClause);
+                context.put(iter,iterClause);
             }
             System.debug('executeSOQL: context updated ' + context);
         }
