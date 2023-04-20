@@ -56,6 +56,12 @@ public with sharing class sfpegList_CTL {
     };
 
 	/***
+    * @description	Static variable containing the currently executed query configuration
+	*				Enables called Apex subclasses to access query configuration details.
+    ***/
+    public static sfpegList__mdt CONFIG;
+
+	/***
 	* @description  Simple method to fetch configuration details for a List component.
 	*               It provides the required input fields, the type of display (datatable...)
 	*               and the corresponding display configuration.
@@ -133,7 +139,7 @@ public with sharing class sfpegList_CTL {
 			System.debug(LoggingLevel.FINE,'getData: SOQL query merged ' + mergedQuery);
 
 			try {
-				System.debug('getData: END / triggering mergedQuery');
+				System.debug('getData: END / triggering SOQL mergedQuery');
 				return executeSoql(mergedQuery, query.BypassSharing__c, query.BypassFLS__c);
 			}
 			catch (Exception error) {
@@ -156,10 +162,19 @@ public with sharing class sfpegList_CTL {
 			}
 		}
 		else if (query.QueryType__c == 'SOSL') {
-			System.debug(LoggingLevel.FINE,'getData: executing SOSL query ' + query.QuerySOQL__c);
+			System.debug(LoggingLevel.FINE,'getData: executing SOSL search ' + query.QuerySOQL__c);
 			String mergedQuery = mergeQuery(query.QuerySOQL__c, (Map<Object,Object>) input, query.BypassEscaping__c);
-			System.debug(LoggingLevel.FINE,'getData: SOSL query merged ' + mergedQuery);
+			System.debug(LoggingLevel.FINE,'getData: SOSL search merged ' + mergedQuery);
 
+			try {
+				System.debug('getData: END / triggering SOSL mergedQuery');
+				return executeSosl(mergedQuery, query.BypassSharing__c, query.BypassFLS__c);
+			}
+			catch (Exception error) {
+				System.debug(LoggingLevel.WARN,'getData: END / KO - ' + error.getMessage());
+				throw new AuraHandledException('SOSL Search failure: ' + error.getMessage());
+			}
+			/*
 			try {
 				System.debug('getData: triggering SOSL mergedQuery');
 				List<List<sObject>> soslResults = executeSosl(mergedQuery, query.BypassSharing__c, query.bypassFLS__c);
@@ -227,8 +242,9 @@ public with sharing class sfpegList_CTL {
 			}
 			catch (Exception error) {
 				System.debug(LoggingLevel.WARN,'getData: END / KO - ' + error.getMessage());
-				throw new AuraHandledException('SOQL Query failure: ' + error.getMessage());
+				throw new AuraHandledException('SOSL Search failure: ' + error.getMessage());
 			}
+			*/
 		}
 		else {
 			System.debug(LoggingLevel.WARN,'getData: END / KO - Unsupported Configuration type' + query.QueryType__c);
@@ -371,8 +387,7 @@ public with sharing class sfpegList_CTL {
 	* @return      sfpegList__mdt   Query execution details (depending on type)
 	* @exception   AuraHandledException If no Configuration found.
 	***/
-	@TestVisible
-	private static sfpegList__mdt getConfig(final String name) {
+	public static sfpegList__mdt getConfig(final String name) {
 		System.debug(LoggingLevel.FINE,'getConfig: START for name ' + name);
 
 		List<sfpegList__mdt> configs = [    SELECT	MasterLabel, QueryType__c, QueryClass__c, QuerySOQL__c,
@@ -381,14 +396,16 @@ public with sharing class sfpegList_CTL {
 											FROM sfpegList__mdt
 											WHERE DeveloperName =  :name];
 		if ((configs == null) || (configs.size() != 1)) {
+			CONFIG = null;
 			throw new AuraHandledException('Configuration not found with name ' + name);
 		}
+		CONFIG = configs[0];
 		System.debug(LoggingLevel.FINE,'getConfig: END ' + configs[0].MasterLabel);
 		return configs[0];
 	}
 
 	/***
-	* @description  Private utility method to merge the context inputs withing a query
+	* @description  Public utility method to merge the context inputs withing a query
 	*               template. It executes tag replacement for all tokens mentioned within
 	*               the input map.
 	*				Single quotes in token values are systematically escaped (as \\'),
@@ -401,8 +418,7 @@ public with sharing class sfpegList_CTL {
 	* @return       String          Merged query.
 	* @exception    AuraHandledException If no queryTemplate provided.
 	***/
-	@TestVisible
-	private static String mergeQuery(final String queryTemplate, final Map<Object,Object> inputMap, final Boolean bypassEscaping) {
+	public static String mergeQuery(final String queryTemplate, final Map<Object,Object> inputMap, final Boolean bypassEscaping) {
 		System.debug('mergeQuery: START with ' + queryTemplate);
 		System.debug(LoggingLevel.FINE,'mergeQuery: inputMap provided ' + inputMap);
 
@@ -558,15 +574,14 @@ public with sharing class sfpegList_CTL {
 	}
 
 	/***
-	* @description  Private utility method to execute a SOQL query
+	* @description  Public utility method to execute a SOQL query
 	* @param        query           SOQL query to execute
 	* @param        bypassSharing   Boolean flag to bypass sharing
 	* @param        bypassFLS   	Boolean flag to bypass FLS field stripping
 	* @return       List<sObject>   Result of the SOQL query
 	* @exception    none
 	***/
-	@TestVisible
-	private static list<sObject> executeSoql(final String query, final Boolean bypassSharing, final Boolean bypassFLS) {
+	public static list<sObject> executeSoql(final String query, final Boolean bypassSharing, final Boolean bypassFLS) {
 		System.debug('executeSoql: START');
 
 		list<sObject> results;
@@ -615,42 +630,104 @@ public with sharing class sfpegList_CTL {
 	}
 
 	/***
-	* @description  Private utility method to execute a SOQL query
+	* @description  Public utility method to execute a SOSL search
 	* @param        query           SOSL query to execute
 	* @param        bypassSharing   Boolean flag to bypass sharing
 	* @param        bypassFLS   	Boolean flag to bypass FLS field stripping
 	* @return       List<List<sObject>> Result of the SOSL query
 	* @exception    none
 	***/
-	@TestVisible
-	private static List<List<sObject>> executeSosl(final String query, final Boolean bypassSharing, final Boolean bypassFLS) {
+	//public static List<List<sObject>> executeSosl(final String query, final Boolean bypassSharing, final Boolean bypassFLS) {
+	public static List<Object> executeSosl(final String query, final Boolean bypassSharing, final Boolean bypassFLS) {
 		System.debug('executeSosl: START');
 
-		List<List<sObject>> results;
+		// Executing Query
+		List<List<sObject>> soslResults;
 		if (bypassSharing) {
 			System.debug('executeSosl: END / executing without sharing request');
 			sfpegBypassSharing_CTL subHandler = new sfpegBypassSharing_CTL();
-			results = subHandler.querySosl(query);
+			soslResults = subHandler.querySosl(query);
 		}
 		else {
 			System.debug('executeSosl: END / executing with sharing request');
-			results = Search.query(query);
+			soslResults = Search.query(query);
 		}
 
+		// Applying FLS
 		if (bypassFLS) {
 			System.debug('executeSosl:END / FLS field stripping bypassed');
-			return results;
 		}
 		else {
 			System.debug('executeSosl: enforcing FLS field stripping');
 			List<List<sObject>> filteredResults = new List<List<sObject>>();
-			for (List<sObject> iter : results) {
+			for (List<sObject> iter : soslResults) {
 				SObjectAccessDecision securityDecision = Security.stripInaccessible(AccessType.READABLE, iter);
 				filteredResults.add(securityDecision.getRecords());
 			}
-			System.debug('executeSosl:END');
-			return filteredResults;
+			System.debug('executeSosl: stripping done');
+			soslResults = filteredResults;
 		}
+
+		// Reformatting results
+		List<Object> soslMergedList = new List<Object>();
+		for (List<sObject> iter : soslResults) {
+			if (iter.size() > 0) {
+				Schema.DescribeSObjectResult objectDesc = ((iter[0]).getSObjectType()).getDescribe();
+				System.debug('executeSosl: registering results for object type ' + objectDesc);
+
+				String objectName = objectDesc.getName();
+				String objectLabel = objectDesc.getLabel();
+				String objectIcon;
+				if (OBJECT_ICON_MAP.containsKey(objectName)) {
+					objectIcon = OBJECT_ICON_MAP.get(objectName);
+				}
+				else if (objectDesc.isCustom()) {
+					objectIcon = 'custom:' + getCustomObjectIcon(objectName);
+				}
+				else {
+					objectIcon = 'standard:' +  objectName.toLowerCase();
+				}
+
+				Map<String, Schema.SObjectField> objectFieldMap = objectDesc.fields.getMap();
+				System.debug('executeSosl: Object fields extracted ' + objectFieldMap.keySet());
+				String nameField;
+				String nameFieldLabel;
+				if (objectFieldMap.containsKey('Name') && objectFieldMap.get('Name').getDescribe().isnameField()) {
+					System.debug('executeSosl: registering standard Name field ');
+					nameField = 'Name';
+					nameFieldLabel = objectFieldMap.get('Name').getDescribe().getLabel();
+				}
+				else {
+					System.debug('executeSosl: looking for Name field ');
+					DescribeFieldResult iterFieldDesc;
+					for (String iterField : objectFieldMap.keySet()) {
+						System.debug(LoggingLevel.FINEST,'getData: processing field ' + iterField);
+						iterFieldDesc = objectFieldMap.get(iterField).getDescribe();
+						//System.debug(LoggingLevel.FINE,'getData: description extracted ' + iterFieldDesc);
+						if (iterFieldDesc.isnameField()) {
+							System.debug('executeSosl: Name field found ' + iterFieldDesc.getLocalName());
+							nameField = iterFieldDesc.getLocalName();
+							nameFieldLabel = iterFieldDesc.getLabel();
+							break;
+						}
+					}
+				}
+
+				List<Object> iterList = (List<Object>) (JSON.deserializeUntyped(JSON.serialize(iter)));
+				for (Object iterObj : iterList) {
+					Map<String,Object> iterMap = ((Map<String,Object>)iterObj);
+					iterMap.put('ObjectApiName',objectName);
+					iterMap.put('ObjectLabel', objectLabel);
+					iterMap.put('ObjectIcon', objectIcon);
+					iterMap.put('NameField', nameField);
+					iterMap.put('NameLabel', nameFieldLabel);
+					iterMap.remove('attributes');
+				}
+				soslMergedList.addAll(iterList);
+			}
+		}
+		System.debug('executeSosl: END / SOSL results merged ' + soslMergedList);
+		return (list<Object>) soslMergedList;
 	}
 
 	/***

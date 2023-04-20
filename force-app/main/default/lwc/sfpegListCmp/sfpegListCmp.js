@@ -235,7 +235,7 @@ export default class SfpegListCmp extends LightningElement {
             returnClass = returnClass + " slds-is-collapsed";
         }
         else if (this.configDetails) {
-            if (this.configDetails.type.includes('List')) {
+            if (this.configDetails.type?.includes('List')) {
                 returnClass = returnClass + ' slds-var-p-horizontal_small'
                             + (((this.displayHeight) &&  (this.displayHeight !== '0')) ? ' slds-scrollable_y' : '')
                             + ((this.configDetails.display.variant === 'timeline') ? ' slds-var-p-top_medium slds-var-p-bottom_large' : ' slds-var-p-vertical_small');
@@ -879,6 +879,14 @@ export default class SfpegListCmp extends LightningElement {
         if (this.isDebug) console.log('doRefresh: START');
         this.executeQuery();
         if (this.isDebug) console.log('doRefresh: END');
+    }
+    @api doSort(field,direction) {
+        if (this.isDebug) console.log('doSort: START');
+        if (this.isDebug) console.log('doSort: sortedBy ',sortedBy);
+        // direction should be asc or desc
+        if (this.isDebug) console.log('doSort: sortDirection ',sortDirection);
+        this.handleSort({sortedBy: field, sortDirection: direction});
+        if (this.isDebug) console.log('doSort: END');
     }
 
     //----------------------------------------------------------------
