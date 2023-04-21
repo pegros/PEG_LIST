@@ -195,6 +195,12 @@ public with sharing class sfpegSearch_SVC extends sfpegListQuery_SVC {
         System.debug('buildWhere: processing condition type ' + type);
 
         switch on type {
+            when 'RAW' {
+                System.debug('buildWhere: processing RAW type');
+                String condition = (String) whereClause.get(type);
+                System.debug('buildWhere: END / returning condition');
+                return '(' + condition + ')';
+            }
             when 'EQ' {
                 System.debug('buildWhere: processing EQ type');
                 Map<String,Object> conditionMap = (Map<String,Object>) whereClause.get(type);
