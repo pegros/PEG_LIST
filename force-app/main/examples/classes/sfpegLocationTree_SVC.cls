@@ -2,7 +2,7 @@
 * @description  Lightning controller to provide sub-hierarchy of a Location.
 * @author       P-E GROS
 * @date         Jan 2023
-* @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
+* @see          PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 *
