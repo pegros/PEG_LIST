@@ -1,4 +1,4 @@
-.cardHeader {
+.slds-card_boundary .cardHeader {
     /*background-color: rgb(150, 150, 150) !important;*/
     --sds-c-card-color-background:  var(--lwc-colorBackground);
 
@@ -20,20 +20,20 @@
     --sds-c-card-footer-spacing-inline-end: 1px;*/
     --sds-c-card-footer-text-align: left;
 }
-.headerActions {
+.slds-card_boundary .headerActions {
     display: flex;
     align-items: center;
     justify-content: center;
     /*max-width: 50%;*/
 }
-.cardContent {
+.slds-card_boundary .cardContent {
     background-color:  var(--lwc-colorBackgroundAlt);
     --sds-c-card-color-background:  var(--lwc-colorBackgroundAlt);
     width: 100%;
     /*min-height: 150px !important;*/
     /*padding-bottom: var(--lwc-varSpacingVerticalMedium);*/
 }
-.footerContent {
+.slds-card_boundary .footerContent {
     /*background-color:  var(--lwc-colorBackgroundAlt);
     --sds-c-card-color-background:  var(--lwc-colorBackgroundAlt);*/
     padding-top: var(--lwc-varSpacingVerticalMedium);
