@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Permission Set providing access to the custom elements required for Apex tests of the List components</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>sfpegTestObject__c.ExternalId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>sfpegTestObject__c.MultiPicklist__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>sfpegTestObject__c.Picklist__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>sfpegListTest</label>
     <objectPermissions>

@@ -89,7 +89,7 @@ public with sharing class sfpegSearch_SVC extends sfpegListQuery_SVC {
         }
         System.debug('getConfig: configuration parsed ' + configMap);
 
-        System.debug('getTemplate: END');
+        System.debug('getConfig: END');
         return configMap;
     }
 
