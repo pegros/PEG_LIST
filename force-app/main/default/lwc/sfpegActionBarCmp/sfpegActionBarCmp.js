@@ -101,21 +101,20 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         return this._parentContext;
     }
     set parentContext(value) {
-        if (this.isDebug) console.log('setParentContext: START set ');
         this._parentContext = value;
-        if (this.isDebug) console.log('setParentContext: parent Context updated ', JSON.stringify(this._parentContext));
+        if (this.isDebug) console.log('set Action ParentContext: START with new value ', JSON.stringify(this._parentContext));
 
-        if (this.isDebug) console.log('setParentContext: is ready ?? ', this.isReady);
+        if (this.isDebug) console.log('set Action ParentContext: is ready ?? ', this.isReady);
 
         if (!this.isReady) {
-            if (this.isDebug) console.log('setParentContext: END / waiting for initial init completion');
+            if (this.isDebug) console.log('set Action ParentContext: END / waiting for initial init completion');
         }
         else if (!this.errorMsg) {
-            if (this.isDebug) console.log('setParentContext: END / calling merge');
+            if (this.isDebug) console.log('set Action ParentContext: END / calling merge');
             this.doMerge();
         }
         else {
-            if (this.isDebug) console.log('setParentContext: END / no merge because of error state ',this.errorMsg);
+            if (this.isDebug) console.log('set Action ParentContext: END / no merge because of error state ',this.errorMsg);
         }
         if (this.isDebug) console.log('setParentContext: END (final) ');
     }
@@ -191,17 +190,17 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     // Component Initialization / deletion
     //----------------------------------------------------------------
     connectedCallback() {
-        if (this.isDebug) console.log('connected: START');
+        if (this.isDebug) console.log('connected: START action ',this.configName);
         if (this.isDebug) console.log('connected: recordId ',this.recordId);
 
         //this.errorMsg = 'Component initialized.';
         if (this.isReady) {
-            console.warn('connected: END / already ready');
+            console.warn('connected: END action / already ready');
             return;
         }
 
         if ((!this.configName) || (this.configName === 'N/A')){
-            console.warn('connected: END / missing configuration');
+            console.warn('connected: END action / missing configuration');
             this.errorMsg = 'Missing configuration!';
             this.isReady = true;
             return;
@@ -231,31 +230,31 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                         "input"     :   sfpegMergeUtl.sfpegMergeUtl.extractTokens(result.Actions__c,this.objectApiName)
                     };
                     this.configDetails = ACTION_CONFIGS[this.configName];
-                    if (this.isDebug) console.log('connected: configuration parsed ',JSON.stringify(this.configDetails));
+                    if (this.isDebug) console.log('connected: action configuration parsed ',JSON.stringify(this.configDetails));
                     this.finalizeConfig();
                     //this.errorMsg = 'Configuration fetched and parsed: ' + ACTION_CONFIGS[this.configName].label;
                 }
                 catch(parseError){
-                    console.warn('connected: configuration parsing failed ',parseError);
+                    console.warn('connected: action configuration parsing failed ',parseError);
                     this.errorMsg = 'Configuration parsing failed: ' + parseError;
                 }
                 finally {
                     this.isReady = true;
-                    if (this.isDebug) console.log('connected: END');
+                    if (this.isDebug) console.log('connected: END action');
                     //this.isReady = true;
                 }
             })
             .catch( error => {
-                console.warn('connected: END / configuration fetch error ',error);
+                console.warn('connected: END action / configuration fetch error ',error);
                 this.errorMsg = 'Configuration fetch error: ' + error;
                 this.isReady = true;
             });
-            if (this.isDebug) console.log('connected: request sent');
+            if (this.isDebug) console.log('connected: action configuration request sent');
         }
     }
 
     disconnectedCallback() {
-        if (this.isDebug) console.log('disconnected: START');
+        if (this.isDebug) console.log('disconnected: START action ',this.configName);
         if (this.isDebug) console.log('disconnected: recordId ',this.recordId);
 
         if (this.notificationSubscription) {
@@ -267,7 +266,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             if (this.isDebug) console.log('disconnected: no notification channel to unsubscribe');
         }
 
-        if (this.isDebug) console.log('disconnected: END');
+        if (this.isDebug) console.log('disconnected: END action');
     }
 
     renderedCallback(){
@@ -898,8 +897,28 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                     if (this.isDebug) console.log('triggerOpenURL: targetUrl reworked ', targetUrl);
                 });
             }
-            else {
-                if (this.isDebug) console.log('triggerOpenURL: no or unsupported rework action available');
+            if (targetUrl.url.includes("LEFT(")) {
+                if (this.isDebug) console.log('triggerOpenURL: processing LEFT rework');
+                let regexp = /LEFT\(([\.\,\'\w_-]*)\)/gi;
+                let reworkKeys = openUrl.match(regexp);
+                if (this.isDebug) console.log('triggerOpenURL: LEFT keys extracted ', reworkKeys);
+                reworkKeys.forEach(keyIter => {
+                    if (this.isDebug) console.log('triggerOpenURL: processing key ', keyIter);
+                    let keyParams = keyIter.slice(5,-1);
+                    if (this.isDebug) console.log('triggerOpenURL: keyParams extracted ', keyParams);
+                    let keyparts = keyParams.split(',');
+                    if (this.isDebug) console.log('triggerOpenURL: key parts extracted ', keyparts);
+                    let keyValue = keyparts[0];
+                    let keyLength = keyparts[1];
+                    if (this.isDebug) console.log('triggerOpenURL: keyLength extracted ', keyLength);
+                    
+                    let newValue = keyValue.substring(0, keyLength);
+                    if (this.isDebug) console.log('triggerOpenURL: newValue computed ', newValue);
+                    let keyRegex = new RegExp("LEFT\\(" + keyParams + "\\)"  , 'g');
+                    if (this.isDebug) console.log('triggerOpenURL: keyRegex computed ', keyRegex);
+                    openUrl = openUrl.replace(keyRegex,newValue);
+                    if (this.isDebug) console.log('triggerOpenURL: targetUrl reworked ', targetUrl);
+                });
             }
         }
 
