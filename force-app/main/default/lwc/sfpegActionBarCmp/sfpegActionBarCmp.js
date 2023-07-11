@@ -922,7 +922,10 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             }
         }
 
-        window.open(openUrl,'_blank');
+        let target = targetUrl.target || '_blank';
+        if (this.isDebug) console.log('triggerOpenURL: target evaluated ',target);
+
+        window.open(openUrl,target);
         if (this.isDebug) console.log('triggerOpenURL: END');
     }
 

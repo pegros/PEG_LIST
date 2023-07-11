@@ -383,7 +383,7 @@ field becomes mandatory in that case. Standard **navigation** actions to record 
 
 The **openURL** action type enables to force the opening of a Web page in a different browser tab (via a `window.open()` javascript call instead of the Lightning navigation service).
 * `url` is the main property to define with the target URL to use
-* some URL rework directives are available (e.g. **SUBSTR()**) but still pending actual large scale use cases to be officially
+* some URL rework directives are available (e.g. **SUBSTR()** or **LEFT()**) but still pending actual large scale use cases to be officially
 supported (and documented).
 ```
 {
@@ -397,6 +397,7 @@ supported (and documented).
     }
 }
 ```
+* `target` (optional) being also possible to define another target than the `_blank` default.
 
 _Note_: See also [Apex List Retrieval and OpenURL Action with Rework](/help/sfpegListCmp.md) for an example with
 the **SUBSTR()** URL rework directive.
