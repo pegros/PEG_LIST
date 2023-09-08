@@ -736,6 +736,12 @@ action on the list selected records followed by a `reload` to update the page re
 reload the component list.
 
 
+### Multi-SOQL Query Execution
+
+Please refer to **[sfpegMultiQueries_SVC](/help/sfpegMultiQueries.md)** extension Apex class to get an example 
+about how to group the results of multiple SOQL queries in a single list.
+
+
 ---
 
 ## Technical Details
