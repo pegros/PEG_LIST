@@ -32,7 +32,7 @@ their `StartDate` values (these are standard **Public Sector Solution** Industry
 
 ![Multi SOQL Queries](/media/sfpegMultiQueries.png)
 
-For this result, the sfpegList metadata record should be configured as follows:
+For this result, the **sfpegList** metadata record should be configured as follows:
 * `Scope`set to `CourseOffering`
 * `Query Type`set to `Apex`
 * `Query Input` set to 
@@ -42,7 +42,7 @@ For this result, the sfpegList metadata record should be configured as follows:
     "COURSE":"{{{RCD.CourseNameId}}}"
 }
 ```
-* `Query Class`set to `sfpegMultiQueries_SVC`
+* `Query Class` set to `sfpegMultiQueries_SVC`
 * `Query Template` set to
 ```
 {
