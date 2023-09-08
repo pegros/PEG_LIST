@@ -1,8 +1,35 @@
 /***
 * @description  Service class to retrieve data via SOSL or SOQL
 *               with dynamic query filters.
-* @date         Apr. 2023
+*               Part of the PEG_LIST package extensions.
+* @author       P-E GROS
+* @date         April 2023
 * @see          sfpegListQuery_SVC
+* @see          PEG_LIST package (https://github.com/pegros/PEG_LIST)
+*
+* Legal Notice
+*
+* MIT License
+*
+* Copyright (c) 2023 pegros
+*
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in all
+* copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
 ***/
 
 public with sharing class sfpegSearch_SVC extends sfpegListQuery_SVC {
@@ -60,7 +87,7 @@ public with sharing class sfpegSearch_SVC extends sfpegListQuery_SVC {
         }
         else {
             System.debug(LoggingLevel.Error,'getData: END KO / missing "sosl" or "soql" section in query configuration');
-            throw new DmlException('Missing "sosl" or "sosl" section in Complex SOSL/SOQL configuration');
+            throw new DmlException('Missing "sosl" or "soql" section in Complex SOSL/SOQL configuration');
         }
     }
 

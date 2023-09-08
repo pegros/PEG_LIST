@@ -4,7 +4,7 @@
 * @author       P-E GROS
 * @date         April 2023
 * @see          sfpegSearch_SVC
-* @see          DSFR_LWR package (https://github.com/pegros/PEG_LIST)
+* @see          PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 *
