@@ -46,8 +46,8 @@ For this result, the **sfpegList** metadata record should be configured as follo
 * `Query Template` set to
 ```
 {
-    "Previous":"SELECT Name, StartDate, TOLABEL(Statut__c) FROM CourseOffering WHERE CourseNameId = '{{{COURSE}}}' and StartDate < {{{DATE}}} LIMIT 1",
-    "Next":"SELECT Name, StartDate, TOLABEL(Statut__c) FROM CourseOffering WHERE CourseNameId = '{{{COURSE}}}' and StartDate > {{{DATE}}} LIMIT 1"
+    "Previous":"SELECT Name, StartDate, TOLABEL(Statut__c) FROM CourseOffering WHERE CourseNameId = '{{{COURSE}}}' and StartDate < {{{DATE}}} ORDER BY StartDate desc LIMIT 1",
+    "Next":"SELECT Name, StartDate, TOLABEL(Statut__c) FROM CourseOffering WHERE CourseNameId = '{{{COURSE}}}' and StartDate > {{{DATE}}} ORDER BY StartDate asc LIMIT 1"
 }
 ```
 * `Display Type` set to `DataTable`
