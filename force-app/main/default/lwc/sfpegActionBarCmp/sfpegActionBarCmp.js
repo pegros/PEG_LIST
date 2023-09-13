@@ -186,6 +186,12 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         return (this.overflowActions && this.overflowActions.length > 0);
     }
 
+    // Interface Getters
+    @api get actionConfig() {
+        if (this.isDebug) console.log('actionConfig: returning ', JSON.stringify(this.actionList));
+        return this.actionList;
+    }
+
     //----------------------------------------------------------------
     // Component Initialization / deletion
     //----------------------------------------------------------------
