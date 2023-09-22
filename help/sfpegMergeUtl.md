@@ -216,7 +216,7 @@ In this example, roles may be referenced in creation actions with the `{{{ROLE.<
 
 An interesting use case is to leverage the standard **Network** object to retrieve the IDs of the Experience Sites
 (e.g. in a **NW** merge token) in order to be able redirections between sites with automatic session revalidation,
-leveraging the network switch endpoint `/servlet/networks/switch?networkI` and using the **urlPathPrefix** to safely
+leveraging the network switch endpoint (`/servlet/networks/switch`) and using the **urlPathPrefix** to safely
 identify Experience Sites (remains constant among Orgs).
 
 The **sfpegConfiguration** record should be configured as follows
@@ -225,8 +225,8 @@ The **sfpegConfiguration** record should be configured as follows
     * `Field` : `urlPathPrefix`
     * `Query` : `SELECT Id, urlPathPrefix FROM Network WHERE urlPathPrefix IN`
 
-**[sfpegAction](/help/sfpegActionBar.md)** records may be configured with  **openURL** actions
-* to preview a record in an Experience site from standard Lightning App
+**[sfpegAction](/help/sfpegActionBar.md)** records may be configured with  **openURL** actions, e.g. to
+* _preview_ a record in an Experience Site from standard Lightning App
 ```
 {
     "name":"preview",
@@ -240,7 +240,7 @@ The **sfpegConfiguration** record should be configured as follows
     }
 }
 ```
-* to redirect a user from an Experience Site to another
+* _redirect_ a user from an Experience Site to another
 ```
 {
     "name": "openSiteB",
