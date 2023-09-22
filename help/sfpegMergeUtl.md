@@ -212,10 +212,50 @@ In this example, roles may be referenced in creation actions with the `{{{ROLE.<
 * _Query_ should provide the SOQL query template to be used by the **sfpegMergeUtl** component to fetch the values (the list of field values requested being automatically added after the `in` keyword).
 
 
-_Notes_:
-* An interesting use case is to leverage the standard **Network** object to retrieve the IDs of the Experience Sites
+### Network Token Example
+
+An interesting use case is to leverage the standard **Network** object to retrieve the IDs of the Experience Sites
 (e.g. in a **NW** merge token) in order to be able redirections between sites with automatic session revalidation,
-leveraging the network switch endpoint `/servlet/networks/switch?networkId={{{NW.ExperienceSiteName}}}&startURL=...` 
+leveraging the network switch endpoint `/servlet/networks/switch?networkI` and using the **urlPathPrefix** to safely
+identify Experience Sites (remains constant among Orgs).
+
+The **sfpegConfiguration** record should be configured as follows
+    * `label`: `Networks`
+    * `Name` : `NTW`
+    * `Field` : `urlPathPrefix`
+    * `Query` : `SELECT Id, urlPathPrefix FROM Network WHERE urlPathPrefix IN`
+
+**[sfpegAction](/help/sfpegActionBar.md)** records may be configured with  **openURL** actions
+* to preview a record in an Experience site from standard Lightning App
+```
+{
+    "name":"preview",
+    "label":"Preview on Site",
+    "iconName":"utility:preview",
+    "action":{
+        "type":"openURL",
+        "params":{
+            "reworkURL":true,
+            "url":"{{{GEN.baseUrl}}}/servlet/networks/switch?networkId=LEFT({{{NTW.ExperienceSiteUrlPathPrefix}}},15)&startURL=/offreemploi/{{{GEN.recordId}}}"
+    }
+}
+```
+* to redirect a user from an Experience Site to another
+```
+{
+    "name": "openSiteB",
+    "label": "Open Site B",
+    "iconName":"utility:open",
+    "action": {
+        "type": "openURL",
+        "params": {
+            "reworkURL": true,
+            "target": "_self",
+            "url": "/servlet/networks/switch?networkId=LEFT({{{NTW.ExperienceSiteUrlPathPrefix}}},15)&startURL=/"
+        }
+    }
+},
+```
 
 
 ---
