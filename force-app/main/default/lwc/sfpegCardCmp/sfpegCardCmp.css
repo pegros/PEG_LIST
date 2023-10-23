@@ -5,3 +5,8 @@
     margin: var(--lwc-spacingXSmall,0.5rem);
     width: 16px;
 }
+.editActions {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 48px;
+}

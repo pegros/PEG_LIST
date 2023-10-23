@@ -128,7 +128,8 @@
                                     <!-- alignment-bump="right" -->
                                     <lightning-layout-item  key={iterField.name}        size={iterField.size}
                                                             padding="horizontal-small"  class="slds-var-m-bottom_xxx-small fieldItem" >
-                                        <div class="slds-media slds-m-horizontal_x-small slds-form-element_readonly">
+                                        <div class="slds-media  slds-form-element_readonly">
+                                            <!-- slds-m-horizontal_x-small -->
                                             <template if:true={iterField.icon}>
                                                 <!-- slds-p-top_x-small -->
                                                 <div class="slds-media__figure ">
@@ -188,7 +189,8 @@
                                             <!-- alignment-bump="right" -->
                                             <lightning-layout-item  key={iterSectionField.name} size={iterSectionField.size}
                                                                     padding="horizontal-small" class="slds-var-m-bottom_xxx-small fieldItem">
-                                                <div class="slds-media slds-m-horizontal_x-small slds-form-element_readonly">
+                                                <div class="slds-media slds-form-element_readonly">
+                                                    <!-- slds-m-horizontal_x-small -->
                                                     <template if:true={iterSectionField.icon}>
                                                         <!-- slds-p-top_x-small -->
                                                         <div class="slds-media__figure ">
@@ -247,7 +249,8 @@
                                     <lightning-layout-item  key={iterField.name}
                                                             size="12"                   medium-device-size={iterField.size} 
                                                             padding="horizontal-small"  class="slds-var-m-bottom_xxx-small fieldItem" >
-                                        <div class="slds-media slds-p-horizontal_x-small ">
+                                        <div class="slds-media">
+                                            <!-- slds-p-horizontal_x-small -->
                                             <template if:true={iterField.icon}>
                                                 <!-- slds-p-top_x-small -->
                                                 <div class="slds-media__figure ">
@@ -287,7 +290,8 @@
                                             <lightning-layout-item  key={iterSectionField.name}
                                                                     size="12"                   medium-device-size={iterSectionField.size} 
                                                                     padding="horizontal-medium" class="slds-var-m-bottom_xxx-small fieldItem" >
-                                               <div class="slds-media slds-p-horizontal_x-small">
+                                               <div class="slds-media ">
+                                                    <!-- slds-p-horizontal_x-small -->
                                                     <template if:true={iterSectionField.icon}>
                                                         <!-- slds-p-top_x-small -->
                                                         <div class="slds-media__figure ">
@@ -317,7 +321,7 @@
                             </template>
 
                             <!-- Save / Cancel buttons -->
-                            <div class="slds-align_absolute-center slds-p-vertical_x-small slds-theme_shade">
+                            <div class="slds-align_absolute-center slds-p-vertical_x-small slds-theme_shade editActions">
                                 <lightning-button-group class="">
                                     <lightning-button variant="neutral"  label={cancelLabel} onclick={handleModeToggle}>
                                     </lightning-button>
