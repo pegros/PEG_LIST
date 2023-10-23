@@ -1,0 +1,7 @@
+.bottomAlignIcon {
+    align-items: flex-end;
+}
+.spaceFill {
+    margin: var(--lwc-spacingXSmall,0.5rem);
+    width: 16px;
+}

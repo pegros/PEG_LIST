@@ -58,6 +58,7 @@
 
             <!-- Card Mode Control -->
             <!-- style="position:relative;top:-1px;" -->
+            <!--
             <template if:false={isReadOnly}>
                 <lightning-button-group slot="actions" >
                     <lightning-button-icon
@@ -69,6 +70,7 @@
                     </lightning-button-icon>
                 </lightning-button-group>
             </template>
+            -->
 
             <!-- Debug information display -->
             <template if:true={isDebug}>
@@ -121,12 +123,12 @@
 
                             <!-- Stand-alone fields -->
                             <!--   horizontal-align="end" -->
-                            <lightning-layout   multiple-rows="true" pull-to-boundary="medium" >
+                            <lightning-layout   multiple-rows="true" pull-to-boundary="small" >
                                 <template for:each={configDetails.fields} for:item="iterField">
                                     <!-- alignment-bump="right" -->
                                     <lightning-layout-item  key={iterField.name}        size={iterField.size}
-                                                            padding="horizontal-medium" class="slds-var-m-bottom_xxx-small fieldItem" >
-                                        <div class="slds-media slds-p-horizontal_x-small">
+                                                            padding="horizontal-small"  class="slds-var-m-bottom_xxx-small fieldItem" >
+                                        <div class="slds-media slds-m-horizontal_x-small slds-form-element_readonly">
                                             <template if:true={iterField.icon}>
                                                 <!-- slds-p-top_x-small -->
                                                 <div class="slds-media__figure ">
@@ -136,9 +138,26 @@
                                                 </div>
                                             </template>
                                             <div class="slds-media__body">
-                                                <lightning-output-field field-name={iterField.name}
-                                                                        variant={configDetails.variant}>
-                                                </lightning-output-field>
+                                                <div class="slds-media bottomAlignIcon">
+                                                    <div class="slds-media__body">
+                                                        <lightning-output-field field-name={iterField.name}
+                                                                                variant={configDetails.variant}>
+                                                        </lightning-output-field>
+                                                    </div>
+                                                    <template lwc:if={showEditButtonIcons}>
+                                                        <template lwc:if={iterField.disabled}>
+                                                            <div class="spaceFill"></div>
+                                                        </template>
+                                                        <template lwc:else>
+                                                            <div class="slds-media__figure slds-media__figure_reverse slds-m-around_xx-small slds-m-left_x-small ">
+                                                                <lightning-button-icon  icon-name="utility:edit"    variant="bare"
+                                                                                        alternative-text="Edit"     title="Edit"
+                                                                                        name={iterField.name}       onclick={handleModeToggle}>
+                                                                </lightning-button-icon>
+                                                            </div>
+                                                        </template>
+                                                    </template>
+                                                </div>
                                             </div>
                                         </div>
                                     </lightning-layout-item>
@@ -164,12 +183,12 @@
                                     </h3>
                                     <!--   horizontal-align="end"  -->
                                     <div class="slds-section__content">
-                                    <lightning-layout   multiple-rows="true" pull-to-boundary="medium" >
+                                    <lightning-layout   multiple-rows="true" pull-to-boundary="small" >
                                         <template for:each={iterSection.fields} for:item="iterSectionField">
                                             <!-- alignment-bump="right" -->
                                             <lightning-layout-item  key={iterSectionField.name} size={iterSectionField.size}
-                                                                    padding="horizontal-medium" class="slds-var-m-bottom_xxx-small fieldItem">
-                                                <div class="slds-media slds-p-horizontal_x-small">
+                                                                    padding="horizontal-small" class="slds-var-m-bottom_xxx-small fieldItem">
+                                                <div class="slds-media slds-m-horizontal_x-small slds-form-element_readonly">
                                                     <template if:true={iterSectionField.icon}>
                                                         <!-- slds-p-top_x-small -->
                                                         <div class="slds-media__figure ">
@@ -179,9 +198,26 @@
                                                         </div>
                                                     </template>
                                                     <div class="slds-media__body">
-                                                        <lightning-output-field field-name={iterSectionField.name}
-                                                                                variant={configDetails.variant}>
-                                                        </lightning-output-field>
+                                                        <div class="slds-media bottomAlignIcon">
+                                                            <div class="slds-media__body">
+                                                                <lightning-output-field field-name={iterSectionField.name}
+                                                                                        variant={configDetails.variant}>
+                                                                </lightning-output-field>
+                                                            </div>
+                                                            <template lwc:if={showEditButtonIcons}>
+                                                                <template lwc:if={iterSectionField.disabled}>
+                                                                    <div class="spaceFill"></div>
+                                                                </template>
+                                                                <template lwc:else>
+                                                                    <div class="slds-media__figure slds-media__figure_reverse slds-m-around_xx-small slds-m-left_x-small ">
+                                                                        <lightning-button-icon  icon-name="utility:edit"        variant="bare"
+                                                                                                alternative-text="Edit"         title="Edit"
+                                                                                                name={iterSectionField.name}    onclick={handleModeToggle}>
+                                                                        </lightning-button-icon>
+                                                                    </div>
+                                                                </template>
+                                                            </template>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </lightning-layout-item>
@@ -205,13 +241,13 @@
 
                             <!-- Stand-alone fields -->
                             <!--   horizontal-align="end" -->
-                            <lightning-layout   multiple-rows="true" pull-to-boundary="medium" >
+                            <lightning-layout   multiple-rows="true" pull-to-boundary="small" >
                                 <template for:each={configDetails.fields} for:item="iterField">
                                     <!-- alignment-bump="right" -->
                                     <lightning-layout-item  key={iterField.name}
                                                             size="12"                   medium-device-size={iterField.size} 
-                                                            padding="horizontal-medium" class="slds-var-m-bottom_xxx-small fieldItem" >
-                                        <div class="slds-media slds-p-horizontal_x-small">
+                                                            padding="horizontal-small"  class="slds-var-m-bottom_xxx-small fieldItem" >
+                                        <div class="slds-media slds-p-horizontal_x-small ">
                                             <template if:true={iterField.icon}>
                                                 <!-- slds-p-top_x-small -->
                                                 <div class="slds-media__figure ">
@@ -280,8 +316,8 @@
                                 </div>
                             </template>
 
-                            <!-- Save / Candel buttons -->
-                            <div class="slds-align_absolute-center slds-p-top_x-small">
+                            <!-- Save / Cancel buttons -->
+                            <div class="slds-align_absolute-center slds-p-vertical_x-small slds-theme_shade">
                                 <lightning-button-group class="">
                                     <lightning-button variant="neutral"  label={cancelLabel} onclick={handleModeToggle}>
                                     </lightning-button>

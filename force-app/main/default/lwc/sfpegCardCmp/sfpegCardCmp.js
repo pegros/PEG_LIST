@@ -39,6 +39,7 @@ import updateRecord     from '@salesforce/apex/sfpegCard_CTL.updateRecord';
 import currentUserId    from '@salesforce/user/Id';
 import { getRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
 //import LightningPrompt from 'lightning/prompt';
+//import { CurrentPageReference } from 'lightning/navigation';
 import sfpegMergeUtl    from 'c/sfpegMergeUtl';
 
 import SAVE_LABEL       from '@salesforce/label/c.sfpegCardSave';
@@ -140,6 +141,9 @@ export default class SfpegCardDsp extends LightningElement {
     //----------------------------------------------------------------
     get showCardHeaderIcons() {
         return (this.cardIcon || this.isCollapsible);
+    }
+    get showEditButtonIcons() {
+        return !(this.isReadOnly || this.isEditMode);
     }
     get hasErrorMsg () {
         if (this.errorMsg) return true;
@@ -373,14 +377,13 @@ export default class SfpegCardDsp extends LightningElement {
                 if (this.isDebug) console.log('disconnected: input item',item);
             });
 
-            /*
             // Option abandonned as not synchronous 
-            let result = await LightningPrompt.open({
-                label: 'Your card is in edit mode', 
-                message: 'Do you want to save your changes before closing?',
-                theme: 'warning'
-            });
-            */
+            //let result = await LightningPrompt.open({
+            //    label: 'Your card is in edit mode', 
+            //    message: 'Do you want to save your changes before closing?',
+            //    theme: 'warning'
+            //});
+
             let closeMsg = CLOSE_MESSAGE.replace('{0}',this.cardTitle);
             if (this.isDebug) console.log('disconnected: closeMsg merged ',closeMsg);
             let doSave = window.confirm(closeMsg);
@@ -393,6 +396,38 @@ export default class SfpegCardDsp extends LightningElement {
         }
         if (this.isDebug) console.log('disconnected: END');
     }
+
+    /*_pageRef;
+    @wire(CurrentPageReference)
+    wiredPageRef(data){
+        if (this.isDebug) console.log('wiredPageRef: START for Card config ', this.configName);
+        if (this.isDebug) console.log('wiredPageRef: data received ', JSON.stringify(data));
+        if (this._pageRef == data) {
+            if (this.isDebug) console.log('wiredPageRef: same page ref ');
+        }
+        else {
+            if (this.isDebug) console.log('wiredPageRef: new page ref ');
+            if ((this.isEditMode) && (this.isConfirmed)) {
+                if (this.isDebug) console.log('disconnected: pending changes to control');
+                let inputFields = this.template.querySelectorAll('lightning-input-field');
+                inputFields.forEach(item => {
+                    if (this.isDebug) console.log('disconnected: input item',item);
+                });
+    
+                let closeMsg = CLOSE_MESSAGE.replace('{0}',this.cardTitle);
+                if (this.isDebug) console.log('disconnected: closeMsg merged ',closeMsg);
+                let doSave = window.confirm(closeMsg);
+                if (this.isDebug) console.log('disconnected: user doSave? decision ',doSave);
+    
+                if (doSave) {
+                    if (this.isDebug) console.log('disconnected: forcing save ');
+                    this.handleFormForceSubmit();
+                }
+            }
+        }
+        this._pageRef = data;
+        if (this.isDebug) console.log('wiredPageRef: END for Card');
+    }*/
 
     //----------------------------------------------------------------
     // Event Handlers  
