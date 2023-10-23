@@ -208,7 +208,8 @@
                             <lightning-layout   multiple-rows="true" pull-to-boundary="medium" >
                                 <template for:each={configDetails.fields} for:item="iterField">
                                     <!-- alignment-bump="right" -->
-                                    <lightning-layout-item  key={iterField.name}        size={iterField.size} 
+                                    <lightning-layout-item  key={iterField.name}
+                                                            size="12"                   medium-device-size={iterField.size} 
                                                             padding="horizontal-medium" class="slds-var-m-bottom_xxx-small fieldItem" >
                                         <div class="slds-media slds-p-horizontal_x-small">
                                             <template if:true={iterField.icon}>
@@ -247,7 +248,8 @@
                                     <lightning-layout   multiple-rows="true" pull-to-boundary="medium" >
                                         <template for:each={iterSection.fields} for:item="iterSectionField">
                                             <!-- alignment-bump="right" -->
-                                            <lightning-layout-item  key={iterSectionField.name} size={iterSectionField.size}
+                                            <lightning-layout-item  key={iterSectionField.name}
+                                                                    size="12"                   medium-device-size={iterSectionField.size} 
                                                                     padding="horizontal-medium" class="slds-var-m-bottom_xxx-small fieldItem" >
                                                <div class="slds-media slds-p-horizontal_x-small">
                                                     <template if:true={iterSectionField.icon}>
