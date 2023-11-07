@@ -433,10 +433,10 @@ export default class SfpegCardDsp extends LightningElement {
     // Event Handlers  
     //---------------------------------------------------------------- 
     // Expand / Collapse management
-    handleExpandCollapse(event) {
-        if (this.isDebug) console.log('handleExpandCollapse: START with isCollapsed ',this.isCollapsed);
+    handleMainExpandCollapse(event) {
+        if (this.isDebug) console.log('handleMainExpandCollapse: START with isCollapsed ',this.isCollapsed);
         this.isCollapsed = !this.isCollapsed;
-        if (this.isDebug) console.log('handleExpandCollapse: END with toggled isCollapsed ',this.isCollapsed);
+        if (this.isDebug) console.log('handleMainExpandCollapse: END with toggled isCollapsed ',this.isCollapsed);
     }
 
     // Read / Edit management

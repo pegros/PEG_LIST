@@ -10,18 +10,20 @@
                     <div class="slds-media__figure">
                         <template if:true={isCollapsible}>
                             <lightning-button-stateful 
-                                class="expandCollapse"
+                                class="mainExpandCollapse"
                                 variant="text"
                                 selected={isCollapsed}
                                 icon-name-when-off="utility:chevrondown"
                                 icon-name-when-on="utility:chevronright"
-                                onclick={handleExpandCollapse}>
+                                onclick={handleMainExpandCollapse}>
                             </lightning-button-stateful>
                         </template>
                         <template if:true={cardIcon}>
-                            <c-sfpeg-icon-dsp   icon-name={cardIcon}
-                                                icon-size="small" >
-                            </c-sfpeg-icon-dsp>
+                            <div class="mainIcon">
+                                <c-sfpeg-icon-dsp   icon-name={cardIcon}
+                                                    icon-size="small" >
+                                </c-sfpeg-icon-dsp>
+                            </div>
                             <!--
                             <lightning-icon icon-name={cardIcon} size="small" >
                             </lightning-icon>

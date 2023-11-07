@@ -10,3 +10,16 @@
     position: sticky;
     bottom: 48px;
 }
+.slds-dl_horizontal__detail {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+.mainExpandCollapse {
+    --sds-c-button-color-background : transparent !important;
+    --sds-c-button-line-height : 0px !important;
+    --slds-c-button-radius-border : 0px;
+    display: inline-block;
+}
+.mainIcon {
+    display: inline-block;
+}
