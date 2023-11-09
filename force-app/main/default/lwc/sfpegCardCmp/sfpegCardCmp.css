@@ -9,6 +9,7 @@
     position: -webkit-sticky;
     position: sticky;
     bottom: 48px;
+    z-index: 2;
 }
 .slds-dl_horizontal__detail {
     overflow-wrap: break-word;
@@ -22,4 +23,13 @@
 }
 .mainIcon {
     display: inline-block;
+}
+.iconSection {
+    margin-left: 0px;
+}
+.warningMessages {
+    width: 100%;
+    min-width: 100%;
+    --slds-c-toast-sizing-min-width: Opx;
+    /*--slds-c-toast-spacing-inline-end: 0px;*/
 }

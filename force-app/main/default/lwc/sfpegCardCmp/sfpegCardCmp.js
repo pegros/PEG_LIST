@@ -501,6 +501,7 @@ export default class SfpegCardDsp extends LightningElement {
             if (this.isDebug) console.log('handleFormSubmit: request sent');
         }
         else {
+            this.isUpdating = true;
             if (this.isDebug) console.log('handleFormSubmit: END / standard LDS form submit ');
         }
     }
@@ -577,6 +578,7 @@ export default class SfpegCardDsp extends LightningElement {
     handleFormSuccess(event) {
         if (this.isDebug) console.log('handleFormSuccess: START ');
         this.isEditMode = false;
+        this.isUpdating = false;
         //this.showForceSave = false;
         if (this.isDebug) console.log('handleFormSuccess: END / edit mode reset to ',this.isEditMode);
     }
@@ -586,6 +588,7 @@ export default class SfpegCardDsp extends LightningElement {
         if (this.isDebug) console.log('handleFormError: event details ',JSON.stringify(event.detail));
         let errors = event.detail?.output?.errors;
         if (this.isDebug) console.log('handleFormError: #errors raised ',JSON.stringify(errors));
+        this.isUpdating = false;
 
         this.showForceSave = false;
         let duplicateError = false;
