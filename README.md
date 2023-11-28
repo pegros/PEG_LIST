@@ -51,15 +51,40 @@ not documented for the time being. You may however look at the source code to se
 
 The package is freely available for use under the MIT license from this GiHub repository.
 Periodic upgrades will be posted depending on fixes/evolutions implemented as part of assignments & personal interactions.
-For now, all commits are made exclusively by the author.
 
-You may easily deploy it to your Org via a simple SFDX deploy command from the project folder.
-> sfdx force:source:deploy -u _yourOrgAlias_ -w 10 --verbose -p force-app
+For now, all commits are made exclusively by the author but you may push Pull Requests that 
+may then be then merged after review.
 
-**Beware** when deploying new versions of the package on an Org having it already installed!
-If you have already customized on your Org the custom labels or static resources included in the package,
-you may need to retrieve first a copy of their current situations before the new package version deployment
-and redeploy them afterwards.
+
+### Package Installation
+
+#### Git Deployment
+
+To retrieve the SFDX project, you may simply execute a git clone from the GitHub repository.
+```
+git clone git@github.com:pegros/PEG_LIST.git
+```
+
+Via SFDX you may then deploy it on you Org
+```
+sfdx force:source:deploy -u <yourOrgAlias> -w 10 --verbose -p force-app
+
+⚠️ **Beware** when deploying new versions of the package on an Org where it is already installed!
+
+If you have already customized on your Org the custom labels or static resources included in the package, you may need to retrieve first a copy of their current situations before the new package version deployment and redeploy them afterwards.
+
+#### Quick Direct Deploy
+
+For a quick and easy deployment, you may alternatively use the following deploy button
+leveraging the **[GitHub Salesforce Deploy Tool](https://github.com/afawcett/githubsfdeploy)**
+implemented by [Andrew Fawcett](https://andyinthecloud.com/2013/09/24/deploy-direct-from-github-to-salesforce/).
+
+To deploy only the whole package to your Org, you may use the following button.
+
+<a href="https://githubsfdeploy.herokuapp.com?ref=master">
+  <img alt="Deploy Package to Salesforce"
+       src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
+</a>
 
 
 ### Usage Prerequisite
