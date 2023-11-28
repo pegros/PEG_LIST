@@ -58,7 +58,7 @@ may then be then merged after review.
 
 ### Package Installation
 
-**Git Deployment**
+#### Git Deployment
 
 To retrieve the SFDX project, you may simply execute a git clone from the GitHub repository.
 ```
@@ -68,9 +68,9 @@ git clone git@github.com:pegros/PEG_LIST.git
 Via SFDX you may then deploy it on you Org
 ```
 sfdx force:source:deploy -u <yourOrgAlias> -w 10 --verbose -p force-app
+```
 
-
-**Quick Direct Deploy**
+#### Quick Direct Deploy
 
 For a quick and easy deployment, you may alternatively use the following deploy button
 leveraging the **[GitHub Salesforce Deploy Tool](https://github.com/afawcett/githubsfdeploy)**
@@ -86,6 +86,7 @@ To deploy only the whole package to your Org, you may use the following button.
 
 ⚠️ **Beware** when deploying new versions of the package on an Org where it is already installed (whatever the option used) !
 If you have already customized on your Org the custom labels or static resources included in the package, you may need to retrieve first a copy of their current situations before the new package version deployment and redeploy them afterwards.
+
 
 ### Usage Prerequisite
 
