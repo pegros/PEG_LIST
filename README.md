@@ -58,6 +58,14 @@ may then be then merged after review.
 
 ### Package Installation
 
+Two options are available to deploy the package on your Org.
+* via Git and SFDX
+* via a direct install button
+
+⚠️ **Beware** when deploying new versions of the package on an Org where it is already installed (whatever the option used) !
+    If you have already customized on your Org the custom labels or static resources included in the package, you may need to retrieve first a copy of their current situations before the new package version deployment and redeploy them afterwards.
+
+
 #### Git Deployment
 
 To retrieve the SFDX project, you may simply execute a git clone from the GitHub repository.
@@ -82,10 +90,6 @@ To deploy only the whole package to your Org, you may use the following button.
   <img alt="Deploy Package to Salesforce"
        src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
 </a>
-
-
-⚠️ **Beware** when deploying new versions of the package on an Org where it is already installed (whatever the option used) !
-If you have already customized on your Org the custom labels or static resources included in the package, you may need to retrieve first a copy of their current situations before the new package version deployment and redeploy them afterwards.
 
 
 ### Usage Prerequisite
