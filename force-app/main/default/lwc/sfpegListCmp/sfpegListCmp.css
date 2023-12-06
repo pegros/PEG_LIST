@@ -33,7 +33,7 @@
     /*min-height: 150px !important;*/
     /*padding-bottom: var(--lwc-varSpacingVerticalMedium);*/
 }
-.slds-card_boundary .footerContent {
+.slds-card_boundary .footerContent, .debugInfo  {
     /*background-color:  var(--lwc-colorBackgroundAlt);
     --sds-c-card-color-background:  var(--lwc-colorBackgroundAlt);*/
     padding-top: var(--lwc-varSpacingVerticalMedium);
@@ -42,6 +42,18 @@
     padding-right: var(--lwc-varSpacingVerticalMedium);
     /*text-align:left;*/
     width:100%;
+}
+.debugInfo {
+    text-align:left;
+}
+.actionFooter {
+    padding-top: var(--lwc-varSpacingVerticalXSxmall);
+    padding-bottom: var(--lwc-varSpacingVerticalXxSmall);
+    padding-left: var(--lwc-varSpacingVerticalXxSmall);
+    padding-right: var(--lwc-varSpacingVerticalXxSmall);
+    width:100%;
+    background-color:  var(--lwc-colorBackgroundAlt);
+    --sds-c-card-color-background:  var(--lwc-colorBackgroundAlt);
 }
 .filterPopup {
     max-width: calc(100% - 46px) !important; 

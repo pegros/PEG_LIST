@@ -33,24 +33,28 @@
             </div>
 
             <div class="headerActions" slot="actions">
-                <lightning-button-group>
-                    <c-sfpeg-action-bar-cmp bar-class= ""
-                                            record-list={selectedRecords}
-                                            config-name={actionConfigName}
-                                            object-api-name={objectApiName}
-                                            record-id={recordId}
-                                            user-id={userId}
-                                            max-size={maxSize}
-                                            parent-context={parentContext}
-                                            is-debug={isDebug}
-                                            ondone={handleActionDone}
-                                            data-my-id="headerActions">
-                    </c-sfpeg-action-bar-cmp>
-                </lightning-button-group>
+
+                <!-- Header Actions -->
+                <template lwc:if={actionConfigName}>
+                    <lightning-button-group>
+                        <c-sfpeg-action-bar-cmp bar-class= ""
+                                                record-list={selectedRecords}
+                                                config-name={actionConfigName}
+                                                object-api-name={objectApiName}
+                                                record-id={recordId}
+                                                user-id={userId}
+                                                max-size={maxSize}
+                                                parent-context={parentContext}
+                                                is-debug={isDebug}
+                                                ondone={handleActionDone}
+                                                data-my-id="headerActions">
+                        </c-sfpeg-action-bar-cmp>
+                    </lightning-button-group>
+                </template>
 
                 <lightning-button-group>
                     <!-- Export Action -->
-                    <template if:true={showExport}>
+                    <template lwc:if={showExport}>
                         <lightning-button-icon
                                 icon-name="utility:download"    size={buttonSize}
                                 variant="border-filled"
@@ -60,7 +64,7 @@
                     </template>
 
                     <!-- Sort Action (on list display) -->
-                    <template if:true={showSort}>
+                    <template lwc:if={showSort}>
                         <lightning-button-menu  icon-name="utility:sort"        icon-size={buttonSize}
                                                 variant="border-filled"         menu-alignment="right"
                                                 alternative-text={sortTitle}    title={sortTitle}
@@ -76,13 +80,13 @@
                     </template>
 
                     <!-- Filter Action (if chosen)  -->
-                    <template if:true={showSearch}>
+                    <template lwc:if={showSearch}>
                         <lightning-button-icon-stateful icon-name="utility:filterList"  size={buttonSize}
                                                         alternative-text={filterTitle}  title={filterTitle}
                                                         selected={isFiltered}           variant="border-filled"
                                                         onclick={handleFilterShow}>
                         </lightning-button-icon-stateful>
-                        <template if:true={showFilter}>
+                        <template lwc:if={showFilter}>
                             <!-- slds-popover_full-width slds-popover_large slds-theme_shade slds-popover_walkthrough slds-popover_walkthrough-alt slds-popover_brand -->
                             <section    class="slds-popover slds-nubbin_top-right slds-dynamic-menu slds-popover_full-width filterPopup"
                                         role="dialog" style="position:absolute;right:23px;top:52px;">
@@ -109,7 +113,7 @@
                                                                 value={filterString}
                                                                 variant="label-hidden"
                                                                 title={filterString}
-                                                                    onchange={handleFilterChange}>
+                                                                onchange={handleFilterChange}>
                                             </lightning-input>
                                         </div>
                                         <lightning-button-icon  icon-name="utility:filter"
@@ -140,47 +144,6 @@
                     </lightning-button-icon>
                 </lightning-button-group>
             </div>
-
-            <!-- Debug information display -->
-            <!-- style="text-align:left; width:100%;" -->
-            <template if:true={isDebug}>
-                <div slot="footer" class="footerContent"  >
-                    <dl class="slds-dl_horizontal">
-                        <dt class="slds-dl_horizontal__label slds-truncate">Configuration</dt>
-                        <dd class="slds-dl_horizontal__detail">Query: {configName}</dd>
-                        <dt class="slds-dl_horizontal__label slds-truncate">Actions</dt>
-                        <dd class="slds-dl_horizontal__detail">Header: {actionConfigName}</dd>
-                        
-                        <dt class="slds-dl_horizontal__label slds-truncate">Loaded?</dt>
-                        <dd class="slds-dl_horizontal__detail">{hasConfig}</dd>
-                        <dt class="slds-dl_horizontal__label slds-truncate">Context</dt>
-                        <dd class="slds-dl_horizontal__detail">{contextString}</dd>
-                        <dt class="slds-dl_horizontal__label slds-truncate">Display Type</dt>
-                        <dd class="slds-dl_horizontal__detail">{displayType}</dd>
-                        <dt class="slds-dl_horizontal__label slds-truncate">User</dt>
-                        <dd class="slds-dl_horizontal__detail">User - {userId}</dd>
-                        <dt class="slds-dl_horizontal__label slds-truncate">Record</dt>
-                        <dd class="slds-dl_horizontal__detail">{objectApiName} - {recordId}</dd>
-                        <dt class="slds-dl_horizontal__label slds-truncate">Records#</dt>
-                        <dd class="slds-dl_horizontal__detail">{resultCount}  </dd>
-                        <dt class="slds-dl_horizontal__label slds-truncate">Form Factor</dt>
-                        <dd class="slds-dl_horizontal__detail">{formfactor}  </dd>
-                        <template if:true={hasConfig}>
-                            <dt class="slds-dl_horizontal__label slds-truncate">Key / Order Field</dt>
-                            <dd class="slds-dl_horizontal__detail">{configDetails.display.keyField} / {configDetails.query.orderByField} </dd>
-                            <dt class="slds-dl_horizontal__label slds-truncate">Actions</dt>
-                            <dd class="slds-dl_horizontal__detail">Row: {configDetails.rowActions}</dd>
-                        </template>
-                        <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
-                        <dd class="slds-dl_horizontal__detail">
-                            <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListCmp.md"
-                                                        label="See Help on GitHub"
-                                                        target="_blank">
-                            </lightning-formatted-url>
-                        </dd>
-                    </dl>
-                </div>
-            </template>
 
             <!-- Ready state display -->
             <template if:true={isReady}>
@@ -228,7 +191,6 @@
                                     data={resultList}
                                     columns={configDetails.display.columns}
                                     hide-checkbox-column={hideCheckbox}
-                                    column-widths-mode={widthMode} 
                                     max-row-selection={maxRowSelection}
                                     default-sort-direction="asc"
                                     sorted-direction={sortDirection}
@@ -264,31 +226,99 @@
                         </template>
                     </div>
 
+                    <!-- Row Action Execution -->
+                    <template lwc:if={configDetails.rowActions}>
+                        <c-sfpeg-action-bar-cmp bar-class= "slds-hide"
+                                        config-name={configDetails.rowActions}
+                                        object-api-name={objectApiName}
+                                        record-id={recordId}
+                                        user-id={userId}
+                                        is-hidden="true"
+                                        parent-context={parentContext}
+                                        is-debug={isDebugFine}
+                                        ondone={handleActionDone}
+                                        data-my-id="rowActions">
+                        </c-sfpeg-action-bar-cmp>
+                    </template>
+                </template>
+            </template>
+
+            <!-- Footer Display -->
+            <!-- Fake action footer for CSS issues -->
+            <template lwc:if={hasActionFooter}>
+                <div class="slds-border_top slds-align_absolute-center actionFooter">
                     <!-- Pagination Control -->
-                    <template if:true={showPagination}>
-                        <div class="slds-align_absolute-center slds-card__body cardContent slds-var-p-around_small">
+                    <template lwc:if={showPagination}>
+                        <lightning-button-group>
                             <lightning-button   label={loadMoreLabel}
                                                 variant="base"
+                                                size="small"
                                                 alternative-text={loadMoreLabel}
                                                 onclick={handleLoadNext}>
                             </lightning-button>
-                        </div>
+                        </lightning-button-group>
                     </template>
 
-                    <!-- Row Action Execution -->
-                    <c-sfpeg-action-bar-cmp bar-class= "slds-hide"
-                                    config-name={configDetails.rowActions}
-                                    object-api-name={objectApiName}
-                                    record-id={recordId}
-                                    user-id={userId}
-                                    is-hidden="true"
-                                    parent-context={parentContext}
-                                    is-debug={isDebugFine}
-                                    ondone={handleActionDone}
-                                    data-my-id="rowActions">
-                    </c-sfpeg-action-bar-cmp>
-                </template>
- 
+                    <!-- Footer Actions -->
+                    <template lwc:if={footerConfigName}>
+                        <lightning-button-group>
+                                <c-sfpeg-action-bar-cmp bar-class= ""
+                                                        record-list={selectedRecords}
+                                                        config-name={footerConfigName}
+                                                        object-api-name={objectApiName}
+                                                        record-id={recordId}
+                                                        user-id={userId}
+                                                        max-size={maxSize}
+                                                        parent-context={parentContext}
+                                                        is-debug={isDebug}
+                                                        ondone={handleActionDone}
+                                                        data-my-id="footerActions">
+                                </c-sfpeg-action-bar-cmp>
+                        </lightning-button-group>
+                    </template>
+                </div>
+            </template>
+
+            <!-- Real Card Footer -->
+            <!-- Debug information display -->
+            <template lwc:if={isDebug}>
+                <div slot="footer" class="footerContent">
+                    <div class="debugInfo"  >
+                           <dl class="slds-dl_horizontal">
+                                <dt class="slds-dl_horizontal__label slds-truncate">Configuration</dt>
+                                <dd class="slds-dl_horizontal__detail">Query: {configName}</dd>
+                                <dt class="slds-dl_horizontal__label slds-truncate">Actions</dt>
+                                <dd class="slds-dl_horizontal__detail">Header: {actionConfigName}</dd>
+                                <dt class="slds-dl_horizontal__label slds-truncate">Loaded?</dt>
+                                <dd class="slds-dl_horizontal__detail">{hasConfig}</dd>
+                                <dt class="slds-dl_horizontal__label slds-truncate">Context</dt>
+                                <dd class="slds-dl_horizontal__detail">{contextString}</dd>
+                                <dt class="slds-dl_horizontal__label slds-truncate">Display Type</dt>
+                                <dd class="slds-dl_horizontal__detail">{displayType}</dd>
+                                <dt class="slds-dl_horizontal__label slds-truncate">User</dt>
+                                <dd class="slds-dl_horizontal__detail">User - {userId}</dd>
+                                <dt class="slds-dl_horizontal__label slds-truncate">Record</dt>
+                                <dd class="slds-dl_horizontal__detail">{objectApiName} - {recordId}</dd>
+                                <dt class="slds-dl_horizontal__label slds-truncate">Records#</dt>
+                                <dd class="slds-dl_horizontal__detail">{resultCount}  </dd>
+                                <dt class="slds-dl_horizontal__label slds-truncate">Form Factor</dt>
+                                <dd class="slds-dl_horizontal__detail">{formfactor}  </dd>
+                                <template if:true={hasConfig}>
+                                    <dt class="slds-dl_horizontal__label slds-truncate">Key / Order Field</dt>
+                                    <dd class="slds-dl_horizontal__detail">{configDetails.display.keyField} / {configDetails.query.orderByField} </dd>
+                                    <dt class="slds-dl_horizontal__label slds-truncate">Actions</dt>
+                                    <dd class="slds-dl_horizontal__detail">Row: {configDetails.rowActions}</dd>
+                                </template>
+                                <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+                                <dd class="slds-dl_horizontal__detail">
+                                    <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListCmp.md"
+                                                                label="See Help on GitHub"
+                                                                target="_blank">
+                                    </lightning-formatted-url>
+                                </dd>
+                            </dl>
+                    </div>
+                </div>
             </template>
 
             <!-- Spinner display (Init vs Loading/Refreshing) -->

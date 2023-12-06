@@ -71,6 +71,7 @@ export default class SfpegListCmp extends LightningElement {
 
     @api configName;            // DeveloperName of the sfpegList__mdt record to be used
     @api actionConfigName;      // DeveloperName of the sfpegAction__mdt record to be used for header actions
+    @api footerConfigName;      // DeveloperName of the sfpegAction__mdt record to be used for footer actions
     @api contextString;         // Context data to be provided as additional CONTEXT input to query 
 
     @api showCount = 'right';   // Flag to display the items count.
@@ -95,34 +96,32 @@ export default class SfpegListCmp extends LightningElement {
         return this._parentContext || {};
     }
     set parentContext(value) {
-        if (this.isDebug) console.log('setParentContext: START set ');
+        if (this.isDebug) console.log('set List ParentContext: START');
         let parentContext = {...value};
         if (this.recordId) parentContext._recordId = this.recordId;
         if (this.objectApiName) parentContext._objectApiName = this.objectApiName;
         this._parentContext = parentContext;
-        if (this.isDebug) console.log('setParentContext: parent Context updated ', JSON.stringify(this._parentContext));
+        if (this.isDebug) console.log('set List ParentContext: parent Context updated ', JSON.stringify(this._parentContext));
 
         let actionBars = this.template.querySelectorAll('c-sfpeg-action-bar-cmp');
-        if (this.isDebug) console.log('setParentContext: action bars fetched ', actionBars);
+        if (this.isDebug) console.log('set List ParentContext: action bars fetched ', actionBars);
         if (actionBars?.length > 0) {
             actionBars.forEach(item => {
                 item.parentContext = this._parentContext;
             });
-            if (this.isDebug) console.log('setParentContext: parent Context updated on action bars ', actionBars);
+            if (this.isDebug) console.log('set List ParentContext: parent Context updated on action bars ', actionBars);
         }
 
         if (!this.isReady) {
-            if (this.isDebug) console.log('setParentContext: waiting for initial init completion');
+            if (this.isDebug) console.log('set List ParentContext: END / waiting for initial init completion');
         }
         else if (!this.errorMsg) {
-            if (this.isDebug) console.log('setParentContext: calling merge');
+            if (this.isDebug) console.log('set List ParentContext: END / calling merge');
             this.executeQuery();
         }
         else {
-            if (this.isDebug) console.log('setParentContext: no merge because of error state ', this.errorMsg);
-        }
-        
-        if (this.isDebug) console.log('setParentContext: END (final) ');
+            if (this.isDebug) console.log('set List ParentContext: END / no merge because of error state ', this.errorMsg);
+        }        
     }
 
     //----------------------------------------------------------------
@@ -256,17 +255,18 @@ export default class SfpegListCmp extends LightningElement {
     }
     get contentStyle() {
         if ((this.isCollapsible) && (this.isCollapsed)) {
-            return '';
+            return ' ';
         }
         else if ((this.resultList || []).length == 0) {
-            return '';
+            return ' ';
         }
         //return (((this.displayHeight) &&  (this.displayHeight !== '0')) ? 'height: ' + this.displayHeight + ';' : 'height:100%;');
-        return (((this.displayHeight) &&  (this.displayHeight !== '0')) ? 'height: ' + this.displayHeight + ';' : '');
+        return (((this.displayHeight) &&  (this.displayHeight !== '0')) ? 'height: ' + this.displayHeight + ';' : ' ');
     }
     get showPagination() {
         //if (this.isDebug) console.log('showPagination: showPagination? ', this.configDetails.query.doPagination);
-        return (    (this.configDetails.query.doPagination)
+        return (    this.isReady 
+                &&  (this.configDetails.query.doPagination)
                 &&  ((this.resultListOrig || this.resultList || []).length < (this.recordCount || 0)) );
         //return ((this.configDetails.query.doPagination));
     }
@@ -300,6 +300,10 @@ export default class SfpegListCmp extends LightningElement {
 
     get showCardHeaderIcons() {
         return (this.cardIcon || this.isCollapsible);
+    }
+
+    get hasActionFooter () {
+        return this.showPagination || this.footerConfigName;
     }
 
     // Data Table mode related getters
@@ -347,7 +351,7 @@ export default class SfpegListCmp extends LightningElement {
     // Component initialisation  
     //----------------------------------------------------------------      
     connectedCallback() {
-        if (this.isDebug) console.log('connected: START');
+        if (this.isDebug) console.log('connected: START List for config ',this.configName);
         if (this.isDebug) console.log('connected: recordId provided ',this.recordId);
         if (this.isDebug) console.log('connected: objectApiName provided ',this.objectApiName);
         if (this.isDebug) console.log('connected: userId provided ',this.userId);
@@ -361,7 +365,7 @@ export default class SfpegListCmp extends LightningElement {
         }
 
         if ((!this.configName) || (this.configName === 'N/A')){
-            console.warn('connected: END / missing configuration');
+            console.warn('connected: END List / missing configuration');
             this.errorMsg = 'Missing configuration!';
             this.isReady = true;
             return;
@@ -369,7 +373,7 @@ export default class SfpegListCmp extends LightningElement {
 
         if (this.isDebug) console.log('connected: config name fetched ', this.configName);
         if (LIST_CONFIGS[this.configName]) {
-            if (this.isDebug) console.log('connected: END / configuration already available');
+            if (this.isDebug) console.log('connected: END List / configuration already available');
             //this.errorMsg = 'Local configuration fetched: ' + LIST_CONFIGS[this.configName].label;
             this.configDetails = LIST_CONFIGS[this.configName];
             this.finalizeConfig();
@@ -395,7 +399,7 @@ export default class SfpegListCmp extends LightningElement {
                             template: (result.QueryInput__c || '{}'),
                             tokens: sfpegMergeUtl.sfpegMergeUtl.extractTokens((result.QueryInput__c || '{}'),this.objectApiName)
                         },
-                        rowActions: (result.RowActions__c || 'N/A')
+                        rowActions: result.RowActions__c
                     };
                     this.configDetails = LIST_CONFIGS[this.configName];
 
@@ -426,21 +430,21 @@ export default class SfpegListCmp extends LightningElement {
                     }
 
                     this.finalizeConfig();
-                    if (this.isDebug) console.log('connected: END / configuration parsed');
+                    if (this.isDebug) console.log('connected: List configuration parsed');
                     //this.errorMsg = 'Configuration fetched and parsed: ' + LIST_CONFIGS[this.configName].label;
                 }
                 catch (parseError){
-                    console.warn('connected: END / configuration parsing failed ',parseError);
+                    console.warn('connected: List configuration parsing failed ',parseError);
                     this.errorMsg = 'Configuration parsing failed: ' + parseError;
                     this.isReady = true;
                 }
                 finally {
-                    if (this.isDebug) console.log('connected: END');
+                    if (this.isDebug) console.log('connected: END List');
                     //this.isReady = true;
                 }
             })
             .catch( error => {
-                console.warn('connected: END / configuration fetch error ',error);
+                console.warn('connected: END List / configuration fetch error ',error);
                 this.errorMsg = 'Configuration fetch error: ' + error;
                 this.isReady = true;
             });
@@ -864,6 +868,9 @@ export default class SfpegListCmp extends LightningElement {
                 this.resultList = null;
                 this.selectedRecords = [];
                 this.errorMsg = 'Data fetch failed : ' + ((error.body || error).message || error);
+                let loadEvt = new CustomEvent('load', { detail: null });
+                if (this.isDebug) console.log('triggerParentEvt: triggering load event for parent component ', JSON.stringify(loadEvt));
+                this.dispatchEvent(loadEvt);
             }).finally( () => {
                 sfpegMergeUtl.sfpegMergeUtl.isDebug = false;
                 this.isLoading = false;

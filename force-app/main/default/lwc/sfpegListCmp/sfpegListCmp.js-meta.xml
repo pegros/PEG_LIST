@@ -83,6 +83,11 @@
                         type="String"
                         datasource="apex://sfpegActionSelector_CTL"
                         description="(Developer)Name of the Action Configuration record to be used in header (see sfpegAction__mdt)."/>
+            <property   name="footerConfigName"
+                        label="Footer Action Configuration"
+                        type="String"
+                        datasource="apex://sfpegActionSelector_CTL"
+                        description="(Developer)Name of the Action Configuration record to be used in footer (see sfpegAction__mdt)."/>
             <property   name="maxSize"
                         label="Max. #Actions Displayed"
                         type="Integer"
