@@ -65,7 +65,7 @@ display of record number, number of header actions displayed before overflow...)
 
 However, most of the configuration lies in two custom metadata referenced records (see orange zones below):
 * a **sfpegList__mdt** record for the data fetch & display
-* a **sfpegAction__mdt** record for the custom header actions (see **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** for details)
+* a **sfpegAction__mdt** record for the custom header and footer actions (see **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** for details)
 
 ![List App Builder Configuration](/media/sfpegListConfiguration.png)
 
@@ -82,8 +82,8 @@ components. It contains multiple sections of properties to respectively configur
 
 _Note_: Context merge is systematically applied to the `query input` property upon initial load/refresh
 (see **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** component) to adapt the query context to the display environment.
-Label related ***merge tokens*** are also evaluated in the `Display Configuration` property to adapt labels to the 
-user language.
+Label related ***merge tokens*** are also evaluated in the `Display Configuration` property to adapt
+labels to the user language.
 
 
 The **Query** section defines how data are retrieved: 
