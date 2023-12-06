@@ -121,7 +121,7 @@ const sfpegJsonUtl = {
             if (typeof jsonObject[fieldName] == 'object'){
                 if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: processing subObject', jsonObject[fieldName]);
                
-                if ((jsonObject[fieldName]).constructor === [].constructor) {
+                if ((jsonObject[fieldName])?.constructor === [].constructor) {
                     if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: flattening list',fieldName);
                     sfpegJsonUtl.flattenJsonList(jsonObject[fieldName],jsonChildren);
                     if (sfpegJsonUtl.isDebug) console.log('flattenJsonObject: subList after flatten step 1', jsonObject[fieldName]);
