@@ -391,7 +391,7 @@ public with sharing class sfpegList_CTL {
 		System.debug(LoggingLevel.FINE,'getConfig: START for name ' + name);
 
 		List<sfpegList__mdt> configs = [    SELECT	MasterLabel, QueryType__c, QueryClass__c, QuerySOQL__c,
-													QueryCount__c, QueryOrderBy__c, QueryOrder__c,
+													QueryCount__c, QueryOrderBy__c, QueryOrder__c, Permission__c,
 													BypassSharing__c, BypassEscaping__c, BypassFLS__c
 											FROM sfpegList__mdt
 											WHERE DeveloperName =  :name];
@@ -400,8 +400,15 @@ public with sharing class sfpegList_CTL {
 			throw new AuraHandledException('Configuration not found with name ' + name);
 		}
 		CONFIG = configs[0];
-		System.debug(LoggingLevel.FINE,'getConfig: END ' + configs[0].MasterLabel);
-		return configs[0];
+		System.debug(LoggingLevel.FINEST,'getConfig: configuration found');
+
+		if ((String.isNotEmpty(CONFIG.Permission__c)) && (!FeatureManagement.checkPermission(CONFIG.Permission__c))) {
+			System.debug(LoggingLevel.ERROR,'getConfig: END KO / User has no access to configuration ' + CONFIG.MasterLabel);
+			throw new AuraHandledException('User has not the permission required for the configuration (' + CONFIG.Permission__c + ')');
+		}
+
+		System.debug(LoggingLevel.FINE,'getConfig: END OK for ' + CONFIG.MasterLabel);
+		return CONFIG;
 	}
 
 	/***

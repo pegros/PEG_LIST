@@ -4,6 +4,7 @@
     <columns>MasterLabel</columns>
     <columns>DeveloperName</columns>
     <columns>Scope__c</columns>
+    <columns>Permission__c</columns>
     <columns>QueryType__c</columns>
     <columns>QueryClass__c</columns>
     <columns>DisplayType__c</columns>
