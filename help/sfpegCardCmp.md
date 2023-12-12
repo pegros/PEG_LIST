@@ -94,6 +94,11 @@ definition objects
   * It may include `isCollapsible` an `isCollapsed` boolean properties to set a section
   as collapsible and set its initial state
   * It may also include a `size` one to override the main default value for the section
+* `context` defines a set of fields to be loaded in the context in edit mode but hidden to the
+user (e.g. a picklist field controlling other picklist fields editable in the card)
+  * It has the same structure as the `fields`property, only the `name` of each field definition
+  being used
+
 
 ```
 {

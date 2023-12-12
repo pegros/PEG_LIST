@@ -168,6 +168,9 @@ export default class SfpegCardDsp extends LightningElement {
     get debugSections() {
         return (this.configDetails ? JSON.stringify(this.configDetails.sections) : "...");
     }
+    get debugContext() {
+        return (this.configDetails ? JSON.stringify(this.configDetails.context) : "...");
+    }
 
     //----------------------------------------------------------------
     // Component initialisation  
@@ -237,6 +240,7 @@ export default class SfpegCardDsp extends LightningElement {
                         size:       config.size || 12,
                         fields:     config.fields || [],
                         sections:   config.sections || [],
+                        context:    config.context,
                         density:    config.density || 'auto'
                     };
                     this.configDetails = CARD_CONFIGS[this.configName];

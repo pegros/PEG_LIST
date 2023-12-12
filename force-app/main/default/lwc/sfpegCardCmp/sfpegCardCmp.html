@@ -74,31 +74,6 @@
             </template>
             -->
 
-            <!-- Debug information display -->
-            <template if:true={isDebug}>
-                <div slot="footer" class="slds-text-align_left"  >
-                    <dl class="slds-dl_horizontal slds-text-align_left">
-                        <dt class="slds-dl_horizontal__label slds-truncate">Configuration:</dt>
-                        <dd class="slds-dl_horizontal__detail">Query: {configName} / Header Actions: {actionConfigName}</dd>
-                        <dt class="slds-dl_horizontal__label slds-truncate">Record:</dt>
-                        <dd class="slds-dl_horizontal__detail">{objectApiName} - {recordId}</dd>
-                        <dt class="slds-dl_horizontal__label slds-truncate">Target:</dt>
-                        <dd class="slds-dl_horizontal__detail">{debugTarget} - {formRecordId}</dd>
-                        <dt class="slds-dl_horizontal__label slds-truncate">Fields:</dt>
-                        <dd class="slds-dl_horizontal__detail">{debugFields}</dd>
-                        <dt class="slds-dl_horizontal__label slds-truncate">Sections:</dt>
-                        <dd class="slds-dl_horizontal__detail">{debugSections}</dd>
-                        <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
-                        <dd class="slds-dl_horizontal__detail">
-                            <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegCardCmp.md"
-                                                        label="See Help on GitHub"
-                                                        target="_blank">
-                            </lightning-formatted-url>
-                        </dd>
-                    </dl>
-                </div>
-            </template>
-
             <!-- Ready state Content display -->
             <template if:true={isReady}>
                 
@@ -322,6 +297,19 @@
                                 </div>
                             </template>
 
+                            <!-- Hidden Context Fields -->
+                            <template lwc:if={configDetails.context}>
+                                <lightning-layout  multiple-rows="true" pull-to-boundary="small" class="slds-hide">
+                                    <template for:each={configDetails.context} for:item="iterContext">
+                                        <lightning-layout-item  key={iterContext.name}      size="12" 
+                                                                padding="horizontal-small"  class="slds-var-m-bottom_xxx-small fieldItem" >
+                                            <lightning-output-field field-name={iterContext.name}>
+                                            </lightning-output-field>
+                                        </lightning-layout-item>
+                                    </template>
+                                </lightning-layout>
+                            </template>
+
                             <!-- Save / Cancel buttons -->
                             <div class="slds-p-vertical_x-small slds-theme_shade editActions">
                                 <div class="warningMessages slds-m-bottom_x-small">
@@ -355,6 +343,34 @@
                     </lightning-spinner>
                 </div>
             </template>
+
+            <!-- Debug information display -->
+            <template if:true={isDebug}>
+                <div slot="footer" class="slds-text-align_left"  >
+                    <dl class="slds-dl_horizontal slds-text-align_left">
+                        <dt class="slds-dl_horizontal__label slds-truncate">Configuration:</dt>
+                        <dd class="slds-dl_horizontal__detail">Query: {configName} / Header Actions: {actionConfigName}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Record:</dt>
+                        <dd class="slds-dl_horizontal__detail">{objectApiName} - {recordId}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Target:</dt>
+                        <dd class="slds-dl_horizontal__detail">{debugTarget} - {formRecordId}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Fields:</dt>
+                        <dd class="slds-dl_horizontal__detail">{debugFields}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Sections:</dt>
+                        <dd class="slds-dl_horizontal__detail">{debugSections}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Context:</dt>
+                        <dd class="slds-dl_horizontal__detail">{debugContext}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+                        <dd class="slds-dl_horizontal__detail">
+                            <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegCardCmp.md"
+                                                        label="See Help on GitHub"
+                                                        target="_blank">
+                            </lightning-formatted-url>
+                        </dd>
+                    </dl>
+                </div>
+            </template>
+
             <!-- Spinner display (DML Update) -->
             <template if:true={isUpdating}>
                 <lightning-spinner alternative-text="Updating" size="medium">
