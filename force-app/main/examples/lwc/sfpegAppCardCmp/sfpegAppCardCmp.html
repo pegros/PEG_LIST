@@ -15,8 +15,27 @@
                             object-api-name={objectApiName}
                             record-id={mergedRecordId}
                             user-id={userId}
-                            is-debug={isDebugFine} 
+                            is-debug={isDebug} 
                             is-debug-fine={isDebugFine} >
         </c-sfpeg-card-cmp>
+    </template>
+    <template lwc:if={isDebug}>
+        <div class="slds-box slds-m-top_small slds-theme_default"  >
+            <dl class="slds-dl_horizontal">
+                <dt class="slds-dl_horizontal__label slds-truncate">Configurations:</dt>
+                <dd class="slds-dl_horizontal__detail">Card: {configName} / Header: {actionConfigName}</dd>
+                <dt class="slds-dl_horizontal__label slds-truncate">Object</dt>
+                <dd class="slds-dl_horizontal__detail">{objectApiName}</dd>
+                <dt class="slds-dl_horizontal__label slds-truncate">Record ID</dt>
+                <dd class="slds-dl_horizontal__detail">{recordIdStr} ==> {mergedRecordId}</dd>
+                <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+                <dd class="slds-dl_horizontal__detail">
+                    <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegAppCardCmp.md"
+                                                label="See Help on GitHub"
+                                                target="_blank">
+                    </lightning-formatted-url>
+                </dd>
+            </dl>
+        </div>
     </template>
 </template>
