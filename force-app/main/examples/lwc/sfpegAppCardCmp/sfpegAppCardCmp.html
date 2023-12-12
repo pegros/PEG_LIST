@@ -1,0 +1,22 @@
+<template>
+    <template lwc:if={mergedRecordId}>
+        <c-sfpeg-card-cmp   card-class={cardClass}
+                            card-title={cardTitle}
+                            card-icon={cardIcon}
+                            button-size={buttonSize}
+                            config-name={configName}
+                            is-read-only={isReadOnly}
+                            is-collapsible={isCollapsible}
+                            is-collapsed={isCollapsed}
+                            action-config-name={actionConfigName}
+                            max-size={maxSize}
+                            use-d-m-l={useDML}
+                            is-confirmed={isConfirmed}
+                            object-api-name={objectApiName}
+                            record-id={mergedRecordId}
+                            user-id={userId}
+                            is-debug={isDebugFine} 
+                            is-debug-fine={isDebugFine} >
+        </c-sfpeg-card-cmp>
+    </template>
+</template>
