@@ -266,7 +266,7 @@ export default class SfpegListCmp extends LightningElement {
     get showPagination() {
         //if (this.isDebug) console.log('showPagination: showPagination? ', this.configDetails.query.doPagination);
         return (    this.isReady 
-                &&  (this.configDetails.query.doPagination)
+                &&  (this.configDetails?.query?.doPagination)
                 &&  ((this.resultListOrig || this.resultList || []).length < (this.recordCount || 0)) );
         //return ((this.configDetails.query.doPagination));
     }
@@ -340,6 +340,9 @@ export default class SfpegListCmp extends LightningElement {
     }
     get tileSize() {
         return 12 / (this.configDetails.display.cardNbr || 1);
+    }
+    get debugPagination() {
+        return '' + this.configDetails?.display?.keyField + ' / ' + this.configDetails?.query?.orderByField;
     }
 
     // Interface Getters
