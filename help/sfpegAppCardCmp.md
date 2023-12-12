@@ -72,8 +72,9 @@ Then, add a simple **sfpegAction** metadata configuration to navigate to the act
 
 ![Header Action Config](/media/sfpegAppCardActionConfig.png)
 
-At last, configure the **sfpegAppCardCmp** component in the App Builder by injecting the Knowledge
-Article ID through a **sfpegMergeUtl** template string.
+At last, after having created your Knowledge Article, configure the **sfpegAppCardCmp** component
+in the App Builder by injecting the Knowledge Article ID via a **sfpegMergeUtl** template string
+containing its `UrlName`.
 
 ![App Card Config](/media/sfpegAppCardConfig.png)
 
