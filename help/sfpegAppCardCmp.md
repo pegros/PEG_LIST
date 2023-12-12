@@ -27,7 +27,8 @@ The only additional properties are:
 * `Object API Name` to explicitly define the Object displayed in the Card
 * `Record ID` to explicitly provide the ID o the record displayed in the Card
 
-
+For the `Record ID` property, all **sfpegMergeUtl** supported tokens are available 
+but the `RCD`, `ROW` and `CTX` ones are available.
 
 
 ### Metadata Configuration
@@ -83,7 +84,7 @@ containing its `UrlName`.
 
 ## Technical Details
 
-If the record ID is not available (e.g. the **sfpegMergeUtl** template is incorrect), no card is displayed.
+This `Record ID` property is evaluated before actually displaying the **sfpegCardCmp** component. 
+If the record ID is not available (e.g. if the **sfpegMergeUtl** template is incorrect or its
+underlying context fetch queries return no data), no card is displayed.
 
-All **sfpegMergeUtl** supported but the `RCD`, `ROW` and `CTX` ones are available for the `Record ID` 
-property.
