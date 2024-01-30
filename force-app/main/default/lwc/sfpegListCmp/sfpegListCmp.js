@@ -1212,14 +1212,21 @@ export default class SfpegListCmp extends LightningElement {
         if (this.isDebug) console.log('handleExport: START');
 
         let fieldList = [];
-        if (this.isDebug) console.log('handleExport: fieldList init ', fieldList);
-        if (this.configDetails.display.title) fieldList.push(this.configDetails.display.title.fieldName);
-        if (this.isDebug) console.log('handleExport: fieldList init ', fieldList);
+        if (this.configDetails.display.title) {
+            fieldList.push(this.configDetails.display.title.fieldName);
+            if (this.isDebug) console.log('handleExport: title added in fieldList ', JSON.stringify(fieldList));
+        }
         this.configDetails.display.columns.forEach(iter => fieldList.push(iter.fieldName));
-        if (this.isDebug) console.log('handleExport: fieldList init ', fieldList);
+        if (this.isDebug) console.log('handleExport: columns added in fieldList ', JSON.stringify(fieldList));
+        if (this.configDetails.display.details) {
+            this.configDetails.display.details.forEach(iter => fieldList.push(iter.fieldName));
+            if (this.isDebug) console.log('handleExport: details added in fieldList ', JSON.stringify(fieldList));
+        }
+        if (this.isDebug) console.log('handleExport: fieldList finalized ', JSON.stringify(fieldList));
 
         sfpegCsvUtl.sfpegCsvUtl.isDebug = this.isDebug;
-        sfpegCsvUtl.sfpegCsvUtl.export(this.cardTitle,this.resultList,fieldList);
+        if (this.isDebug) console.log('handleExport: display type ', this.configDetails.type);
+        sfpegCsvUtl.sfpegCsvUtl.export(this.cardTitle,this.resultList,fieldList, (this.configDetails.type === 'TreeGrid'), this.configDetails.display.keyField);
         sfpegCsvUtl.sfpegCsvUtl.isDebug = false;
 
         if (this.isDebug) console.log('handleExport: END ');
