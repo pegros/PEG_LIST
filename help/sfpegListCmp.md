@@ -139,7 +139,7 @@ the JSON display configuration of the standard
     item) to be displayed in each tile / at the end of each _DataTable_/_TreeGrid_ row (see `Row Actions` below).
     * An optional `variant` property enables to alter the display of the tiles
         * For now, two values are available, i.e. _base_ for default tile box display or _timeline_ for timeline like display (no box, vertical grey border under the icon)
-    * An optional `details` property enabling to set a second list of fields (similar to the `fields` one)
+    * An optional `details` property enabling to set a second list of fields (similar to the `columns` one)
         * setting this property activates an expand/collapse on the tile content
         * when expanded, the fields of this list are displayed below the main ones in a _cardList_ mode
     * An optional `expandAll` property enabling to force all rows of a _TreeGrid_ to be fully expanded by default.
