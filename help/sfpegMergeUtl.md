@@ -44,6 +44,8 @@ As a baseline, the **sfpegMergeUtl** component provides the following set of tok
     * The **NPERM** prefix may be used instead of **PERM** to check the opposite (user has not the permission)
 * **VFP.pageName** to get the full URL of a VF page, i.e. including the security token
     * This is required when the target page has CSRF protection activated
+* **DMN.siteName** to get the root URL of a Site from its name (or at least one of the possible ones)
+    * This may be useful to redirect to another site when in Guest mode; Network switching (see below) indeed does not work in such a case.
 
 As an example, the following configuration of a **[sfpegActionBarCmp](/help/sfpegListCmp.md)** component
 leverages multiple tokens.

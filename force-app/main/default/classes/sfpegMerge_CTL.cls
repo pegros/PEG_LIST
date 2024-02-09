@@ -152,6 +152,33 @@ public with sharing class sfpegMerge_CTL {
 					}
 					System.debug('getValues: Custom Permissions (disabled) processed' + iterResults);
 				}
+				when 'DMN' {
+					// Need to split queries on Site, DomainSite and Domain as lookup fields are not
+					// fetched in SOQL queries executed in Apex. 
+					System.debug('getValues: processing DMN page URLs' + iterList);
+					List<String> iterNames = String.join(iterList, ';').split(';');
+					Map<Id,Site> siteMap = new Map<ID,Site>([SELECT Id, Name FROM Site WHERE Name IN :iterNames]);
+					System.debug('getValues: siteMap fetched ' + siteMap);
+					List<DomainSite> domainSiteList = [SELECT DomainId, SiteId FROM DomainSite WHERE SiteId IN :siteMap.keySet()];
+					System.debug('getValues: domainSiteList  fetched ' + domainSiteList);
+					Set<Id> siteIds = new Set<Id>();
+					Map<Id,ID> siteDomainMap = new Map<Id,ID>();
+					for (DomainSite iterDS : domainSiteList) { siteIds.add(iterDS.DomainId); siteDomainMap.put(iterDS.SiteId,iterDS.DomainId);}
+					System.debug('getValues: siteIds extracted ' + siteIds);
+					System.debug('getValues: siteDomainMap extracted ' + siteDomainMap);
+					Map<ID,Domain> domainMap = new Map<ID,Domain>([SELECT Domain FROM Domain WHERE Id in :siteIds]);
+					System.debug('getValues: domainMap fetched ' + domainMap);
+
+					for (Site iterS : siteMap.values()) {
+						System.debug(LoggingLevel.FINE,'getValues: processing site ' + iterS);
+						ID iterSid = siteDomainMap.get(iterS.Id);
+						System.debug(LoggingLevel.FINE,'getValues: domain ID extracted ' + iterSid);
+						Domain iterSd = domainMap.get(iterSid);
+						System.debug(LoggingLevel.FINE,'getValues: domain data fetched ' + iterSd);
+						iterResults.put((String)iterS.Name,iterSd.Domain);
+					}
+					System.debug('getValues: DMNs processed' + iterResults);
+				}
 				when else {
 					System.debug('getValues: processing registered query');
 
