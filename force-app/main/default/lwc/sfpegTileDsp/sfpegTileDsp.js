@@ -276,8 +276,12 @@ export default class SfpegTileDsp extends LightningElement {
                         }
                         else {
                             if (this.isDebug) console.log('resetDisplayData: setting static disabled value ');
-                            newItem.disabled = (String(iterItem.disabled).toLowerCase() == "true");
-                            //newItem.disabled = eval(iterItem.disabled);
+                            if (this.configDetails.isDynamicCondition) {
+                                newItem.disabled = eval(iterItem.disabled);
+                            }
+                            else {
+                                newItem.disabled = (String(iterItem.disabled).toLowerCase() == "true");
+                            }
                         }
                     }
                     if (iterItem.hidden) {
@@ -287,8 +291,12 @@ export default class SfpegTileDsp extends LightningElement {
                         }
                         else {
                             if (this.isDebug) console.log('resetDisplayData: setting static hidden value ');
-                            newItem.hidden = (String(iterItem.hidden).toLowerCase() == "true");
-                            //newItem.disabled = eval(iterItem.disabled);
+                            if (this.configDetails.isDynamicCondition) {
+                                newItem.disabled = eval(iterItem.disabled);
+                            }
+                            else {
+                                newItem.hidden = (String(iterItem.hidden).toLowerCase() == "true");
+                            }
                         }
                     }
                     newMenu.push(newItem);

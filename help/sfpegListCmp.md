@@ -721,6 +721,10 @@ to `true` in the configuration:
 ...
 ```
 
+In addition, by setting `"isDynamicCondition":true` in addition to `"isDynamicMenu":true`
+in the configuration, the `disabled` and `hidden` parameters may be dynamically evaluated
+(via `eval()` statement) out of a textual condition instead of a pure boolean value. 
+
 
 ### List Refresh after Flow Popup Execution
 
