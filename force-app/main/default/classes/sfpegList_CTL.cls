@@ -603,13 +603,13 @@ public with sharing class sfpegList_CTL {
 		}
 
 		if (bypassFLS) {
-			System.debug('executeSoql:END / FLS field stripping bypassed');
+			System.debug('executeSoql:END / FLS field stripping bypassed returning #items ' + results.size());
 			return results;
 		}
 		else {
-			System.debug('executeSoql: enforcing FLS field stripping');
+			System.debug('executeSoql: enforcing FLS field stripping on #items ' + results.size());
 			SObjectAccessDecision securityDecision = Security.stripInaccessible(AccessType.READABLE, results);
-			System.debug('executeSoql:END');
+			System.debug('executeSoql:END ');
 			return securityDecision.getRecords();
 		}
 	}
