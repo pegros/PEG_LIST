@@ -8,6 +8,8 @@
         <target>lightning__AppPage</target>
         <target>lightning__HomePage</target>
         <target>lightning__RecordPage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
     </targets>
 
     <targetConfigs>
@@ -32,6 +34,35 @@
                         type="Boolean"
                         default="false"
                         description="Flag to show debug information."/>
+        </targetConfig>
+        <targetConfig targets="lightningCommunity__Default">
+            <property   name="configName"
+                        label="Action Configuration"
+                        type="String"
+                        datasource="apex://sfpegActionSelector_CTL"
+                        description="(Developer)Name of the Action Configuration record to be used (see sfpegAction__mdt)."/>
+
+            <property   name="actionName"
+                        label="Action Name"
+                        type="String"
+                        description="Name of the Action within the Configuration to be triggered"/>
+
+            <property   name="isDebug"
+                        label="Debug?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information."/>
+
+            <property   name="objectApiName"
+                        label="Object API Name"
+                        type="String"
+                        default="{!objectApiName}"
+                        description="API Name of Current Object."/>
+            <property   name="recordId"
+                        label="Record ID"
+                        type="String"
+                        default="{!recordId}"
+                        description="ID of current Record"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
