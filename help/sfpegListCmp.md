@@ -661,6 +661,12 @@ The _TreeGrid_ layout configuration looks as follows:<br/>
 }
 ```
 
+### Hierarchy Query Execution
+
+Please refer to **[sfpegHierarchy_SVC](/help/sfpegHierarchy.md)** extension Apex class
+to get an example about how to easily generate a tree-grid with all the sub-hierarchy
+of a record.
+
 
 ### Dynamically Disabled Row Actions
 
