@@ -1,4 +1,4 @@
-# ![Logo](/media/Logo.png) &nbsp; **sfpegMMultiQueries_SVC** Extension
+# ![Logo](/media/Logo.png) &nbsp; **sfpegMultiQueries_SVC** Extension
 
 ## Introduction
 
@@ -27,7 +27,7 @@ query templates to execute.
 ## Configuration Example
 
 The following example shows a **[sfpegListCmp](/help/sfpegListCmp.md)** in a **CourseOffering** record page
-providing the the previous and next **CourseOffering** for the same parent **TrnCourse** record based on 
+providing the previous and next **CourseOffering** for the same parent **TrnCourse** record based on 
 their `StartDate` values (these are standard **Public Sector Solution** Industry objects).
 
 ![Multi SOQL Queries](/media/sfpegMultiQueries.png)
@@ -72,5 +72,5 @@ This means that pagination is (currently) not supported.
 There is also no record deduplication between queries, all results of each individual query being
 appended to the global result list.
 
-This class comes with the **sfpegMultiQueries_SVC** test class requiring 3 test custom metadata
+This class comes with the **sfpegMultiQueries_TST** test class requiring 3 test custom metadata
 (**sfpegTestMultiQueriesOK**, **sfpegTestMultiQueriesKOparse**, **sfpegTestMultiQueriesKOquery**).
