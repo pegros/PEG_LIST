@@ -56,7 +56,7 @@ public with sharing class sfpegMerge_CTL {
 		Set<String> keySet = new Set<String>();
 		for (Object iter : configMap.keySet()) keySet.add((String)iter);
 		List<sfpegConfiguration__mdt> refConfig =
-			[   select Field__c, Query__c, DeveloperName from sfpegConfiguration__mdt
+			[   select Field__c, TargetField__c, Query__c, DeveloperName from sfpegConfiguration__mdt
 				where  DeveloperName in :keySet];
 		Map<String,sfpegConfiguration__mdt> refMap = new Map<String,sfpegConfiguration__mdt>();
 		if (refConfig != null) {
@@ -192,8 +192,11 @@ public with sharing class sfpegMerge_CTL {
 					List<sObject> resultList = database.query(iterQuery);
 					System.debug('getValues: resultList fetched ' + resultList );
 
+					String targetField = (String.isBlank(iterConfig.TargetField__c) ? 'Id' : iterConfig.TargetField__c);
+					System.debug('getValues: targetField init ' + targetField );
 					for (SObject iterObj : resultList) {
-						iterResults.put((String)(iterObj.get(iterConfig.Field__c)),iterObj.Id);
+						//iterResults.put((String)(iterObj.get(iterConfig.Field__c)),iterObj.Id);
+						iterResults.put((String)(iterObj.get(iterConfig.Field__c)),iterObj.get(targetField));
 					}
 					System.debug('getValues: items processed' + iterResults);
 				}

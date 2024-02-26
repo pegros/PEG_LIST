@@ -211,7 +211,13 @@ The configuration of it is quite simple.<br/>
 In this example, roles may be referenced in creation actions with the `{{{ROLE.<SourceSystemId__c>}}}` keyword.
 * _Name_ should contain the token prefix (here `ROLE`).
 * _Field_ should indicate which field identifies the token value in the merge syntax for the considered token prefix (here `SourceSystemId__c`).
+* _Target Field_ should indicate which field provides the token value in the merge syntax for the considered token prefix (usually `Id`).
 * _Query_ should provide the SOQL query template to be used by the **sfpegMergeUtl** component to fetch the values (the list of field values requested being automatically added after the `in` keyword).
+
+ℹ️ The SOQL query should typically look like:
+```
+SELECT _Target Field_, _Field_ FROM <OBJECT> WHERE _Field_ IN
+```
 
 
 ### Network Token Example
