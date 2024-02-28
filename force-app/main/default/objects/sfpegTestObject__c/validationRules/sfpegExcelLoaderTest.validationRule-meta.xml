@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>sfpegExcelLoaderTest</fullName>
-    <active>true</active>
-    <description>Validation rule to generate DML exception for sfpegExcelLoader_TST class</description>
-    <errorConditionFormula>Name == &apos;sfpegExcelLoaderError&apos;</errorConditionFormula>
-    <errorDisplayField>Name</errorDisplayField>
-    <errorMessage>No record with name sfpegExcelLoaderError may be created</errorMessage>
-</ValidationRule>
