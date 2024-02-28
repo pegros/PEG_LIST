@@ -84,6 +84,20 @@ public class sfpegMerge_TST {
 	@isTest
 	static void testGetConfig() {
 		System.debug('testGetConfig: START');
+
+		sfpegTestSetting__c newSetting = new sfpegTestSetting__c();
+		newSetting.isOK__c = true;
+		newSetting.stringConfig__c = 'testOrg';
+		insert newSetting;
+		System.debug('testGetConfig: test Org custom setting record inserted ' + newSetting);
+
+		sfpegTestSetting__c newUserSetting = new sfpegTestSetting__c();
+		newUserSetting.isOK__c = false;
+		newUserSetting.stringConfig__c = 'testUser';
+		newUserSetting.SetupOwnerId = UserInfo.getUserId();
+		insert newUserSetting;
+		System.debug('testGetConfig: test User custom setting record inserted ' + newUserSetting);
+
 		Test.startTest();
 
 		try {
@@ -157,7 +171,8 @@ public class sfpegMerge_TST {
 			'RT' => (Object) (new List<String>{'sfpegTestObject__c.sfpegRT1','sfpegTestObject__c.sfpegRT2'}),
 			'PERM' => (Object) (new List<String>{'sfpegTestPermission'}),
 			'NPERM' => (Object) (new List<String>{'sfpegTestPermission'}),
-			'RPT' => (Object) (new List<String>{'sfpegTestReport'})
+			'RPT' => (Object) (new List<String>{'sfpegTestReport'}),
+			'CST' => (Object) (new List<String>{'sfpegTestSetting__c.isOK__c','sfpegTestSetting__c.stringConfig__c'})
 		};
 		System.debug('testGetConfig: configMap init ' + configMap);
 		try {

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>Hierarchy Custom Setting to support the test classes of the Apex controllers for the sfpeg LWC components</description>
+    <enableFeeds>false</enableFeeds>
+    <label>sfpegTestSetting</label>
+    <visibility>Protected</visibility>
+</CustomObject>

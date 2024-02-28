@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>sfpegTestSetting__c</name>
+    </customSettingAccesses>
     <description>Permission Set providing access to the custom elements required for Apex tests of the List components</description>
     <fieldPermissions>
         <editable>true</editable>

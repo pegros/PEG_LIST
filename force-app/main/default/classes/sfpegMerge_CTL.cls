@@ -152,6 +152,68 @@ public with sharing class sfpegMerge_CTL {
 					}
 					System.debug('getValues: Custom Permissions (disabled) processed' + iterResults);
 				}
+				when 'CST' {
+					System.debug('getValues: processing Custom Settings');
+
+					List<String> whereParts = new List<String>();
+					whereParts.add(UserInfo.getOrganizationId());
+					whereParts.add(UserInfo.getProfileId());
+					whereParts.add(UserInfo.getUserId());
+					System.debug('getValues: IDs for WHERE clause fetched ' + whereParts);
+					String soqlWhere = ' WHERE SetupOwnerId in (\'' + String.join(whereParts, '\',\'') + '\')';
+					System.debug('getValues: WHERE clause init ' + soqlWhere);
+
+					Map<String,Set<String>> settingMap = new Map<String,Set<String>>();
+					for (Object iterCS : iterList) {
+						System.debug(LoggingLevel.FINE,'getValues: analysing Custom Settings ' + iterCS);
+						List<String> iterCSparts = ((String)iterCS).split('\\.');
+						System.debug(LoggingLevel.FINE,'getValues: setting parts split ' + iterCSparts);
+						Set<String> iterCSfields = settingMap.get(iterCSparts[0]);
+						if (iterCSfields == null) {
+							System.debug(LoggingLevel.FINE,'getValues: registering new Settings ' + iterCS);
+							iterCSfields = new Set<String>();
+							settingMap.put(iterCSparts[0],iterCSfields);
+						}
+						iterCSfields.add(iterCSparts[1]);
+					}
+					System.debug(LoggingLevel.FINE,'getValues: settingMap init ' + settingMap);
+					
+					for (String iterCSkey : settingMap.keySet()) {
+						System.debug(LoggingLevel.FINE,'getValues: fetching fields for Custom Settings ' + iterCSkey);
+
+						String iterQuery = 'SELECT SetupOwnerId,' + String.join(new List<String>(settingMap.get(iterCSkey)), ',') + ' FROM ' + iterCSkey + soqlWhere;
+						System.debug(LoggingLevel.FINE,'getValues: query prepared ' + iterQuery);
+
+						List<SObject> iterCSvalues = database.query(iterQuery);
+						System.debug(LoggingLevel.FINE,'getValues: values fetched ' + iterCSvalues);
+
+						SObject iterCSvalue = null;
+						for (SObject iterVal : iterCSvalues) {
+							if (iterCSvalue == null) {
+								System.debug(LoggingLevel.FINE,'getValues: first value set ' + iterVal);
+								iterCSvalue = iterVal;
+							}
+							else if (iterVal.get('SetupOwnerId') == UserInfo.getOrganizationId()) {
+								System.debug(LoggingLevel.FINE,'getValues: ignoring Org default');
+							}
+							else if (iterVal.get('SetupOwnerId') == UserInfo.getUserId()) {
+								System.debug(LoggingLevel.FINE,'getValues: overriding with user value');
+								iterCSvalue = iterVal;
+							}
+							else if (iterCSvalue.get('SetupOwnerId') == UserInfo.getOrganizationId()) {
+								System.debug(LoggingLevel.FINE,'getValues: overriding with profile value');
+								iterCSvalue = iterVal;
+							}
+						}
+						System.debug(LoggingLevel.FINE,'getValues: applicable value determined ' + iterCSvalue);
+
+						for (String iterCSfield : settingMap.get(iterCSkey)) {
+							System.debug(LoggingLevel.FINE,'getValues: registering field ' + iterCSfield);
+							iterResults.put(iterCSkey + '.' + iterCSfield,iterCSvalue.get(iterCSfield));
+						}
+					}
+					System.debug('getValues: Custom Settings processed' + iterResults);
+				}
 				when 'DMN' {
 					// Need to split queries on Site, DomainSite and Domain as lookup fields are not
 					// fetched in SOQL queries executed in Apex. 
