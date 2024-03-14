@@ -121,7 +121,8 @@ public with sharing class sfpegMerge_CTL {
 							System.debug(LoggingLevel.WARN,'getValues: END - Unsupported Record type format (Record type ID fetch error)');
 							throw new AuraHandledException('Record type ID fetch error: ' + iterParts + ' should be in objectApiName.rtDevName format');
 						}
-						Schema.RecordTypeInfo iterDesc = Schema.getGlobalDescribe().get(iterParts[0])?.getDescribe().getRecordTypeInfosByDeveloperName()?.get(iterParts[1]);
+						//Schema.RecordTypeInfo iterDesc = Schema.getGlobalDescribe().get(iterParts[0])?.getDescribe().getRecordTypeInfosByDeveloperName()?.get(iterParts[1]);
+						Schema.RecordTypeInfo iterDesc = ((SObject)Type.forName('Schema.' + iterParts[0]).newInstance()).getSObjectType()?.getDescribe().getRecordTypeInfosByDeveloperName()?.get(iterParts[1]);
 						System.debug(LoggingLevel.FINE,'getValues: RT desc fetched ' + iterDesc);
 						if (iterDesc == null) {
 							System.debug(LoggingLevel.WARN,'getValues: END - Unfound Record type ' + iterParts);
@@ -400,7 +401,8 @@ public with sharing class sfpegMerge_CTL {
 			String[] iterParts = ((String)iter).split('\\.');
 			System.debug(LoggingLevel.FINE,'replaceFieldLabelTokens: field label parts extracted ' + iterParts);
 
-			Schema.SObjectField iterDesc = Schema.getGlobalDescribe().get(iterParts[0])?.getDescribe().fields.getMap().get(iterParts[1]);
+			//Schema.SObjectField iterDesc = Schema.getGlobalDescribe().get(iterParts[0])?.getDescribe().fields.getMap().get(iterParts[1]);
+			Schema.SObjectField iterDesc = ((SObject)Type.forName('Schema.' + iterParts[0]).newInstance()).getSObjectType()?.getDescribe().fields.getMap().get(iterParts[1]);
 			System.debug(LoggingLevel.FINE,'replaceFieldLabelTokens: field desc fetched ' + iterDesc);
 			if (iterDesc == null) {
 				System.debug(LoggingLevel.WARN,'replaceFieldLabelTokens: END - Unfound field ' + iter);
