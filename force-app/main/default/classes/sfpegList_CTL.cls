@@ -435,7 +435,23 @@ public with sharing class sfpegList_CTL {
 		}
 
 		String mergedQuery = queryTemplate;
-		for (Object iter : inputMap.keySet()) {
+		List<Object> keyList = new List<Object>(inputMap.keySet());
+		if (inputMap.containsKey('CONTEXT')) {
+			Integer contextIndex = keyList.indexOf('CONTEXT');
+			if (contextIndex > 0) {
+				System.debug(LoggingLevel.FINEST,'mergeQuery: putting CONTEXT token first' + contextIndex);
+				keyList.remove(contextIndex);
+				keyList.add(0,'CONTEXT');
+			}
+			else {
+				System.debug(LoggingLevel.FINEST,'mergeQuery: CONTEXT token already first');
+			}
+		}
+		else {
+			System.debug(LoggingLevel.FINEST,'mergeQuery: no CONTEXT token to merge');
+		}
+		//for (Object iter : inputMap.keySet()) {
+		for (Object iter : keyList) {
 			System.debug(LoggingLevel.FINEST,'mergeQuery: processing token ' + iter);
 			String iterValue;
 			if ((bypassEscaping) || (iter == 'PAGE')){
