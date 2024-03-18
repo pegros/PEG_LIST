@@ -149,7 +149,8 @@ public with sharing class sfpegHierarchy_SVC extends sfpegListQuery_SVC {
         // Fetching children records
         Map<String, Object> bindParams = new Map<String, Object>();
         bindParams.put('idSet',idSet);
-        Map<ID,SObject> childMap = new Map<ID,SObject>((List<SObject>) Database.queryWithBinds(QUERY_TEMPLATE,bindParams,AccessLevel.USER_MODE));
+        // System mode for test classes to prevent issues with Permissions when deploying for the first time
+        Map<ID,SObject> childMap = new Map<ID,SObject>((List<SObject>) Database.queryWithBinds(QUERY_TEMPLATE,bindParams,(Test.isRunningTest() ? AccessLevel.SYSTEM_MODE : AccessLevel.USER_MODE)));
         System.debug('fetchDetails: #Children fetched ' + childMap?.size());
         System.debug('fetchDetails: Children fetched ' + childMap);
         
