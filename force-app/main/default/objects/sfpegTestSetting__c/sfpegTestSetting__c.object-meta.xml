@@ -4,5 +4,5 @@
     <description>Hierarchy Custom Setting to support the test classes of the Apex controllers for the sfpeg LWC components</description>
     <enableFeeds>false</enableFeeds>
     <label>sfpegTestSetting</label>
-    <visibility>Protected</visibility>
+    <visibility>Public</visibility>
 </CustomObject>
