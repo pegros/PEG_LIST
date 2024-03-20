@@ -66,7 +66,7 @@
                     <!-- Sort Action (on list display) -->
                     <template lwc:if={showSort}>
                         <lightning-button-menu  icon-name="utility:sort"        icon-size={buttonSize}
-                                                variant="border-filled"         menu-alignment="right"
+                                                variant="border"         menu-alignment="right"
                                                 alternative-text={sortTitle}    title={sortTitle}
                                                 onselect={handleSortSelect} >
                             <template for:each={sortFields} for:item="iterField">

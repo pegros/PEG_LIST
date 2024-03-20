@@ -349,7 +349,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
 
             sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
             this.recordData = sfpegMergeUtl.sfpegMergeUtl.convertLdsData(data,this.configDetails.input.RCD);
-            if (this.isDebug) console.log('wiredRecord: END / recordData updated ', JSON.stringify(this.recordData));
+            if (this.isDebug) console.log('wiredRecord: recordData updated ', JSON.stringify(this.recordData));
 
             //if ((this.configDetails.input.USR) && (!this.userData)) {
             if ((this.userFields) && (!this.userData)) {
@@ -380,7 +380,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
 
             sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
             this.userData = sfpegMergeUtl.sfpegMergeUtl.convertLdsData(data,this.configDetails.input.USR);
-            if (this.isDebug) console.log('wiredUser: END / userData updated ', JSON.stringify(this.userData));
+            if (this.isDebug) console.log('wiredUser: userData updated ', JSON.stringify(this.userData));
 
             //if ((this.configDetails.input.RCD) && (!this.recordData)) {
             if ((this.recordFields) && (!this.recordData)) {
