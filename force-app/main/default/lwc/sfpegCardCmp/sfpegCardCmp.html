@@ -100,7 +100,17 @@
 
                             <!-- Stand-alone fields -->
                             <!--   horizontal-align="end" -->
-                            <lightning-layout   multiple-rows="true" pull-to-boundary="small" >
+                            <template lwc:if={configDetails.description}>
+                                <p class="slds-p-horizontal_xx-small slds-p-bottom_small">
+                                    <lightning-formatted-text class="slds-text-body" value={configDetails.description}></lightning-formatted-text>
+                                </p>
+                            </template>
+                            <template lwc:if={configDetails.help}>
+                                <p class="slds-p-horizontal_xx-small slds-p-bottom_small">
+                                    <lightning-formatted-text class="slds-text-body_small slds-text-color_weak" value={configDetails.help}></lightning-formatted-text>
+                                </p>
+                            </template>
+                            <lightning-layout   multiple-rows="true" pull-to-boundary="small" vertical-align="end" class="slds-m-bottom_small">
                                 <template for:each={configDetails.fields} for:item="iterField">
                                     <!-- alignment-bump="right" -->
                                     <lightning-layout-item  key={iterField.name}        size={iterField.size}
@@ -161,47 +171,61 @@
                                     </h3>
                                     <!--   horizontal-align="end"  -->
                                     <div class="slds-section__content">
-                                    <lightning-layout   multiple-rows="true" pull-to-boundary="small" >
-                                        <template for:each={iterSection.fields} for:item="iterSectionField">
-                                            <!-- alignment-bump="right" -->
-                                            <lightning-layout-item  key={iterSectionField.name} size={iterSectionField.size}
-                                                                    padding="horizontal-small" class="slds-var-m-bottom_xxx-small fieldItem">
-                                                <div class="slds-media slds-form-element_readonly">
-                                                    <!-- slds-m-horizontal_x-small -->
-                                                    <template if:true={iterSectionField.icon}>
-                                                        <!-- slds-p-top_x-small -->
-                                                        <div class="slds-media__figure ">
-                                                            <c-sfpeg-icon-dsp   icon-name={iterSectionField.icon}
-                                                                                icon-size={configDetails.iconSize} >
-                                                            </c-sfpeg-icon-dsp>
+                                        <template lwc:if={iterSection.description}>
+                                            <p class="slds-p-horizontal_xx-small slds-p-bottom_small">
+                                                <lightning-formatted-text class="slds-text-body" value={iterSection.description}></lightning-formatted-text>
+                                            </p>
+                                        </template>
+                                        <template lwc:if={iterSection.help}>
+                                            <p class="slds-p-horizontal_xx-small slds-p-bottom_small">
+                                                <lightning-formatted-text class="slds-text-body_small slds-text-color_weak" value={iterSection.help}></lightning-formatted-text>
+                                            </p>
+                                        </template>
+                                        <lightning-layout   multiple-rows="true" pull-to-boundary="small" vertical-align="end" class="slds-m-bottom_small">
+                                            <template for:each={iterSection.fields} for:item="iterSectionField">
+                                                <!-- alignment-bump="right" -->
+                                                <lightning-layout-item  key={iterSectionField.name} size={iterSectionField.size}
+                                                                        padding="horizontal-small" class="slds-var-m-bottom_xxx-small fieldItem">
+                                                    <template lwc:if={iterSectionField.isSpace}>
+                                                    </template>
+                                                    <template lwc:else>
+                                                        <div class="slds-media slds-form-element_readonly">
+                                                            <!-- slds-m-horizontal_x-small -->
+                                                            <template if:true={iterSectionField.icon}>
+                                                                <!-- slds-p-top_x-small -->
+                                                                <div class="slds-media__figure ">
+                                                                    <c-sfpeg-icon-dsp   icon-name={iterSectionField.icon}
+                                                                                        icon-size={configDetails.iconSize} >
+                                                                    </c-sfpeg-icon-dsp>
+                                                                </div>
+                                                            </template>
+                                                            <div class="slds-media__body">
+                                                                <div class="slds-media bottomAlignIcon">
+                                                                    <div class="slds-media__body">
+                                                                        <lightning-output-field field-name={iterSectionField.name}
+                                                                                                variant={configDetails.variant}>
+                                                                        </lightning-output-field>
+                                                                    </div>
+                                                                    <template lwc:if={showEditButtonIcons}>
+                                                                        <template lwc:if={iterSectionField.disabled}>
+                                                                            <div class="spaceFill"></div>
+                                                                        </template>
+                                                                        <template lwc:else>
+                                                                            <div class="slds-media__figure slds-media__figure_reverse slds-m-around_xx-small slds-m-left_x-small ">
+                                                                                <lightning-button-icon  icon-name="utility:edit"        variant="bare"
+                                                                                                        alternative-text="Edit"         title="Edit"
+                                                                                                        name={iterSectionField.name}    onclick={handleModeToggle}>
+                                                                                </lightning-button-icon>
+                                                                            </div>
+                                                                        </template>
+                                                                    </template>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </template>
-                                                    <div class="slds-media__body">
-                                                        <div class="slds-media bottomAlignIcon">
-                                                            <div class="slds-media__body">
-                                                                <lightning-output-field field-name={iterSectionField.name}
-                                                                                        variant={configDetails.variant}>
-                                                                </lightning-output-field>
-                                                            </div>
-                                                            <template lwc:if={showEditButtonIcons}>
-                                                                <template lwc:if={iterSectionField.disabled}>
-                                                                    <div class="spaceFill"></div>
-                                                                </template>
-                                                                <template lwc:else>
-                                                                    <div class="slds-media__figure slds-media__figure_reverse slds-m-around_xx-small slds-m-left_x-small ">
-                                                                        <lightning-button-icon  icon-name="utility:edit"        variant="bare"
-                                                                                                alternative-text="Edit"         title="Edit"
-                                                                                                name={iterSectionField.name}    onclick={handleModeToggle}>
-                                                                        </lightning-button-icon>
-                                                                    </div>
-                                                                </template>
-                                                            </template>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </lightning-layout-item>
-                                        </template>
-                                    </lightning-layout>
+                                                </lightning-layout-item>
+                                            </template>
+                                        </lightning-layout>
                                     </div>
                                 </div>
                             </template>
@@ -217,10 +241,19 @@
                                                     onsuccess={handleFormSuccess}       onerror={handleFormError} >
 
                             <!--<lightning-messages></lightning-messages>-->
-
                             <!-- Stand-alone fields -->
+                            <template lwc:if={configDetails.description}>
+                                <p class="slds-p-horizontal_xx-small slds-p-bottom_small">
+                                    <lightning-formatted-text class="slds-text-body" value={configDetails.description}></lightning-formatted-text>
+                                </p>
+                            </template>
+                            <template lwc:if={configDetails.help}>
+                                <p class="slds-p-horizontal_xx-small slds-p-bottom_small">
+                                    <lightning-formatted-text class="slds-text-body_small slds-text-color_weak" value={configDetails.help}></lightning-formatted-text>
+                                </p>
+                            </template>
                             <!--   horizontal-align="end" -->
-                            <lightning-layout   multiple-rows="true" pull-to-boundary="small" >
+                            <lightning-layout   multiple-rows="true" pull-to-boundary="small" vertical-align="end" class="slds-m-bottom_small">
                                 <template for:each={configDetails.fields} for:item="iterField">
                                     <!-- alignment-bump="right" -->
                                     <lightning-layout-item  key={iterField.name}
@@ -261,38 +294,52 @@
                                     </h3>
                                     <!--   horizontal-align="end"  -->
                                     <div class="slds-section__content">
-                                    <lightning-layout   multiple-rows="true" pull-to-boundary="medium" >
-                                        <template for:each={iterSection.fields} for:item="iterSectionField">
-                                            <!-- alignment-bump="right" -->
-                                            <lightning-layout-item  key={iterSectionField.name}
-                                                                    size="12"                   medium-device-size={iterSectionField.size} 
-                                                                    padding="horizontal-medium" class="slds-var-m-bottom_xxx-small fieldItem" >
-                                               <div class="slds-media ">
-                                                    <!-- slds-p-horizontal_x-small -->
-                                                    <template if:true={iterSectionField.icon}>
-                                                        <!-- slds-p-top_x-small -->
-                                                        <div class="slds-media__figure ">
-                                                            <c-sfpeg-icon-dsp   icon-name={iterSectionField.icon}
-                                                                                icon-size={configDetails.iconSize} >
-                                                            </c-sfpeg-icon-dsp>
+                                        <template lwc:if={iterSection.description}>
+                                            <p class="slds-p-horizontal_xx-small slds-p-bottom_small">
+                                                <lightning-formatted-text class="slds-text-body" value={iterSection.description}></lightning-formatted-text>
+                                            </p>
+                                        </template>
+                                        <template lwc:if={iterSection.help}>
+                                            <p class="slds-p-horizontal_xx-small slds-p-bottom_small">
+                                                <lightning-formatted-text class="slds-text-body_small slds-text-color_weak" value={iterSection.help}></lightning-formatted-text>
+                                            </p>
+                                        </template>
+                                        <lightning-layout   multiple-rows="true" pull-to-boundary="medium" vertical-align="end" class="slds-m-bottom_small">
+                                            <template for:each={iterSection.fields} for:item="iterSectionField">
+                                                <!-- alignment-bump="right" -->
+                                                <lightning-layout-item  key={iterSectionField.name}
+                                                                        size="12"                   medium-device-size={iterSectionField.size} 
+                                                                        padding="horizontal-medium" class="slds-var-m-bottom_xxx-small fieldItem" >
+                                                    <template lwc:if={iterSectionField.isSpace}>
+                                                    </template>
+                                                    <template lwc:else>
+                                                        <div class="slds-media ">
+                                                            <!-- slds-p-horizontal_x-small -->
+                                                            <template if:true={iterSectionField.icon}>
+                                                                <!-- slds-p-top_x-small -->
+                                                                <div class="slds-media__figure ">
+                                                                    <c-sfpeg-icon-dsp   icon-name={iterSectionField.icon}
+                                                                                        icon-size={configDetails.iconSize} >
+                                                                    </c-sfpeg-icon-dsp>
+                                                                </div>
+                                                            </template>
+                                                            <div class="slds-media__body">
+                                                                <lightning-input-field  if:false={iterSectionField.disabled} 
+                                                                                        field-name={iterSectionField.name}
+                                                                                        required={iterSectionField.required}
+                                                                                        disabled={iterSectionField.disabled} 
+                                                                                        variant={configDetails.variant} >
+                                                                </lightning-input-field>
+                                                                <lightning-output-field if:true={iterSectionField.disabled}
+                                                                                        field-name={iterSectionField.name}
+                                                                                        variant={configDetails.variant}>
+                                                                </lightning-output-field>
+                                                            </div>
                                                         </div>
                                                     </template>
-                                                    <div class="slds-media__body">
-                                                        <lightning-input-field  if:false={iterSectionField.disabled} 
-                                                                                field-name={iterSectionField.name}
-                                                                                required={iterSectionField.required}
-                                                                                disabled={iterSectionField.disabled} 
-                                                                                variant={configDetails.variant} >
-                                                        </lightning-input-field>
-                                                        <lightning-output-field if:true={iterSectionField.disabled}
-                                                                                field-name={iterSectionField.name}
-                                                                                variant={configDetails.variant}>
-                                                        </lightning-output-field>
-                                                    </div>
-                                                </div>
-                                            </lightning-layout-item>
-                                        </template>
-                                    </lightning-layout>
+                                                </lightning-layout-item>
+                                            </template>
+                                        </lightning-layout>
                                     </div>
                                 </div>
                             </template>

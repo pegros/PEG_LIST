@@ -78,6 +78,7 @@ as a JSON object with the following properties :
 * `iconSize` defines the size of the icons displayed (if any), as "small", "medium"...)
 * `density` defines how the labels are displayed (above vs next to the field value, see **lightning-record-view-form** or **lightning-record-edit-form**)
 * `variant` may be alternatively defined for similar  (see **lightning-input-field** or **lightning-output-field**)
+* `description` and `help` text may be specified to be displayed (in this order) above the input fields.
 * `fields` defines the main list of fields displayed just below the card header, as a list
 of JSON field definition objects
   * Each field definition has a mandatory `name` property (API name of the field)
@@ -85,15 +86,19 @@ of JSON field definition objects
   in edit mode
   * It may also include a `size` one to override the main default value
   * It may also include an `icon` one to display next to the field
+  * A boolean `isSpace` property may also be set to simply reserve a zone in the grid (in which case
+  the `name` is irrelevant but should still have a value, e.g. `Dummy1`)
 * `sections` defines the sections displayed afterwards in the card, as a list of JSON section
 definition objects
   * Each section definition has a mandatory `label` property (possibly using a Custom Label
   leveraging the `{{{LBL.xxx}}}` merge syntax)
-  * It then has a mandatory _fields_ property to define the fields displayed in the section
+  * It then has a mandatory `fields` property to define the fields displayed in the section
   (similarly to the main _fields_ property)
   * It may include `isCollapsible` an `isCollapsed` boolean properties to set a section
   as collapsible and set its initial state
   * It may also include a `size` one to override the main default value for the section
+  * `description` and `help` text may also be specified to be displayed (in this order)
+  between the label and the input fields of the section.
 * `context` defines a set of fields to be loaded in the context in edit mode but hidden to the
 user (e.g. a picklist field controlling other picklist fields editable in the card)
   * It has the same structure as the `fields`property, only the `name` of each field definition
@@ -103,12 +108,14 @@ user (e.g. a picklist field controlling other picklist fields editable in the ca
 ```
 {
   "size":12,
+  "description":"This form displays the information relevant to the XXX process. Please pay attention to..",
   "fields":[
     {"name":"Name"},
     {"name":"OwnerId","disabled":true}
   ],
   "sections":[
     { "label": "{{{LBL.PEG_TEST}}}", "size":"6",
+      "help":"Here are the most important fields for the XXX process."
       "fields":[
         {"name":"Motif__c","size":4},
         {"name":"DueDate__c","required":true},

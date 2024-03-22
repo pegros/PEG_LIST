@@ -238,6 +238,8 @@ export default class SfpegCardDsp extends LightningElement {
                             recordIdField: result.TargetIdField__c
                         },
                         size:       config.size || 12,
+                        help:       config.help,
+                        description: config.description,
                         fields:     config.fields || [],
                         sections:   config.sections || [],
                         context:    config.context,
