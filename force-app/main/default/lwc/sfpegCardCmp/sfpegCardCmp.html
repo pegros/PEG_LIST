@@ -115,39 +115,53 @@
                                     <!-- alignment-bump="right" -->
                                     <lightning-layout-item  key={iterField.name}        size={iterField.size}
                                                             padding="horizontal-small"  class="slds-var-m-bottom_xxx-small fieldItem" >
-                                        <div class="slds-media  slds-form-element_readonly">
-                                            <!-- slds-m-horizontal_x-small -->
-                                            <template if:true={iterField.icon}>
-                                                <!-- slds-p-top_x-small -->
-                                                <div class="slds-media__figure ">
-                                                    <c-sfpeg-icon-dsp   icon-name={iterField.icon}
-                                                                        icon-size={configDetails.iconSize} >
-                                                    </c-sfpeg-icon-dsp>
-                                                </div>
+                                        <template lwc:if={iterField.isSpace}>
+                                            <template lwc:if={iterField.description}>
+                                                <p class="slds-p-horizontal_xx-small slds-p-top_x-small">
+                                                    <lightning-formatted-text class="slds-text-body" value={iterField.description}></lightning-formatted-text>
+                                                </p>
                                             </template>
-                                            <div class="slds-media__body">
-                                                <div class="slds-media bottomAlignIcon">
-                                                    <div class="slds-media__body">
-                                                        <lightning-output-field field-name={iterField.name}
-                                                                                variant={configDetails.variant}>
-                                                        </lightning-output-field>
+                                            <template lwc:if={iterField.help}>
+                                                <p class="slds-p-horizontal_xx-small slds-p-top_xx-small">
+                                                    <lightning-formatted-text class="slds-text-body_small slds-text-color_weak" value={iterField.help}></lightning-formatted-text>
+                                                </p>
+                                            </template>
+                                        </template>
+                                        <template lwc:else>
+                                            <div class="slds-media  slds-form-element_readonly">
+                                            <!-- slds-m-horizontal_x-small -->
+                                                <template if:true={iterField.icon}>
+                                                    <!-- slds-p-top_x-small -->
+                                                    <div class="slds-media__figure ">
+                                                        <c-sfpeg-icon-dsp   icon-name={iterField.icon}
+                                                                            icon-size={configDetails.iconSize} >
+                                                        </c-sfpeg-icon-dsp>
                                                     </div>
-                                                    <template lwc:if={showEditButtonIcons}>
-                                                        <template lwc:if={iterField.disabled}>
-                                                            <div class="spaceFill"></div>
+                                                </template>
+                                                <div class="slds-media__body">
+                                                    <div class="slds-media bottomAlignIcon">
+                                                        <div class="slds-media__body">
+                                                            <lightning-output-field field-name={iterField.name}
+                                                                                    variant={configDetails.variant}>
+                                                            </lightning-output-field>
+                                                        </div>
+                                                        <template lwc:if={showEditButtonIcons}>
+                                                            <template lwc:if={iterField.disabled}>
+                                                                <div class="spaceFill"></div>
+                                                            </template>
+                                                            <template lwc:else>
+                                                                <div class="slds-media__figure slds-media__figure_reverse slds-m-around_xx-small slds-m-left_x-small ">
+                                                                    <lightning-button-icon  icon-name="utility:edit"    variant="bare"
+                                                                                            alternative-text="Edit"     title="Edit"
+                                                                                            name={iterField.name}       onclick={handleModeToggle}>
+                                                                    </lightning-button-icon>
+                                                                </div>
+                                                            </template>
                                                         </template>
-                                                        <template lwc:else>
-                                                            <div class="slds-media__figure slds-media__figure_reverse slds-m-around_xx-small slds-m-left_x-small ">
-                                                                <lightning-button-icon  icon-name="utility:edit"    variant="bare"
-                                                                                        alternative-text="Edit"     title="Edit"
-                                                                                        name={iterField.name}       onclick={handleModeToggle}>
-                                                                </lightning-button-icon>
-                                                            </div>
-                                                        </template>
-                                                    </template>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </template>
                                     </lightning-layout-item>
                                 </template>
                             </lightning-layout>
@@ -187,6 +201,16 @@
                                                 <lightning-layout-item  key={iterSectionField.name} size={iterSectionField.size}
                                                                         padding="horizontal-small" class="slds-var-m-bottom_xxx-small fieldItem">
                                                     <template lwc:if={iterSectionField.isSpace}>
+                                                        <template lwc:if={iterSectionField.description}>
+                                                            <p class="slds-p-horizontal_xx-small slds-p-top_x-small">
+                                                                <lightning-formatted-text class="slds-text-body" value={iterSectionField.description}></lightning-formatted-text>
+                                                            </p>
+                                                        </template>
+                                                        <template lwc:if={iterSectionField.help}>
+                                                            <p class="slds-p-horizontal_xx-small slds-p-top_xx-small">
+                                                                <lightning-formatted-text class="slds-text-body_small slds-text-color_weak" value={iterSectionField.help}></lightning-formatted-text>
+                                                            </p>
+                                                        </template>
                                                     </template>
                                                     <template lwc:else>
                                                         <div class="slds-media slds-form-element_readonly">
@@ -259,29 +283,44 @@
                                     <lightning-layout-item  key={iterField.name}
                                                             size="12"                   medium-device-size={iterField.size} 
                                                             padding="horizontal-small"  class="slds-var-m-bottom_xxx-small fieldItem" >
-                                        <div class="slds-media">
-                                            <!-- slds-p-horizontal_x-small -->
-                                            <template if:true={iterField.icon}>
-                                                <!-- slds-p-top_x-small -->
-                                                <div class="slds-media__figure ">
-                                                    <c-sfpeg-icon-dsp   icon-name={iterField.icon}
-                                                                        icon-size={configDetails.iconSize} >
-                                                    </c-sfpeg-icon-dsp>
-                                                </div>
+                                        <template lwc:if={iterField.isSpace}>
+                                            <template lwc:if={iterField.description}>
+                                                <p class="slds-p-horizontal_xx-small slds-p-top_x-small">
+                                                    <lightning-formatted-text class="slds-text-body" value={iterField.description}></lightning-formatted-text>
+                                                </p>
                                             </template>
-                                            <div class="slds-media__body">
-                                                <lightning-input-field  if:false={iterField.disabled} 
-                                                                        field-name={iterField.name}
-                                                                        required={iterField.required}
-                                                                        disabled={iterField.disabled} 
-                                                                        variant={configDetails.variant} >
-                                                </lightning-input-field>
-                                                <lightning-output-field if:true={iterField.disabled}
-                                                                        field-name={iterField.name}
-                                                                        variant={configDetails.variant}>
-                                                </lightning-output-field>
+                                            <template lwc:if={iterField.help}>
+                                                <p class="slds-p-horizontal_xx-small slds-p-top_xx-small">
+                                                    <lightning-formatted-text class="slds-text-body_small slds-text-color_weak" value={iterField.help}></lightning-formatted-text>
+                                                </p>
+                                            </template>
+                                        </template>
+                                        <template lwc:else>
+                                            <div class="slds-media">
+                                                        
+                                                <!-- slds-p-horizontal_x-small -->
+                                                <template if:true={iterField.icon}>
+                                                    <!-- slds-p-top_x-small -->
+                                                    <div class="slds-media__figure ">
+                                                        <c-sfpeg-icon-dsp   icon-name={iterField.icon}
+                                                                            icon-size={configDetails.iconSize} >
+                                                        </c-sfpeg-icon-dsp>
+                                                    </div>
+                                                </template>
+                                                <div class="slds-media__body">
+                                                    <lightning-input-field  if:false={iterField.disabled} 
+                                                                            field-name={iterField.name}
+                                                                            required={iterField.required}
+                                                                            disabled={iterField.disabled} 
+                                                                            variant={configDetails.variant} >
+                                                    </lightning-input-field>
+                                                    <lightning-output-field if:true={iterField.disabled}
+                                                                            field-name={iterField.name}
+                                                                            variant={configDetails.variant}>
+                                                    </lightning-output-field>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </template>
                                     </lightning-layout-item>
                                 </template>
                             </lightning-layout>
@@ -311,6 +350,16 @@
                                                                         size="12"                   medium-device-size={iterSectionField.size} 
                                                                         padding="horizontal-medium" class="slds-var-m-bottom_xxx-small fieldItem" >
                                                     <template lwc:if={iterSectionField.isSpace}>
+                                                        <template lwc:if={iterSectionField.description}>
+                                                            <p class="slds-p-horizontal_xx-small slds-p-top_x-small">
+                                                                <lightning-formatted-text class="slds-text-body" value={iterSectionField.description}></lightning-formatted-text>
+                                                            </p>
+                                                        </template>
+                                                        <template lwc:if={iterSectionField.help}>
+                                                            <p class="slds-p-horizontal_xx-small slds-p-top_xx-small">
+                                                                <lightning-formatted-text class="slds-text-body_small slds-text-color_weak" value={iterSectionField.help}></lightning-formatted-text>
+                                                            </p>
+                                                        </template>
                                                     </template>
                                                     <template lwc:else>
                                                         <div class="slds-media ">

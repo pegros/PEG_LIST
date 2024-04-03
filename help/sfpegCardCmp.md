@@ -88,6 +88,8 @@ of JSON field definition objects
   * It may also include an `icon` one to display next to the field
   * A boolean `isSpace` property may also be set to simply reserve a zone in the grid (in which case
   the `name` is irrelevant but should still have a value, e.g. `Dummy1`)
+    * In such a case, it is still possible to specify `description` and `help` (optional) properties
+    to display text in the reserved zone.
 * `sections` defines the sections displayed afterwards in the card, as a list of JSON section
 definition objects
   * Each section definition has a mandatory `label` property (possibly using a Custom Label
@@ -118,6 +120,8 @@ user (e.g. a picklist field controlling other picklist fields editable in the ca
       "help":"Here are the most important fields for the XXX process."
       "fields":[
         {"name":"Motif__c","size":4},
+        {"name": "MSG", "isSpace": true,"size":12,
+          "description":"This is some inline description", "help": "This is some inline help"},
         {"name":"DueDate__c","required":true},
         {"name":"TriggerFlow__c","size":4}
       ]
