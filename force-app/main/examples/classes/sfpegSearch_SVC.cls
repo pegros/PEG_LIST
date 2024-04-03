@@ -63,7 +63,9 @@ public with sharing class sfpegSearch_SVC extends sfpegListQuery_SVC {
                 String soslTerm = (String) contextMap.get(soslConfig.get('term'));
                 System.debug('getData: provided context search term ' + soslTerm);
 
-                if ((String.isNotBlank(soslTerm)) && ((soslTerm.length() > 2) || !(soslTerm.endsWith('*') || soslTerm.endsWith('?')))) {
+                if (	(String.isNotBlank(soslTerm))
+                    &&	(	(soslTerm.length() > 2)
+                         || ((soslTerm.length() == 2) && !(soslTerm.endsWith('*') || soslTerm.endsWith('?'))))) {
                     System.debug('getData: END / launching SOSL search');
                     return executeSOSL((Map<String,Object>)soslConfig,contextMap,soslTerm);
                 }
