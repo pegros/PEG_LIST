@@ -22,6 +22,10 @@ from a UX perspective
 automatically fetched upon instantiation, a _load more_ button being displayed in the component's footer as long
 as this total count has not been loaded)
 
+ℹ️ If you wish to actually load the data only when the user explicitly requests it, you
+may use the **sfpegOnDemandListCmp** _wrapper_ component (see in the examples) which
+includes an _expand_ button icon to control the actual display of a **sfpegListCmp**.
+
 ---
 
 ## Component Configuration
