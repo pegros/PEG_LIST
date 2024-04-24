@@ -1,0 +1,39 @@
+<template>
+    <!-- STANDARD FINAL STATE - LIST DISPLAY -->
+    <template lwc:if={isOpen}>
+        <c-sfpeg-list-cmp   object-api-name={objectApiName}
+                            record-id={recordId}
+                            card-title={cardTitle}
+                            card-class={cardClass}
+                            button-size={buttonSize}
+                            config-name={configName}
+                            action-config-name={actionConfigName}
+                            footer-config-name={footerConfigName}
+                            context-string={contextString}
+                            show-count={showCount}
+                            show-search={showSearch}
+                            show-export={showExport}
+                            display-height={displayHeight}
+                            max-size={maxSize}
+                            is-collapsible={isCollapsible}
+                            is-collapsed={isCollapsed}
+                            is-debug={isDebug}
+                            is-debug-fine={isDebugFine} >
+        </c-sfpeg-list-cmp>
+    </template>
+
+    <!-- STANDARD INITIAL STATE - CARD HEADER DISPLAY -->
+    <template lwc:else >
+        <div class={cardClass} >
+            <lightning-card class="cardHeader" title={cardTitle} icon-name={cardIcon}>
+                <div class="headerActions" slot="actions">
+                    <lightning-button-icon
+                                icon-name="utility:expand"  size={buttonSize}
+                                variant="border-filled"     title="Expand"
+                                onclick={handleOpen}>
+                    </lightning-button-icon>
+                </div>
+            </lightning-card>
+        </div>
+    </template>
+</template>
