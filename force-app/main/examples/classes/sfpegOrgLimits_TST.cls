@@ -39,7 +39,7 @@ public class sfpegOrgLimits_TST {
     ***/
     static testmethod void testGetData() {
         System.debug('testGetData: START');
-        SYS_OrgLimits_SVC getDataSvc = new SYS_OrgLimits_SVC();
+        sfpegOrgLimits_SVC getDataSvc = new sfpegOrgLimits_SVC();
         getDataSvc.getData(null,null);
         System.debug('testGetData: END');
     }
