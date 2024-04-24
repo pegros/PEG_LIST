@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>SFPEG RecordShares Account</label>
+    <protected>false</protected>
+    <values>
+        <field>BypassEscaping__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>BypassFLS__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>BypassSharing__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">List to display details about the record shares of an Account record.</value>
+    </values>
+    <values>
+        <field>DisplayConfig__c</field>
+        <value xsi:type="xsd:string">{
+&quot;keyField&quot;:&quot;Id&quot;,
+&quot;widthMode&quot;:&quot;auto&quot;,
+&quot;stacked&quot;:false,
+&quot;columns&quot;: [
+{ &quot;label&quot;: &quot;Shared With&quot;, &quot;fieldName&quot;: &quot;UserOrGroup.Name&quot;, &quot;sortable&quot;: true},
+{ &quot;label&quot;: &quot;Cause&quot;, &quot;fieldName&quot;: &quot;RowCause&quot;, &quot;sortable&quot;: true},
+{ &quot;label&quot;: &quot;Access&quot;, &quot;fieldName&quot;: &quot;AccountAccessLevel&quot;, &quot;sortable&quot;: true},
+{ &quot;label&quot;: &quot;Shared Id&quot;, &quot;fieldName&quot;: &quot;UserOrGroupId&quot;, &quot;sortable&quot;: true},
+{ &quot;label&quot;: &quot;Contact Access&quot;, &quot;fieldName&quot;: &quot;ContactAccessLevel&quot;, &quot;sortable&quot;: true},
+{ &quot;label&quot;: &quot;Case Access&quot;, &quot;fieldName&quot;: &quot;CaseAccessLevel&quot;, &quot;sortable&quot;: true},
+{ &quot;label&quot;: &quot;Opportunity Access&quot;, &quot;fieldName&quot;: &quot;OpportunityAccessLevel&quot;, &quot;sortable&quot;: true}
+]
+}</value>
+    </values>
+    <values>
+        <field>DisplayType__c</field>
+        <value xsi:type="xsd:string">DataTable</value>
+    </values>
+    <values>
+        <field>DoPagination__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>FlattenResults__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Permission__c</field>
+        <value xsi:type="xsd:string">VIRTUO_ManageSharing</value>
+    </values>
+    <values>
+        <field>QueryClass__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>QueryCount__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>QueryInput__c</field>
+        <value xsi:type="xsd:string">{
+&quot;ROW&quot;:&quot;{{{GEN.recordId}}}&quot;
+}</value>
+    </values>
+    <values>
+        <field>QueryOrderBy__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>QueryOrder__c</field>
+        <value xsi:type="xsd:string">ASC</value>
+    </values>
+    <values>
+        <field>QuerySOQL__c</field>
+        <value xsi:type="xsd:string">Select Id, UserOrGroupId, UserOrGroup.Name, RowCause, AccountAccessLevel, ContactAccessLevel, OpportunityAccessLevel, CaseAccessLevel from AccountShare where AccountId = &apos;{{{ROW}}}&apos;</value>
+    </values>
+    <values>
+        <field>QueryType__c</field>
+        <value xsi:type="xsd:string">SOQL</value>
+    </values>
+    <values>
+        <field>RowActions__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Scope__c</field>
+        <value xsi:type="xsd:string">Account</value>
+    </values>
+</CustomMetadata>

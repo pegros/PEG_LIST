@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>SFPEG Sharing Details</label>
+    <protected>false</protected>
+    <values>
+        <field>Actions__c</field>
+        <value xsi:type="xsd:string">[
+{
+    &quot;name&quot;:&quot;viewSharing&quot;,
+    &quot;label&quot;:&quot;Détails&quot;,
+    &quot;iconName&quot;:&quot;utility:asset_audit&quot;,
+    &quot;action&quot;: {
+        &quot;type&quot;:&quot;navigation&quot;,
+        &quot;params&quot;: {
+            &quot;type&quot;: &quot;standard__recordPage&quot;,
+            &quot;attributes&quot;: {
+                &quot;recordId&quot;:&quot;{{{GEN.recordId}}}&quot;,
+                &quot;objectApiName&quot;:&quot;{{{GEN.objectApiName}}}&quot;,
+                &quot;actionName&quot;:&quot;recordShareHierarchy&quot;
+            }
+        }
+    }
+}
+]</value>
+    </values>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">Navigation action to open the sharing hierarchy display of a record</value>
+    </values>
+    <values>
+        <field>DoEvaluation__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>NotificationChannels__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Permission__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Scope__c</field>
+        <value xsi:type="xsd:string">RECORDS</value>
+    </values>
+</CustomMetadata>
