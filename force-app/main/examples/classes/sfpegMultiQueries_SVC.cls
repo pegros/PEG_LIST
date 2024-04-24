@@ -35,9 +35,12 @@
 public with sharing class sfpegMultiQueries_SVC extends sfpegListQuery_SVC {
     
     /***
-    * @description  Override of the standard getdata() method to execute a query.
-    *               It executes a SOSL or SOQL query depending on the query configuration
-    *               and search term provided in the context.
+    * @description  Override of the standard getdata() method to execute multiple queries
+    *               and group all results in a single list, each record getting a "Query"
+    *               property providing the name of the query having retrieved it.
+    *               Configuration of the set of SOQL queries is retrieved from the
+    *               sfpegList metadata triggering its execution (via the sfpegList_CTL.CONFIG
+    *               static property).
     ***/
     public override List<Object> getData(final Object context, final String queryName) {
         System.debug('getData: START sfpegMultiQueries_SVC implementation');
