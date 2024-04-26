@@ -1,0 +1,16 @@
+<template>
+    <template lwc:if={isDebug}>
+        <div class="slds-box slds-theme_default slds-text-align_left slds-m-bottom_small">
+            <dl class="slds-dl_horizontal slds-text-align_left">
+                <dt class="slds-dl_horizontal__label slds-truncate">Channel:</dt>
+                <dd class="slds-dl_horizontal__detail debugDetail">{channel}</dd>
+                <dt class="slds-dl_horizontal__label slds-truncate">Action:</dt>
+                <dd class="slds-dl_horizontal__detail debugDetail">{action}</dd>
+            </dl>
+            <lightning-button   class="slds-align_absolute-center slds-m-top_small"
+                                label="Trigger Event"
+                                onclick={handleClick}>
+            </lightning-button>
+        </div>
+    </template>
+</template>
