@@ -23,7 +23,7 @@ follows:
     * `subqueries`: JSON object providing, per result merge token, the subquery template 
         to execute (and possibly the field providing the information to extract from the subquery)
 
-ℹ️ There is a single main SOQL query but multiple subqueries (with different merge token names).
+ℹ️ There is a single main SOQL query but there may be multiple subqueries (with different merge token names).
 
 
 ## Configuration Example
