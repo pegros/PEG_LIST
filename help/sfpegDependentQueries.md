@@ -57,14 +57,14 @@ For this result, the **sfpegList** metadata record should be configured as follo
     }
 }
 ```
+* `Bypass Escaping` checked
 * `Display Type` set to `DataTable`
 * `Display Configuration` set to 
 ```
 {
     "keyField": "Id",
     "columns":[
-        {"label":"Name","fieldName":"Name","sortable":true},
-        {"label":"Status","fieldName":"Statut__c","sortable":true},
+        {"label":"Name","fieldName":"Name","sortable":true}
     ]
 }
 ```
