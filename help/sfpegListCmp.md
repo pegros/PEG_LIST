@@ -752,8 +752,14 @@ reload the component list.
 
 ### Multi-SOQL Query Execution
 
-Please refer to **[sfpegMultiQueries_SVC](/help/sfpegMultiQueries.md)** extension Apex class to get an example 
+Please refer to **[sfpegMultiQueries_SVC](/help/sfpegMultiQueries.md)** Apex extension class to get an example 
 about how to group the results of multiple SOQL queries in a single list.
+
+### Dependent SOQL Queries Execution
+
+Please refer to **[sfpegDependentQueries_SVC](/help/sfpegMultiQueries.md)** Apex extension class to get an example 
+about how to workaround various limitations of standard SOQL subqueries and leverage independent SOQL subqueries to
+fill in criteria of `IN` conditions.
 
 
 ---
