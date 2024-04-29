@@ -769,7 +769,7 @@ two elements are available off-the-shelf in the examples:
 * the **sfpegOrgLimits** **sfpegList** list medatada record
 
 ![List as tiles](/media/sfpegOrgLimits.png)<br/>
-_Monitoring of the Org limits _
+_Monitoring of the Org limits_
 
 
 ---
