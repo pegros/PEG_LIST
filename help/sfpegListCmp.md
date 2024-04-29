@@ -757,7 +757,7 @@ about how to group the results of multiple SOQL queries in a single list.
 
 ### Dependent SOQL Queries Execution
 
-Please refer to **[sfpegDependentQueries_SVC](/help/sfpegMultiQueries.md)** Apex extension class to get an example 
+Please refer to **[sfpegDependentQueries_SVC](/help/sfpegDependentQueries.md)** Apex extension class to get an example 
 about how to workaround various limitations of standard SOQL subqueries and leverage independent SOQL subqueries to
 fill in criteria of `IN` conditions.
 
