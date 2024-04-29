@@ -761,6 +761,16 @@ Please refer to **[sfpegDependentQueries_SVC](/help/sfpegMultiQueries.md)** Apex
 about how to workaround various limitations of standard SOQL subqueries and leverage independent SOQL subqueries to
 fill in criteria of `IN` conditions.
 
+### Current Org Limits Status
+
+In order to display in an App page the current state of the Org Limits,
+two elements are available off-the-shelf in the examples:
+* the **sfpegOrgLimits_SVC** Apex extension class (calling **see **OrgLimits.getMap()**)
+* the **sfpegOrgLimits** **sfpegList** list medatada record
+
+![List as tiles](/media/sfpegOrgLimits.png)<br/>
+_Monitoring of the Org limits _
+
 
 ---
 
