@@ -765,7 +765,7 @@ fill in criteria of `IN` conditions.
 
 In order to display in an App page the current state of the Org Limits,
 two elements are available off-the-shelf in the examples:
-* the **sfpegOrgLimits_SVC** Apex extension class (calling **see **OrgLimits.getMap()**)
+* the **sfpegOrgLimits_SVC** Apex extension class (calling see **OrgLimits.getMap()**)
 * the **sfpegOrgLimits** **sfpegList** list medatada record
 
 ![List as tiles](/media/sfpegOrgLimits.png)<br/>
