@@ -100,8 +100,8 @@ public class  sfpegMultiQueries_TST {
             Assert.areEqual(2,outputList.size(),'2 records should be returned when context is middle record');
 		}
 		catch (Exception e) {
-			System.debug(LoggingLevel.Error,'testGetData: exception raised when no filter/search term specified ' + e.getMessage());
-			Assert.fail('No exception should be raised when no filter/search term specified');
+			System.debug(LoggingLevel.Error,'testGetData: exception raised when 2 queries return data' + e.getMessage());
+			Assert.fail('No exception should be raised when 2 queries return data');
 		}
 
         System.debug('testGetData: TEST 2 - 2 queries with only 1 returning data');
@@ -112,12 +112,12 @@ public class  sfpegMultiQueries_TST {
             Assert.areEqual(1,outputList.size(),'1 record should be returned when context is middle record');
 		}
 		catch (Exception e) {
-			System.debug(LoggingLevel.Error,'testGetData: exception raised when no filter/search term specified ' + e.getMessage());
-			Assert.fail('No exception should be raised when correct search term but no filter specified');
+			System.debug(LoggingLevel.Error,'testGetData: exception raised when 1 of 2 queries returns no data ' + e.getMessage());
+			Assert.fail('No exception should be raised when 1 of 2 queries returns no data');
 		}
 
 		// Error cases
-        System.debug('testGetData: TEST 5 - Invalid query template configuration');
+        System.debug('testGetData: TEST 3 - Invalid query template configuration');
 		try {
 			sfpegList_CTL.getData('sfpegTestMultiQueriesKOparse',inputData);
 			System.debug(LoggingLevel.Error,'testGetData: no exception raised for invalid query template');
@@ -127,7 +127,7 @@ public class  sfpegMultiQueries_TST {
 			System.debug('testGetData: exception properly raised for invalid query template ' + e.getMessage());
 		}
 
-        System.debug('testGetData: TEST 6 - Wrong SOQL query');
+        System.debug('testGetData: TEST 4 - Wrong SOQL query');
 		try {
 			sfpegList_CTL.getData('sfpegTestMultiQueriesKOquery',inputData);
 			System.debug(LoggingLevel.Error,'testGetData: no exception raised for wrong soql statement in query template');
