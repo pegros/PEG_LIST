@@ -355,19 +355,21 @@
                                                                                 if:false={itermenu.value.label}>
                                                     </lightning-menu-subheader>
                                                     <template for:each={itermenu.value.items} for:item="iterMenu2" >
-                                                        <lightning-menu-item    key={iterMenu2.name}
-                                                                                label={iterMenu2.label}
-                                                                                icon-name={iterMenu2.iconName}
-                                                                                value={iterMenu2}
-                                                                                if:false={iterMenu2.disabled}>
-                                                         </lightning-menu-item>
-                                                         <lightning-menu-item   key={iterMenu2.name}
-                                                                                label={iterMenu2.label}
-                                                                                icon-name={iterMenu2.iconName}
-                                                                                value={iterMenu2}
-                                                                                disabled
-                                                                                if:true={iterMenu2.disabled}>
-                                                         </lightning-menu-item>
+                                                        <template if:false={iterMenu2.hidden}>
+                                                            <lightning-menu-item    key={iterMenu2.name}
+                                                                                    label={iterMenu2.label}
+                                                                                    icon-name={iterMenu2.iconName}
+                                                                                    value={iterMenu2}
+                                                                                    if:false={iterMenu2.disabled}>
+                                                             </lightning-menu-item>
+                                                             <lightning-menu-item   key={iterMenu2.name}
+                                                                                    label={iterMenu2.label}
+                                                                                    icon-name={iterMenu2.iconName}
+                                                                                    value={iterMenu2}
+                                                                                    disabled
+                                                                                    if:true={iterMenu2.disabled}>
+                                                             </lightning-menu-item>
+                                                        </template>
                                                     </template>
                                                     <lightning-menu-divider     key={itermenu.value.name}
                                                                                 if:false={itermenu.last}>
