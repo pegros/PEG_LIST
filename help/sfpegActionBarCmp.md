@@ -756,7 +756,7 @@ Various properties are available to customise the experience:
 
 _Note_: Whenever a error occurs, the error message provided is automatically displayed in an error toast popup.
 
-### **Mass** Action Types (**massForm** and **massDML**)
+### **Mass** Action Types (**massForm**, **massDML** and **massApex**)
 
 Two Action Types are available to execute operations (create, update, delete) on a selection of records, either
 directly or via a first popup form.
