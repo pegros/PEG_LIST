@@ -124,7 +124,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     //----------------------------------------------------------------
     @track isReady = false;     // Initialization state of the component (to control spinner)
     @track configDetails = null;// Global applicable action configuration
-    @track actionList = [];     // Contextualised action list
+    @api actionList = [];       // Contextualised action list
     
     // Internal Query Control Parameters
     @track isExecuting = false; // Ongoing Action state  (to control spinner)
@@ -224,7 +224,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             if (this.isDebug) console.log('connected: fetching configuration from server');
             getConfiguration({name: this.configName})
             .then( result => {
-                if (this.isDebug) console.log('connected: configuration received  ',result);
+                if (this.isDebug) console.log('connected: action configuration received  ',result);
                 if (this.isDebug) console.log('connected: for config ',this.configName);
                 sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
                 try {
@@ -251,7 +251,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                 }
             })
             .catch( error => {
-                console.warn('connected: END action / configuration fetch error ',error);
+                console.warn('connected: END action / configuration fetch error ',JSON.stringify(error));
                 this.errorMsg = 'Configuration fetch error: ' + error;
                 this.isReady = true;
             });
@@ -508,13 +508,13 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                     if (this.isDebug) console.log('doMerge: processing action ', iterAction.name);
                     if (iterAction.hasOwnProperty('hidden'))    iterAction.hidden = this.evalValue(iterAction.hidden);
                     if (iterAction.hasOwnProperty('disabled'))  iterAction.disabled = this.evalValue(iterAction.disabled);
-                    if (this.isDebug) console.log('doMerge: hidden / disabled reevaluated',iterAction);
+                    if (this.isDebug) console.log('doMerge: hidden / disabled reevaluated',JSON.stringify(iterAction));
                     if (iterAction.items) {
                         iterAction.items.forEach(iterMenu => {
                             if (this.isDebug) console.log('doMerge: processing menu item ', iterMenu.name);
                             if (iterMenu.hasOwnProperty('hidden'))    iterMenu.hidden = this.evalValue(iterMenu.hidden);
                             if (iterMenu.hasOwnProperty('disabled'))  iterMenu.disabled = this.evalValue(iterMenu.disabled);
-                            if (this.isDebug) console.log('doMerge: hidden / disabled reevaluated',iterMenu);
+                            if (this.isDebug) console.log('doMerge: hidden / disabled reevaluated',JSON.stringify(iterMenu));
                         });
                     }
                 });
@@ -669,15 +669,15 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
 
         if (message.channel) {
             if (this.configDetails.channels.includes(message.channel)) {
-                if (this.isDebug) console.log('handleMessage: END / processing message on subscribed channel ',message.channel);
+                if (this.isDebug) console.log('handleNotification: END / processing message on subscribed channel ',message.channel);
                 this.processAction(message.action,null);
             }
             else {
-                if (this.isDebug) console.log('handleMessage: END / message ignored as on unsubscribed channel ',message.channel);
+                if (this.isDebug) console.log('handleNotification: END / message ignored as on unsubscribed channel ',message.channel);
             }
         }
         else {
-            console.warn('handleMessage: END / channel information missing in notification');
+            console.warn('handleNotification: END / channel information missing in notification');
         }
     }
 
@@ -767,6 +767,10 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                 if (this.isDebug) console.log('processAction: processing DML action');
                 this.triggerDML(action.params);
                 break;
+            case 'apex':
+                if (this.isDebug) console.log('processAction: executing Apex action');
+                this.triggerApex(action.params);
+                break;
             case 'showDetails':
                 if (this.isDebug) console.log('processAction: showing details popup');
                 this.triggerShowDetails(action.params);
@@ -787,6 +791,10 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                 if (this.isDebug) console.log('processAction: processing mass DML action');
                 this.triggerMassDML(action.params);
                 break;
+            case 'massApex':
+                if (this.isDebug) console.log('processAction: processing mass Apex action');
+                this.triggerMassApex(action.params);
+                break;
             case 'upload':
                 if (this.isDebug) console.log('processAction: processing file Upload action');
                 this.triggerFileUpload(action.params);
@@ -802,10 +810,6 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             case 'toast':
                 if (this.isDebug) console.log('processAction: displaying toast');
                 this.triggerToast(action.params);
-                break;
-            case 'apex':
-                if (this.isDebug) console.log('processAction: executing Apex action');
-                this.triggerApex(action.params);
                 break;
             case 'utility':
                 if (this.isDebug) console.log('processAction: triggering utility action');
@@ -1336,7 +1340,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         }
     }
 
-    triggerMassDML = function(dmlAction,context) {
+    triggerMassDML = function(dmlAction) {
         if (this.isDebug) console.log('triggerMassDML: START with ',JSON.stringify(dmlAction));
 
         if (!dmlAction.operation)  {
@@ -1360,17 +1364,26 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                 });
             }
             else {
-                if (this.isDebug) console.log('triggerDML: not bypassing confirmation for operation ',dmlAction.operation);
+                if (this.isDebug) console.log('triggerMassDML: not bypassing confirmation for operation ',dmlAction.operation);
                 confirmPromise = popupUtil.showConfirm((dmlAction.title || DEFAULT_MASS_POPUP_HEADER) + ' (' + this._recordList.length + ')', (dmlAction.message || DEFAULT_CONFIRM_MESSAGE));
             }
-            if (this.isDebug) console.log('triggerDML: confirmation promise initialised');
+            if (this.isDebug) console.log('triggerMassDML: confirmation promise initialised');
 
             confirmPromise.then(() => {
-                if (this.isDebug) console.log('triggerDML: confirmation bypassed/received');
+                if (this.isDebug) console.log('triggerMassDML: confirmation bypassed/received');
                 popupUtil.startSpinner((dmlAction.title || DEFAULT_MASS_POPUP_HEADER) + ' (' + this._recordList.length + ')', EXECUTION_MESSAGE);
 
                 let dmlList = [];
                 switch (dmlAction.operation) {
+                    case 'insert': 
+                        if (this.isDebug) console.log('triggerMassDML: initializing insert operation');
+                        this._recordList.forEach(rcdIter => {
+                            if (this.isDebug) console.log('triggerMassDML: processing rcdIter', JSON.stringify(rcdIter));
+                            let newRcd = {...(dmlAction.record || {})};
+                            newRcd[dmlAction.lookup] = rcdIter.Id;
+                            dmlList.push(newRcd);
+                        });
+                        break;
                     case 'update': 
                         if (this.isDebug) console.log('triggerMassDML: initializing update operation');
                         this._recordList.forEach(rcdIter => {
@@ -1427,6 +1440,73 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         else {
             this.showError({message: NO_RECORD_ERROR},'warning');
             console.warn('triggerMassDML: END / no record to process');
+        }
+    }
+
+    triggerMassApex = function(apexAction) {
+        if (this.isDebug) console.log('triggerMassApex: START with ',JSON.stringify(apexAction));
+
+        if (!apexAction.name)  {
+            console.warn('triggerMassApex: END KO / Missing name property');
+            this.showError({message: 'Missing name property in MassApex action!'});
+            throw "Missing name property in MassApex params!";
+        }
+
+        if ((this._recordList && this._recordList.length > 0)) {
+            if (this.isDebug) console.log('triggerMassApex: processing record list ', JSON.stringify(this._recordList));
+
+            let popupUtil = this.template.querySelector('c-sfpeg-popup-dsp');
+            if (this.isDebug) console.log('triggerMassApex: popupUtil fetched ', popupUtil);
+
+            let confirmPromise;
+            if (apexAction.bypassConfirm) {
+                if (this.isDebug) console.log('triggerMassApex: bypassing confirmation for name ',apexAction.name);
+                confirmPromise = new Promise((resolve,reject) => {
+                    if (this.isDebug) console.log('triggerMassApex: confirmation bypassed');
+                    resolve();
+                });
+            }
+            else {
+                if (this.isDebug) console.log('triggerMassApex: not bypassing confirmation for name ',apexAction.class);
+                confirmPromise = popupUtil.showConfirm((apexAction.title || DEFAULT_MASS_POPUP_HEADER) + ' (' + this._recordList.length + ')', (apexAction.message || DEFAULT_CONFIRM_MESSAGE));
+            }
+            if (this.isDebug) console.log('triggerMassApex: confirmation promise initialised');
+
+            confirmPromise.then(() => {
+                if (this.isDebug) console.log('triggerMassApex: confirmation bypassed/received');
+                popupUtil.startSpinner((apexAction.title || DEFAULT_MASS_POPUP_HEADER) + ' (' + this._recordList.length + ')', EXECUTION_MESSAGE);
+
+                if (this.isDebug) console.log('triggerMassApex: launching mass action');
+
+                let inputData = {... (apexAction.params || {})};
+                inputData._selection = this._recordList;
+                if (this.isDebug) console.log('triggerMassApex: inputData prepared ',JSON.stringify(inputData));
+                
+                return executeApex({ "action": apexAction.name, "params": inputData });
+            }).then(() => {
+                if (this.isDebug) console.log('triggerMassApex: mass action done');
+                popupUtil.stopSpinner();
+
+                if (apexAction.next) {
+                    if (this.isDebug) console.log('triggerMassApex: chained action to trigger',JSON.stringify(apexAction.next));
+                    this.processAction(apexAction.next,null);
+                    if (this.isDebug) console.log('triggerMassApex: END / chained action triggered');
+                }
+                else {
+                    if (this.isDebug) console.log('triggerMassApex: END / no chained action to trigger');
+                }
+            }).catch((error) => {
+                this.displayMsg = JSON.stringify(error);
+                popupUtil.stopSpinner();
+                console.warn('triggerMassApex: Issue when processing action ',JSON.stringify(error));
+                this.showError(error);
+                if (this.isDebug) console.log('triggerMassApex: END / error message displayed');
+            });
+            if (this.isDebug) console.log('triggerMassApex: confirmation popup displayed');
+        }
+        else {
+            this.showError({message: NO_RECORD_ERROR},'warning');
+            console.warn('triggerMassApex: END / no record to process');
         }
     }
 

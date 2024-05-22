@@ -598,6 +598,52 @@ popup is usually displayed to the user before executing the operation.
 }
 ```
 
+### Custom **apex** Action Type
+
+The **apex** action type enables to execute any operation implemented in a custom Apex class.
+* This Apex class should implement the **sfpegAction_SVC** virtual class.
+* The `params` are then provided as input to the configured Apex class.
+* A confirmation popup is displayed, the header `title` and `message` of which may be customised by
+    dedicated properties.
+* The `bypassConfirm` property enables to bypass this step and directly execute the DML.
+
+```
+{
+    "name": "apexAction", "label": "apexAction",
+    "action": {
+        "type": "apex",
+        "title": "Apex Action Execution",
+        "message": "Please confirm the execution of the Apex Action.",
+        "params": {
+            "name": "TST_UserAction_SVC",
+            "params": {
+                "Id": "{{{GEN.userId}}}"
+            }
+        }
+    }
+}
+```
+
+There is also a way to group various logic within a single Apex class,
+in which case a “method” parameter can be specified after the class name.
+```
+{
+    "name": "apexMethod", "label": "apexMethod",
+    "action": {
+        "type": "apex",
+        "params": {
+            "name": "TST_UserAction_SVC.TestMethod",
+            "params": {
+                "Id": "{{{GEN.userId}}}"
+            }
+        }
+    }
+}
+```
+
+_Note_: Whenever a error occurs, the error message provided is automatically displayed in an error toast popup. Raising a custom Apex Exception then enables to provide tailored error messages to the end-users.
+
+
 ### **Form** Action Types (**ldsForm** and **dmlForm**)
 
 Two Action Types are available to execute record operation (create, update) via a popup form,
@@ -755,31 +801,56 @@ provided by a parent component.
 }
 ```
 
-* **massDML** to execute a predefined mass operation via DML (update or delete) on the selected records
+* **massDML** to execute a predefined mass operation via DML (insert, update or delete) on the selected records
     * A confirmation popup is displayed, the header `title` and `message` of which may be customised by
     dedicated properties.
-    * The `bypassConfirm` property enables to bypass this ste and directly execute the DML.
+    * The `bypassConfirm` property enables to bypass this step and directly execute the DML.
+    
     * For the _update_ operation, the `record` property must be defined with the set of field values to
-    be applied on all the selected records. The generated DML contains clones of this JSON object with
-    the `Id` property set from the value available on each selected record.
+    be applied on all the selected records. The generated DML clones this JSON object and sets
+    the `Id` property from the value available on each selected record.
+    * For the _insert_ operation, the `record` property must be defined with the set of field values to
+    be initialized on all the selected records. The generated DML clones of this JSON object with
+    the `lookup` property set from the `Id` value available on each selected record.
 ```
+{
+    "name": "newTask", "label": "Add Task", "iconName": "utility:add",
+    "action": {
+        "type": "massDML",
+        "params": {
+            "operation": "insert",
+            "title": "Add new Tasks",
+            "message": "Please confirm the addition of callback tasks for the selected records",
+            "lookup": "WhatId",
+            "record": {
+                "Subject": "Customer callback",
+                "sobjectType":"Task",
+                "Status": "Open",
+                "ActivityDate": "{{{GEN.nextWeek}}}"
+            },
+            "next": {
+                "type": "toast",
+                "params": {
+                    "title": "Operation Success",
+                    "message": "Your new tasks were properly created.",
+                    "variant": "success"
+                }
+            }
+        }
+    }
+},
 {
     "name": "close", "label": "Close", "iconName": "utility:close",
     "action": {
         "type": "massDML",
         "params": {
             "operation": "update",
-            "title": "Close the Tasks",
-            "message": "Please confirm the closing of the selected tasks",
+            "title": "Close the Records",
+            "message": "Please confirm the closing of the selected records",
             "record": {
                 "Status": "Completed"
             },
-            "next": {
-                "type": "done",
-                "params": {
-                    "type": "refresh"
-                }
-            }
+            "next": {"type": "done","params": {"type": "refresh"}}
         }
     }
 },
@@ -789,21 +860,36 @@ provided by a parent component.
         "type": "massDML",
         "params": {
             "operation": "delete",
-            "title": "Delete the Tasks",
-            "message": "Please confirm the deletion of the selected Tasks",
-            "next": {
-                "type": "done",
-                "params": {
-                    "type": "refresh"
-                }
-            }
+            "title": "Delete the records",
+            "message": "Please confirm the deletion of the selected records",
+            "next": {"type": "done","params": {"type": "refresh"}}
         }
     }
 }
 ```
 
-* **massApex** : PLANNED
-    * Same behaviour as the **massDML** but with the ability to call an Apex logic instead of simple DMLs.
+* **massApex** : to execute a predefined mass operation via Apex based on the selected records
+    * it behaves exactly as the the **apex** unitary action (see above)
+    * the selected records are added automatically as `_selection` property in the input
+    sent to the Apex class. 
+
+```
+{
+    "name": "register","label": "Register", "iconName": "utility:add",
+    "action": {
+        "type": "massApex",
+        "params": {
+            "name": "sfpegMassAction_SVC",
+            "title": "Course Registration",
+            "message": "Please confirm the registration to the selected Courses",
+            "params": {
+                "CurrentRcd": "{{{GEN.recordId}}}"
+            },
+            "next": {"type": "done","params": {"type": "refresh"}}
+        }
+    }
+}
+```
 
 
 _Note_: Whenever a error occurs, the error message provided is automatically displayed in an error toast popup.
@@ -879,45 +965,6 @@ The **toast** action type enables to display a simple toast message, e.g. once a
     }
     ...
 ```
-
-### Custom **apex** Action Type
-
-The **apex** action type enables to execute any operation implemented in a custom Apex class.
-* This Apex class should implement the **sfpegAction_SVC** virtual class.
-* The `params` are then provided as input to the configured Apex class.
-```
-{
-    "name": "apexAction", "label": "apexAction",
-    "action": {
-        "type": "apex",
-        "params": {
-            "name": "TST_UserAction_SVC",
-            "params": {
-                "Id": "{{{GEN.userId}}}"
-            }
-        }
-    }
-}
-```
-
-There is also a way to group various logic within a single Apex class,
-in which case a “method” parameter can be specified after the class name.
-```
-{
-    "name": "apexMethod", "label": "apexMethod",
-    "action": {
-        "type": "apex",
-        "params": {
-            "name": "TST_UserAction_SVC.TestMethod",
-            "params": {
-                "Id": "{{{GEN.userId}}}"
-            }
-        }
-    }
-}
-```
-
-_Note_: Whenever a error occurs, the error message provided is automatically displayed in an error toast popup. Raising a custom Apex Exception then enables to provide tailored error messages to the end-users.
 
 
 ### **Notification** Action Types (**utility**, **action** and **notify**)
