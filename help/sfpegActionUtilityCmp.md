@@ -118,9 +118,85 @@ once the flow completes, leveraging a `notify` action type within a `next` prope
 }
 ```
 
-_Note_: For the notify action to work properly, the `Notification Channel` of the **[sfpegAction](/help/sfpegActionBarCmp.md)**
+_Note_:
+For the notify action to work properly, the `Notification Channel` of the **[sfpegAction](/help/sfpegActionBarCmp.md)**
 row action configuration used in the originating **[sfpegListCmp](/help/sfpegListCmp.md)** should be set to include the
 `RefreshList` channel used here.
+
+### **openFlow** Action Type for Mass operations
+
+The **openFlow** Action Type may be also used as a _mass_ action when triggered from the header actions of the
+**[sfpegListCmp](/help/sfpegListCmp.md)** (first via a `utility` notification action), in which 
+case information about the the selected items may be fed as input to the Flow.
+
+This is done via an additional `selection` property enabling to transform the selection list into a list input
+parameter of the Flow. This parameter is then added to the set of inputs specified by the `params` property.
+
+Two options are basically available:
+* extracting a single `field` of each selected item and populating a simple String list input property
+for the Flow; in the example below, the `Id` of each selected items are provided for the `selectedIDs` 
+String multi-value Flow input variable.
+```
+{
+    "name": "Flow1","label": "Launch Flow1",
+    "action": {
+        "type": "utility",
+        "params": {
+            "type": "openFlow",
+            "params": {
+                "name": "TEST_Flow1",
+                "params": [{"name": "recordId","type": "String","value": "{{{GEN.userId}}}"}],
+                "selection": {"name": "selectedIDs","type": "String","field": "Id"},
+                "header": "Test Flow1 Header",
+                "doRefresh": false,
+                "class": "slds-modal slds-fade-in-open slds-slide-down-cancel slds-modal_large",
+                "next": {
+                    "type": "notify","channel": "RefreshList",
+                    "params": {"type": "done","params": {"type": "refresh"}}
+                }
+            }
+        }
+    }
+}
+```
+* building JSON objects with a set of `fields` for each selected item and populating an Apex class list
+input property for the Flow; in the example below, the `Id` and `Name` of each selected items are provided
+for the `selectedRecords` Apex class multi-value Flow input variable.
+```
+{
+    "name": "Flow2","label": "Launch Flow2",
+    "action": {
+        "type": "utility",
+        "params": {
+            "type": "openFlow",
+            "params": {
+                "name": "TEST_Flow2",
+                "params": [{"name": "recordId","type": "String","value": "{{{GEN.userId}}}"}],
+                "selection": {"name": "selectedRecords","type": "String","fields": ["Id","Name"]},
+                "header": "Test Flow2 Header",
+                "doRefresh": false,
+                "class": "slds-modal slds-fade-in-open slds-slide-down-cancel slds-modal_large",
+                "next": {
+                    "type": "notify","channel": "RefreshList",
+                    "params": {"type": "done","params": {"type": "refresh"}}
+                }
+            }
+        }
+    }
+}
+```
+In this example, this requires the definition of a custom Flow visible Apex class to define
+the `selectedRecords` variable in the Flow, e.g. as
+```
+public with sharing class sfpegTestClass {
+ 
+    @AuraEnabled
+    public String Id;
+ 
+    @AuraEnabled
+    public String Name;
+}
+``` 
 
 
 ### **closeTabs** Action Type
@@ -254,8 +330,6 @@ in such a case.
 ## Configuration Examples
 
 ### Popup with Notification back to original Component
-
-
 
 ***TO BE CONTINUED***
 

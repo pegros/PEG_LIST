@@ -78,7 +78,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
     //----------------------------------------------------------------
     // Record List Context (for mass operations) 
     //----------------------------------------------------------------
-    _recordList = {};          // parent record list contextual data (for mass operations)
+    _recordList = null;         // parent record list contextual data (for mass operations)
     // Implementation with setter to handle context changes.
     @api
     get recordList() {
@@ -669,6 +669,10 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
 
         if (message.channel) {
             if (this.configDetails.channels.includes(message.channel)) {
+                if (message.context) {
+                    if (this.isDebug) console.log('handleNotification: overriding current recordList context ',JSON.stringify(message.context));
+                    this._recordList = message.context;
+                }
                 if (this.isDebug) console.log('handleNotification: END / processing message on subscribed channel ',message.channel);
                 this.processAction(message.action,null);
             }
@@ -1587,7 +1591,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
 
         let actionNotif = {
             'action': action,
-            'context': null
+            'context': this._recordList
         };
         if (this.isDebug) console.log('triggerUtilityAction: actionNotif prepared ',JSON.stringify(actionNotif));
 
@@ -1604,7 +1608,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             let actionNotif = {
                 'channel': channel,
                 'action': action,
-                'context': null
+                'context': this._recordList
             };
             if (this.isDebug) console.log('triggerCustomAction: actionNotif prepared ', JSON.stringify(actionNotif));
 
@@ -1627,7 +1631,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
             let actionNotif = {
                 'channel': channel,
                 'action': notification,
-                'context': null
+                'context': this._recordList
             };
             if (this.isDebug) console.log('triggerCustomNotification: actionNotif prepared ',JSON.stringify(actionNotif));
 

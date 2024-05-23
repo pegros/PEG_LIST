@@ -39,9 +39,9 @@
     // Action handling
     handleAction : function(component, event, helper) {
         if (helper.isDebug) console.log('handleAction: START');
-        let action = event.getParams();
-        if (helper.isDebug) console.log('handleAction: action extracted ',JSON.stringify(action));
-        helper.processAction(action,component,helper);
+        let params = event.getParams();
+        if (helper.isDebug) console.log('handleAction: params extracted ',JSON.stringify(params));
+        helper.processAction(params.action,params.context,component,helper);
         if (helper.isDebug) console.log('handleAction: END');
     }//,
     // Console Tab Events handling

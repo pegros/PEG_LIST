@@ -301,9 +301,15 @@ export default class SfpegListCmp extends LightningElement {
     get showCardHeaderIcons() {
         return (this.cardIcon || this.isCollapsible);
     }
+    get hasHeaderActionConfig() {
+        return (this.actionConfigName) && (this.actionConfigName !== 'N/A');
+    }
 
     get hasActionFooter () {
         return this.showPagination || this.footerConfigName;
+    }
+    get hasFooterActionConfig() {
+        return (this.footerConfigName) && (this.footerConfigName !== 'N/A');
     }
 
     // Data Table mode related getters
@@ -456,25 +462,25 @@ export default class SfpegListCmp extends LightningElement {
     }
 
     renderedCallback() {
-        if (this.isDebug) console.log('renderedCallback: START');
+        if (this.isDebug) console.log('rendered: START for config ',this.configName);
 
         if ((this.isReady) && (!this.isExpandDone) && (this.configDetails?.type === "TreeGrid") && (this.configDetails?.display?.expandAll)){
-            if (this.isDebug) console.log('renderedCallback: expanding tree grid by default');
+            if (this.isDebug) console.log('rendered: expanding tree grid by default');
 
             const treeGridCmp =  this.template.querySelector('lightning-tree-grid');
-            if (this.isDebug) console.log('renderedCallback: treeGridCmp fetched ', treeGridCmp);
+            if (this.isDebug) console.log('rendered: treeGridCmp fetched ', treeGridCmp);
 
             if (treeGridCmp) {
                 treeGridCmp.expandAll();
                 this.isExpandDone = true;
-                if (this.isDebug) console.log('renderedCallback: treeGridCmp expanded');
+                if (this.isDebug) console.log('rendered: treeGridCmp expanded');
             }
             else {
-                if (this.isDebug) console.log('renderedCallback: treeGridCmp not yet rendered');
+                if (this.isDebug) console.log('rendered: treeGridCmp not yet rendered');
             }
         }
 
-        if (this.isDebug) console.log('renderedCallback: END');
+        if (this.isDebug) console.log('rendered: END');
     }
 
     //----------------------------------------------------------------
@@ -766,7 +772,7 @@ export default class SfpegListCmp extends LightningElement {
                     if (this.isDebug) console.log('executeQuery: CheckBox displayed ');
                     this.selectedRecords = ( tableOrTree ? tableOrTree.getSelectedRows() : []);
                 }
-                if (this.isDebug) console.log('executeQuery: selectedRecords init ', JSON.stringify(this.selectedRecords));
+                if (this.isDebug) console.log('executeQuery: selectedRecords init ', JSON.stringify(this.selectedRecords || null));
 
                 if (this.isDebug) console.log('executeQuery: tracking last record key ', this.configDetails.query.orderByField);
                 let lastRecord = (this.resultList.length > 0 ? (this.resultList.slice(-1)) : null);
@@ -906,6 +912,13 @@ export default class SfpegListCmp extends LightningElement {
     handleRefresh(event){
         if (this.isDebug) console.log('handleRefresh: START');
         this.isExpandDone = false;
+
+        let tableOrTree = this.template.querySelector('lightning-datatable') || this.template.querySelector('lightning-tree-grid');
+        if (tableOrTree) {
+            if (this.isDebug) console.log('handleRefresh: resetting selection');
+            tableOrTree.selectedRows = [];
+        }
+
         this.executeQuery();
         if (this.isDebug) console.log('handleRefresh: END');
     }
@@ -1303,6 +1316,13 @@ export default class SfpegListCmp extends LightningElement {
         let nextAction;
         if (event.detail.type === 'refresh') {
             if (this.isDebug) console.log('handleActionDone: refreshing list');
+
+            let tableOrTree = this.template.querySelector('lightning-datatable') || this.template.querySelector('lightning-tree-grid');
+            if (tableOrTree) {
+                if (this.isDebug) console.log('handleRefresh: resetting selection');
+                tableOrTree.selectedRows = [];
+            }
+
             this.executeQuery();
             nextAction = event.detail.next;
         }

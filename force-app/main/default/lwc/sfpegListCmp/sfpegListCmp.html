@@ -35,7 +35,7 @@
             <div class="headerActions" slot="actions">
 
                 <!-- Header Actions -->
-                <template lwc:if={actionConfigName}>
+                <template lwc:if={hasHeaderActionConfig}>
                     <lightning-button-group>
                         <c-sfpeg-action-bar-cmp bar-class= ""
                                                 record-list={selectedRecords}
@@ -260,7 +260,7 @@
                     </template>
 
                     <!-- Footer Actions -->
-                    <template lwc:if={footerConfigName}>
+                    <template lwc:if={hasFooterActionConfig}>
                         <lightning-button-group>
                                 <c-sfpeg-action-bar-cmp bar-class= ""
                                                         record-list={selectedRecords}
@@ -288,7 +288,7 @@
                                 <dt class="slds-dl_horizontal__label slds-truncate">Configuration</dt>
                                 <dd class="slds-dl_horizontal__detail">Query: {configName}</dd>
                                 <dt class="slds-dl_horizontal__label slds-truncate">Actions</dt>
-                                <dd class="slds-dl_horizontal__detail">Header: {actionConfigName}</dd>
+                                <dd class="slds-dl_horizontal__detail">Header: {actionConfigName} / Footer: {footerConfigName}</dd>
                                 <dt class="slds-dl_horizontal__label slds-truncate">Loaded?</dt>
                                 <dd class="slds-dl_horizontal__detail">{hasConfig}</dd>
                                 <dt class="slds-dl_horizontal__label slds-truncate">Context</dt>

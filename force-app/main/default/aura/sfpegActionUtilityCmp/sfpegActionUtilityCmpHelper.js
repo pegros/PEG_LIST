@@ -56,8 +56,10 @@
         if (helper.isDebug) console.log('processInit: END (synchronous part)');	
 	},
     // Action Handling
-    processAction: function(action, component, helper) {
+    processAction: function(action, context, component, helper) {
         if (helper.isDebug) console.log('processAction: START');
+        if (helper.isDebug) console.log('processAction: action provided ',JSON.stringify(action));
+        if (helper.isDebug) console.log('processAction: context provided ', JSON.stringify(context));
 
         let isLocalAction = true;
         if (helper.isDebug) console.log('processAction: action type provided ',action.type);
@@ -80,11 +82,11 @@
                 break;
             case 'openFlow':
                 if (helper.isDebug) console.log('processAction: opening Flow popup');
-                helper.openFlow(action.params,component,helper);
+                helper.openFlow(action.params,context,component,helper);
                 break;
             case 'openPopup':
                 if (helper.isDebug) console.log('processAction: opening custom Aura component popup');
-                helper.openPopup(action.params,component,helper);
+                helper.openPopup(action.params,context,component,helper);
                 break;
             case 'fireEvent':
                 if (helper.isDebug) console.log('processAction: firing App event');
@@ -93,12 +95,12 @@
             default:
                 if (helper.isDebug) console.log('processAction: invoking action on action bar ',action.type);
                 isLocalAction = false;
-                helper.callActionBar(action, component, helper);
+                helper.callActionBar(action, context, component, helper);
         }
 
         if ((isLocalAction) && (action.next)) {
             if (this.isDebug) console.log('processAction: chained action to trigger',JSON.stringify(action.next));
-            helper.processAction(action.next,component, helper);
+            helper.processAction(action.next,context,component, helper);
             if (this.isDebug) console.log('processAction: END / chained action triggered');
         }
         else {
@@ -280,13 +282,43 @@
             if (helper.isDebug) console.log('refreshTab: END / Event fired');
         }
     },
-    openFlow : function(params,component,helper) {
+    openFlow : function(params,context,component,helper) {
         if (helper.isDebug) console.log('openFlow: START with params ',JSON.stringify(params));
-        //if (helper.isDebug) console.log('openFlow: isDebug ', helper.isDebug);
+        if (helper.isDebug) console.log('openFlow: context provided ', JSON.stringify(context));
+
+        let flowParams = [...(params.params || [])];
+        if (helper.isDebug) console.log('openFlow: flowParams init ', JSON.stringify(flowParams));
+        if ((params.selection) && (context)) {
+            if (helper.isDebug) console.log('openFlow: adding selection configured as ',JSON.stringify(params.selection));
+            //let selectParam = { ...(params.selection) };
+            let selectParam = {name: params.selection.name, type: params.selection.type, value: []};
+            if (helper.isDebug) console.log('openFlow: selectParam init ',JSON.stringify(selectParam));
+            if (params.selection.fields) {
+                if (helper.isDebug) console.log('openFlow: extracting fields from selection ',JSON.stringify(params.selection.fields));
+                context.forEach(item => {
+                    let itemVal = {};
+                    params.selection.fields.forEach(itemField => {
+                        itemVal[itemField] = item[itemField];
+                    });
+                    selectParam.value.push(itemVal);
+                });
+            }
+            else {
+                if (helper.isDebug) console.log('openFlow: extracting field from selection ',params.selection.field);
+                context.forEach(item => {
+                    selectParam.value.push(item[params.selection.field]);
+                });
+            }
+            if (helper.isDebug) console.log('openFlow: selection init ',JSON.stringify(selectParam));
+            flowParams.push(selectParam);
+            if (helper.isDebug) console.log('openFlow: selection added ');
+        }
+        if (helper.isDebug) console.log('openFlow: flowParams prepared ', JSON.stringify(flowParams));
 
         $A.createComponent("c:sfpegFlowDsp", {
                 "flowName":     params.name,
-                "flowParams":   params.params,
+                //"flowParams":   params.params,
+                "flowParams":   flowParams,
                 "isDebug":      helper.isDebug
             },
             function(flowCmp, status, errorMessage) {
@@ -303,7 +335,8 @@
                                 if (helper.isDebug) console.log('openFlow: popup closed');
                                 if (params.next) {
                                     if (helper.isDebug) console.log('openFlow: chained action to trigger',JSON.stringify(params.next));
-                                    helper.processAction(params.next,component, helper);
+                                    if (helper.isDebug) console.log('openFlow: helper status',helper);
+                                    helper.processAction(params.next,context,component, helper);
                                     if (helper.isDebug) console.log('openFlow: chained action triggered');
                                 }
                                 else {
@@ -328,11 +361,38 @@
 
         if (helper.isDebug) console.log('openFlow: component creation requested');
     },
-    openPopup : function(params,component,helper) {
+    openPopup : function(params,context,component,helper) {
         if (helper.isDebug) console.log('openPopup: START with params ',JSON.stringify(params));
-        if (helper.isDebug) console.log('openPopup: isDebug ', helper.isDebug);
+        if (helper.isDebug) console.log('openPopup: context provided ', context);
 
-        $A.createComponent(params.name, params.params,
+        let cmpParams = JSON.parse(JSON.stringify(params.params || {}));
+        if (helper.isDebug) console.log('openPopup: cmpParams init ', JSON.stringify(cmpParams));
+        if ((params.selection) && (context)) {
+            if (helper.isDebug) console.log('openPopup: adding selection configured as ',JSON.stringify(params.selection));
+
+            let selectionValue = [];
+            if (params.selection.fields) {
+                if (helper.isDebug) console.log('openPopup: extracting fields from selection ',JSON.stringify(params.selection.fields));
+                context.forEach(item => {
+                    let itemVal = {};
+                    params.selection.fields.forEach(itemField => {
+                        itemVal[itemField] = item[itemField];
+                    });
+                    selectionValue.value.push(itemVal);
+                });
+            }
+            else {
+                if (helper.isDebug) console.log('openPopup: extracting field from selection ',params.selection.field);
+                context.forEach(item => {
+                    selectionValue.push(item[params.selection.field]);
+                });
+            }
+            if (helper.isDebug) console.log('openPopup: selectionValue init ',JSON.stringify(selectionValue));
+            cmpParams[params.selection] = selectionValue;
+        }
+        if (helper.isDebug) console.log('openFlow: cmpParams prepared ', JSON.stringify(cmpParams));
+
+        $A.createComponent(params.name, cmpParams,
             function(content, status, errorMessage) {
               if (status === "SUCCESS") {
                   console.log('openPopup: component create OK');
@@ -346,7 +406,7 @@
                                 if (helper.isDebug) console.log('openPopup: popup closed');
                                 if (params.next) {
                                     if (helper.isDebug) console.log('openPopup: chained action to trigger',JSON.stringify(params.next));
-                                    helper.processAction(params.next,component, helper);
+                                    helper.processAction(params.next,context,component, helper);
                                     if (helper.isDebug) console.log('openPopup: chained action triggered');
                                 }
                                 else {
@@ -394,10 +454,14 @@
             console.warn("fireEvent: END KO - Missing event type")
         }
     },
-    callActionBar : function(action,component,helper) {
+    callActionBar : function(action,context,component,helper) {
         if (helper.isDebug) console.log('callActionBar: START');
             
         let actionBar = component.find("actionBar");
+        if (context) {
+            if (helper.isDebug) console.log('callActionBar: setting selection list from context',JSON.stringify(context));
+            actionBar.recordList = context;
+        }
         actionBar.executeAction(action,null);
         
         if (helper.isDebug) console.log('callActionBar: END');

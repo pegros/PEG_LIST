@@ -150,8 +150,11 @@ export default class SfpegActionHandlerCmp extends LightningElement {
                 case "openPopup":
                 case "fireEvent":
                     if (this.isDebug) console.log('handleMessage: forwarding action to parentCmp ',message.action.type);
+                    if (this.isDebug) console.log('handleMessage: action to set ',JSON.stringify(message.action));
+                    if (this.isDebug) console.log('handleMessage: context to set ',JSON.stringify(message.context));
+
                     let doneEvent = new CustomEvent('done', {
-                        "detail": message.action
+                        detail: { action: message.action, context: message.context}
                     });
                     if (this.isDebug) console.log('handleMessage: doneEvent init',JSON.stringify(doneEvent));   
                     this.dispatchEvent(doneEvent);
