@@ -351,6 +351,11 @@ export default class SfpegListCmp extends LightningElement {
         return '' + this.configDetails?.display?.keyField + ' / ' + this.configDetails?.query?.orderByField;
     }
 
+    // Hidden mode related getters
+    get isNotHidden() {
+        return !((this.configDetails) && (this.configDetails.type === 'Hidden'));
+    }
+
     // Interface Getters
     @api get configuration() {
         return this.configDetails;
