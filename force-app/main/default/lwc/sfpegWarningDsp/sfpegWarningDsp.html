@@ -1,20 +1,21 @@
 <template>
-
-    <div class="slds-box slds-box_x-small slds-media slds-media_center">
-        <div    class="slds-media__figure">
-            <lightning-icon icon-name={variantConfig.iconName} size="small"
-                            variant={variantConfig.iconVariant}>
-            </lightning-icon>
-        </div>
-            <div class="slds-media__body" style="word-wrap: break-word !important;">
-                <p class={variantConfig.textColor}>
-                    {message}
+    <div class={wrappingClass}>
+        <template lwc:if={variantConfig.iconName}>
+            <div    class="slds-media__figure">
+                <lightning-icon icon-name={variantConfig.iconName} size="small"
+                                variant={variantConfig.iconVariant}>
+                </lightning-icon>
+            </div>
+        </template>
+        <div class="slds-media__body" style="word-wrap: break-word !important;">
+            <p class={variantConfig.textColor}>
+                {message}
+            </p>
+            <template lwc:if={errorDetails}>
+                <p class="slds-text-body_small">
+                    {errorDetails}
                 </p>
-                <template if:true={errorDetails}>
-                    <p class="slds-text-body_small">
-                        {errorDetails}
-                    </p>
-                </template>
+            </template>
         </div>
     </div>
 </template>

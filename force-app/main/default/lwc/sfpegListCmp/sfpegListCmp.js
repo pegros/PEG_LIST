@@ -201,6 +201,15 @@ export default class SfpegListCmp extends LightningElement {
         if (this.configDetails) return true;
         return false;
     }
+    get hasData() {
+        return (this.resultList && this.resultList.length > 0);
+    }
+    get hasEmptyMsg(){
+        return (this.configDetails?.display?.emptyMsg);
+    } 
+    get emptyMsgVariant() {
+        return (this.configDetails?.display?.emptyVariant || 'info');
+    }
     get resultCount () {
         return (this.resultList || []).length;
     }
@@ -306,7 +315,7 @@ export default class SfpegListCmp extends LightningElement {
     }
 
     get hasActionFooter () {
-        return this.showPagination || this.footerConfigName;
+        return this.showPagination || ((this.footerConfigName) && (this.footerConfigName !== 'N/A'));
     }
     get hasFooterActionConfig() {
         return (this.footerConfigName) && (this.footerConfigName !== 'N/A');

@@ -35,6 +35,11 @@ const DISPLAY_VARIANTS = {
     info: {
         "iconName"   : "utility:info_alt",
         "iconVariant": null,
+        "textColor"  : "slds-text-color_default",
+    },
+    infoLight: {
+        "iconName"   : null,
+        "iconVariant": null,
         "textColor"  : "slds-text-color_default"
     },
     warning: {
@@ -62,6 +67,7 @@ export default class SfpegWarningDsp extends LightningElement {
     @api message;               // Text message to display
     @api error;                 // Error object for which message properties should be displayed
     @api variant = "warning";   // Variant of the display
+    @api wrappingClass = "slds-box slds-box_x-small slds-media slds-media_center";  // CSS for the Wrapping div
     @api isDebug = false;       // Flag to trigger debug logs
 
     //----------------------------------------------------------------

@@ -169,6 +169,35 @@ Hereafter is an example of the **sfpegAction__mdt** record used for row level ac
 ![Row Action Metadata Record](/media/sfpegListConfigMetaAction.png)
 
 
+### No Data Display Handling
+
+By default, the component only displays the card header with header actions when
+there is no data to display (and no error).
+
+![List with no data](/media/sfpegListNoData.png)
+
+It is however possible to change this behaviour and specify a default message
+displayed when no data is available via the `emptyMsg` property in the
+`Display Configuration`.
+
+![List with no data and message](/media/sfpegListNoDataMsg.png)
+
+_Notes_:
+* Custom labels may be used for the `emptyMsg` property leveraging the **LBL**.
+* It is also possible to slightly alter the appearance of this message via the
+`emptyVariant` property (e.g. replacing the default `info` by `infoLight` to remove
+the information icon).
+
+Hereafter is such an example.
+```
+{
+    "keyField":"Id",
+    "emptyMsg":"{{{LBL.EmptyListCustomLabelName}}}",
+    "emptyVariant":"infoLight",
+    ...
+}
+```
+
 ### Special Paginated Use Cases
 
 When using the pagination, this example should be modified the following way:

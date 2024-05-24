@@ -30,6 +30,10 @@
     background-color:  var(--lwc-colorBackgroundAlt);
     --sds-c-card-color-background:  var(--lwc-colorBackgroundAlt);
     width: 100%;
+    /*border-bottom-left: var(--slds-c-card-radius-border, var(--sds-c-card-radius-border, var(--lwc-borderRadiusMedium, 0.25rem)));*/
+    border-bottom-left-radius: var(--slds-c-card-radius-border, var(--sds-c-card-radius-border, var(--lwc-borderRadiusMedium, 0.25rem)));
+    border-bottom-right-radius: var(--slds-c-card-radius-border, var(--sds-c-card-radius-border, var(--lwc-borderRadiusMedium, 0.25rem)));
+    /*margin-bottom: var(--slds-c-card-radius-border, var(--sds-c-card-radius-border, var(--lwc-borderRadiusMedium, 0.25rem)));*/
     /*min-height: 150px !important;*/
     /*padding-bottom: var(--lwc-varSpacingVerticalMedium);*/
 }

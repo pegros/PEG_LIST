@@ -151,18 +151,20 @@
 
                 <!-- Error Message display -->
                 <template if:true={hasErrorMsg}>
-                    <c-sfpeg-warning-dsp message={errorMsg}>
+                    <c-sfpeg-warning-dsp    wrapping-class="slds-var-m-horizontal_medium slds-var-m-bottom_small slds-media slds-media_center"
+                                            variant="errorLight"    
+                                            message={errorMsg}>
                     </c-sfpeg-warning-dsp>
                 </template>
 
                 <!-- Results Display -->
-                <template if:true={hasConfig}>
-                    <div style={contentStyle} class={contentClass} >
-                        <!--  -->
-                        <!-- Data Table mode data display -->
-                        <template if:true={isDataTable}>
-                        <!--<div class="slds-card__body cardContent ">-->
-                            <lightning-datatable
+                <template lwc:if={hasConfig}>
+                    <template lwc:if={hasData}>
+                        <div style={contentStyle} class={contentClass} >
+
+                            <!-- Data Table mode data display -->
+                            <template if:true={isDataTable}>
+                                <lightning-datatable
                                     data-id="dataTable"
                                     class="sfpegTable"
                                     key-field={configDetails.display.keyField}
@@ -178,14 +180,12 @@
                                     onrowaction={handleRowAction}
                                     onrowselection={handleRowSelection}
                                     render-config={renderConfig}>
-                            </lightning-datatable>
-                        <!-- render-mode="role-based" render-config={renderConfig} </div>-->
-                        </template>
+                                </lightning-datatable>
+                            </template>
 
-                        <!-- Tree Grid mode data display -->
-                        <template if:true={isTreeGrid}>
-                        <!--div class="slds-card__body cardContent ">-->
-                            <lightning-tree-grid
+                            <!-- Tree Grid mode data display -->
+                            <template if:true={isTreeGrid}>
+                                <lightning-tree-grid
                                     data-id="treeGrid"
                                     class="sfpegTable"
                                     key-field={configDetails.display.keyField}
@@ -200,36 +200,32 @@
                                     onrowaction={handleRowAction} 
                                     onrowselection={handleRowSelection} 
                                     render-config={renderConfig} >
-                            </lightning-tree-grid>
-                        <!--  render-mode="role-based" render-config={renderConfig} </div>-->
-                        </template>
+                                </lightning-tree-grid>
+                            </template>
 
-                        <!-- List mode data display -->
-                        <template if:true={isList}>
-                        <!--<div class="slds-var-p-horizontal_x-small slds-card__body cardContent horizontal-align="end" slds-var-p-horizontal_small slds-var-p-around_small " is-debug={isDebug}>  config-actions={configDetails.rowActions}  -->
-                            <div class="slds-p-horizontal_xx-small">
-                            <lightning-layout   multiple-rows="true"   >
-                                <template for:each={resultList} for:item="iter">
-                                    <!-- alignment-bump="right" alignment-bump="left" -->
-                                    <lightning-layout-item  key={iter.Id}  size={tileSize}  >
-                                        <c-sfpeg-tile-dsp   display-type={configDetails.type}
-                                                            display-variant={configDetails.display.variant}
-                                                            config-details={configDetails.display}
-                                                            record-data={iter}
-                                                            is-debug={isDebugFine}
-                                                            onrowaction={handleRowAction}>
-                                        </c-sfpeg-tile-dsp>
-                                    </lightning-layout-item>
-                                </template>
-                            </lightning-layout>
-                            </div>
-                        <!-- </div> -->
-                        </template>
-                    </div>
+                            <!-- List mode data display -->
+                            <template if:true={isList}>
+                                <div class="slds-m-horizontal_xx-small">
+                                    <lightning-layout   multiple-rows="true"   >
+                                        <template for:each={resultList} for:item="iter">
+                                            <lightning-layout-item  key={iter.Id}  size="12" medium-device-size={tileSize} >
+                                                <c-sfpeg-tile-dsp   display-type={configDetails.type}
+                                                                    display-variant={configDetails.display.variant}
+                                                                    config-details={configDetails.display}
+                                                                    record-data={iter}
+                                                                    is-debug={isDebugFine}
+                                                                    onrowaction={handleRowAction}>
+                                                </c-sfpeg-tile-dsp>
+                                            </lightning-layout-item>
+                                        </template>
+                                    </lightning-layout>
+                                </div>
+                            </template>
+                        </div>
 
-                    <!-- Row Action Execution -->
-                    <template lwc:if={configDetails.rowActions}>
-                        <c-sfpeg-action-bar-cmp bar-class= "slds-hide"
+                        <!-- Row Action Execution -->
+                        <template lwc:if={configDetails.rowActions}>
+                            <c-sfpeg-action-bar-cmp bar-class= "slds-hide"
                                         config-name={configDetails.rowActions}
                                         object-api-name={objectApiName}
                                         record-id={recordId}
@@ -239,8 +235,21 @@
                                         is-debug={isDebugFine}
                                         ondone={handleActionDone}
                                         data-my-id="rowActions">
-                        </c-sfpeg-action-bar-cmp>
+                            </c-sfpeg-action-bar-cmp>
+                        </template>
                     </template>
+                    <template lwc:elseif={hasEmptyMsg}>
+                        <div style={contentStyle} class={contentClass} >
+                            <c-sfpeg-warning-dsp    variant={emptyMsgVariant}
+                                                    wrapping-class="slds-var-m-horizontal_medium slds-media slds-media_center"
+                                                    message={configDetails.display.emptyMsg}>
+                            </c-sfpeg-warning-dsp>
+                            <!--
+                            <p class="slds-text-body slds-var-m-horizontal_medium">{configDetails.display.emptyMsg}</p>
+                            -->
+                        </div>
+                    </template>
+                    <template lwc:else></template>
                 </template>
             </template>
 
