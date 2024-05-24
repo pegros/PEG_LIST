@@ -186,7 +186,8 @@ _Notes_:
 * ⚠️ For proper display of the _no data_ layout, beware to include the `slds-theme_shade`
 class in the `Card CSS Class` App Builder property when using the `slds-card_boundary`
 card border class!
-* Custom labels may be used for the `emptyMsg` property leveraging the **LBL**.
+* Custom labels may be used for the `emptyMsg` property leveraging the **LBL** merge
+token.
 * It is also possible to slightly alter the appearance of this message via the
 `emptyVariant` property (e.g. replacing the default `info` by `infoLight` to remove
 the information icon).
