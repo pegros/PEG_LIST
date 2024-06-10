@@ -222,21 +222,6 @@
                                 </div>
                             </template>
                         </div>
-
-                        <!-- Row Action Execution -->
-                        <template lwc:if={configDetails.rowActions}>
-                            <c-sfpeg-action-bar-cmp bar-class= "slds-hide"
-                                        config-name={configDetails.rowActions}
-                                        object-api-name={objectApiName}
-                                        record-id={recordId}
-                                        user-id={userId}
-                                        is-hidden="true"
-                                        parent-context={parentContext}
-                                        is-debug={isDebugFine}
-                                        ondone={handleActionDone}
-                                        data-my-id="rowActions">
-                            </c-sfpeg-action-bar-cmp>
-                        </template>
                     </template>
                     <template lwc:elseif={hasEmptyMsg}>
                         <div style={contentStyle} class={contentClass} >
@@ -349,5 +334,21 @@
 
         </lightning-card>
     </div>
+    </template>
+    <template lwc:if={hasConfig}>
+        <!-- Row Action Execution -->
+        <template lwc:if={configDetails.rowActions}>
+            <c-sfpeg-action-bar-cmp bar-class= "slds-hide"
+                        config-name={configDetails.rowActions}
+                        object-api-name={objectApiName}
+                        record-id={recordId}
+                        user-id={userId}
+                        is-hidden="true"
+                        parent-context={parentContext}
+                        is-debug={isDebugFine}
+                        ondone={handleActionDone}
+                        data-my-id="rowActions">
+            </c-sfpeg-action-bar-cmp>
+        </template>
     </template>
 </template>
