@@ -329,7 +329,7 @@ public with sharing class sfpegMerge_CTL {
 			//Fetching LBL values
 			Map<String, Object> labelMap;
 			if (Test.isRunningTest()) {
-				//Special case as CF pages may not be renedered in a test !
+				//Special case as CF pages may not be rendered in a test !
 				labelMap = new Map<String, Object>();
 				for (String iter : lblTokens) {
 					labelMap.put(iter,iter);
