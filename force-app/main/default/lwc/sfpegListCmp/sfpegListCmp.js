@@ -365,11 +365,18 @@ export default class SfpegListCmp extends LightningElement {
         return !((this.configDetails) && (this.configDetails.type === 'Hidden'));
     }
 
+    //----------------------------------------------------------------
     // Interface Getters
+    //----------------------------------------------------------------
+
     @api get configuration() {
         return this.configDetails;
     }
 
+    @api get selection() {
+        return this.selectedRecords;
+    }
+    
     //----------------------------------------------------------------
     // Component initialisation  
     //----------------------------------------------------------------      
