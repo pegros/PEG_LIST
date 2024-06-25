@@ -6,7 +6,7 @@
     <fieldManageability>SubscriberControlled</fieldManageability>
     <inlineHelpText>Field API Name for SOQL OrderBy Statement (when pagination is used)</inlineHelpText>
     <label>Query OrderBy Field</label>
-    <length>25</length>
+    <length>50</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>
