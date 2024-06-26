@@ -92,3 +92,6 @@
     border-left-style: solid !important;
     border-left-color: var(--lwc-colorBorderButtonDefault) !important;
 }
+.sfpegTile {
+    height: calc(100% - 8px);
+}
