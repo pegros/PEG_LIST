@@ -206,7 +206,7 @@
                             <!-- List mode data display -->
                             <template if:true={isList}>
                                 <div class="slds-m-horizontal_xx-small">
-                                    <lightning-layout   multiple-rows="true"   >
+                                    <lightning-layout   multiple-rows="true"  vertical-align="stretch" >
                                         <template for:each={resultList} for:item="iter">
                                             <lightning-layout-item  key={iter.Id}  size="12" medium-device-size={tileSize} >
                                                 <c-sfpeg-tile-dsp   display-type={configDetails.type}
@@ -345,7 +345,8 @@
                         user-id={userId}
                         is-hidden="true"
                         parent-context={parentContext}
-                        is-debug={isDebugFine}
+                        is-debug={isDebug}
+                        is-debug-fine={isDebugFine}
                         ondone={handleActionDone}
                         data-my-id="rowActions">
             </c-sfpeg-action-bar-cmp>
