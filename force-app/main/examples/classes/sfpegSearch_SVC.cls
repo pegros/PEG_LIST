@@ -185,6 +185,12 @@ public with sharing class sfpegSearch_SVC extends sfpegListQuery_SVC {
                 String iterClause = buildWhere((Map<String,Object>)whereClause.get(iter),context);
                 System.debug('executeSOQL: WHERE clause init ' + iterClause);
                 iterClause = ((iterClause == null) ? '' : 'WHERE ' + iterClause);
+
+                if (iterClause.contains('{{{')) {
+                    System.debug(LoggingLevel.FINE,'executeSOQL: premerging context in WHERE clause');
+                    iterClause = sfpegList_CTL.mergeQuery((String)iterClause, context, sfpegList_CTL.CONFIG.BypassEscaping__c);
+                    System.debug(LoggingLevel.FINE,'executeSOQL: WHERE clause merged');
+                }
                 context.put(iter,iterClause);
             }
             System.debug('executeSOQL: context updated ' + context);
