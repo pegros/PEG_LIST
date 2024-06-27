@@ -484,6 +484,7 @@ const sfpegMergeUtl = {
     // string, leveraging tokens previously extracted from the
     // template (via the extractTokens method).
     //#########################################################
+    // @TODO : refactor and isolate additional transformations.
     mergeTokens : function(templateString, tokenMap, userId, userData, objectName, recordId, recordData, rowData, contextData) {
         if (sfpegMergeUtl.isDebug) console.log('mergeTokens: START with templateString ',templateString);
         if (sfpegMergeUtl.isDebug) console.log('mergeTokens: tokenMap provided ',JSON.stringify(tokenMap));
@@ -557,64 +558,190 @@ const sfpegMergeUtl = {
                 let mergeResult = sfpegMergeUtl.setTokenValues(templateString, tokenMap, tokenData);
                 if (sfpegMergeUtl.isDebug) console.log('mergeTokens: merge done ',mergeResult);
 
-                if (mergeResult.includes('ESCAPE(((')) {
-                    if (this.isDebug) console.log('mergeTokens: HTML escaping required ');
-
-                    let escapeMatches = [...mergeResult.matchAll(/ESCAPE(\(\(\()(.*?)(\)\)\))/gms)];
-                    if (this.isDebug) console.log('mergeTokens: HTML escapeMatches found ',escapeMatches);
-    
-                    escapeMatches.forEach(matchIter => {
-                        if (this.isDebug) console.log('mergeTokens: processing matchIter ',matchIter);
-                        //if (this.isDebug) console.log('mergeTokens: match considered ',matchIter[0]);
-                        //if (this.isDebug) console.log('mergeTokens: value considered ',matchIter[2]);
-                        //if (this.isDebug) console.log('mergeTokens: submatches ',[...(matchIter[2]).matchAll(/"/g)]);
-                        let newMatchValue = (matchIter[2]).replace(/"/gms,'\\"');
-                        newMatchValue = (newMatchValue).replace(/[\r\n\t]/gms,' ');
-                        //newMatchValue = (newMatchValue).replace(/[\r]/gms,'\\r');
-                        //newMatchValue = (newMatchValue).replace(/[\n]/gms,'\\n');
-                        //newMatchValue = (newMatchValue).replace(/[\t]/gms,'\\t');
-                        if (this.isDebug) console.log('mergeTokens: newMatchValue ', newMatchValue);
-                        mergeResult = mergeResult.replace(matchIter[0],newMatchValue);
-                        //if (this.isDebug) console.log('mergeTokens: mergeResult updated ', mergeResult);
-                    });
-                    if (this.isDebug) console.log('mergeTokens: mergeResult HTML escaped');
+                if (mergeResult.includes('{{{ROW.')) {
+                    if (sfpegMergeUtl.isDebug) console.log('mergeTokens: waiting for ROW data to applying special operations');
                 }
                 else {
-                    if (this.isDebug) console.log('mergeTokens: no HTML escaping required ');
-                }
+                    if (sfpegMergeUtl.isDebug) console.log('mergeTokens: applying special operations directly');
 
-                if (mergeResult.includes('UTF(((')) {
-                    if (this.isDebug) console.log('mergeTokens: UTF escaping required ');
+                    //=================================================
+                    //@TODO refactor and isolate in sub methods
+                    //=================================================
+                    if (mergeResult.includes('ESCAPE(((')) {
+                        if (this.isDebug) console.log('mergeTokens: HTML escaping required ');
 
-                    let escapeMatches = [...mergeResult.matchAll(/UTF(\(\(\()(.*?)(\)\)\))/gms)];
-                    if (this.isDebug) console.log('mergeTokens: UTF escapeMatches found ',escapeMatches);
+                        let escapeMatches = [...mergeResult.matchAll(/ESCAPE(\(\(\()(.*?)(\)\)\))/gms)];
+                        if (this.isDebug) console.log('mergeTokens: HTML escapeMatches found ',escapeMatches);
     
-                    escapeMatches.forEach(matchIter => {
-                        if (this.isDebug) console.log('mergeTokens: processing matchIter ',matchIter);
-                        //if (this.isDebug) console.log('mergeTokens: match considered ',matchIter[0]);
-                        //if (this.isDebug) console.log('mergeTokens: value considered ',matchIter[2]);
-                        //if (this.isDebug) console.log('mergeTokens: submatches ',[...(matchIter[2]).matchAll(/"/g)]);
-                        let newMatchValue = (matchIter[2]).replaceAll('+','%2B');
-                        if (this.isDebug) console.log('mergeTokens: + char replaced ',newMatchValue);
-                        newMatchValue = (newMatchValue).replaceAll(',','%2C');
-                        if (this.isDebug) console.log('mergeTokens: , char replaced ',newMatchValue);
-                        //newMatchValue = (newMatchValue).replace(/\\/gms,'%5C');
-                        //newMatchValue = (newMatchValue).replaceAll('\\\\','%5C');
-                        newMatchValue = (newMatchValue).replaceAll('\\','%5C');
-                        if (this.isDebug) console.log('mergeTokens: \\ char replaced ',newMatchValue);
-                        //newMatchValue = (newMatchValue).replace(/[\\]/gms,'%5C');
-                        //newMatchValue = (newMatchValue).replace(/[\r]/gms,'\\r');
-                        //newMatchValue = (newMatchValue).replace(/[\n]/gms,'\\n');
-                        //newMatchValue = (newMatchValue).replace(/[\t]/gms,'\\t');
-                        if (this.isDebug) console.log('mergeTokens: newMatchValue ', newMatchValue);
-                        mergeResult = mergeResult.replace(matchIter[0],newMatchValue);
-                        //if (this.isDebug) console.log('mergeTokens: mergeResult updated ', mergeResult);
-                    });
-                    if (this.isDebug) console.log('mergeTokens: mergeResult URL escaped');
+                        escapeMatches.forEach(matchIter => {
+                            if (this.isDebug) console.log('mergeTokens: processing matchIter ',matchIter);
+                            //if (this.isDebug) console.log('mergeTokens: match considered ',matchIter[0]);
+                            //if (this.isDebug) console.log('mergeTokens: value considered ',matchIter[2]);
+                            //if (this.isDebug) console.log('mergeTokens: submatches ',[...(matchIter[2]).matchAll(/"/g)]);
+                            let newMatchValue = (matchIter[2]).replace(/"/gms,'\\"');
+                            newMatchValue = (newMatchValue).replace(/[\r\n\t]/gms,' ');
+                            //newMatchValue = (newMatchValue).replace(/[\r]/gms,'\\r');
+                            //newMatchValue = (newMatchValue).replace(/[\n]/gms,'\\n');
+                            //newMatchValue = (newMatchValue).replace(/[\t]/gms,'\\t');
+                            if (this.isDebug) console.log('mergeTokens: newMatchValue ', newMatchValue);
+                            mergeResult = mergeResult.replace(matchIter[0],newMatchValue);
+                            //if (this.isDebug) console.log('mergeTokens: mergeResult updated ', mergeResult);
+                        });
+                        if (this.isDebug) console.log('mergeTokens: mergeResult HTML escaped');
+                    }
+                    else {
+                        if (this.isDebug) console.log('mergeTokens: no HTML escaping required ');
+                    }
+
+                    if (mergeResult.includes('UTF(((')) {
+                        if (this.isDebug) console.log('mergeTokens: UTF escaping required ');
+
+                        let escapeMatches = [...mergeResult.matchAll(/UTF(\(\(\()(.*?)(\)\)\))/gms)];
+                        if (this.isDebug) console.log('mergeTokens: UTF escapeMatches found ',escapeMatches);
+    
+                        escapeMatches.forEach(matchIter => {
+                            if (this.isDebug) console.log('mergeTokens: processing matchIter ',matchIter);
+                            //if (this.isDebug) console.log('mergeTokens: match considered ',matchIter[0]);
+                            //if (this.isDebug) console.log('mergeTokens: value considered ',matchIter[2]);
+                            //if (this.isDebug) console.log('mergeTokens: submatches ',[...(matchIter[2]).matchAll(/"/g)]);
+                            let newMatchValue = (matchIter[2]).replaceAll('+','%2B');
+                            if (this.isDebug) console.log('mergeTokens: + char replaced ',newMatchValue);
+                            newMatchValue = (newMatchValue).replaceAll(',','%2C');
+                            if (this.isDebug) console.log('mergeTokens: , char replaced ',newMatchValue);
+                            //newMatchValue = (newMatchValue).replace(/\\/gms,'%5C');
+                            //newMatchValue = (newMatchValue).replaceAll('\\\\','%5C');
+                            newMatchValue = (newMatchValue).replaceAll('\\','%5C');
+                            if (this.isDebug) console.log('mergeTokens: \\ char replaced ',newMatchValue);
+                            //newMatchValue = (newMatchValue).replace(/[\\]/gms,'%5C');
+                            //newMatchValue = (newMatchValue).replace(/[\r]/gms,'\\r');
+                            //newMatchValue = (newMatchValue).replace(/[\n]/gms,'\\n');
+                            //newMatchValue = (newMatchValue).replace(/[\t]/gms,'\\t');
+                            if (this.isDebug) console.log('mergeTokens: newMatchValue ', newMatchValue);
+                            mergeResult = mergeResult.replace(matchIter[0],newMatchValue);
+                            //if (this.isDebug) console.log('mergeTokens: mergeResult updated ', mergeResult);
+                        });
+                        if (this.isDebug) console.log('mergeTokens: mergeResult URL escaped');
+                    }
+                    else {
+                        if (this.isDebug) console.log('mergeTokens: no URL escaping required ');
+                    }
+
+                    if (mergeResult.includes('RPL(((')) {
+                        if (this.isDebug) console.log('mergeTokens: RPL replacement required ');
+
+                        let escapeMatches = [...mergeResult.matchAll(/RPL\(\(\((.*)\|\|\|(.*)\|\|\|(.*)\)\)\)/gms)];
+                        if (this.isDebug) console.log('mergeTokens: RPL escapeMatches found ',escapeMatches);
+    
+                        escapeMatches.forEach(matchIter => {
+                            if (this.isDebug) console.log('mergeTokens: processing matchIter ',matchIter);
+                            if (this.isDebug) console.log('mergeTokens: match considered ',matchIter[0]);
+                            if (this.isDebug) console.log('mergeTokens: value considered ',matchIter[1]);
+                            if (this.isDebug) console.log('mergeTokens: source string ',matchIter[2]);
+                            if (this.isDebug) console.log('mergeTokens: target string ',matchIter[3]);
+                        
+                            if (matchIter[1]) {
+                                if (this.isDebug) console.log('mergeTokens: converting value');
+
+                                let newValue = matchIter[1].replaceAll(matchIter[2],matchIter[3]);
+                                if (this.isDebug) console.log('mergeTokens: newValue generated',newValue);
+
+                                mergeResult = mergeResult.replace(matchIter[0],newValue);
+                                if (this.isDebug) console.log('mergeTokens: mergeResult updated ', mergeResult);
+                            }
+                            else {
+                                if (this.isDebug) console.log('mergeTokens: no value to convert');
+                                mergeResult = mergeResult.replace(matchIter[0],'');
+                                if (this.isDebug) console.log('mergeTokens: mergeResult updated ', mergeResult);
+                            }
+                        });
+                        if (this.isDebug) console.log('mergeTokens: mergeResult RPL replaced');
+                    }
+                    else {
+                        if (this.isDebug) console.log('mergeTokens: no RPL replacement required ');
+                    }
+
+                    if (mergeResult.includes('ADD(((')) {
+                        if (this.isDebug) console.log('mergeTokens: ADD replacement required ');
+
+                        let escapeMatches = [...mergeResult.matchAll(/ADD\(\(\((.*)\|\|\|(.*)\|\|\|(.*)\)\)\)/gms)];
+                        if (this.isDebug) console.log('mergeTokens: ADD escapeMatches found ',escapeMatches);
+    
+                        escapeMatches.forEach(matchIter => {
+                            if (this.isDebug) console.log('mergeTokens: processing matchIter ',matchIter);
+                            if (this.isDebug) console.log('mergeTokens: match considered ',matchIter[0]);
+                            if (this.isDebug) console.log('mergeTokens: source considered ',matchIter[1]);
+                            if (this.isDebug) console.log('mergeTokens: value to add ',matchIter[2]);
+                            if (this.isDebug) console.log('mergeTokens: splitter ',matchIter[3]);
+                        
+                            if (matchIter[1]) {
+                                if (this.isDebug) console.log('mergeTokens: adding value to list');
+
+                                let valueList = (matchIter[1]).split(matchIter[3]);
+                                if (this.isDebug) console.log('mergeTokens: values split',valueList);
+
+                                let valueSet = new Set(valueList);
+                                if (this.isDebug) console.log('mergeTokens: values split',valueSet);
+
+                                valueSet.add(matchIter[2]);
+                                if (this.isDebug) console.log('mergeTokens: value added',valueSet);
+
+                                mergeResult = mergeResult.replace(matchIter[0],Array.from(valueSet).join(matchIter[3]));
+                                if (this.isDebug) console.log('mergeTokens: mergeResult updated ', mergeResult);
+                            }
+                            else {
+                                if (this.isDebug) console.log('mergeTokens: no initial value');
+                                mergeResult = mergeResult.replace(matchIter[0],matchIter[2]);
+                                if (this.isDebug) console.log('mergeTokens: mergeResult updated ', mergeResult);
+                            }
+                        });
+                        if (this.isDebug) console.log('mergeTokens: mergeResult ADD replaced');
+                    }
+                    else {
+                        if (this.isDebug) console.log('mergeTokens: no ADD replacement required ');
+                    }
+
+                    if (mergeResult.includes('RMV(((')) {
+                        if (this.isDebug) console.log('mergeTokens: RMV replacement required ');
+
+                        let escapeMatches = [...mergeResult.matchAll(/RMV\(\(\((.*)\|\|\|(.*)\|\|\|(.*)\)\)\)/gms)];
+                        if (this.isDebug) console.log('mergeTokens: RMV escapeMatches found ',escapeMatches);
+    
+                        escapeMatches.forEach(matchIter => {
+                            if (this.isDebug) console.log('mergeTokens: processing matchIter ',matchIter);
+                            if (this.isDebug) console.log('mergeTokens: match considered ',matchIter[0]);
+                            if (this.isDebug) console.log('mergeTokens: source considered ',matchIter[1]);
+                            if (this.isDebug) console.log('mergeTokens: value to add ',matchIter[2]);
+                            if (this.isDebug) console.log('mergeTokens: splitter ',matchIter[3]);
+                        
+                            if (matchIter[1]) {
+                                if (this.isDebug) console.log('mergeTokens: adding value to list');
+
+                                let valueList = (matchIter[1]).split(matchIter[3]);
+                                if (this.isDebug) console.log('mergeTokens: values split',valueList);
+
+                                let valueSet = new Set(valueList);
+                                if (this.isDebug) console.log('mergeTokens: values set init',valueSet);
+
+                                valueSet.delete(matchIter[2]);
+                                if (this.isDebug) console.log('mergeTokens: value removed',valueSet);
+                                if (this.isDebug) console.log('mergeTokens: value regenerated',Array.from(valueSet).join(matchIter[3]));
+
+                                mergeResult = mergeResult.replace(matchIter[0],Array.from(valueSet).join(matchIter[3]));
+                                if (this.isDebug) console.log('mergeTokens: mergeResult updated ', mergeResult);
+                            }
+                            else {
+                                if (this.isDebug) console.log('mergeTokens: no initial value');
+                                mergeResult = mergeResult.replace(matchIter[0],'');
+                                if (this.isDebug) console.log('mergeTokens: mergeResult updated ', mergeResult);
+                            }
+                        });
+                        if (this.isDebug) console.log('mergeTokens: mergeResult RMV replaced');
+                    }
+                    else {
+                        if (this.isDebug) console.log('mergeTokens: no RMV replacement required ');
+                    }
                 }
-                else {
-                    if (this.isDebug) console.log('mergeTokens: no URL escaping required ');
-                }
+                //=================================================
 
                 if (sfpegMergeUtl.isDebug) console.log('mergeTokens: END OK - returning ',mergeResult);
                 resolve(mergeResult);

@@ -338,6 +338,38 @@ Hereafter is an example of a set of ***filter*** actions to set / unset specific
 }...
 ```
 
+### Context Merge Upon Query
+
+Context merge is systematically applied to the `query input` property upon initial load/refresh of the **sfpegListCmp** component to gather information about the display context. This information is then
+provided when collecting data and `{{{XXX}}}` tokens present in the query templates replaced by the 
+corresponding fields of this `query input` object.
+
+A special `{{{CONTEXT}}}` token is also available, the value of which may be set via the `Query Context`
+string property in the App Builder. This enables to reuse the same **sfpegList** configuration for
+various use cases, when multiple queries only vary by one parameter.
+An example is the **sfpegRecordShares** configuration provided in the example folder, which list
+the sharing rows related to the record of the current page:
+* record ID is fetched via the `query input` property set in the **sfpegList** configuration as `{"ROW":"{{{GEN.recordId}}}"}`
+* sharing object API name is provided via the `Query Context` property set in the App Builder, e.g. as `MyCustomObject__share`
+* the `query template` in the **sfpegList** configuration then merges the 2 tokens at their proper place
+in the SOQL query as `Select Id, UserOrGroupId, UserOrGroup.Name, RowCause, AccessLevel from {{{CONTEXT}}} where ParentId = '{{{ROW}}}'`
+
+For multi-picklist or CSV like text fields, a special post-processing may also be executed after token
+merge via the `LIST(((xxxx|||y)))` syntax. It converts a CSV like text value `xxxx` using `y`as separator
+into a valid value list for a `IN` where clause.
+The following **sfpegList** configuration illustrates the use-case:
+* current record's multi-picklist field value is fetched via the `query input` property set as
+`{"VALUES":"{{{RCD.MultiPicklist__c}}}"}`
+* another target custom object uses the same value set on a picklist field and matching records are
+fetched via the `query template` property set as
+`SELECT Name, Picklist__c FROM TargetObject__c WHERE Picklist__c IN LIST((({{{VALUES}}}|||;)))`
+* a resulting SOQL query after merge would be `SELECT Name, Picklist__c FROM TargetObject__c WHERE Picklist__c IN ('value1','value2')`
+
+A technical `parent context` property (not available in App Builder) also enables a parent component
+to inject additional context information to be leveraged as additional `{{{CTX.xxx}}}` tokens when the
+**sfpegListCmp** component is included in another custom component (see also **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** component).
+
+
 ---
 
 ## Configuration Examples

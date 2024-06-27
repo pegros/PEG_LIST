@@ -462,8 +462,34 @@ public with sharing class sfpegList_CTL {
 			}
 			System.debug(LoggingLevel.FINEST,'mergeQuery: value retrieved ' + iterValue);
 			mergedQuery = mergedQuery.replaceAll('\\{\\{\\{' + iter + '\\}\\}\\}',iterValue);
-			//System.debug(LoggingLevel.FINEST,'mergeQuery: mergedQuery updated ' + mergedQuery);
+			System.debug(LoggingLevel.FINEST,'mergeQuery: mergedQuery updated ' + mergedQuery);
 		}
+
+		//server side rework
+		if (mergedQuery.contains('LIST(((')) {
+			Pattern listPattern = Pattern.compile('LIST\\(\\(\\(((?:(?!\\)\\)\\)).)*)\\|\\|\\|((?:(?!\\)\\)\\)).)*)\\)\\)\\)');
+			Matcher listMatcher = listPattern.matcher(mergedQuery);
+			String targetQuery = mergedQuery;
+			while(listMatcher.find()) {
+				System.debug(LoggingLevel.FINEST,'mergeQuery: processing match ' + listMatcher.group(0));
+				System.debug(LoggingLevel.FINEST,'mergeQuery: with value ' + listMatcher.group(1));
+				System.debug(LoggingLevel.FINEST,'mergeQuery: and split ' + listMatcher.group(2));
+				if (String.isNotBlank(listMatcher.group(1))) {
+					System.debug(LoggingLevel.FINEST,'mergeQuery: replacing list with value');
+					List<String> valueList = listMatcher.group(1).split(listMatcher.group(2));
+					System.debug(LoggingLevel.FINEST,'mergeQuery: value split ' + valueList);
+					targetQuery = targetQuery.replace(listMatcher.group(0), '(\'' + String.join(valueList,'\',\'') + '\')');
+					System.debug(LoggingLevel.FINEST,'mergeQuery: targetQuery merged ' + targetQuery);
+				} 
+				else {
+					System.debug(LoggingLevel.FINEST,'mergeQuery: replacing with empty list');
+					targetQuery = targetQuery.replace(listMatcher.group(0), '(\'\')');
+					System.debug(LoggingLevel.FINEST,'mergeQuery: targetQuery merged ' + targetQuery);
+				}
+			}
+			mergedQuery = targetQuery;
+		}
+
 		System.debug('mergeQuery: END with  ' + mergedQuery);
 		return mergedQuery;
 	}

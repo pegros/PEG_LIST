@@ -123,6 +123,9 @@ export default class SfpegListCmp extends LightningElement {
             if (this.isDebug) console.log('set List ParentContext: END / no merge because of error state ', this.errorMsg);
         }        
     }
+    get parentContextString() {
+        return JSON.stringify(this._parentContext);
+    }
 
     //----------------------------------------------------------------
     // Internal Initialization Parameters

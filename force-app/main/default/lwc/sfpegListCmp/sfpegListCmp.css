@@ -50,6 +50,10 @@
 .debugInfo {
     text-align:left;
 }
+.slds-dl_horizontal__detail {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
 .actionFooter {
     padding-top: var(--lwc-varSpacingVerticalXSxmall);
     padding-bottom: var(--lwc-varSpacingVerticalXxSmall);

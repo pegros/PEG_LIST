@@ -86,6 +86,7 @@ As a baseline, the **sfpegMergeUtl** component directly replaces the tokens by t
 However, in some cases, some issues may arise when parsing the resulting merged
 string as a JSON list or object. 
 
+
 ### Double Quotes **ESCAPE**
 
 Main JSON parsing issues arise from double quotes (") within text fields which then break the JSON parsing operation.
@@ -170,6 +171,62 @@ would lead to the following properly acceptable output for the navigation action
         "nooverride": "1"
     }
 ```
+
+
+### Picklist Value **ADD** / **RMV**
+
+When dealing with multi-picklist fields (or any CSV like text field), it is possible to easily
+add or remove a specific value via the `ADD(((xxxxxx|||yyy|||z)))` or `RMV(((xxxxxx|||yyy|||z)))` syntaxes.
+
+They respectively enable to add (`ADD`) or remove (`RMV`) a specific unitary `yyyy`value from the 
+current `xxxxxx` multi-value leveraging `z` as separator (e.g. `;` for standard multi-picklists).
+
+For instance,
+* `ADD(((value1;value2|||value3|||;)))"` is converted into `value1;value2;value3`
+* `RMV(((value1;value2;value3|||value2|||;)))"` is converted into `value1;value3`
+
+_Note_: the operations are fault tolerant, i.e.
+* adding twice a same value results in a single value in the output
+* removing a value not present results in an output equal to the original 
+
+This may be used in row level **[sfpegAction](/help/sfpegActionBarCmp.md)** `LDS` action to
+add / remove values in a `MultiPicklist__c` field of a page record from a list of reference
+record using the sames value set in a `Picklist__c` field:
+```
+[
+    {
+        "name": "removeValue",
+        "action": {
+            "type": "LDS",
+            "params": {
+                "type": "update",
+                "params": {
+                    "fields": {
+                        "Id": "{{{GEN.recordId}}}",
+                        "MultiPicklist__c": "RMV((({{{RCD.MultiPicklist__c}}}|||{{{ROW.Picklist__c}}}|||;)))"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "addValue",
+        "action": {
+            "type": "LDS",
+            "params": {
+                "type": "update",
+                "params": {
+                    "fields": {
+                        "Id": "{{{GEN.recordId}}}",
+                        "MultiPicklist__c": "ADD((({{{RCD.MultiPicklist__c}}}|||{{{ROW.Picklist__c}}}|||;)))"
+                    }
+                }
+            }
+        }
+    }
+]
+```
+
 
 ---
 
