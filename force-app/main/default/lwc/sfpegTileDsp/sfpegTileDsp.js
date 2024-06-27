@@ -69,6 +69,7 @@ export default class SfpegTileDsp extends LightningElement {
     @track isExpanded = false;  // Expanded detail fields section (if any)
     @track cardDetails = null;  // Displayed detail field data (if any)
     @track cardMenu = [];       // Displayed menu (if any) - includes evaluation of disabled property
+    singleAction;
 
     // Custom getter
     get isCard() {
@@ -313,6 +314,10 @@ export default class SfpegTileDsp extends LightningElement {
             console.warn('resetDisplayData: no card menu');
         }
 
+        if ((this.cardMenu) && (this.cardMenu.length == 1)) {
+            this.singleAction = this.cardMenu[0];
+            if (this.isDebug) console.log('resetDisplayData: singleAction init ', JSON.stringify(this.singleAction));
+        }
 
         if (this.isDebug) console.log('resetDisplayData: END ');
     }
@@ -323,6 +328,15 @@ export default class SfpegTileDsp extends LightningElement {
     }
 
     // Event handlers
+    handleActionClick(event) {
+        if (this.isDebug) console.log('handleActionClick: START with ',event.target.value);
+
+        let actionEvent = new CustomEvent('rowaction', { detail: {row : this._recordData, action: event.target.value }});
+        if (this.isDebug) console.log('handleActionClick: actionEvent prepared',JSON.stringify(actionEvent));
+
+        this.dispatchEvent(actionEvent);
+        if (this.isDebug) console.log('handleActionClick: END');
+    }
     handleActionSelect(event) {
         if (this.isDebug) console.log('handleActionSelect: START with ',JSON.stringify(event.detail));
 
@@ -332,6 +346,7 @@ export default class SfpegTileDsp extends LightningElement {
         this.dispatchEvent(actionEvent);
         if (this.isDebug) console.log('handleActionSelect: END');
     }
+    
 
     handleTitleLink(event) {
         if (this.isDebug) console.log('handleTitleLink: START with ',event);

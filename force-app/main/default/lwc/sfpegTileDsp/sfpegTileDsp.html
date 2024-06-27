@@ -5,7 +5,7 @@
         <div class={wrapperClass} >
             <div class="slds-media">
                 <!-- Global Tile wrapper -->
-                <template if:true={hasIcon}>
+                <template lwc:if={hasIcon}>
                     <div class="slds-media__figure">
                         <c-sfpeg-icon-dsp   icon-name={cardIcon}
                                             icon-size={cardIconSize}
@@ -21,32 +21,36 @@
                     <!-- Tile Header -->
                     <div class="slds-media slds-media_center">
                         <!-- Details expand/collapse Icon display -->
-                        <template if:true={cardDetails}>
+                        <template lwc:if={cardDetails}>
                             <div class="slds-media__figure slds-m-right_xx-small">
-                                <lightning-button-icon  if:false={isExpanded}
-                                                        class="expandCollapse"
-                                                        variant="bare"
-                                                        icon-name="utility:chevronright"
-                                                        onclick={handleExpandCollapse}></lightning-button-icon>
-                                <lightning-button-icon  if:true={isExpanded}
-                                                        class="expandCollapse"
-                                                        variant="bare"
-                                                        icon-name="utility:chevrondown"
-                                                        onclick={handleExpandCollapse}></lightning-button-icon>
+                                <template lwc:if={isExpanded}>
+                                    <lightning-button-icon  class="expandCollapse"
+                                                            variant="bare"
+                                                            icon-name="utility:chevrondown"
+                                                            onclick={handleExpandCollapse}>
+                                    </lightning-button-icon>
+                                </template>
+                                <template lwc:else>
+                                    <lightning-button-icon  class="expandCollapse"
+                                                            variant="bare"
+                                                            icon-name="utility:chevronright"
+                                                            onclick={handleExpandCollapse}>
+                                    </lightning-button-icon>
+                                </template>
                             </div>
                         </template>
 
                         <!-- Main Title display -->
                         <div class="slds-media__body">
                             <div class="slds-truncate" title={cardTitleLabel} >
-                                <template if:true={hasTitleLink}>
+                                <template lwc:if={hasTitleLink}>
                                     <a onclick={handleTitleLink}>
                                         <lightning-formatted-text   value={cardTitle}
                                                                     class="slds-text-title_bold">
                                         </lightning-formatted-text>
                                     </a>
                                 </template>
-                                <template if:false={hasTitleLink}>
+                                <template lwc:else>
                                     <lightning-formatted-text   value={cardTitle}
                                                                 class="slds-text-title_bold">
                                     </lightning-formatted-text>
@@ -55,33 +59,78 @@
                         </div>
 
                         <!-- Actions display -->
-                        <template if:true={hasActions}>
+                        <template lwc:if={hasActions}>
                             <div class="slds-media__figure slds-media__figure_reverse">
-                                <lightning-button-menu  icon-size="x-small"               variant="border"
-                                                        alternative-text="Actions"      title="Actions"
-                                                        menu-alignment="right"
-                                                        onselect={handleActionSelect} >
-                                    <!--<template for:each={configActions} for:item="iterAction">-->
-                                    <template for:each={cardMenu} for:item="iterAction">
-                                        <template if:false={iterAction.hidden}>
-                                            <template if:true={iterAction.disabled}>
-                                                <lightning-menu-item    key={iterAction.name}
-                                                                        value={iterAction}
-                                                                        label={iterAction.label} 
-                                                                        disabled
-                                                                        icon-name={iterAction.iconName} >
-                                                </lightning-menu-item> 
+                                <template lwc:if={singleAction}>
+                                    <template lwc:if={singleAction.hidden}>
+                                    </template>
+                                    <template lwc:else>
+                                        <template lwc:if={singleAction.disabled}>
+                                            <template lwc:if={singleAction.label}>
+                                                <lightning-button   name={singleAction.name}
+                                                                    variant={singleAction.variant}
+                                                                    label={singleAction.label}          title={singleAction.title}
+                                                                    icon-name={singleAction.iconName}   icon-position={singleAction.iconPosition}
+                                                                    disabled >
+                                                </lightning-button>
                                             </template>
-                                            <template if:false={iterAction.disabled}>
-                                                <lightning-menu-item    key={iterAction.name}
-                                                                        value={iterAction}
-                                                                        label={iterAction.label} 
-                                                                        icon-name={iterAction.iconName} >
-                                                </lightning-menu-item> 
+                                            <template lwc:else>
+                                                <lightning-button-icon  name={singleAction.name}
+                                                                        variant={singleAction.variant}   size={singleAction.iconSize}
+                                                                        title={singleAction.title}
+                                                                        icon-name={singleAction.iconName}
+                                                                        disabled>
+                                                </lightning-button-icon>
+                                            </template>
+                                        </template>
+                                        <template lwc:else>
+                                            <template lwc:if={singleAction.label}>
+                                                <lightning-button   name={singleAction.name}            value={singleAction}
+                                                                    variant={singleAction.variant}
+                                                                    label={singleAction.label}          title={singleAction.title}
+                                                                    icon-name={singleAction.iconName}   icon-position={singleAction.iconPosition}
+                                                                    onclick={handleActionClick} >
+                                                </lightning-button>
+                                            </template>
+                                            <template lwc:else>
+                                                <lightning-button-icon  name={singleAction.name}        value={singleAction}
+                                                                        variant={singleAction.variant}  size={singleAction.iconSize}
+                                                                        title={singleAction.title}
+                                                                        icon-name={singleAction.iconName}
+                                                                        onclick={handleActionClick} >
+                                                </lightning-button-icon>
                                             </template>
                                         </template>
                                     </template>
-                                </lightning-button-menu>
+                                </template>
+                                <template lwc:else>
+                                    <lightning-button-menu  icon-size="x-small"             variant="border"
+                                                            alternative-text="Actions"      title="Actions"
+                                                            menu-alignment="right"
+                                                            onselect={handleActionSelect} >
+                                        <template for:each={cardMenu} for:item="iterAction">
+                                            <template lwc:if={iterAction.hidden}>
+                                            </template>
+                                            <template lwc:else>
+                                                <template lwc:if={iterAction.disabled}>
+                                                    <lightning-menu-item    key={iterAction.name}
+                                                                            value={iterAction}
+                                                                            label={iterAction.label} 
+                                                                            disabled
+                                                                            icon-name={iterAction.iconName} >
+                                                    </lightning-menu-item> 
+                                                </template>
+                                                <template lwc:else>
+                                                    <lightning-menu-item    key={iterAction.name}
+                                                                            value={iterAction}
+                                                                            label={iterAction.label} 
+                                                                            icon-name={iterAction.iconName} >
+                                                    </lightning-menu-item> 
+                                                </template>
+                                            </template>
+                                        </template>
+                                    </lightning-button-menu>
+                                </template>
                             </div>
                         </template>
                     </div>
