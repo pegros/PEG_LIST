@@ -105,7 +105,7 @@
                                 </template>
                                 <template lwc:else>
                                     <lightning-button-menu  icon-size="x-small"             variant="border"
-                                                            alternative-text="Actions"      title="Actions"
+                                                            alternative-text="Actions"      title={menuTitle}
                                                             menu-alignment="right"
                                                             onselect={handleActionSelect} >
                                         <template for:each={cardMenu} for:item="iterAction">

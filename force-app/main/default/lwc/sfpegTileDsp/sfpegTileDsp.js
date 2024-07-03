@@ -71,7 +71,9 @@ export default class SfpegTileDsp extends LightningElement {
     @track cardMenu = [];       // Displayed menu (if any) - includes evaluation of disabled property
     singleAction;
 
-    // Custom getter
+    //--------------------------------------------------------------------
+    // Custom getters
+    //--------------------------------------------------------------------
     get isCard() {
         return (this.displayType) && (this.displayType === "CardList");
     }
@@ -98,7 +100,13 @@ export default class SfpegTileDsp extends LightningElement {
         return (this.configDetails) && (this.configDetails.title) && (this.configDetails.title.action);
     }
 
-    // Component initialisation            
+    get menuTitle() {
+        return  this.configDetails?.display?.menuSelectLabel || this.configDetails?.display?.menuLabel || 'Actions';
+    }
+
+    //--------------------------------------------------------------------
+    // Component initialisation 
+    //--------------------------------------------------------------------
     connectedCallback() {
         if (this.isDebug) console.log('connected: START');
 
