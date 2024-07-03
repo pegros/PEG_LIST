@@ -191,7 +191,7 @@ _Note_: the operations are fault tolerant, i.e.
 
 This may be used in row level **[sfpegAction](/help/sfpegActionBarCmp.md)** `LDS` action to
 add / remove values in a `MultiPicklist__c` field of a page record from a list of reference
-record using the sames value set in a `Picklist__c` field:
+record using the same value set in a `Picklist__c` field:
 ```
 [
     {

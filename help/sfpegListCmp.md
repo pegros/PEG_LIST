@@ -422,7 +422,9 @@ For the `CardList` and `TileList` modes, the solution is slightly different
     },
     ...   
 ```
-* other navigation actions may be specified in the menu (referencing any row action)
+* other navigation actions may be specified in the menu (referencing any row action),
+a generic button icon menu being displayed if more than one option is configured
+(single button or button icon otherwise).
 ```
 "menu": [
     ...
@@ -434,6 +436,8 @@ For the `CardList` and `TileList` modes, the solution is slightly different
     ...
 ]
 ```
+
+?
 
 As a workaround for record previews, the `showPreview` action type may be used instead of the `navigation`
 one (see **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**) to display a summary of the record.
