@@ -82,6 +82,7 @@ export default class SfpegListCmp extends LightningElement {
     @api isCollapsible = false; // Flag to set the list details as collapsible 
     @api isCollapsed = false;   // Flag inddicating the initial/current collapsed state
 
+    @api forceHidden = false;   // Flag to force the list display in hidden mode, even if configuration not hidden
     @api isDebug = false;       // Debug mode activation
     @api isDebugFine = false;   // Debug mode activation for all subcomponents.
 
@@ -115,13 +116,14 @@ export default class SfpegListCmp extends LightningElement {
         if (!this.isReady) {
             if (this.isDebug) console.log('set List ParentContext: END / waiting for initial init completion');
         }
-        else if (!this.errorMsg) {
-            if (this.isDebug) console.log('set List ParentContext: END / calling merge');
+        //else if (!this.errorMsg) {
+        else {
+            if (this.isDebug) console.log('set List ParentContext: END / calling merge and relaunching query');
             this.executeQuery();
         }
-        else {
+        /*else {
             if (this.isDebug) console.log('set List ParentContext: END / no merge because of error state ', this.errorMsg);
-        }        
+        }*/      
     }
     get parentContextString() {
         return JSON.stringify(this._parentContext);
@@ -365,7 +367,9 @@ export default class SfpegListCmp extends LightningElement {
 
     // Hidden mode related getters
     get isNotHidden() {
-        return !((this.configDetails) && (this.configDetails.type === 'Hidden'));
+        //if (this.isDebug) console.log('isNotHidden: forceHidden ',this.forceHidden);
+        //if (this.isDebug) console.log('isNotHidden: Hidden config ',(this.configDetails) && (this.configDetails.type === 'Hidden'));
+        return !this.forceHidden && !((this.configDetails) && (this.configDetails.type === 'Hidden'));
     }
 
     //----------------------------------------------------------------
@@ -436,19 +440,7 @@ export default class SfpegListCmp extends LightningElement {
                     };
                     this.configDetails = LIST_CONFIGS[this.configName];
 
-                    if ((this.configDetails.display.menu) && (this.configDetails.display.columns))  {
-                        if (this.isDebug) console.log('connected: registering menu in columns configuration ',JSON.stringify(this.configDetails.display.menu));
-                        this.configDetails.display.columns.push({
-                            type: "action",
-                            typeAttributes: {
-                                class: "slds-scrollable_none",
-                                rowActions: this.configDetails.display.menu
-                            }
-                        });
-                        if (this.isDebug) console.log('connected: columns configuration updated ',JSON.stringify(this.configDetails.display.columns));
-                        //if (this.isDebug) console.log('connected: LIST_CONFIGS[this.configName] state ',JSON.stringify(LIST_CONFIGS[this.configName]));
-                    }
-
+                    // Automatic conversion from datatable to tile list
                     if (this.formfactor === "Small") {
                         if (this.isDebug) console.log('connected: overriding configuration for mobile');
                         this.configDetails.type = "TileList"; 
@@ -460,6 +452,25 @@ export default class SfpegListCmp extends LightningElement {
                                 if (item.label) delete item.label;
                             });
                         }*/
+                    }
+                    else if (((this.isDataTable) || (this.isTreeGrid)) && (this.configDetails.display.columns) && (this.configDetails.display.details)) {
+                        if (this.isDebug) console.log('connected: registering detail fields as columns');
+                        this.configDetails.display.columns = this.configDetails.display.columns.concat(this.configDetails.display.details);
+                    }
+
+                    if (((this.isDataTable) || (this.isTreeGrid)) && (this.configDetails.display.menu) && (this.configDetails.display.columns))  {
+                        if (this.isDebug) console.log('connected: registering menu in columns configuration ',JSON.stringify(this.configDetails.display.menu));
+                        this.configDetails.display.columns.push({
+                            label: this.configDetails?.display?.menuLabel || '',
+                            type: "action",
+                            typeAttributes: {
+                                label: this.configDetails?.display?.menuSelectLabel || '',
+                                class: "slds-scrollable_none",
+                                rowActions: this.configDetails.display.menu
+                            }
+                        });
+                        if (this.isDebug) console.log('connected: columns configuration updated ',JSON.stringify(this.configDetails.display.columns));
+                        //if (this.isDebug) console.log('connected: LIST_CONFIGS[this.configName] state ',JSON.stringify(LIST_CONFIGS[this.configName]));
                     }
 
                     this.finalizeConfig();
@@ -928,6 +939,11 @@ export default class SfpegListCmp extends LightningElement {
         this.handleSort({sortedBy: field, sortDirection: direction});
         if (this.isDebug) console.log('doSort: END');
     }
+    @api doRowAction(event) {
+        if (this.isDebug) console.log('doRowAction: START with event',event);
+        this.handleRowAction(event);
+        if (this.isDebug) console.log('doRowAction: END');
+    }
 
     //----------------------------------------------------------------
     // Event handlers
@@ -1280,7 +1296,8 @@ export default class SfpegListCmp extends LightningElement {
             let actioName = action.name || action.subTypeAttributes.name;
             if (this.isDebug) console.log('handleRowAction: triggering action ',actioName);
 
-            let rowActionBar = this.template.querySelector('c-sfpeg-action-bar-cmp[data-my-id=rowActions]');
+            //let rowActionBar = this.template.querySelector('c-sfpeg-action-bar-cmp[data-my-id=rowActions]');
+            let rowActionBar = this.refs.rowActions;
             console.log('handleRowAction: rowActionBar fetched ',rowActionBar);
 
             try {

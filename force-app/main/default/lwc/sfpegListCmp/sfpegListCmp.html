@@ -48,7 +48,8 @@
                                                 parent-context={parentContext}
                                                 is-debug={isDebug}
                                                 ondone={handleActionDone}
-                                                data-my-id="headerActions">
+                                                data-my-id="headerActions"
+                                                lwc:ref="headerActions">
                         </c-sfpeg-action-bar-cmp>
                     </lightning-button-group>
                 </template>
@@ -348,7 +349,8 @@
                         is-debug={isDebug}
                         is-debug-fine={isDebugFine}
                         ondone={handleActionDone}
-                        data-my-id="rowActions">
+                        data-my-id="rowActions"
+                        lwc:ref="rowActions">
             </c-sfpeg-action-bar-cmp>
         </template>
     </template>
