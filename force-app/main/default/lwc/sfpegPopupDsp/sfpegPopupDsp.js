@@ -66,8 +66,9 @@ export default class SfpegPopupDsp extends LightningElement {
     @track showConfirmation = false;    // Flag to toggle confirmation mode display
    
     // Record Form Display parameters
-    @track showForm = false;            // Flag to toggle Record Form mode display
-    //@track showSaveNew = false;         // Flag to display a save & new button in creation mode
+    @track showStandardForm = false;    // Flag to toggle standard Record Form mode display
+    @track showForm = false;            // Flag to toggle custom Record Form mode display
+    //@track showSaveNew = false;       // Flag to display a save & new button in creation mode
     doSubmit = false;                   // Flag to let the popup execute the form submit (record creation/modification)
     @track formRecord = {};             // Record data for the Form
     @track formFieldSize = 12;          // Width of a form field (as a subset of 12 columns)
@@ -315,7 +316,7 @@ export default class SfpegPopupDsp extends LightningElement {
     }
 
     //###########################################################
-    // Asynchronous Edit / Create popup display (depends on presence of ID on record)
+    // Asynchronous Edit / Create custom Form popup display (depends on presence of ID on record)
     //###########################################################
     @api showRecordForm(title,message,record,fields,columns,doSubmit,size,height,showSaveNew) {
         if (this.isDebug) console.log('showRecordForm: START with submit? ',doSubmit);

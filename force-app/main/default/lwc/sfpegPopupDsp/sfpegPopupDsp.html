@@ -1,6 +1,6 @@
 <template>
 
-    <template if:true={showPopup}>
+    <template lwc:if={showPopup}>
         <!-- greyed background -->
         <div    class="modal-glass slds-backdrop fadein slds-backdrop--open backgroundContainer"
                 tabindex="-1" data-aura-rendered-by="3230:0" style="opacity: 0.8;">
@@ -12,7 +12,7 @@
 
                 <!-- Header display-->
                 <header class="slds-modal__header">
-                    <template if:true={showClose}>
+                    <template lwc:if={showClose}>
                         <lightning-button-icon  icon-name="utility:close" variant="bare"
                                                 class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
                                                 alternative-text="Close" title="Close"
@@ -29,15 +29,30 @@
                     <p class="slds-text-heading_small slds-p-bottom_small">{popupMessage}</p>
 
                     <!-- Spinner display-->
-                    <template if:true={showSpinner}>
+                    <template lwc:if={showSpinner}>
                         <!--<div class="slds-is-relative slds-theme_shade" style="height:200px !important;" >-->
                             <lightning-spinner  alternative-text="Loading"  size="medium">
                             </lightning-spinner>
                         <!--</div>-->
                     </template>
 
-                    <!-- Unitary Create/Edit Form Display -->
-                    <template if:true={showForm}>
+                    <!-- Unitary Create/Edit Standard Form Display -->
+                    <!--<template lwc:if={showStandardForm}>
+                        <div class={formClass} >
+                            <lightning-record-form  object-api-name={formRecord.ObjectApiName}
+                                                    record-type-id={formRecord.RecordTypeId}
+                                                    record-id={formRecord.Id}
+                                                    layout-type="Full"
+                                                    onload={handleLoad}
+                                              	    onsubmit={handleSubmit}
+                                                    onerror={handleError}
+                                                    onsuccess={handleSave}>
+                            </lightning-record-form>
+                        </div>
+                    </template>-->
+                    
+                    <!-- Unitary Create/Edit Custom Form Display -->
+                    <template lwc:if={showForm}>
                         <div class={formClass} >
                         <lightning-record-edit-form record-id={formRecord.Id}
                                                     object-api-name={formRecord.ObjectApiName}
@@ -106,7 +121,7 @@
                     </template>
 
                     <!-- Record Details Display -->
-                    <template if:true={showDetails}>
+                    <template lwc:elseif={showDetails}>
                         <div class="slds-form slds-grid slds-gutters slds-wrap fullWidth">
                             <template for:each={recordData} for:item="iter">
                                 <div class={detailFieldClass} key={iter.label} >
@@ -129,8 +144,8 @@
                     </template>
 
                     <!-- File Upload Display -->
-                    <template if:true={showUpload}>
-                        <template if:true={allowMultiple}>
+                    <template lwc:elseif={showUpload}>
+                        <template lwc:if={allowMultiple}>
                             <lightning-file-upload  label={uploadLabel}
                                                     class="slds-align_absolute-center"
                                                     accept={fileFormats}
@@ -140,7 +155,7 @@
                                                     onclick={handleUploadStart} >
                             </lightning-file-upload>
                         </template>
-                        <template if:false={allowMultiple}>
+                        <template lwc:else>
                             <lightning-file-upload  label={uploadLabel}
                                                     class="slds-align_absolute-center"
                                                     accept={fileFormats}
@@ -149,7 +164,7 @@
                                                     onclick={handleUploadStart} >
                             </lightning-file-upload>
                         </template>
-                        <template if:true={fileFormats}>
+                        <template lwc:if={fileFormats}>
                             <div class="slds-p-top_small slds-align_absolute-center">
                                 <p class="slds-text-title slds-m-right_x-small">{formatsTitle}</p>
                                 <div class="slds-grid slds-wrap">
@@ -166,10 +181,10 @@
                 </div>
 
                 <!-- Footer display-->
-                <template if:true={showFooter}>
+                <template lwc:if={showFooter}>
                     <footer class="slds-modal__footer">
                         <!-- Confirmation Buttons-->
-                        <template if:true={showConfirmation}>
+                        <template lwc:if={showConfirmation}>
                             <lightning-button   variant="neutral"   label={cancelLabel}
                                                 onclick={handleCancel} ></lightning-button>
                             <lightning-button   variant="brand"     label={confirmLabel}
@@ -177,7 +192,7 @@
                                                 onclick={handleConfirm}></lightning-button>
                         </template>
                         <!-- Form Buttons-->
-                        <template if:true={showForm}>
+                        <template lwc:if={showForm}>
                             <lightning-button	variant="neutral"   label={cancelLabel}
                                                 onclick={handleCancel}></lightning-button>
                             <!--
@@ -191,7 +206,7 @@
                                                 onclick={handleSubmit}></lightning-button>
                         </template>
                         <!-- Detail Close Buttons-->
-                        <template if:true={showDetails}>
+                        <template lwc:elseif={showDetails}>
                             <lightning-button   variant="neutral"   label={closeLabel}
                                                 onclick={handleClose} ></lightning-button>
                             <lightning-button   if:true={detailNext}
@@ -200,7 +215,7 @@
                                                 onclick={handleDetailNext} ></lightning-button>
                         </template>
                         <!-- Upload Close Buttons-->
-                        <template if:true={showUpload}>
+                        <template lwc:elseif={showUpload}>
                             <lightning-button   variant="neutral"   label={closeLabel}
                                                 onclick={handleClose} ></lightning-button>
                         </template>
