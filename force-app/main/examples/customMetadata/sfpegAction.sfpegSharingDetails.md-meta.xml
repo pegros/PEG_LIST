@@ -36,10 +36,6 @@
         <value xsi:nil="true"/>
     </values>
     <values>
-        <field>Permission__c</field>
-        <value xsi:nil="true"/>
-    </values>
-    <values>
         <field>Scope__c</field>
         <value xsi:type="xsd:string">RECORDS</value>
     </values>
