@@ -173,11 +173,11 @@ export default class SfpegTileDsp extends LightningElement {
         if (this.isDebug) console.log('resetDisplayData: icon provided ', JSON.stringify(this.configDetails.icon));
         if (this.configDetails.icon) {
             this.cardIconSize = this.configDetails.icon.size || 'small';
-            if (this.configDetails.icon.variant.fieldName) {      
-                if (this.isDebug) console.log(`resetDisplayData: icon variant from field ${this.configDetails.icon.variant.fieldName}`);
+            if (this.configDetails.icon.variant?.fieldName) {      
+                if (this.isDebug) console.log('resetDisplayData: icon variant from field ', this.configDetails.icon.variant.fieldName);
                 this.cardIconVariant = this._recordData[this.configDetails.icon.variant.fieldName];
             }
-            this.cardIconVariant = this.cardIconVariant ?? this.configDetails.icon.variant;
+            this.cardIconVariant = this.cardIconVariant || this.configDetails.icon.variant;
             if (this.configDetails.icon.name) {
                 if (this.isDebug) console.log('resetDisplayData: icon label');
                 this.cardIcon = this.configDetails.icon.name;

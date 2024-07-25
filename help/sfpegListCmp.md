@@ -477,7 +477,9 @@ In this example, within the related **sfpegList__mdt** custom metadata
 }
 ```
 
-_Note_: In `timeline` mode, an icon is always displayed within each tile (default value being `utility:info_alt`).
+_Notes_:
+* In `timeline` mode, an icon is always displayed within each tile (default value being `utility:info_alt`).
+* More generally, for the `icon` property, it is possible to set a fixed or a record dependent icon name via respectively the `name` or `fieldName` properties. For _utility_ icons, it is also possible to dynamically set the variant (color) by setting the `variant` property to `{"fieldName":"fieldApiName__c"}` instead of a string fixed variant name. 
 
 
 ### Apex List Retrieval and OpenURL Action with Rework 
