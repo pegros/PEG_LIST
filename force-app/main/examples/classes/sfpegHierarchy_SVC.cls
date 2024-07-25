@@ -115,7 +115,7 @@ public with sharing class sfpegHierarchy_SVC extends sfpegListQuery_SVC {
             throw error;
         }
         ID recordId = (ID)(inputData.get('RootId'));
-        System.debug('getData: recordId fetched ',recordId);
+        System.debug('getData: recordId fetched ' + recordId);
         if (String.isBlank(recordId)) {
             System.debug(LoggingLevel.Error, 'getData: END KO / Missing recordId');
             Exception error = new System.NullPointerException();
