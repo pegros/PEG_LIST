@@ -787,6 +787,10 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
                 if (this.isDebug) console.log('processAction: processing Create/Edit DML popup action');
                 this.triggerDmlForm(action.params);
                 break;
+            case 'apexForm':
+                if (this.isDebug) console.log('processAction: processing Apex popup action');
+                this.triggerApexForm(action.params);
+                break;
             case 'massForm':
                 if (this.isDebug) console.log('processAction: processing mass Edit Popup action');
                 this.triggerMassForm(action.params);
@@ -1280,6 +1284,52 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         if (this.isDebug) console.log('triggerDmlForm: popup displayed');
     }
 
+    triggerApexForm = function(formAction) {
+        if (this.isDebug) console.log('triggerApexForm: START with ',JSON.stringify(formAction));
+
+        if ((!formAction.formRecord) || (!formAction.formFields) || (!formAction.name))  {
+            console.warn('triggerApexForm: END KO / Missing formRecord, formFields and/or name properties');
+            this.showError({message: 'Missing formRecord, formFields and/or name properties in apexForm action!'});
+            throw "Missing formRecord, formFields and/or name properties in apexForm params!";
+        }
+
+        let popupUtil = this.template.querySelector('c-sfpeg-popup-dsp');
+        if (this.isDebug) console.log('triggerApexForm: popupUtil fetched ', popupUtil);
+
+        popupUtil.showRecordForm(   formAction.title || DEFAULT_POPUP_HEADER, formAction.message || DEFAULT_POPUP_MESSAGE,
+                                    formAction.formRecord, formAction.formFields, formAction.columns, false, formAction.size, formAction.height)
+        .then((userInput) => {
+            if (this.isDebug) console.log('triggerApexForm: user input received',JSON.stringify(userInput));
+            
+            let apexAction = {
+                name:   formAction.name,
+                title:  formAction.title,
+                bypassConfirm: true,
+                params: {
+                    params:     formAction.params,
+                    input:      userInput
+                },
+                next: formAction.next
+            };
+            if (this.isDebug) console.log('triggerDmlForm: END / triggering Apex operation ',JSON.stringify(apexAction));
+            this.triggerApex(apexAction);
+        })
+        .catch((error) => {
+            this.displayMsg = JSON.stringify(error);
+            console.warn('triggerApexForm: Issue when processing operation ',JSON.stringify(error));
+            if (formAction.error) {
+                if (this.isDebug) console.log('triggerApexForm: chained error action to trigger',JSON.stringify(formAction.error));
+                this.processAction(formAction.error, error);
+                if (this.isDebug) console.log('triggerApexForm: END / chained error action triggered');
+            }
+            else {
+                this.showError(error);
+                if (this.isDebug) console.log('triggerApexForm: END / error message displayed');
+            }
+        });
+        if (this.isDebug) console.log('triggerApexForm: popup displayed');
+    }
+
     triggerMassForm = function(formAction) {
         if (this.isDebug) console.log('triggerMassForm: START with ',JSON.stringify(formAction));
 
@@ -1537,7 +1587,7 @@ export default class SfpegActionMenuDsp extends NavigationMixin(LightningElement
         }
 
         let popupUtil = this.template.querySelector('c-sfpeg-popup-dsp');
-        if (this.isDebug) console.log('triggerMassDML: popupUtil fetched ', popupUtil);
+        if (this.isDebug) console.log('triggerApex: popupUtil fetched ', popupUtil);
 
         let confirmPromise;
         if (apexAction.bypassConfirm) {

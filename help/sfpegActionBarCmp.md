@@ -612,9 +612,9 @@ The **apex** action type enables to execute any operation implemented in a custo
     "name": "apexAction", "label": "apexAction",
     "action": {
         "type": "apex",
-        "title": "Apex Action Execution",
-        "message": "Please confirm the execution of the Apex Action.",
         "params": {
+            "title": "Apex Action Execution",
+            "message": "Please confirm the execution of the Apex Action.",
             "name": "TST_UserAction_SVC",
             "params": {
                 "Id": "{{{GEN.userId}}}"
@@ -750,9 +750,44 @@ Various properties are available to customise the experience:
 }
 ```
 
-* **apexForm** : PLANNED
-    * Same behaviour as the **ldsForm** but with the ability to fetch/update data via Apex calls
-    instead of LDS (e.g. to perform callouts to external systems).
+* **apexForm** : 
+    * Same behaviour as the **ldsForm** action but executing an Apex logic instead of a LDS creation / update
+    from the form displayed in the popup (e.g. to perform callouts to external systems).
+    * it relies on a custom object creation form to collect user input, leveraging the same properties
+    as **ldsForm** and on an Apex call leveraging the same parameters as the **apex** action.
+    * In some cases, it may be necessary to create a custom _proxy_ object just to support the form
+    even if no data is stored in the Org.
+    * In the Apex class implementing the **sfpegJsonAction_SVC** interface (see  **apex** action),
+    the input object then has 2 properties: `input` containing the record data provided by the LDS form
+    and `params`containing the `params` configured for the action.
+```
+{
+    "name": "apexFormAction","label": "Action XXX",
+    "action": {
+        "type": "apexForm",
+        "params": {
+            "title": "Executing Action XXX",
+            "message": "Please fill in the following fields.",
+            "columns": 2,
+            "formRecord": {
+                "ObjectApiName": "ProxyObject__c",
+                "Name":"{{{ROW.Name}}}",
+                "Status__c": "{{{ROW.Status__c}}}"
+            },
+            "formFields": [
+                {"name": "Name","required": true},
+                {"name": "Status__c","required": true}
+            ],
+            "name": "sfpegJsonAction_SVC",
+            "params": {
+                "operation": "update",
+                "recordId": "{{{GEN.recordId}}}",
+                "recordName": {{{RCD.Name}}}
+            }
+        }
+    }
+}
+```
 
 _Note_: Whenever a error occurs, the error message provided is automatically displayed in an error toast popup.
 
