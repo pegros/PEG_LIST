@@ -28,7 +28,7 @@
             <property   name="cardClass"
                         label="Card CSS Class"
                         type="String"
-                        default="slds-card slds-card_boundary slds-theme_shade"
+                        default="slds-card slds-card_boundary"
                         description="CSS Classes for the wrapping card div"/>
             <property   name="displayHeight"
                         label="Display height"

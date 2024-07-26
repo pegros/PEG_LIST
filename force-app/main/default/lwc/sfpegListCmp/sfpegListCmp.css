@@ -1,3 +1,6 @@
+.slds-card_boundary {
+    --sds-c-card-color-background:  var(--lwc-colorBackground);
+}
 .slds-card_boundary .cardHeader {
     /*background-color: rgb(150, 150, 150) !important;*/
     --sds-c-card-color-background:  var(--lwc-colorBackground);
