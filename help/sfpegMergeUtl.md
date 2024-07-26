@@ -324,6 +324,10 @@ The **sfpegConfiguration** record should be configured as follows
 },
 ```
 
+_Note_: in these examples, the **LEFT(...)** syntax is not provided by the generic
+**sfpegMergeUtl** framework but is specific to the **openURL** actions (see 
+**[sfpegActionBarCmp]**(/help/sfpegActionBarCmp.md)).
+
 
 ---
 
