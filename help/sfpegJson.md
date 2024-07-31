@@ -10,7 +10,7 @@ They enable to store a stringified list of JSON objects within a Salesforce reco
 (to avoid a custom child object and related list) and display it as a related list via the **sfpegListCmp** component, while providing add/update/remove capabilities via the **sfpegActionBarCmp** component.
 
 ℹ️ The only constraints are that:
-* a `index` property is systematically added / managed by this framework
+* an `index` property is systematically added / managed by this framework
 to uniquely identify each JSON object of the list.
 * a custom _proxy_ custom object may be required for the _add_ and _update_
 `apexForm` actions, property names in the JSON objects being directly the
