@@ -9,12 +9,17 @@ components capabilities.
 They enable to store a stringified list of JSON objects within a Salesforce record text/richtext field
 (to avoid a custom child object and related list) and display it as a related list via the **sfpegListCmp** component, while providing add/update/remove capabilities via the **sfpegActionBarCmp** component.
 
+For instance,
+```
+[{"index":0,"DateFiliation__c":"2024-07-10","LienFiliation__c":"Du conjoint","DateNaissance__c":"2024-07-10","Prenom__c":"aaa","Name":"AAA"},{"index":1,"DateFiliation__c":"2021-06-01","LienFiliation__c":"Du conjoint","DateNaissance__c":"2021-06-01","Prenom__c":"bbb","Name":"BBB"}]
+```
+
 ℹ️ The only constraints are that:
 * an `index` property is systematically added / managed by this framework
-to uniquely identify each JSON object of the list.
-* a custom _proxy_ custom object may be required for the _add_ and _update_
+to uniquely identify each JSON object in the list.
+* a custom _proxy_ custom object may be required for the _add_ and _update_ 
 `apexForm` actions, property names in the JSON objects being directly the
-API Names of the fields used in these forms.
+API Names of the fields used in these forms (e.g. `Name` and `DateFiliation__c`)
 * updates to the text field are done server side by the Apex **sfpegJsonAction_SVC** service
 and `next` actions may be required to refresh client side information.
 
