@@ -71,7 +71,7 @@ Configuration should be set e.g. as follows:
 
 ### Header Add Action Configuration 
 
-![JSON Add Popup](/media/sfpegActionAdd.png)<br/>
+![JSON Add Popup](/media/sfpegJsonActionAdd.png)<br/>
 _Header Add Action of a new JSON Object in the list_
 
 Configuration relies on standard **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** configuration principles.
@@ -125,7 +125,7 @@ Configuration should be set e.g. as follows:
 
 ### Row Level Update and Remove Actions Configuration
 
-![List as timeline](/media/sfpegActionMenu.png)<br/>
+![JSON Update/Remove Menu](/media/sfpegJsonActionMenu.png)<br/>
 _Row Level Actions to edit or remove JSON Objects in the list_
 
 Configuration relies on standard **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** configuration principles. 
