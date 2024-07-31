@@ -25,6 +25,11 @@
         <field>sfpegTestObject__c.Picklist__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>sfpegTestObject__c.TextArea__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>sfpegListTest</label>
     <objectPermissions>

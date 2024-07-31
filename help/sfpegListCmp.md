@@ -826,6 +826,14 @@ reload the component list.
 Please refer to **[sfpegMultiQueries_SVC](/help/sfpegMultiQueries.md)** Apex extension class to get an example 
 about how to group the results of multiple SOQL queries in a single list.
 
+
+### JSON Object List Field Display
+
+Please refer to **[sfpegJsonList_SVC](/help/sfpegJson.md)** Apex extension class to get an example 
+about how to display information stored in a standard text field and containing a stringified
+JSON object list as a standard related list.
+
+
 ### Dependent SOQL Queries Execution
 
 Please refer to **[sfpegDependentQueries_SVC](/help/sfpegDependentQueries.md)** Apex extension class to get an example 
