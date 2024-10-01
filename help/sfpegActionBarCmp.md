@@ -383,6 +383,7 @@ field becomes mandatory in that case. Standard **navigation** actions to record 
 
 The **openURL** action type enables to force the opening of a Web page in a different browser tab (via a `window.open()` javascript call instead of the Lightning navigation service).
 * `url` is the main property to define with the target URL to use
+* `target` is optional and enables to set a HTML link target different from the default `_blank` value.
 * some URL rework directives are available (e.g. **SUBSTR()** or **LEFT()**) but still pending actual large scale use cases to be officially
 supported (and documented).
 ```
@@ -574,7 +575,7 @@ popup is usually displayed to the user before executing the operation.
                 "operation": "update",
                 "records": [{
                     "Id": "{{{ROW.Id}}}",
-                    "ObjectApiName": "Task",
+                    "sobjectType": "Task",
                     "Status": "Done"
                 }]
             }
@@ -712,7 +713,7 @@ base component (updates being then made via LDS)
             "title": "Closing the Task",
             "message": "Please select a task close reason.",
             "record": {
-                "ObjectApiName": "Task",
+                "sobjectType": "Task",
                 "Id": "{{{ROW.Id}}}",
                 "Status": "Cancelled"
             },
