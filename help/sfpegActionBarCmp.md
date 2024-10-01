@@ -398,7 +398,6 @@ supported (and documented).
     }
 }
 ```
-* `target` (optional) being also possible to define another target than the `_blank` default.
 
 _Note_: See also [Apex List Retrieval and OpenURL Action with Rework](/help/sfpegListCmp.md) for an example with
 the **SUBSTR()** URL rework directive.
