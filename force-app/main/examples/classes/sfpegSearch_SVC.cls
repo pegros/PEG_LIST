@@ -135,6 +135,9 @@ public with sharing class sfpegSearch_SVC extends sfpegListQuery_SVC {
             throw new AuraHandledException('Missing "search" property in "sosl" section of Complex SOSL/SOQL configuration');
         }
 
+        String queryString = (String)searchConfig.get('search');
+        System.debug(LoggingLevel.FINE,'executeSOSL: raw search string fetched ' + queryString);
+
         if (searchConfig.containsKey('where')) {
             System.debug('executeSOSL: building WHERE clause');
             Map<String,Object> whereClause = (Map<String,Object>) searchConfig.get('where');
@@ -143,16 +146,18 @@ public with sharing class sfpegSearch_SVC extends sfpegListQuery_SVC {
                 String iterClause = buildWhere((Map<String,Object>)whereClause.get(iter),context);
                 System.debug('executeSOSL: WHERE clause init ' + iterClause);
                 iterClause = ((iterClause == null) ? '' : 'WHERE ' + iterClause);
-                context.put(iter,iterClause);
+                String iterToken  = '{{{' + iter + '}}}';
+                System.debug('executeSOSL: clause token init ' + iterToken);
+                queryString = queryString.replace(iterToken,iterClause);
             }
             System.debug('executeSOSL: context updated ' + context);
         }
         else {
             System.debug('executeSOSL: no WHERE clause build required');
         }
+        System.debug(LoggingLevel.FINE,'executeSOSL: clauses replaced in SOSL search ' + queryString);
 
-        System.debug(LoggingLevel.FINE,'executeSOSL: preparing SOSL search string');
-        String mergedSearch = sfpegList_CTL.mergeQuery((String)searchConfig.get('search'), context, sfpegList_CTL.CONFIG.BypassEscaping__c);
+        String mergedSearch = sfpegList_CTL.mergeQuery(queryString, context, sfpegList_CTL.CONFIG.BypassEscaping__c);
         System.debug(LoggingLevel.FINE,'executeSOSL: SOSL search merged ' + mergedSearch);
 
         try {
@@ -177,6 +182,9 @@ public with sharing class sfpegSearch_SVC extends sfpegListQuery_SVC {
             throw new AuraHandledException('Missing "select" property in "soql" section of Complex SOSL/SOQL configuration');
         }
 
+        String queryString = (String)queryConfig.get('select');
+        System.debug(LoggingLevel.FINE,'executeSOQL: raw search string fetched ' + queryString);
+
         if (queryConfig.containsKey('where')) {
             System.debug('executeSOQL: building WHERE clause');
             Map<String,Object> whereClause = (Map<String,Object>) queryConfig.get('where');
@@ -185,22 +193,18 @@ public with sharing class sfpegSearch_SVC extends sfpegListQuery_SVC {
                 String iterClause = buildWhere((Map<String,Object>)whereClause.get(iter),context);
                 System.debug('executeSOQL: WHERE clause init ' + iterClause);
                 iterClause = ((iterClause == null) ? '' : 'WHERE ' + iterClause);
-
-                if (iterClause.contains('{{{')) {
-                    System.debug(LoggingLevel.FINE,'executeSOQL: premerging context in WHERE clause');
-                    iterClause = sfpegList_CTL.mergeQuery((String)iterClause, context, sfpegList_CTL.CONFIG.BypassEscaping__c);
-                    System.debug(LoggingLevel.FINE,'executeSOQL: WHERE clause merged');
-                }
-                context.put(iter,iterClause);
+                String iterToken  = '{{{' + iter + '}}}';
+                System.debug('executeSOSL: clause token init ' + iterToken);
+                queryString = queryString.replace(iterToken,iterClause);
             }
             System.debug('executeSOQL: context updated ' + context);
         }
         else {
             System.debug('executeSOQL: no WHERE clause build required');
         }
+        System.debug(LoggingLevel.FINE,'executeSOQL: clauses replaced in SOSL search ' + queryString);
 
-        System.debug(LoggingLevel.FINE,'executeSOQL: preparing SOQL query string');
-        String mergedQuery = sfpegList_CTL.mergeQuery((String)queryConfig.get('select'), context, sfpegList_CTL.CONFIG.BypassEscaping__c);
+        String mergedQuery = sfpegList_CTL.mergeQuery(queryString, context, sfpegList_CTL.CONFIG.BypassEscaping__c);
         System.debug(LoggingLevel.FINE,'executeSOQL: SOQL query merged ' + mergedQuery);
 
         try {
@@ -235,6 +239,27 @@ public with sharing class sfpegSearch_SVC extends sfpegListQuery_SVC {
                 String condition = (String) whereClause.get(type);
                 System.debug('buildWhere: END / returning condition');
                 return '(' + condition + ')';
+            }
+            when 'LK' {
+                System.debug('buildWhere: processing LK type');
+                Map<String,Object> conditionMap = (Map<String,Object>) whereClause.get(type);
+                String fieldName = (String) conditionMap.get('field');
+                Boolean fieldNot = (Boolean) conditionMap.get('not');
+                String fieldValue = getValue(conditionMap,context);
+                if (String.isNotBlank(fieldValue)) {
+                    if (fieldNot == true) {
+                        System.debug('buildWhere: END / returning NOT condition');
+                        return '(NOT(' + fieldName + ' LIKE \'' + fieldValue + '%\'))';
+                    }
+                    else {
+                        System.debug('buildWhere: END / returning condition');
+                        return '(' + fieldName + ' LIKE \'' + fieldValue + '%\')';
+                    }
+                }
+                else {
+                    System.debug('buildWhere: END / ignoring condition');
+                    return null;
+                }
             }
             when 'EQ' {
                 System.debug('buildWhere: processing EQ type');
@@ -360,7 +385,7 @@ public with sharing class sfpegSearch_SVC extends sfpegListQuery_SVC {
             String fieldValue = (String) context.get(fieldName);
             if (!String.isEmpty(fieldValue)) {
                 System.debug('getValue: END / returning context value ' + fieldValue);
-                return fieldValue;
+                return '{{{' + fieldName + '}}}';
             }
         }
 

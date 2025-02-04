@@ -840,6 +840,15 @@ Please refer to **[sfpegDependentQueries_SVC](/help/sfpegDependentQueries.md)** 
 about how to workaround various limitations of standard SOQL subqueries and leverage independent SOQL subqueries to
 fill in criteria of `IN` conditions.
 
+
+### SOSL with SOQL Fallback Queries Execution
+
+Please refer to **[sfpegSearch_SVC](/help/sfpegSearchQueries.md)** Apex extension class to get an example 
+about how to implement a SOSL query with a SOQL fallback query if no (or a a too short) search term is provided.
+It also provides the ability to dynamically build `WHERE` clauses based on filtering criteria actually
+provided in the context.
+
+
 ### Current Org Limits Status
 
 In order to display in an App page the current state of the Org Limits,
