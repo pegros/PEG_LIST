@@ -283,14 +283,16 @@ public with sharing class sfpegSearch_SVC extends sfpegListQuery_SVC {
                 Boolean fieldNot = (Boolean) conditionMap.get('not');
                 String fieldValue = getValue(conditionMap,context);
                 if (String.isNotBlank(fieldValue)) {
-                    System.debug('buildWhere: END / returning condition');
-                    List<String> values = fieldValue.split(';');
+                    System.debug('buildWhere: returning condition on ' + fieldValue);
+                    /*List<String> values = fieldValue.split(';');
                     System.debug('buildWhere: values split ' + values);
                     System.debug('buildWhere: values condition ' + String.join(values,'\',\''));
                     System.debug('buildWhere: fieldNot ' + fieldNot);
                     System.debug('buildWhere: fieldNot confition ' + (fieldNot == true ? ' NOT IN (\'' : ' IN (\''));
-                    System.debug('buildWhere: resulting in ' + '(' + fieldName + (fieldNot == true ? ' NOT IN (\'' : ' IN (\'') + String.join(values,'\',\'') + '\'))');
-                    return '(' + fieldName + (fieldNot == true ? ' NOT IN (\'' : ' IN (\'') + String.join(values,'\',\'') + '\'))';
+                    System.debug('buildWhere: END / resulting in ' + '(' + fieldName + (fieldNot == true ? ' NOT IN (\'' : ' IN (\'') + String.join(values,'\',\'') + '\'))');*/
+                    System.debug('buildWhere: END / resulting in ' + '(' + fieldName + (fieldNot == true ? ' NOT IN LIST(((' : ' IN LIST(((') + fieldValue + '|||;))) )');
+                    //return '(' + fieldName + (fieldNot == true ? ' NOT IN (\'' : ' IN (\'') + String.join(values,'\',\'') + '\'))';
+                    return '(' + fieldName + (fieldNot == true ? ' NOT IN LIST(((' : ' IN LIST(((') + fieldValue + '|||;))) )';
                 }
                 else {
                     System.debug('buildWhere: END / ignoring condition');
@@ -304,9 +306,10 @@ public with sharing class sfpegSearch_SVC extends sfpegListQuery_SVC {
                 Boolean fieldNot = (Boolean) conditionMap.get('not');
                 String fieldValue = getValue(conditionMap,context);
                 if (String.isNotBlank(fieldValue)) {
-                    System.debug('buildWhere: END / returning condition');
+                    System.debug('buildWhere: END / returning condition on ' + fieldValue);
                     List<String> values = fieldValue.split(';');
-                    return '(' + fieldName + (fieldNot == true ? ' EXCLUDES (\'' : ' INCLUDES (\'') + String.join(values,'\',\'') + '\'))';
+                    //return '(' + fieldName + (fieldNot == true ? ' EXCLUDES (\'' : ' INCLUDES (\'') + String.join(values,'\',\'') + '\'))';
+                    return '(' + fieldName + (fieldNot == true ? ' EXCLUDES LIST(((' : ' INCLUDES LIST(((') + fieldValue + '|||;))) )';
                 }
                 else {
                     System.debug('buildWhere: END / ignoring condition');
