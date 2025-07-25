@@ -181,6 +181,9 @@
                                     onrowaction={handleRowAction}
                                     onrowselection={handleRowSelection}
                                     render-config={renderConfig}>
+                                    <!-- Call custom type provider component for datatable  -->
+                                     <!-- [DOC REF] : https://developer.salesforce.com/docs/platform/lwc/guide/data-table-custom-types.html -->
+                                     <c-sfpeg-list-custom-data-types-provider slot="customdatatypes"></c-sfpeg-list-custom-data-types-provider>
                                 </lightning-datatable>
                             </template>
 
