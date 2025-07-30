@@ -442,6 +442,35 @@ a generic button icon menu being displayed if more than one option is configured
 As a workaround for record previews, the `showPreview` action type may be used instead of the `navigation`
 one (see **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**) to display a summary of the record.
 
+### Display Image In Datatable Column
+
+For the `Datatable` mode, The `customImage` type can be used to display images directly within the Lightning datatable cells. Instead of showing plain text or links, custom images(e.g png,svg,jpg,etc.) can be used.
+
+To add an image column to the datatable, the 'customImage' type should be set within `Display Configuration` JSON :
+
+```
+{
+    "label" : "Profile Picture",
+    "type" : "customImage",
+    "fieldName" : "profilePicture",
+    "sortable" : "true",
+    "typeAttributes" : {
+        "imageUrl" : {
+            "fieldName" : "profilePicture"
+        }
+    },
+    "cellAttributes" : {
+        "alignment" : "center"
+    }
+}
+```
+
+_Notes_:
+
+* The property `imageUrl` is always mandatory as it indicates from which field it is going to read the image url. Hence, the field value should be in the form of `"/resource/example/image.png"`.
+
+* in the example above the `fieldName` field displayed is specified twice in the configuration, once as root
+to be used for sorting and filtering, secondly within the `typeAttributes` property of the `imageUrl` attribute.
 
 ### Timeline Configuration
 
