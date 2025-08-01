@@ -76,7 +76,7 @@ Such an event should be handled by setting the _onaction_ handler on the compone
 The **sfpegIcons** static resource contains all the custom SVG icons usable in the other components via the `resource:xxxx` syntax. If new icons are required, new SVG definitions may be added in the static resource for the new icon in all target sizes. The content of the static resource is easily accessible via the **sfpegIconCatalog**
 App page.
 
-![Icon Catalog Page](/media/sfpegIconCatalog.mng)
+![Icon Catalog Page](/media/sfpegIconCatalog.png)
 
 
 In the following example, the `resource:total` icon is defined in both medium and small formats.
