@@ -41,18 +41,18 @@ actionability (via the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**).
 
 The whole set of components (and this repository) is structured as 4 complementary
 packages (with their dedicated folders and overview pages):
-* **`[sfpegList-core](/help/sfpegListPkgCore.md)`** providing the core functionality of the
+* **[sfpegList-core](/help/sfpegListPkgCore.md)** providing the core functionality of the
 repository, with focus on the contextualised list component (**[sfpegListCmp](/help/README.md)**)
 and supporting contextualization and action framework
-* **`[sfpegList-extensions](/help/sfpegListPkgExtensions.md)`** providing other components to enhance
+* **[sfpegList-extensions](/help/sfpegListPkgExtensions.md)** providing other components to enhance
 the standard Lightning UX and leveraging more or less the same underlying framework
-* **`[sfpegList-utilities](/help/sfpegListPkgUtilities.md)`** providing useful extensions to the
+* **[sfpegList-utilities](/help/sfpegListPkgUtilities.md)** providing useful extensions to the
 `sfpegList-core` package (Apex extension classes, custom metadata records, wrapping LWC components...)
-* **`[sfpegList-examples](/help/sfpegListPkgExamples.md)`** providing out-of-the-box configurations
+* **[sfpegList-examples](/help/sfpegListPkgExamples.md)** providing out-of-the-box configurations
 for usual use cases.
-* **`[sfpegList-dataCloud](/help/sfpegListPkgDataCloud.md)`** providing extra utilities dedicated
+* **[sfpegList-dataCloud](/help/sfpegListPkgDataCloud.md)** providing extra utilities dedicated
 to Data Cloud integration.
-* **`[sfpegList-legacy](/help/sfpegListPkgLegacy.md)`** providing original Aura components, most
+* **[sfpegList-legacy](/help/sfpegListPkgLegacy.md)** providing original Aura components, most
 of which have been replaced or integrated into other LWC components.
 
 ℹ️ The [Component List](/help/componentList.md) page provides an exhaustive list of all metadata
