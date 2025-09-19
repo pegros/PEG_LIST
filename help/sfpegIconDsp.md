@@ -88,10 +88,14 @@ The **sfpegIcons** static resource contains all the custom SVG icons usable in t
 via the `resource:xxxx` syntax. If new icons are required, new SVG definitions may be added in the
 static resource for the new icon in all target sizes.
 
+<<<<<<< HEAD
 ⚠️ **Beware** when deploying new versions of the package on an Org where your have modified this 
 static resource as it will be overridden!
 Please retrieve first a copy of the previous version before deploying the new package version and
 redeploy the first copy (or a merge with the new version) afterwards.
+=======
+![Icon Catalog Page](/media/sfpegIconCatalog.png)
+>>>>>>> e9dfa1fe1b7b8cd4d1ac37f9742a9cdfe65148a8
 
 The content of the static resource is easily accessible via the **sfpegIconCatalog** App page.
 ![Icon Catalog Page](/media/sfpegIconCatalog.png)

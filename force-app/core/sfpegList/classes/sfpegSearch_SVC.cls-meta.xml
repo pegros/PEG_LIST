@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
+<<<<<<< HEAD:force-app/core/sfpegList/classes/sfpegSearch_SVC.cls-meta.xml
     <apiVersion>64.0</apiVersion>
+=======
+    <apiVersion>62.0</apiVersion>
+>>>>>>> e9dfa1fe1b7b8cd4d1ac37f9742a9cdfe65148a8:force-app/main/examples/classes/sfpegSearch_SVC.cls-meta.xml
     <status>Active</status>
 </ApexClass>
