@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>sfpegListRefresh</fullName>
+        <categories>PEG Component LWC List Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegListRefresh</shortDescription>
+        <value>Refresh</value>
+    </labels>
+    <labels>
+        <fullName>sfpegListFilter</fullName>
+        <categories>PEG Component LWC List Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegListFilter</shortDescription>
+        <value>Filter</value>
+    </labels>
+    <labels>
+        <fullName>sfpegListFilterAll</fullName>
+        <categories>PEG Component LWC List Option Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegListAll</shortDescription>
+        <value>All</value>
+    </labels>
+    <labels>
+        <fullName>sfpegListFilterApply</fullName>
+        <categories>PEG Component LWC List Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegListFilterApply</shortDescription>
+        <value>Apply</value>
+    </labels>
+    <labels>
+        <fullName>sfpegListFilterClose</fullName>
+        <categories>PEG Component LWC List Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegListFilterClose</shortDescription>
+        <value>Close</value>
+    </labels>
+    <labels>
+        <fullName>sfpegListFilterScope</fullName>
+        <categories>PEG Component LWC List Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegListFilterScope</shortDescription>
+        <value>Scope Selection</value>
+    </labels>
+    <labels>
+        <fullName>sfpegListFilterPlaceholder</fullName>
+        <categories>PEG Component LWC List Input Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegListFilterPlaceholder</shortDescription>
+        <value>Enter key words...</value>
+    </labels>
+    <labels>
+        <fullName>sfpegListSort</fullName>
+        <categories>PEG Component LWC List Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegListSort</shortDescription>
+        <value>Sort</value>
+    </labels>
+    <labels>
+        <fullName>sfpegListExport</fullName>
+        <categories>PEG Component LWC List Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegListExport</shortDescription>
+        <value>Export</value>
+    </labels>
+    <labels>
+        <fullName>sfpegListInit</fullName>
+        <categories>PEG Component LWC List Event Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegListInit</shortDescription>
+        <value>Initializing...</value>
+    </labels>
+    <labels>
+        <fullName>sfpegListLoading</fullName>
+        <categories>PEG Component LWC List Event Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegListLoading</shortDescription>
+        <value>Loading...</value>
+    </labels>
+    <labels>
+        <fullName>sfpegListSearching</fullName>
+        <categories>PEG Component LWC List Event Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegListSearching</shortDescription>
+        <value>Searching...</value>
+    </labels>
+    <labels>
+        <fullName>sfpegListLoadMore</fullName>
+        <categories>PEG Component LWC List Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegListLoadMore</shortDescription>
+        <value>Load more...</value>
+    </labels>
+    <labels>
+        <fullName>sfpegListAccessErrorRecord</fullName>
+        <categories>PEG Component LWC List Error Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message raised when user has no access to a list config record</shortDescription>
+        <value>User has not the {0} permission required to access the {1} list configuration record!</value>
+    </labels>
+    <labels>
+        <fullName>sfpegListAccessErrorObject</fullName>
+        <categories>PEG Component LWC List Error Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message raised when user has not access to the list configs</shortDescription>
+        <value>User has no access the list configuration object!</value>
+    </labels>
+</CustomLabels>

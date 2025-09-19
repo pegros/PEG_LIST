@@ -40,5 +40,9 @@ $RECYCLE.BIN/
 .vscode
 
 #Examples
-force-app/main/example/
-force-app/main/example2/
+force-app/default/
+force-app/work/
+force-app/default/
+.sf/
+.sfdx/
+Deployment.md

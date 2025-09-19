@@ -1,4 +1,13 @@
-# ![Logo](/media/Logo.png) &nbsp; **sfpegHierarchy_SVC** Extension
+# ![Logo](/media/Logo.png) &nbsp; **sfpegHierarchy_SVC** Query Extension
+
+
+This extension is part of the [`sfpegList-core`](/help/sfpegListPkgCore.md) package
+of the **[PEG_LIST](/README.md)** repository.
+
+⚠️ This page applies to the most recent (unlocked) packaging of the **PEG_LIST** repository.
+Some features described here may thus not be available on the old **[v0](https://github.com/pegros/PEG_LIST/tree/v0)** version.
+See v0 documentation of the same component [here](/blob/v0/help/sfpegHierarchy.md).
+
 
 ## Introduction
 
@@ -14,10 +23,11 @@ standard [tree-grid](https://developer.salesforce.com/docs/component-library/bun
 
 ## Configuration
 
-Configuration relies on standard **[sfpegListCmp](/help/sfpegListCmp.md)** configuration principles.
+ℹ️ Please refer to the [Component Configuration](/help/configuration.md) dedicated page to 
+get more general information about the way the included components may be configured. 
 
-In order to leverage this new capability, the `sfpegList` metadata record should be configured as
-follows:
+This Apex class may be leveraged within standard **[sfpegListCmp](/help/sfpegListCmp.md)** configuration.
+In order to use it, the `sfpegList` metadata record should be configured as follows:
 * `Query Input` should be a JSON object containing a `RootId` property providing the 
   ID of the record of which the sub-hierarchy should be displayed.
 * `Query Type`should be set to `Apex`
@@ -49,14 +59,14 @@ The following properties are available for the `Query Template`:
 
 The following example shows a **[sfpegListCmp](/help/sfpegListCmp.md)** in a
 **Population__c** custom object record page providing its sub-hierarchy.
-
 ![Hierarchy Query](/media/sfpegHierarchy.png)
-
 
 
 ## Technical Details
 
-This class implements only the `getData()` method of the **sfpegListQuery_SVC** interface class. 
-This means that pagination is (currently) not supported.
+This class implements only the `getData()` method of the **sfpegListQuery_SVC** interface class. This means that pagination is (currently) not supported.
 
 This class comes with the **sfpegHierarchy_TST** test class.
+
+ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to 
+get more global information about the way the components have been implemented.

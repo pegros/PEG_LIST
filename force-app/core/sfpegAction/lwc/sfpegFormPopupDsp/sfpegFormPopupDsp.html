@@ -1,0 +1,146 @@
+<template>
+    <!-- Popup Header -->
+    <template lwc:if={modalHeader}>
+        <lightning-modal-header label={modalHeader}>
+        </lightning-modal-header>
+    </template>
+
+    <lightning-modal-body>
+        <!-- Main Popup Body -->
+        <div class={modalClass} >
+            <template lwc:if={modalMessage}>
+                <p class="slds-p-horizontal_xx-small slds-m-bottom_small">
+                    <lightning-formatted-text class="slds-text-body" value={modalMessage}></lightning-formatted-text>
+                </p>
+            </template>
+            <template lwc:if={modalHelp}>
+                <p class="slds-p-horizontal_xx-small slds-m-bottom_small">
+                    <lightning-formatted-text class="slds-text-body_small slds-text-color_weak" value={modalHelp}></lightning-formatted-text>
+                </p>
+            </template>
+            <lightning-record-edit-form lwc:ref="recordForm"
+                                        record-id={record.Id}
+                                        object-api-name={record.ObjectApiName}
+                                        record-type-id={record.RecordTypeId}
+                                        onsubmit={handleFormSubmit}
+                                        onload={handleLoad}
+                                        onerror={handleError}
+                                        onsuccess={handleSave} >
+                <!-- Error Messages -->
+                <lightning-messages class="formMessages">
+                </lightning-messages>
+
+                <!-- Field Display -->
+                <lightning-layout   multiple-rows="true" pull-to-boundary="small" vertical-align="start" class="slds-m-bottom_small">
+                    <template for:each={displayedFields} for:item="iterField">
+                        <!-- Hidden field handling  -->
+                        <template lwc:if={iterField.hidden}>
+                            <lightning-layout-item  key={iterField.name} size="12" class="slds-hide" >
+                                <lightning-input-field  field-name={iterField.name}
+                                                        variant={variant}
+                                                        value={iterField.value} 
+                                                        disabled>
+                                </lightning-input-field>
+                            </lightning-layout-item>
+                        </template>
+                        <!-- Standard field handling -->
+                        <template lwc:else>
+                            <lightning-layout-item  key={iterField.name}
+                                                    size="12"                   medium-device-size={iterField.size} 
+                                                    padding="horizontal-small"  class="slds-var-m-bottom_xxx-small" >
+                                <!-- Special filtered lookup field replacement by picklist -->
+                                <template lwc:if={iterField.dataSource}>
+                                    <template lwc:if={iterField.disabled}>
+                                        <lightning-input-field  field-name={iterField.name}
+                                                                data-field-name={iterField.name}
+                                                                required={iterField.required}
+                                                                variant={variant}
+                                                                value={iterField.value}
+                                                                disabled >
+                                        </lightning-input-field>
+                                    </template>
+                                    <template lwc:else>
+                                        <lightning-input-field  class="slds-hide"
+                                                                field-name={iterField.name}
+                                                                data-field-name={iterField.name}
+                                                                required={iterField.required}
+                                                                variant={variant}
+                                                                value={iterField.value} >
+                                        </lightning-input-field>
+                                        <c-sfpeg-picklist-input-dsp field-name={iterField.name}
+                                                                    data-field-name={iterField.name}
+                                                                    config-name={iterField.dataSource}
+                                                                    label-field={iterField.dataLabel}
+                                                                    value-field={iterField.dataValue}
+                                                                    object-api-name={objectApiName}
+                                                                    record-id={recordId}
+                                                                    user-id={userId}
+                                                                    variant={variant}
+                                                                    is-debug={isDebug}
+                                                                    required={iterField.required}
+                                                                    onfieldchange={handlePicklistChange}>
+                                        </c-sfpeg-picklist-input-dsp>
+                                    </template>
+                                </template>
+                                <!-- Standard field -->
+                                <template lwc:else>
+                                    <lightning-input-field  field-name={iterField.name}
+                                                            required={iterField.required}
+                                                            disabled={iterField.disabled}
+                                                            variant={variant}
+                                                            value={iterField.value} >
+                                    </lightning-input-field>
+                                </template>
+                            </lightning-layout-item>
+                        </template>
+                    </template>
+                </lightning-layout>
+
+                <!-- Spinner Management -->
+                <template lwc:if={showSpinner}>
+                    <lightning-spinner  alternative-text={spinnerMessage}  size="medium">
+                    </lightning-spinner>
+                </template>
+            </lightning-record-edit-form>
+        </div>
+
+        <!-- Debug Information Display -->
+        <template lwc:if={isDebug}>
+            <div class="slds-text-align_left slds-m-top_small slds-p-around_small slds-border_top"  >
+                <dl class="slds-dl_horizontal slds-text-align_left">
+                    <dt class="slds-dl_horizontal__label slds-truncate">Record:</dt>
+                    <dd class="slds-dl_horizontal__detail">{recordStr}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Form:</dt>
+                    <dd class="slds-dl_horizontal__detail">OBJ {record.ObjectApiName} / RT {record.RecordTypeId} / ID {record.Id}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Fields:</dt>
+                    <dd class="slds-dl_horizontal__detail">{fieldsStr}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">(aria-)label:</dt>
+                    <dd class="slds-dl_horizontal__detail">{label}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">(aria-)description:</dt>
+                    <dd class="slds-dl_horizontal__detail">{description}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+                    <dd class="slds-dl_horizontal__detail">
+                        <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegActionBarCmp.md"
+                                                    label="See Help on GitHub"
+                                                    target="_blank">
+                        </lightning-formatted-url>
+                    </dd>
+                </dl>
+            </div>
+        </template>
+    </lightning-modal-body>
+
+    <!-- Popup Footer -->
+    <lightning-modal-footer>
+        <lightning-button	lwc:ref="cancelButton"
+                            label={cancelLabel}     title={cancelTitle}
+                            variant="neutral"   
+                            onclick={handleCancel}>
+        </lightning-button>
+        <lightning-button	lwc:ref="submitButton"
+                            label={saveLabel}       title={saveTitle}
+                            variant="brand"         class="slds-m-left_small"
+                            onclick={handleSubmit}>
+        </lightning-button>
+    </lightning-modal-footer>
+</template>

@@ -1,5 +1,13 @@
 # ![Logo](/media/Logo.png) &nbsp; **sfpegMultiQueries_SVC** Extension
 
+This component is part of the [`sfpegList-utilities`](/help/sfpegListPkgUtilities.md) package
+of the **[PEG_LIST](/README.md)** repository.
+
+⚠️ This page applies to the most recent (unlocked) packaging of the **PEG_LIST** repository.
+Some features described here may thus not be available on the old **[v0](https://github.com/pegros/PEG_LIST/tree/v0)** version.
+See v0 documentation of the same component [here](/blob/v0/help/sfpegMultiQueries.md).
+
+
 ## Introduction
 
 The **sfpegMultiQueries_SVC** Apex Class is an extension to the **[sfpegListCmp](/help/sfpegListCmp.md)** 
@@ -14,10 +22,11 @@ e.g. to fetch the records (if any) just before and after the current record in a
 
 ## Configuration
 
-Configuration relies on standard **[sfpegListCmp](/help/sfpegListCmp.md)** configuration principles.
+ℹ️ Please refer to the [Component Configuration](/help/configuration.md) dedicated page to 
+get more general information about the way the included components may be configured. 
 
-In order to leverage this new capability, the `sfpegList` metadata record should be configured as
-follows:
+This Apex class may be leveraged within standard **[sfpegListCmp](/help/sfpegListCmp.md)** configuration.
+In order to use it, the `sfpegList` metadata record should be configured as follows:
 * `Query Type`should be set to `Apex`
 * `Query Class` should be set to `sfpegMultiQueries_SVC` 
 * `Query Template` should contain a JSON object with text properties defining the names and SOQL
@@ -74,3 +83,6 @@ appended to the global result list.
 
 This class comes with the **sfpegMultiQueries_TST** test class requiring 3 test custom metadata
 (**sfpegTestMultiQueriesOK**, **sfpegTestMultiQueriesKOparse**, **sfpegTestMultiQueriesKOquery**).
+
+ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to 
+get more global information about the way the components have been implemented.

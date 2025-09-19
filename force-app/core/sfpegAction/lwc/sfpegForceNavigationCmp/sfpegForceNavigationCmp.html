@@ -1,0 +1,23 @@
+<template>
+    <template lwc:if={isDebug}>
+        <div class="slds-box slds-theme_default">
+            <dl class="slds-dl_horizontal slds-text-align_left">
+                <dt class="slds-dl_horizontal__label slds-truncate">Context</dt>
+                <dd class="slds-dl_horizontal__detail">{objectApiName} / {recordId}</dd>
+                <dt class="slds-dl_horizontal__label slds-truncate">Main Tab?</dt>
+                <dd class="slds-dl_horizontal__detail">{isMainTab}</dd>
+                <dt class="slds-dl_horizontal__label slds-truncate">Parent Record</dt>
+                <dd class="slds-dl_horizontal__detail">{parentField}<template lwc:if={parentField}> / {lookupId} vs {mainTabRecordId}</template></dd>
+                <dt class="slds-dl_horizontal__label slds-truncate">Target Page</dt>
+                <dd class="slds-dl_horizontal__detail">{targetPage}<template lwc:if={targetPage}>/ {lookupId}</template></dd>
+                <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+                <dd class="slds-dl_horizontal__detail">
+                    <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegForceNavigationCmp.md"
+                                                label="See Help on GitHub"
+                                                target="_blank">
+                    </lightning-formatted-url>
+                </dd>
+            </dl>
+        </div>
+    </template>
+</template>

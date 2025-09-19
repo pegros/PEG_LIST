@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SF PEG Force Navigation</masterLabel>
+    <description>This component enables to force the navigation or reopening of a record in another page.</description>
+
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            
+            <property   name="isMainTab"
+                        label="Main Tab?"
+                        type="Boolean"
+                        description="Indicates if the current record should be open in Main or Subtab (in console mode)"/>
+
+            <property   name="parentField"
+                        label="Parent Field"
+                        type="String"
+                        description="API Name of the lookup field providing the expected Parent ID (if subtab of console mode)"/>
+
+            <property   name="targetPage"
+                        label="Target Page"
+                        type="String"
+                        description='Page reference to navigate to (with lookup field API Name as recordId if target is a record page)'/>
+
+            <property   name="isDebug"
+                        label="Debug?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information."/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

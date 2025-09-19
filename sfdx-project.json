@@ -1,11 +1,143 @@
 {
   "packageDirectories": [
     {
-      "path": "force-app",
+      "path": "force-app/default",
       "default": true
+    },
+    {
+      "versionName": "Sept. 2025",
+      "versionNumber": "1.0.0.NEXT",
+      "path": "force-app/core",
+      "default": false,
+      "package": "sfpegList-core",
+      "versionDescription": "Core features of the PEG_LIST package, see https://github.com/pegros/PEG_LIST",
+      "apexTestAccess": {
+        "permissionSets": [
+          "sfpegListTest",
+          "sfpegListCoreUsage"
+        ],
+        "permissionSetLicenses": []
+      }
+    },
+    {
+      "versionName": "Sept. 2025",
+      "versionNumber": "1.0.0.NEXT",
+      "path": "force-app/extensions",
+      "default": false,
+      "package": "sfpegList-extensions",
+      "versionDescription": "Extensions to the core PEG_LIST package, see https://github.com/pegros/PEG_LIST",
+      "dependencies": [
+        {
+          "package": "sfpegList-core",
+          "versionNumber": "1.0.0.LATEST"
+        }
+      ],
+      "apexTestAccess": {
+        "permissionSets": [
+          "sfpegListTest",
+          "sfpegListCoreUsage"
+        ],
+        "permissionSetLicenses": []
+      }
+    },
+    {
+      "versionName": "Sept. 2025",
+      "versionNumber": "1.0.0.NEXT",
+      "path": "force-app/examples",
+      "default": false,
+      "package": "sfpegList-examples",
+      "versionDescription": "Configuration examples of the PEG_LIST package, see https://github.com/pegros/PEG_LIST",
+      "dependencies": [
+        {
+          "package": "sfpegList-core",
+          "versionNumber": "1.0.0.LATEST"
+        },
+        {
+          "package": "sfpegList-extensions",
+          "versionNumber": "1.0.0.LATEST"
+        }
+      ],
+      "apexTestAccess": {
+        "permissionSets": [
+          "sfpegListTest",
+          "sfpegListCoreUsage",
+          "sfpegListExtUsage"
+        ],
+        "permissionSetLicenses": []
+      }
+    },
+    {
+      "versionName": "Sept. 2025",
+      "versionNumber": "1.0.0.NEXT",
+      "path": "force-app/utilities",
+      "default": false,
+      "package": "sfpegList-utilities",
+      "versionDescription": "Utilities for the PEG_LIST package, see https://github.com/pegros/PEG_LIST",
+      "dependencies": [
+        {
+          "package": "sfpegList-core",
+          "versionNumber": "1.0.0.LATEST"
+        }
+      ],
+      "apexTestAccess": {
+        "permissionSets": [
+          "sfpegListTest",
+          "sfpegListCoreUsage"
+        ],
+        "permissionSetLicenses": []
+      }
+    },
+    {
+      "versionName": "Sept. 2025",
+      "versionNumber": "1.0.0.NEXT",
+      "path": "force-app/legacy",
+      "default": false,
+      "package": "sfpegList-legacy",
+      "versionDescription": "Legacy Aura components of the PEG_LIST package, see https://github.com/pegros/PEG_LIST",
+      "dependencies": [
+        {
+          "package": "sfpegList-core",
+          "versionNumber": "1.0.0.LATEST"
+        }
+      ]
+    },
+    {
+      "versionName": "Sept. 2025",
+      "versionNumber": "1.0.0.NEXT",
+      "path": "force-app/dataCloud",
+      "default": false,
+      "package": "sfpegList-dataCloud",
+      "versionDescription": "Data Cloud specific utilities for the PEG_LIST package, see https://github.com/pegros/PEG_LIST",
+      "dependencies": [
+        {
+          "package": "sfpegList-core",
+          "versionNumber": "0.2.0.LATEST"
+        }
+      ],
+      "apexTestAccess": {
+        "permissionSets": [
+          "sfpegListTest",
+          "sfpegListCoreUsage"
+        ],
+        "permissionSetLicenses": [
+          "RemoteDataCloudPsl",
+          "GenieDataPlatformStarterPsl"
+        ]
+      }
     }
   ],
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "55.0"
+  "sourceApiVersion": "63.0",
+  "packageAliases": {
+    "sfpegList-core": "0HoJ7000000XZBUKA4",
+    "sfpegList-extensions": "0HoJ7000000XZBZKA4",
+    "sfpegList-utilities": "0HoJ7000000XZBeKAO",
+    "sfpegList-examples": "0HoJ7000000XZBjKAO",
+    "sfpegList-legacy": "0HoJ7000000XZD6KAO",
+    "sfpegList-dataCloud": "0HoJ7000000XZDBKA4",
+    "sfpegList-core@1.0.0-2": "04tJ7000000xHDBIA2",
+    "sfpegList-extensions@1.0.0-1": "04tJ7000000xHDGIA2",
+    "sfpegList-utilities@1.0.0-1": "04tJ7000000xHDLIA2"
+  }
 }

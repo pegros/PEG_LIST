@@ -1,5 +1,17 @@
 # ![Logo](/media/Logo.png) &nbsp; **sfpegActionUtilityCmp** component
 
+This component is part of the [`sfpegList-legacy`](/help/sfpegListPkgLegacy.md) package
+of the **[PEG_LIST](/README.md)** repository.
+
+ℹ️ Most of its functionalities have been included in the most recent version of the LWC
+**[sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md)** utility component. It is kept
+mainly for backward compatibility.
+
+⚠️ This page applies to the most recent (unlocked) packaging of the **PEG_LIST** repository.
+Some features described here may thus not be available on the old **[v0](https://github.com/pegros/PEG_LIST/tree/v0)** version.
+See v0 documentation of the same component [here](/blob/v0/help/sfpegActionUtilityCmp.md).
+
+
 ## Introduction
 
 The **sfpegActionUtilityCmp** component is an Aura wrapper of the **[sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md)**
@@ -32,21 +44,21 @@ for Aura specific actions
 
 They may be invoked directly from the **sfpegActionUtilityCmp** component menu or called from any action bar 
 (**[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component) within a tab leveraging the
-_utility_ action type (to forward the action to the utility bar component,
+`utility` action type (to forward the action to the utility bar component,
 see **[sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md)** for details). 
 
----
 
 ## Component Configuration
 
-Its configuration is identical to the **[sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md)** one.
+ℹ️ Please refer to the [Component Configuration](/help/configuration.md) dedicated page to 
+get more general information about the way the included components may be configured. 
 
-***Beware*** to opt for automatic component launch in the App Builder
+The configuration of this component is identical to the **[sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md)** one.
+
+⚠️ **Beware** to opt for automatic component launch in the App Builder
 (`Start automatically` checkbox in the component utility bar configuration), in order to
 properly handle `utility` actions triggered from the pages.
 
-
----
 
 ## Specific Action Types
 
@@ -201,7 +213,7 @@ public with sharing class sfpegTestClass {
 
 ### **closeTabs** Action Type
 
-The **closeTabs** action type enables to launch a Lightning Flow within a popup (instead of a tab) leveraging the standard
+The **closeTabs** action type enables to close multiple tabs at once within a console application thanks to the
 [workspace API](https://developer.salesforce.com/docs/component-library/bundle/lightning:workspaceAPI/documentation).
 
 This is a typical utility bar menu action, two options being available:
@@ -210,7 +222,7 @@ This is a typical utility bar menu action, two options being available:
 In any case, pinned tabs are ignored and never closed.
 
 From a **sfpegActionUtilityCmp** component, the following action configuration 
-provides the two options.<br/>
+provides the two options.
 ```
 {
     "label":"Close Tabs", "name":"closeAllTabs",
@@ -331,9 +343,8 @@ in such a case.
 
 ### Popup with Notification back to original Component
 
-***TO BE CONTINUED***
+_TO BE CONTINUED_
 
----
 
 ## Technical Details
 
@@ -352,3 +363,6 @@ executed by the child **sfpegActionHandlerCmp** component.
 Even if initially meant for the utility bar, the **sfpegActionUtilityCmp** Aura component
 may be also used in the footer of a community template to provide the same features in this
 technical context.
+
+ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to 
+get more global information about the way the components have been implemented.

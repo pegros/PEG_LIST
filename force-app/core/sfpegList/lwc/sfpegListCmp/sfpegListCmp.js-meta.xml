@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SF PEG Custom List</masterLabel>
+    <description>This component enables to display a list of records fetched via custom logic.</description>
+
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage,lightning__RecordPage">
+            <supportedFormFactors>
+                <supportedFormFactor type="Small" />
+                <supportedFormFactor type="Large" />
+            </supportedFormFactors>
+            <property   name="cardTitle"
+                        label="Card Title"
+                        type="String" />
+            <property   name="cardIcon"
+                        label="Card Icon"
+                        type="String"/>
+            <property   name="cardClass"
+                        label="Card CSS Class"
+                        type="String"
+                        default="slds-card slds-card_boundary"
+                        description="CSS Classes for the wrapping card div"/>
+            <property   name="displayHeight"
+                        label="Display height"
+                        type="String"
+                        description="Height in px/em... of the result display content div."/>
+            <property   name="buttonSize"
+                        label="Button Size"
+                        type="String"
+                        datasource="x-small,small,medium"
+                        default="small"
+                        description="Size of the standard header buttons (to align with custom header actions)"/>
+
+            <property   name="configName"
+                        label="Query Configuration"
+                        type="String"
+                        datasource="apex://sfpegListSelector_CTL"
+                        description="(Developer)Name of the Query Configuration record to be used (see sfpegList__mdt)."/>
+            <property   name="contextString"
+                        label="Query Context (Beta)"
+                        type="String"
+                        description="Context (optional) to be provided as input to the query (to mutualise configuration of similar queries)."/>
+
+            <property   name="showCount"
+                        label="Show #Records?"
+                        type="String"
+                        datasource="no,right,left"
+                        default="right"
+                        description="Flag to show record number (to right/left) in title."/>
+            <property   name="showSearch"
+                        label="Show Filter?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show Filter action in header."/>
+            <property   name="showExport"
+                        label="Show Export?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show Export action in header."/>
+            <property   name="isCollapsible"
+                        label="Collapsible?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to let the component expand/collapse the result list."/>
+            <property   name="isCollapsed"
+                        label="Collapsed by default?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to set the default collapsed state of the component."/>
+
+            <property   name="actionConfigName"
+                        label="Header Action Configuration"
+                        type="String"
+                        datasource="apex://sfpegActionSelector_CTL"
+                        description="(Developer)Name of the Action Configuration record to be used in header (see sfpegAction__mdt)."/>
+            <property   name="footerConfigName"
+                        label="Footer Action Configuration"
+                        type="String"
+                        datasource="apex://sfpegActionSelector_CTL"
+                        description="(Developer)Name of the Action Configuration record to be used in footer (see sfpegAction__mdt)."/>
+            <property   name="maxSize"
+                        label="Max. #Actions Displayed"
+                        type="Integer"
+                        description="Max number of actions displayed before overflow in menu."/>
+
+            <property   name="isDebug"
+                        label="Debug?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information."/>
+            <property   name="isDebugFine"
+                        label="Debug (fine) ?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information for all sub-components."/>
+        </targetConfig>
+        <targetConfig targets="lightningCommunity__Default">
+            <property   name="cardTitle"
+                        label="Card Title"
+                        type="String" />
+            <property   name="cardIcon"
+                        label="Card Icon"
+                        type="String"/>
+            <property   name="cardClass"
+                        label="Card CSS Class"
+                        type="String"
+                        default="slds-card slds-card_boundary slds-theme_shade"
+                        description="CSS Classes for the wrapping card div"/>
+            <property   name="displayHeight"
+                        label="Display height"
+                        type="String"
+                        description="Height in px/em... of the result display content div."/>
+            <property   name="buttonSize"
+                        label="Button Size"
+                        type="String"
+                        datasource="x-small,small,medium"
+                        default="small"
+                        description="Size of the standard header buttons (to align with custom header actions)"/>
+
+            <property   name="configName"
+                        label="Query Configuration"
+                        type="String"
+                        datasource="apex://sfpegListSelector_CTL"
+                        description="(Developer)Name of the Query Configuration record to be used (see sfpegList__mdt)."/>
+            <property   name="contextString"
+                        label="Query Context (Beta)"
+                        type="String"
+                        description="Context (optional) to be provided as input to the query (to mutualise configuration of similar queries)."/>
+
+            <property   name="showCount"
+                        label="Show #Records?"
+                        type="String"
+                        datasource="no,right,left"
+                        default="right"
+                        description="Flag to show record number (to right/left) in title."/>
+            <property   name="showSearch"
+                        label="Show Filter?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show Filter action in header."/>
+            <property   name="showExport"
+                        label="Show Export?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show Export action in header."/>
+            <property   name="isCollapsible"
+                        label="Collapsible?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to let the component expand/collapse the result list."/>
+            <property   name="isCollapsed"
+                        label="Collapsed by default?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to set the default collapsed state of the component."/>
+
+            <property   name="actionConfigName"
+                        label="Header Action Configuration"
+                        type="String"
+                        datasource="apex://sfpegActionSelector_CTL"
+                        description="(Developer)Name of the Action Configuration record to be used in header (see sfpegAction__mdt)."/>
+            <property   name="footerConfigName"
+                        label="Footer Action Configuration"
+                        type="String"
+                        datasource="apex://sfpegActionSelector_CTL"
+                        description="(Developer)Name of the Action Configuration record to be used in footer (see sfpegAction__mdt)."/>
+            <property   name="maxSize"
+                        label="Max. #Actions Displayed"
+                        type="Integer"
+                        description="Max number of actions displayed before overflow in menu."/>
+
+            <property   name="isDebug"
+                        label="Debug?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information."/>
+            <property   name="isDebugFine"
+                        label="Debug (fine) ?"
+                        type="Boolean"
+                        default="false"
+                        description="Flag to show debug information for all sub-components."/>
+
+            <property   name="objectApiName"
+                        label="Object API Name"
+                        type="String"
+                        default="{!objectApiName}"
+                        description="API Name of Current Object."/>
+            <property   name="recordId"
+                        label="Record ID"
+                        type="String"
+                        default="{!recordId}"
+                        description="ID of current Record"/>
+        </targetConfig>
+    </targetConfigs>
+
+</LightningComponentBundle>

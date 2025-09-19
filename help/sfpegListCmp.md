@@ -1,5 +1,13 @@
 # ![Logo](/media/Logo.png) &nbsp; **sfpegListCmp** Component
 
+This component is part of the [`sfpegList-core`](/help/sfpegListPkgCore.md) package
+of the **[PEG_LIST](/README.md)** repository.
+
+⚠️ This page applies to the most recent (unlocked) packaging of the **PEG_LIST** repository.
+Some features described here may thus not be available on the old **[v0](https://github.com/pegros/PEG_LIST/tree/v0)** version.
+See v0 documentation of the same component [here](/blob/v0/help/sfpegListCmp.md).
+
+
 ## Introduction
 
 The **sfpegListCmp** component displays a contextualised and actionable list of records in 3 main formats
@@ -26,9 +34,11 @@ as this total count has not been loaded)
 may use the **sfpegOnDemandListCmp** _wrapper_ component (see in the examples) which
 includes an _expand_ button icon to control the actual display of a **sfpegListCmp**.
 
----
 
 ## Component Configuration
+
+ℹ️ Please refer to the [Component Configuration](/help/configuration.md) dedicated page to 
+get more general information about the way the included components may be configured. 
 
 ### Global Layout
 
@@ -40,20 +50,20 @@ on selected rows, navigate to a report or dashboard...)
 
 Hereafter are provided examples of various display types.
 
-![List as tiles](/media/sfpegListTiles.png)<br/>
-_Display as list of Tiles (1 tile per row)_
+![List as tiles](/media/sfpegListTiles.png)
+_<center>Display as list of Tiles (1 tile per row)</center>_
 
-![List as tile cards](/media/sfpegListCards.png)<br/>
-_Display as list of Tile Cards (2 tiles per row)_
+![List as tile cards](/media/sfpegListCards.png)
+_<center>Display as list of Tile Cards (2 tiles per row)</center>_
 
-![List as timeline](/media/sfpegListTimeline.png)<br/>
-_Display as list of Tiles in timeline variant (1 tile per row)_
+![List as timeline](/media/sfpegListTimeline.png)
+_<center>Display as list of Tiles in timeline variant (1 tile per row)</center>_
 
-![List as data table](/media/sfpegListTable.png)<br/>
-_Display as Data Table_
+![List as data table](/media/sfpegListTable.png)
+_<center>Display as Data Table</center>_
 
-![List as tree grid](/media/sfpegListTree.png) <br/>
-_Display as Tree Grid_
+![List as tree grid](/media/sfpegListTree.png)
+_<center>Display as Tree Grid</center>_
 
 _Note_:In the last _TreeGrid_ example, fetching data with custom Apex enables to fetch
 a whole multi-level record hierarchy in a single call (while SOQL only supports 1 level of
@@ -370,8 +380,6 @@ to inject additional context information to be leveraged as additional `{{{CTX.x
 **sfpegListCmp** component is included in another custom component (see also **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** component).
 
 
----
-
 ## Configuration Examples
 
 ### Lookup Field Handling 
@@ -437,17 +445,15 @@ a generic button icon menu being displayed if more than one option is configured
 ]
 ```
 
-?
-
 As a workaround for record previews, the `showPreview` action type may be used instead of the `navigation`
 one (see **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**) to display a summary of the record.
 
 
 ### Timeline Configuration
 
-The **sfpegListCmp** may be configured to look as follows:<br/>
-![List as timeline](/media/sfpegListTimeline.png)<br/>
-_Display as list of Tiles in timeline variant with expandable section_
+The **sfpegListCmp** may be configured to look as follows:
+![List as timeline](/media/sfpegListTimeline.png)
+_<center>Display as list of Tiles in timeline variant with expandable section</center>_
 
 In this example, within the related **sfpegList__mdt** custom metadata
 * the **Display Type** must be set in `TileList` (selected option in the example) or `CardList` mode.
@@ -493,7 +499,7 @@ The Query is configured as an Apex fetch, with a class leveraging the
 **Schema.describe()** methods to provide the proper information.<br/>
 ![Object Attributes List Metadata](/media/sfpegListObjectAttributesMeta.png)
 
-The display is configured as follows:<br/>
+The display is configured as follows:
 ```
 {
     "keyField":"QualifiedApiName",
@@ -514,7 +520,7 @@ The display is configured as follows:<br/>
 }
 ```
 
-The row action provides a direct link to the Setup page for each attribute (via an _openURL_ 
+The row action provides a direct link to the Setup page for each attribute (via an `openURL` 
 action with rework feature activated).<br/>
 ```
 {
@@ -529,12 +535,12 @@ action with rework feature activated).<br/>
 }
 ```
 
+
 ### Custom Experience Site Result Search Page
 
 In that example, the query template is based on a SOSL multi-object request to filter the **Files** and **Knowledge** articles
 applicable to the considered Experience Site. By default, Salesforce Search returns all possible results the user has access
 to and this induce the possible display of records corresponding to other Experience Sites (depending on record sharing).
-
 ![Experience Site Search Results](/media/sfpegListExperienceSearch.png)
 
 The solution consists in using the **sfpegListCmp** in the Search result page while injecting the search terms set by the 
@@ -542,7 +548,6 @@ user into the input context to a SOSL query leveraging additional standard filte
 
 In the **Experience Builder**, the most important configuration is to set the value of the `Query Context` property to
 the Experience Search Site page `{!term}` variable, as shown below.
-
 ![Experience Site Search Configuration](/media/sfpegListExperienceSearchConfig.png)
 
 This context may then be reused as input to the SOSL query in the **sfpegList** record's `Query Template`property
@@ -736,6 +741,7 @@ The _TreeGrid_ layout configuration looks as follows:<br/>
 }
 ```
 
+
 ### Hierarchy Query Execution
 
 Please refer to **[sfpegHierarchy_SVC](/help/sfpegHierarchy.md)** extension Apex class
@@ -749,14 +755,14 @@ In that example, the **sfpegListCmp** component is configured in _DataTable_ mod
 relies on a custom boolean formula field to activate an action or not on a per row basis.<br/>
 ![List with row level conditional actions](/media/sfpegListRowActionsExample.png)
 
-The query should include the boolean formula field (here *HasReason__c*) to be used for action activation 
+The query should include the boolean formula field (here `HasReason__c`) to be used for action activation 
 ```
 select Id, Name, RecordType.Name, TOLABEL(Motif__c), TST_ACL__c, TST_ACL__r.Name, ReasonCode__c, HasReason__c
 from TST_PEG__c
 where TST_ACL__c = '{{{ID}}}'
 ```
 
-The _DataTable_ configuration layout looks as follows:<br/>
+The _DataTable_ configuration layout looks as follows:
 ```
 {
     "keyField": "Id",
@@ -781,8 +787,8 @@ column types. Among others it does not for row actions set in the `menu` propert
 **[lightning-datatable](https://developer.salesforce.com/docs/component-library/bundle/lightning-datatable/documentation)** component limitation.
 
 
-For the _CardList_ and _TileList_ modes, any entry in the `menu` property may be dynamically _disabled_
-or _hidden_ in a similar way. However the `isDynamicMenu` boolean property needs to be explicitly set
+For the _CardList_ and _TileList_ modes, any entry in the `menu` property may be dynamically `disabled`
+or `hidden` in a similar way. However the `isDynamicMenu` boolean property needs to be explicitly set
 to `true` in the configuration:
 ```
 ...
@@ -840,6 +846,15 @@ Please refer to **[sfpegDependentQueries_SVC](/help/sfpegDependentQueries.md)** 
 about how to workaround various limitations of standard SOQL subqueries and leverage independent SOQL subqueries to
 fill in criteria of `IN` conditions.
 
+
+### SOSL with SOQL Fallback Queries Execution
+
+Please refer to **[sfpegSearch_SVC](/help/sfpegSearchQueries.md)** Apex extension class to get an example 
+about how to implement a SOSL query with a SOQL fallback query if no (or a a too short) search term is provided.
+It also provides the ability to dynamically build `WHERE` clauses based on filtering criteria actually
+provided in the context.
+
+
 ### Current Org Limits Status
 
 In order to display in an App page the current state of the Org Limits,
@@ -847,11 +862,9 @@ two elements are available off-the-shelf in the examples:
 * the **sfpegOrgLimits_SVC** Apex extension class (calling see **[OrgLimits.getMap()](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_class_System_OrgLimits.htm)**)
 * the **sfpegOrgLimits** **sfpegList** list medatada record
 
-![List as tiles](/media/sfpegOrgLimits.png)<br/>
-_Monitoring of the Org limits_
+![List as tiles](/media/sfpegOrgLimits.png)
+_<center>Monitoring of the Org limits</center>_
 
-
----
 
 ## Technical Details
 
@@ -869,3 +882,6 @@ _merge tokens_)
 * **sfpegTileDsp** for record tile display (thus also **[sfpegIconDsp](/help/sfpegIconDsp.md)** for tile icons)
 * **sfpegCsvUtl** for CSV list export
 * **sfpegJsonUtl** for various JSON operations (e.g. data _flattening_)
+
+ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to 
+get more global information about the way the components have been implemented.

@@ -1,5 +1,13 @@
 # ![Logo](/media/Logo.png) &nbsp; **sfpegMergeUtl** Utility
 
+This component is part of the [`sfpegList-core`](/help/sfpegListPkgCore.md) package
+of the **[PEG_LIST](/README.md)** repository.
+
+⚠️ This page applies to the most recent (unlocked) packaging of the **PEG_LIST** repository.
+Some features described here may thus not be available on the old **[v0](https://github.com/pegros/PEG_LIST/tree/v0)** version.
+See v0 documentation of the same component [here](/blob/v0/help/sfpegMergeUtl.md).
+
+
 ## Introduction
 
 The **sfpegMergeUtl** component basically enables to merge contextual data within a string. It
@@ -77,14 +85,12 @@ the merge **token**, as it would result in a string instead of a boolean/number
 (e.g. `{"isActive":{{{RCD.IsActive__c}}} }` to get `{"isActive":true }` after merge)
 
 
----
-
 ## Post Merge Modifier
 
 As a baseline, the **sfpegMergeUtl** component directly replaces the tokens by their value.
 
 However, in some cases, some issues may arise when parsing the resulting merged
-string as a JSON list or object. 
+string as a JSON list or object and the following post-processing feature.
 
 
 ### Double Quotes **ESCAPE**
@@ -102,8 +108,8 @@ Text fields may also raise the same issue, as double quotes in their content are
 as in the richtext field case. 
 
 In order to prevent these fields to break the configuration parsing, a special `ESCAPE(((...)))` directive
-is available. Such a directive is applied after the initial merge and replaces all '"' character occurrences
-by '\\"' ones. This enables to escape these double quotes for the JSON parsing and restore their original
+is available. Such a directive is applied after the initial merge and replaces all `"` character occurrences
+by `\\"` ones. This enables to escape these double quotes for the JSON parsing and restore their original
 value for display afterwards.
 
 The following **[sfpegRecordDisplayCmp](/help/sfpegRecordDisplayCmp.md)** configuration example describes
@@ -175,10 +181,10 @@ would lead to the following properly acceptable output for the navigation action
 
 ### Picklist Value **ADD** / **RMV**
 
-When dealing with multi-picklist fields (or any CSV like text field), it is possible to easily
+When dealing with multi-picklist fields (or any CSV like text field) in actions, it is possible to easily
 add or remove a specific value via the `ADD(((xxxxxx|||yyy|||z)))` or `RMV(((xxxxxx|||yyy|||z)))` syntaxes.
 
-They respectively enable to add (`ADD`) or remove (`RMV`) a specific unitary `yyyy`value from the 
+They respectively enable to add (`ADD`) or remove (`RMV`) a specific unitary `yyyy` value from the 
 current `xxxxxx` multi-value leveraging `z` as separator (e.g. `;` for standard multi-picklists).
 
 For instance,
@@ -228,12 +234,10 @@ record using the same value set in a `Picklist__c` field:
 ```
 
 
----
-
 ## Merge Tokens Extension
 
-This base set of token types may be extended by leveraging the **sfpegConfiguration** custom metadata.
-These records enable to easily retrieve and merge Salesforce IDs for specific Object records,
+The base set of token types provided by the package may be extended by leveraging the **sfpegConfiguration**
+custom metadata. These records enable to easily retrieve and merge Salesforce IDs for specific Object records,
 facilitating the deployment of Salesforce configuration artefacts between environments.
 By default a set of predefined metadata records is provided : 
 * **RPT** for report IDs (the merge token being then `RPT.DeveloperName`)
@@ -260,11 +264,12 @@ the **DBD** token base may be used as follows (see also **[sfpegActionBarCmp](/h
 }
 ```
 
+Specific Org records may then be added to the configuration (e.g. the Knowledge Articles or FSC Reciprocal Roles
+in the example below).
 
-Specific Org records may then be added to the configuration (e.g. the Knowledge Articles or FSC Reciprocal Roles in the example below).<br/>
 ![Custom Merge Tokens List](/media/sfpegMergeConfiguration.png)
 
-The configuration of it is quite simple.<br/>
+The configuration of it is quite simple.
 ![Custom Merge Token Configuration](/media/sfpegMergeConfigExample.png)
 
 In this example, roles may be referenced in creation actions with the `{{{ROLE.<SourceSystemId__c>}}}` keyword.
@@ -329,14 +334,11 @@ _Note_: in these examples, the **LEFT(...)** syntax is not provided by the gener
 **[sfpegActionBarCmp]**(/help/sfpegActionBarCmp.md)).
 
 
----
-
 ## Server Side Merge Logic for Label Tokens
 
-In the **[sfpegListCmp](/help/sfpegListCmp.md)**  and 
-**[sfpegKpiListCmp](/help/sfpegKpiListCmp.md)** components, some token merge logic
-(leveraging the **sfpegMerge_CTL** class) takes place on server side when fetching the
-configuration metadata.
+In the **[sfpegListCmp](/help/sfpegListCmp.md)**  and **[sfpegKpiListCmp](/help/sfpegKpiListCmp.md)** 
+components, some token merge logic (leveraging the **sfpegMerge_CTL** class) takes place on server side
+when fetching the configuration metadata.
 
 This applies to **LBL** and **FLBL** (for object field labels, as `FLBL.ObjectName.FieldName`) tokens
 in their display configurations to localise column labels to the end-user language.

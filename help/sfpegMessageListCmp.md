@@ -1,5 +1,13 @@
 # ![Logo](/media/Logo.png) &nbsp; **sfpegMessageListCmp** Component
 
+This component is part of the [`sfpegList-extensions`](/help/sfpegListPkgExtensions.md) package
+of the **[PEG_LIST](/README.md)** repository.
+
+⚠️ This page applies to the most recent (unlocked) packaging of the **PEG_LIST** repository.
+Some features described here may thus not be available on the old **[v0](https://github.com/pegros/PEG_LIST/tree/v0)** version.
+See v0 documentation of the same component [here](/blob/v0/help/sfpegMessageListCmp.md).
+
+
 ## Introduction
 
 The **sfpegMessageListCmp** component displays a conditional, contextualised and actionable list
@@ -13,9 +21,12 @@ It may be also used to highlight a gradation in a KPI and track the progress of 
 via dynamic icons and embedded progress bar.<br/>
 ![List of messages with dynamic icons](/media/sfpegMessageExample.png)
 
----
 
 ## Component Configuration
+
+ℹ️ Please refer to the [Component Configuration](/help/configuration.md) dedicated page to 
+get more general information about the way the included components may be configured. 
+
 
 ### Global Layout
 
@@ -34,7 +45,8 @@ conditions evaluated within the component), each message consisting in:
 
 In the App Builder, the configuration of the **sfpegMessageListCmp** component is pretty simple
 and mainly relies on selecting an applicable **sfpegMessage__mdt** custom metadata configuration
-record in the _Message Configuration_ property.<br/>
+record in the _Message Configuration_ property.
+
 ![App Builder Message List Configuration](/media/sfpegMessageConfig.png)
 
 Additional properties enables to fine tune its display
@@ -47,7 +59,8 @@ Additional properties enables to fine tune its display
 The **sfpegMessage__mdt** custom metadata provides most if not all configuration items for 
 the **sfpegMessageListCmp** components.
 
-Its main property is _Message Display_ which contains a JSON list of message definitions.<br/>
+Its main property is _Message Display_ which contains a JSON list of message definitions.
+
 ![Message List Configuration](/media/sfpegMessageConfigMeta.png)
 
 Each message definition is a JSON object with the following properties:
@@ -74,7 +87,6 @@ _Notes_:
 * This component leverages the **[sfpegIconDsp](/help/sfpegIconDsp.md)** component to display icons. Custom SVG icons or dynamic ones may thus be referenced within the message configuration in addition to all standard SLDS ones.
 * **Beware** to leverage fields that are safe in your `isHidden` conditions, as a possibly unsecure Javascript `eval()` statement when a string property is provided.
 
----
 
 ## Configuration Example
 
@@ -120,7 +132,8 @@ to navigate between process stages.
 
 ### Message with Dynamic Icons
 
-For the following example,<br/>
+For the following example,
+
 ![List of messages with dynamic icons](/media/sfpegMessageExample.png)
 
 the `Message Display` property of the custom metadata record should be configured as follows:
@@ -191,7 +204,8 @@ Beware that some values are text ones and others numbers.
 
 In the following test example, there is a single message presenting a summary of the current record, e.g.
 for a Community in which the Record Type of the object should be emphasized instead of the Salesforce 
-Object Name.<br/>
+Object Name.
+
 ![Simple Header Message](/media/sfpegMessageHeader.png)
 
 the `Message Display` property of the custom metadata record should be configured as follows:
@@ -212,8 +226,6 @@ slds-box slds-box_small slds-theme_default
 ```
 
 
----
-
 ## Technical Details
 
 It relies on the **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** utility component to contextualise
@@ -224,3 +236,6 @@ It also uses the standard
 [lightning-progress-indicator](https://developer.salesforce.com/docs/component-library/bundle/lightning-progress-indicator/documentation) and
 [lightning-progress-bar](https://developer.salesforce.com/docs/component-library/bundle/lightning-progress-bar/documentation)
 base components to respectively display a progress indicator (steps or path) and progress bar.
+
+ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to 
+get more global information about the way the components have been implemented.

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>sfpegEdit</label>
+    <protected>false</protected>
+    <values>
+        <field>ActionControls__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Actions__c</field>
+        <value xsi:type="xsd:string">[
+{&quot;name&quot;:&quot;edit&quot;,&quot;label&quot;:&quot;Edit&quot;,&quot;iconName&quot;:&quot;utility:edit&quot;,&quot;action&quot;:{&quot;type&quot;:&quot;edit&quot;}}
+]</value>
+    </values>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">Standard out of the box header Edit action (leveraging the current record Id)</value>
+    </values>
+    <values>
+        <field>DoEvaluation__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>NotificationChannels__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Permission__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Scope__c</field>
+        <value xsi:type="xsd:string">RECORDS</value>
+    </values>
+</CustomMetadata>

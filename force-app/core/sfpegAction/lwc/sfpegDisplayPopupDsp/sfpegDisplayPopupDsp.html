@@ -1,0 +1,81 @@
+<template>
+    <!-- Popup Header -->
+    <lightning-modal-header label={modalHeader}>
+    </lightning-modal-header>
+    
+    <lightning-modal-body>
+        <!-- Main Popup Body -->
+        <div class={modalClass}>
+            <template lwc:if={modalMessage}>
+                <p class="slds-p-horizontal_small slds-m-bottom_small">
+                    <lightning-formatted-text class="slds-text-body_regular" value={modalMessage}></lightning-formatted-text>
+                </p>
+            </template>
+            <template lwc:if={modalHelp}>
+                <p class="slds-p-horizontal_small slds-m-bottom_small">
+                    <lightning-formatted-text class="slds-text-body_small slds-text-color_weak" value={modalHelp}></lightning-formatted-text>
+                </p>
+            </template>
+
+            <lightning-layout   multiple-rows="true"    pull-to-boundary="small"
+                                vertical-align="start"  class="slds-p-horizontal_x-small slds-m-bottom_small">
+                <template for:each={recordData} for:item="iter">
+                    <lightning-layout-item  key={iter.label}
+                                            size="12"                   medium-device-size={iter.size} 
+                                            padding="horizontal-small"  class="slds-var-m-bottom_xxx-small" >
+                        <div class="slds-form-element slds-form-element_stacked formField">
+                            <label  class="slds-text-title slds-form-element__label slds-truncate tableLabel"
+                                    title={iter.label}>
+                                {iter.label}
+                            </label>
+                            <div class="slds-form-element__control">
+                                <div class="slds-form-element__static ">
+                                    <c-sfpeg-field-dsp  field-type={iter.type}
+                                                        field-label={iter.label}
+                                                        field-value={iter.value}>
+                                    </c-sfpeg-field-dsp>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                </template>
+            </lightning-layout>
+        </div>
+
+        <!-- Debug Information Display -->
+        <template lwc:if={isDebug}>
+            <div class="slds-text-align_left slds-m-top_small slds-p-around_small slds-border_top"  >
+                <dl class="slds-dl_horizontal slds-text-align_left">
+                    <dt class="slds-dl_horizontal__label slds-truncate">(aria-)label:</dt>
+                    <dd class="slds-dl_horizontal__detail">{label}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">(aria-)description:</dt>
+                    <dd class="slds-dl_horizontal__detail">{description}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+                    <dd class="slds-dl_horizontal__detail">
+                        <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegActionBarCmp.md"
+                                                    label="See Help on GitHub"
+                                                    target="_blank">
+                        </lightning-formatted-url>
+                    </dd>
+                </dl>
+            </div>
+        </template>
+    </lightning-modal-body>
+
+    <!-- Popup Footer -->
+    <lightning-modal-footer>
+        <lightning-button   lwc:ref="closeButton"
+                            label={closeLabel}     title={closeTitle}
+                            variant="neutral"   
+                            onclick={handleClose} >
+        </lightning-button>
+        <template lwc:if={nextLabel}>
+            <lightning-button	lwc:ref="confirmButton"
+                                label={nextLabel}       title={nextTitle}
+                                variant="brand"         class="slds-m-left_small"
+                                onclick={handleNext}>
+            </lightning-button>
+        </template>
+    </lightning-modal-footer>
+
+</template>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>App page displaying the list of custom Icons available in the sfpegList-core package</description>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>sfpegIconCatalogCmp</componentName>
+                <identifier>sfpegIconCatalogCmp</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>main</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <masterLabel>SF PEG Icon Catalog</masterLabel>
+    <template>
+        <name>flexipage:defaultAppHomeTemplate</name>
+    </template>
+    <type>AppPage</type>
+</FlexiPage>

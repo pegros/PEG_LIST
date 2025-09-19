@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>sfpegCardSave</fullName>
+        <categories>PEG Component LWC Form Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegCardSave</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>sfpegCardForceSave</fullName>
+        <categories>PEG Component LWC Form Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegCardForceSave</shortDescription>
+        <value>Save (bypass Duplicates)</value>
+    </labels>
+    <labels>
+        <fullName>sfpegCardCancel</fullName>
+        <categories>PEG Component LWC Form Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegCardCancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>sfpegCardModeToggle</fullName>
+        <categories>PEG Component LWC Button Title</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegCardModeToggle</shortDescription>
+        <value>Toggle Edit/Read mode</value>
+    </labels>
+    <labels>
+        <fullName>sfpegCardSaveError</fullName>
+        <categories>PEG Component LWC Error Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegCardSaveError</shortDescription>
+        <value>Record Update failed</value>
+    </labels>
+    <labels>
+        <fullName>sfpegCardCloseMessage</fullName>
+        <categories>PEG Component LWC Confirmation Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sfpegCardCloseMessage</shortDescription>
+        <value>A "{0}" card is still in edit mode. Do you want to save before closing it?</value>
+    </labels>
+</CustomLabels>

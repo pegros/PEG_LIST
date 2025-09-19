@@ -1,0 +1,64 @@
+<template>
+    <!-- Popup Header -->
+    <template lwc:if={modalHeader}>
+        <lightning-modal-header label={modalHeader}>
+        </lightning-modal-header>
+    </template>
+    
+    <lightning-modal-body>
+        <!-- Main Popup Body -->
+        <div class={modalClass}>
+            <template lwc:if={errorMsg}>
+                <c-sfpeg-warning-dsp    message={errorMsg}>
+                </c-sfpeg-warning-dsp>
+            </template>
+            <template lwc:else>
+                <template lwc:if={modalMessage}>
+                    <p class="slds-p-horizontal_small slds-m-bottom_small">
+                        <lightning-formatted-text class="slds-text-body_regular" value={modalMessage}></lightning-formatted-text>
+                    </p>
+                </template>
+                <template lwc:if={modalHelp}>
+                    <p class="slds-p-horizontal_small slds-m-bottom_small">
+                        <lightning-formatted-text class="slds-text-body_small slds-text-color_weak" value={modalHelp}></lightning-formatted-text>
+                    </p>
+                </template>
+                <lightning-flow flow-api-name={flowName}
+                                flow-input-variables={flowInput}
+                                flow-finish-behavior="NONE"
+                                onstatuschange={handleStatusChange} >
+                </lightning-flow>
+            </template>
+        </div>
+
+        <!-- Debug Information Display -->
+        <template lwc:if={isDebug}>
+            <div class="slds-text-align_left slds-p-around_small slds-m-top_small slds-border_top"  >
+                <dl class="slds-dl_horizontal slds-text-align_left">
+                    <dt class="slds-dl_horizontal__label slds-truncate">Flow:</dt>
+                    <dd class="slds-dl_horizontal__detail">{flowName}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Input:</dt>
+                    <dd class="slds-dl_horizontal__detail">{flowInputStr}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">(aria-)label:</dt>
+                    <dd class="slds-dl_horizontal__detail">{label}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">(aria-)description:</dt>
+                    <dd class="slds-dl_horizontal__detail">{description}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+                    <dd class="slds-dl_horizontal__detail">
+                        <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegActionBarCmp.md"
+                                                    label="See Help on GitHub"
+                                                    target="_blank">
+                        </lightning-formatted-url>
+                    </dd>
+                </dl>
+            </div>
+        </template>
+    </lightning-modal-body>
+
+    <!-- Popup Footer -->
+    <template lwc:if={showClose}>
+        <lightning-modal-footer>
+            <lightning-button label={closeLabel} title={closeTitle} onclick={handleClose}></lightning-button>
+        </lightning-modal-footer>
+    </template>
+</template>

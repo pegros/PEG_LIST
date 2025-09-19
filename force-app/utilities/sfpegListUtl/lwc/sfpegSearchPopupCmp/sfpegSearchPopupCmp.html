@@ -1,0 +1,17 @@
+<template>
+    <template lwc:if={isDebug}>
+        <div class="slds-box slds-box_small slds-theme_default">
+            <dl class="slds-dl_horizontal">
+                <dd class="slds-dl_horizontal__label slds-truncate">Channel:</dd>
+                <dd class="slds-dl_horizontal__detail">{notifChannel}</dd>
+                <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+                <dd class="slds-dl_horizontal__detail">
+                    <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegSearchPopupCmp.md"
+                                                label="See Help on GitHub"
+                                                target="_blank">
+                    </lightning-formatted-url>
+                </dd>
+            </dl>
+        </div>
+    </template>
+</template>

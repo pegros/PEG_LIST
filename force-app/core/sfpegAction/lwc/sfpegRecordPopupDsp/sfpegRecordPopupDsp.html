@@ -1,0 +1,78 @@
+<template>
+    <!-- Popup Header -->
+    <lightning-modal-header label={modalHeader}>
+    </lightning-modal-header>
+    
+    <lightning-modal-body>
+        <!-- Main Popup Body -->
+        <div class={modalClass}>
+            <template lwc:if={modalMessage}>
+                <p class="slds-p-horizontal_small slds-m-bottom_small">
+                    <lightning-formatted-text class="slds-text-body_regular" value={modalMessage}></lightning-formatted-text>
+                </p>
+            </template>
+            <template lwc:if={modalHelp}>
+                <p class="slds-p-horizontal_small slds-m-bottom_small">
+                    <lightning-formatted-text class="slds-text-body_small slds-text-color_weak" value={modalHelp}></lightning-formatted-text>
+                </p>
+            </template>
+
+            <div class="slds-p-horizontal_small">
+                <template lwc:if={showRtSelect}>
+                    <!--<lightning-select   lwc:ref="recordTypes"
+                                        name="recordTypes"      label="Please select a Record Type"
+                                        options={recordTypes}   required
+                                        onchange={handleRtSelect}  >
+                    </lightning-select>-->
+                    <lightning-radio-group  lwc:ref="recordTypes"
+                                            name="recordTypes"      label="Please select a Record Type"
+                                            options={recordTypes}   required
+                                            type="radio"            onchange={handleRtSelect}>
+                    </lightning-radio-group>
+                </template>
+                <template lwc:else>
+                    <lightning-record-form  lwc:ref="recordForm"
+                                            columns={columns}               density={density}
+                                            mode="edit"                     layout-type="Full"
+                                            object-api-name={objectApiName}
+                                            record-type-id={recordTypeId}   record-id={recordId}
+                                            onload={handleLoad}             onsubmit={handleSuccess}
+                                            onsuccess={handleSuccess}       onerror={handleError}
+                                            oncancel={handleCancel}>
+                    </lightning-record-form>
+                </template>
+            </div>
+        </div>
+
+        <!-- Debug Information Display -->
+        <template lwc:if={isDebug}>
+            <div class="slds-text-align_left slds-p-around_small slds-m-top_small slds-border_top"  >
+                <dl class="slds-dl_horizontal slds-text-align_left">
+                    <dt class="slds-dl_horizontal__label slds-truncate">(aria-)label:</dt>
+                    <dd class="slds-dl_horizontal__detail">{label}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">(aria-)description:</dt>
+                    <dd class="slds-dl_horizontal__detail">{description}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Form Data:</dt>
+                    <dd class="slds-dl_horizontal__detail">Object: {objectApiName} / ID: {recordId} / RT: {recordTypeId}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+                    <dd class="slds-dl_horizontal__detail">
+                        <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegActionBarCmp.md"
+                                                    label="See Help on GitHub"
+                                                    target="_blank">
+                        </lightning-formatted-url>
+                    </dd>
+                </dl>
+            </div>
+        </template>
+    </lightning-modal-body>
+
+    <!-- Popup Footer -->
+    <lightning-modal-footer>
+        <lightning-button   lwc:ref="closeButton"
+                            label={closeLabel}     title={closeTitle}
+                            variant="neutral"   
+                            onclick={handleClose} >
+        </lightning-button>
+    </lightning-modal-footer>
+
+</template>

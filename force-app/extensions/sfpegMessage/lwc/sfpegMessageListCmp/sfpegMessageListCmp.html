@@ -1,0 +1,148 @@
+<template>
+    <!-- Component Display -->
+    <div  class={wrappingClass} if:true={showComponent}>
+
+        <!-- Error Message display -->
+        <template if:true={errorMsg}>
+            <div class="slds-card__body slds-var-p-horizontal_small slds-card__body_inner cardContent slds-var-p-vertical_medium slds-media slds-media_center slds-theme_default">
+                <div    class="slds-media__figure">
+                    <lightning-icon icon-name="utility:warning"
+                                    size="small"
+                                    variant="error">
+                    </lightning-icon>
+                </div>
+                <div    class="slds-media__body slds-text-color_error"
+                        style="word-wrap: break-word !important;" >
+                    {errorMsg}
+                </div>
+            </div>
+        </template>
+
+        <!-- Display of List of Messages -->
+        <template if:true={isDisplayed}>
+            <div class="slds-grid slds-grid_align-spread slds-wrap  slds-grid_vertical-align-start slds-gutters_xx-small slds-grid_pull-padded-xx-small gridContainer">
+                <template for:each={displayedMessages} for:item="iterMessage">
+                    <template if:false={iterMessage._isHidden}>
+                        <div class={iterMessage._msgWrapClass} key={iterMessage._key} >
+                            <div class={iterMessage.msgClass}>
+                                <template if:true={iterMessage.iconName}>
+                                    <div class="slds-media__figure">
+                                        <c-sfpeg-icon-dsp   icon-name={iterMessage.iconName}
+                                                            icon-size={iterMessage.iconSize}
+                                                            icon-variant={iterMessage.iconVariant}
+                                                            icon-value={iterMessage.iconValue}
+                                                            icon-title={iterMessage.iconTitle}
+                                                            is-debug={isDebugFine} >
+                                        </c-sfpeg-icon-dsp>
+                                    </div>
+                                </template>
+                                <div class={iterMessage.textClass}>
+                                    <template if:true={iterMessage.header}>
+                                        <div class="slds-text-heading_small">
+                                            <lightning-formatted-text   value={iterMessage.header}>
+                                            </lightning-formatted-text>
+                                        </div>
+                                    </template>
+                                    <template if:true={iterMessage.path}>
+                                        <div class="slds-m-vertical_xx-small">
+                                            <lightning-progress-indicator   current-step={iterMessage.path.value}
+                                                                            has-error={iterMessage.path.hasError}
+                                                                            type={iterMessage.path.type}
+                                                                            variant={iterMessage.path.variant}
+                                                                            title={iterMessage.path.title}>
+                                                <template for:each={iterMessage.path.steps} for:item="iterStep">
+                                                    <lightning-progress-step    key={iterStep.value}
+                                                                                label={iterStep.label}
+                                                                                value={iterStep.value} >
+                                                    </lightning-progress-step>
+                                                </template>
+                                            </lightning-progress-indicator>
+                                        </div>
+                                    </template>
+                                    <template if:true={iterMessage.progress}>
+                                        <div class="slds-m-vertical_xx-small">
+                                            <lightning-progress-bar value={iterMessage.progress.value}
+                                                                    size={iterMessage.progress.size}
+                                                                    variant={iterMessage.progress.variant}
+                                                                    class={iterMessage.progress.class}
+                                                                    title={iterMessage.progress.title}>
+                                            </lightning-progress-bar>
+                                        </div>
+                                    </template>
+                                    <template if:true={iterMessage.message}>
+                                        <lightning-formatted-rich-text  value={iterMessage.message}>
+                                        </lightning-formatted-rich-text>
+                                    </template>
+                                </div>
+                                <template if:true={iterMessage.action}>
+                                    <div class="slds-media__figure slds-media__figure_reverse">
+                                        <template if:true={iterMessage.action.label}>
+                                            <lightning-button   label={iterMessage.action.label}
+                                                                variant={iterMessage.action.variant}
+                                                                name={iterMessage.action.name}
+                                                                title={iterMessage.action.title}
+                                                                icon-name={iterMessage.action.iconName}
+                                                                icon-position={iterMessage.action.iconPosition}
+                                                                value={iterMessage.action}
+                                                                onclick={handleAction}>
+                                            </lightning-button>
+                                        </template>
+                                        <template if:false={iterMessage.action.label}>
+                                            <lightning-button-icon   size={iterMessage.action.iconSize}
+                                                                    variant={iterMessage.action.variant}
+                                                                    name={iterMessage.action.name}
+                                                                    title={iterMessage.action.title}
+                                                                    icon-name={iterMessage.action.iconName}
+                                                                    value={iterMessage.action}
+                                                                    onclick={handleAction}>
+                                            </lightning-button-icon>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+            </div>
+
+            <template if:true={hasActions}>
+                <c-sfpeg-action-bar-cmp bar-class= "slds-hide"
+                                        config-name={configDetails.actions}
+                                        object-api-name={objectApiName}
+                                        record-id={recordId}
+                                        user-id={userId}
+                                        parent-context={parentContext}
+                                        is-hidden="true"
+                                        ondone={handleActionDone}
+                                        is-debug={isDebugFine}
+                                        is-debug-fine={isDebugFine}>
+                </c-sfpeg-action-bar-cmp>
+            </template>
+        </template>
+
+        <!-- Debug Information Display -->
+        <template if:true={isDebug}>
+            <div class="slds-box slds-theme_default slds-m-top_x-small"  >
+                <dl class="slds-dl_horizontal">
+                    <dt class="slds-dl_horizontal__label slds-truncate">Configuration:</dt>
+                    <dd class="slds-dl_horizontal__detail">
+                        <lightning-formatted-url    value={configUrl}
+                                                    label={configName}
+                                                    target="_blank">
+                        </lightning-formatted-url>
+                    </dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">#Messages:</dt>
+                    <dd class="slds-dl_horizontal__detail">{displayedMessages.length} --> at least 1 displayed ? {isDisplayed}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+                    <dd class="slds-dl_horizontal__detail">
+                        <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegMessageListCmp.md"
+                                                    label="See Help on GitHub"
+                                                    target="_blank">
+                        </lightning-formatted-url>
+                    </dd>
+                </dl>
+            </div>
+        </template>
+
+    </div>
+</template>

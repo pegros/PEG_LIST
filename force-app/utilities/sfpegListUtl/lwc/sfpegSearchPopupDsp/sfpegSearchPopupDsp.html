@@ -1,0 +1,76 @@
+<template>
+    <lightning-modal-header label={popupLabel}>
+    </lightning-modal-header>
+    <lightning-modal-body>
+        <div class="slds-p-horizontal_x-small">
+            <template lwc:if={searchForm}>
+                <div class="slds-border_bottom slds-p-bottom_small slds-m-bottom_small">
+                    <lightning-record-edit-form     object-api-name={searchForm.objectApiName}
+                                                    record-type-id={searchForm.recordTypeId}
+                                                    onsubmit={handleSubmit}>
+                        <lightning-messages class="formMessages">
+                        </lightning-messages>
+                        
+                        <lightning-layout   multiple-rows="true"  vertical-align="stretch"
+                                            pull-to-boundary="small" >
+                            <template for:each={searchForm.fields} for:item="iterForm">
+                                <lightning-layout-item  key={iterForm.name}
+                                                        size="12"   large-device-size={fieldsize}
+                                                        padding="horizontal-small"> 
+                                    <lightning-input-field  field-name={iterForm.name}
+                                                            required={iterForm.required}
+                                                            disabled={iterForm.disabled}
+                                                            variant="label-stacked"
+                                                            value={iterForm.value}>
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                            </template>
+                        </lightning-layout>
+                        
+                        <div class="slds-align_absolute-center slds-m-top_small">
+                            <lightning-button   variant="brand"     type="submit"
+                                                label={applyButton} onclick={handleClick}>
+                            </lightning-button>
+                        </div>
+                    </lightning-record-edit-form>
+                </div>
+            </template>
+            <template lwc:if={isDebug}>
+                <div slot="footer" class="slds-text-align_left slds-border_bottom slds-p-horizontal_small slds-p-bottom_small slds-m-bottom_small"  >
+                    <dl class="slds-dl_horizontal slds-text-align_left">
+                        <dt class="slds-dl_horizontal__label slds-truncate">(aria-)description:</dt>
+                        <dd class="slds-dl_horizontal__detail">{description}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">searchForm fields:</dt>
+                        <dd class="slds-dl_horizontal__detail">{searchFormFields}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">resultsConfig name:</dt>
+                        <dd class="slds-dl_horizontal__detail">{resultsConfig.name}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+                        <dd class="slds-dl_horizontal__detail">
+                            <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegSearchPopupCmp.md"
+                                                        label="See Help on GitHub"
+                                                        target="_blank">
+                            </lightning-formatted-url>
+                        </dd>
+                    </dl>
+                </div>
+            </template>
+            <template lwc:if={showResults}>
+                <c-sfpeg-list-cmp   object-api-name={resultsConfig.objectApiName}
+                                    record-id={resultsConfig.recordId}
+                                    display-height={resultsConfig.displayHeight}
+                                    show-search={resultsConfig.showSearch}
+                                    card-title={resultsTitle}
+                                    config-name={resultsConfig.name}
+                                    action-config-name={resultsConfig.actionConfigName}
+                                    footer-config-name={resultsConfig.footerConfigName}
+                                    parent-context={queryContext}
+                                    is-debug={isDebug}
+                                    is-debug-fine={isDebugFine}>
+                </c-sfpeg-list-cmp>
+            </template>
+        </div>
+    </lightning-modal-body>
+    <lightning-modal-footer>
+        <lightning-button label={closeLabel} onclick={handleClose}></lightning-button>
+    </lightning-modal-footer>
+</template>

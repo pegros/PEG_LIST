@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>RelatedFiles</label>
+    <protected>false</protected>
+    <values>
+        <field>BypassEscaping__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>BypassFLS__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>BypassSharing__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">List of files related to a record (with preview, open and edit actions)</value>
+    </values>
+    <values>
+        <field>DisplayConfig__c</field>
+        <value xsi:type="xsd:string">{
+&quot;keyField&quot;: &quot;Id&quot;,
+&quot;widthMode&quot;: &quot;auto&quot;,
+&quot;cardNbr&quot;: 1,
+&quot;fieldNbr&quot;: 2,
+&quot;stacked&quot;: false,
+&quot;title&quot;: {
+&quot;label&quot;: &quot;Title&quot;,
+&quot;fieldName&quot;: &quot;ContentDocument.Title&quot;,
+&quot;sortable&quot;: true,
+&quot;action&quot;: &quot;previewCty&quot;
+},
+&quot;columns&quot;: [
+{
+&quot;label&quot;: &quot;Title&quot;,
+&quot;fieldName&quot;: &quot;ContentDocument.Title&quot;,
+&quot;type&quot;: &quot;button&quot;,
+&quot;sortable&quot;: &quot;true&quot;,
+&quot;initialWidth&quot;: 250,
+&quot;typeAttributes&quot;: {
+&quot;label&quot;: {
+&quot;fieldName&quot;: &quot;ContentDocument.Title&quot;
+},
+&quot;name&quot;: &quot;previewCty&quot;,
+&quot;variant&quot;: &quot;base&quot;
+}
+},
+{
+&quot;label&quot;: &quot;Size&quot;,
+&quot;fieldName&quot;: &quot;ContentDocument.ContentSize&quot;,
+&quot;sortable&quot;: true
+},
+{
+&quot;label&quot;: &quot;Type&quot;,
+&quot;fieldName&quot;: &quot;ContentDocument.FileType&quot;,
+&quot;sortable&quot;: true
+},
+{
+&quot;label&quot;: &quot;Description&quot;,
+&quot;fieldName&quot;: &quot;ContentDocument.Description&quot;,
+&quot;sortable&quot;: true
+}
+],
+&quot;menu&quot;: [
+{
+&quot;label&quot;: &quot;Preview&quot;,
+&quot;iconName&quot;: &quot;utility:preview&quot;,
+&quot;name&quot;: &quot;previewCty&quot;
+},
+{
+&quot;label&quot;: &quot;Open&quot;,
+&quot;iconName&quot;: &quot;utility:open&quot;,
+&quot;name&quot;: &quot;open&quot;
+},
+{
+&quot;label&quot;: &quot;Edit&quot;,
+&quot;iconName&quot;: &quot;utility:edit&quot;,
+&quot;name&quot;: &quot;edit&quot;
+}
+]
+}</value>
+    </values>
+    <values>
+        <field>DisplayType__c</field>
+        <value xsi:type="xsd:string">TileList</value>
+    </values>
+    <values>
+        <field>DoPagination__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>FlattenResults__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Permission__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>QueryClass__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>QueryCount__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>QueryInput__c</field>
+        <value xsi:type="xsd:string">{&quot;ID&quot;:&quot;{{{GEN.recordId}}}&quot;}</value>
+    </values>
+    <values>
+        <field>QueryOrderBy__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>QueryOrder__c</field>
+        <value xsi:type="xsd:string">DESC</value>
+    </values>
+    <values>
+        <field>QuerySOQL__c</field>
+        <value xsi:type="xsd:string">SELECT ContentDocument.Title, ContentDocument.Description, ContentDocument.ContentSize, ContentDocument.FileType, ContentDocument.LatestPublishedVersionId, ContentDocument.LatestPublishedVersion.ContentUrl FROM ContentDocumentLink where LinkedEntityId=&apos;{{{ID}}}&apos;</value>
+    </values>
+    <values>
+        <field>QueryType__c</field>
+        <value xsi:type="xsd:string">SOQL</value>
+    </values>
+    <values>
+        <field>RowActions__c</field>
+        <value xsi:type="xsd:string">RelatedFileActions</value>
+    </values>
+    <values>
+        <field>Scope__c</field>
+        <value xsi:type="xsd:string">RECORDS</value>
+    </values>
+</CustomMetadata>

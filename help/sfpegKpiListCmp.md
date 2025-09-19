@@ -1,19 +1,28 @@
 # ![Logo](/media/Logo.png) &nbsp; **sfpegKpiListCmp** Component
 
+This component is part of the [`sfpegList-extensions`](/help/sfpegListPkgExtensions.md) package
+of the **[PEG_LIST](/README.md)** repository.
+
+⚠️ This page applies to the most recent (unlocked) packaging of the **PEG_LIST** repository.
+Some features described here may thus not be available on the old **[v0](https://github.com/pegros/PEG_LIST/tree/v0)** version.
+See v0 documentation of the same component [here](/blob/v0/help/sfpegKpiListCmp.md).
+
+
 ## Introduction
 
 The **sfpegKpiListCmp** component displays an actionable list of KPI field values in a structured
 and graphical way. It enables to display key information in a very dense format, grouping KPIs
-by business/functional domains.<br/>
+by business/functional domains.
 ![List of KPIs](/media/sfpegKpis.png)
 
-Such a grouping is optional and a single list of KPIs may be used.<br/>
+Such a grouping is optional and a single list of KPIs may be used.
 ![Simple List of KPIs](/media/sfpegKpisSingle.png)
 
 Actions may be defined per group and activated on a per KPI basis (the icon next to the main KPI
 becomes actionable), e.g. to redirect the user to a related list or a filtered report.
 
-For each KPI, custom or dynamic icons may be chose, leveraging the features offered by the **[sfpegIconDsp](/help/sfpegIconDsp.md)** display component.
+For each KPI, custom or dynamic icons may be chose, leveraging the features offered by the
+**[sfpegIconDsp](/help/sfpegIconDsp.md)** display component.
 
 For performance purposes, the **sfpegKpiListCmp** component exclusively relies on the standard
 [lightning-view-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-view-form/documentation)
@@ -22,9 +31,11 @@ This requires all data to be defined on accessible (possibly formula) fields of 
 to be displayed or fetched via standard
 [lightning-output-field](https://developer.salesforce.com/docs/component-library/bundle/lightning-output-field/documentation) base components.
 
----
 
 ## Component Configuration
+
+ℹ️ Please refer to the [Component Configuration](/help/configuration.md) dedicated page to 
+get more general information about the way the included components may be configured. 
 
 ### Global Layout
 
@@ -39,7 +50,7 @@ A **sfpegKpiListCmp** basically displays :
 
 Configuration is quite straigthforward in the App Builder, basically requiring to select an
 existing **sfpegKpiList__mdt** custom metadata configuration record and setting some additional
-display parameters (e.g. SLDS CSS classes for the wrapping div).<br/>
+display parameters (e.g. SLDS CSS classes for the wrapping div).
 ![KPI List App Builder Configuration](/media/sfpegKpiConfiguration.png)
 
 
@@ -48,7 +59,7 @@ display parameters (e.g. SLDS CSS classes for the wrapping div).<br/>
 **sfpegKpiList__mdt** custom metadata records provide the main configurations for the **sfpegKpiListCmp**
 components.
 
-All of the confguration lies in the _Display Config_ property, which should contain a JSON list
+All of the confguration lies in the `Display Config` property, which should contain a JSON list
 of KPI group definitions, each one consisting in:
 * a `header` with
     * `label` and `iconName` properties to display in the header title
@@ -72,14 +83,13 @@ of KPI group definitions, each one consisting in:
 _Note_: **LBL** and **FLBL** merge tokens may be used to translate labels used in the configurations, see
 dedicated section in **[sfpegMergeUtl](/help/sfpegMergeUtl.md)**.
 
----
 
 ## Additional Examples
 
 ### Full Configuration Example
 
 To implement a layout like the one below, leveraging dynamic icons, the following configuration
-actions should be applied.<br/>
+actions should be applied.
 ![KPI List Example](/media/sfpegKpiListExample.png)
 
 * create a **sfpegKpiList__mdt** custom metadata record with the following `Display Config` property
@@ -162,7 +172,6 @@ Each action mentioned on a KPI should be a valid action `name` of the referenced
 * drag and drop the **SF PEG KPI List** component and select the proper **sfpegKpiList__mdt** record in the configuration dropdown (here `newsKpis`).
 ![KPI List App Builder Configuration](/media/sfpegKpiConfiguration.png)
 
----
 
 ## Technical Details
 
@@ -172,3 +181,6 @@ to display a wide range of static or dynamic icons.
 
 **LBL** and **FLBL** merge tokens may be used to translate labels used in the configurations, see
 dedicated section in **[sfpegMergeUtl](/help/sfpegMergeUtl.md)**.
+
+ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to 
+get more global information about the way the components have been implemented.

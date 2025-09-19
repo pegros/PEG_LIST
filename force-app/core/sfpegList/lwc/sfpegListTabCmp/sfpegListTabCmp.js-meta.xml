@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+	<apiVersion>64.0</apiVersion>
+	<isExposed>true</isExposed>
+	<masterLabel>SF PEG List Tab (URL Addressable)</masterLabel>
+	<description>Addressable wrapper to open sfpegListCmp in its own tab via URL parameters.</description>
+	<targets>
+		<target>lightning__UrlAddressable</target>
+	</targets>
+</LightningComponentBundle>

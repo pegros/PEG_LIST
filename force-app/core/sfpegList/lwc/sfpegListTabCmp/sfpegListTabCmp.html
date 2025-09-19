@@ -1,0 +1,44 @@
+<template>
+	<template if:true={errorMsg}>
+		<c-sfpeg-warning-dsp message={errorMsg} variant="error">
+        </c-sfpeg-warning-dsp>
+	</template>
+	<template if:false={errorMsg}>
+		<c-sfpeg-list-cmp
+			card-title={title}
+			card-icon={icon}
+			config-name={list}
+			action-config-name={actions}
+			context-string={contextString}
+			show-count="right"
+			button-size={buttonSize}
+			display-height={displayHeight}
+			show-search={showSearch}
+			show-export={showExport}
+			is-debug={isDebug}
+			is-debug-fine={isDebug}
+			record-id={recordId}
+			object-api-name={objectApiName}>
+		</c-sfpeg-list-cmp>
+	</template>
+	<!-- DEBUG INFO DISPLAY -->
+	<template lwc:if={isDebug}>
+		<div class="slds-box slds-m-vertical_x-small slds-theme_default">
+            <dl class="slds-dl_horizontal slds-text-align_left">
+				<dt class="slds-dl_horizontal__label slds-truncate">List Query:</dt>
+				<dd class="slds-dl_horizontal__detail">{list}</dd>
+				<dt class="slds-dl_horizontal__label slds-truncate">Header Actions:</dt>
+				<dd class="slds-dl_horizontal__detail">{actions}</dd>
+				<dt class="slds-dl_horizontal__label slds-truncate">Context:</dt>
+				<dd class="slds-dl_horizontal__detail">{contextString}</dd>
+				<dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+				<dd class="slds-dl_horizontal__detail">
+					<lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListTabCmp.md"
+												label="See Help on GitHub"
+												target="_blank">
+					</lightning-formatted-url>
+				</dd>
+			</dl>
+		</div>
+	</template>
+</template>

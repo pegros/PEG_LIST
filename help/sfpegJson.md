@@ -1,5 +1,13 @@
 # ![Logo](/media/Logo.png) &nbsp; **sfpegJsonList_SVC** and **sfpegJsonAction_SVC** Extensions
 
+These components are part of the [`sfpegList-examples`](/help/sfpegListPkgExamples.md) package
+of the **[PEG_LIST](/README.md)** repository.
+
+⚠️ This page applies to the most recent (unlocked) packaging of the **PEG_LIST** repository.
+Some features described here may thus not be available on the old **[v0](https://github.com/pegros/PEG_LIST/tree/v0)** version.
+See v0 documentation of the same classes [here](/blob/v0/help/sfpegJson.md).
+
+
 ## Introduction
 
 The **sfpegJsonList_SVC** and **sfpegJsonAction_SVC** Apex Classes are extensions
@@ -7,11 +15,17 @@ to the **[sfpegListCmp](/help/sfpegListCmp.md)** and **[sfpegActionBarCmp](/help
 components capabilities.
 
 They enable to store a stringified list of JSON objects within a Salesforce record text/richtext field
-(to avoid a custom child object and related list) and display it as a related list via the **sfpegListCmp** component, while providing add/update/remove capabilities via the **sfpegActionBarCmp** component.
+(to avoid a custom child object and related list) and display it as a related list via the
+**sfpegListCmp** component, while providing add/update/remove capabilities via the **sfpegActionBarCmp** component.
 
 For instance,
 ```
-[{"index":0,"DateFiliation__c":"2024-07-10","LienFiliation__c":"Du conjoint","DateNaissance__c":"2024-07-10","Prenom__c":"aaa","Name":"AAA"},{"index":1,"DateFiliation__c":"2021-06-01","LienFiliation__c":"Du conjoint","DateNaissance__c":"2021-06-01","Prenom__c":"bbb","Name":"BBB"}]
+[
+    {"index":0,"DateFiliation__c":"2024-07-10","LienFiliation__c":"Du conjoint",
+    "DateNaissance__c":"2024-07-10","Prenom__c":"aaa","Name":"AAA"},
+    {"index":1,"DateFiliation__c":"2021-06-01","LienFiliation__c":"Du conjoint",
+    "DateNaissance__c":"2021-06-01","Prenom__c":"bbb","Name":"BBB"}
+]
 ```
 
 ℹ️ The only constraints are that:
@@ -26,15 +40,22 @@ and `next` actions may be required to refresh client side information.
 
 ## Configuration
 
+ℹ️ Please refer to the [Component Configuration](/help/configuration.md) dedicated page to 
+get more general information about the way the included components may be configured. 
+
+These Apex classes may be leveraged within standard **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** 
+and **[sfpegListCmp](/help/sfpegListCmp.md)** configuration.
+
 Hereafter are provided 3 different configurations for the 2 Apex classes
 * one for the **sfpegListCmp** displaying the JSON data in a table
 * one for a **sfpegActionBarCmp** header action menu for the list to add new elements
 * one for row level **sfpegActionBarCmp** actions to update or remove elements in the list
 
-### List Configuration
 
-![JSON List](/media/sfpegJsonList.png)<br/>
-_Display text field as list of JSON objects_
+### List Query Configuration
+
+![JSON List](/media/sfpegJsonList.png)
+_<center>Display text field as list of JSON objects</center>_
 
 Configuration relies on standard **[sfpegListCmp](/help/sfpegListCmp.md)** configuration principles.
 The main constraints are to :
@@ -76,8 +97,8 @@ Configuration should be set e.g. as follows:
 
 ### Header Add Action Configuration 
 
-![JSON Add Popup](/media/sfpegJsonActionAdd.png)<br/>
-_Header Add Action of a new JSON Object in the list_
+![JSON Add Popup](/media/sfpegJsonActionAdd.png)
+_<center>Header Add Action of a new JSON Object in the list</center>_
 
 Configuration relies on standard **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** configuration principles.
 The main constraints are to:
@@ -131,7 +152,7 @@ Configuration should be set e.g. as follows:
 ### Row Level Update and Remove Actions Configuration
 
 ![JSON Update/Remove Menu](/media/sfpegJsonActionMenu.png)<br/>
-_Row Level Actions to edit or remove JSON Objects in the list_
+_<center>Row Level Actions to edit or remove JSON Objects in the list</center>_
 
 Configuration relies on standard **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** configuration principles. 
 
@@ -217,3 +238,6 @@ The **sfpegJsonAction_SVC** class implements only the `execute()` method of the 
 
 They come with their related  **sfpegJsonList_TST** and **sfpegJsonAction_TST** test classes
 relying on the **sfpegTestObject__c** custom test object with its `TextArea__c` field.
+
+ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to 
+get more global information about the way the components have been implemented.

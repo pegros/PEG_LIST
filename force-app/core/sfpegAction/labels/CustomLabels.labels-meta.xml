@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>sfpegActionAccessErrorRecord</fullName>
+        <categories>PEG Component LWC Action Error Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message raised when user has no access to an action config record</shortDescription>
+        <value>User has not the {0} permission required to access the {1} action configuration record!</value>
+    </labels>
+    <labels>
+        <fullName>sfpegActionAccessErrorObject</fullName>
+        <categories>PEG Component LWC Action Error Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message raised when user has not access to the action configs</shortDescription>
+        <value>User has no access the action configuration object!</value>
+    </labels>
+
+    <labels>
+        <fullName>sfpegActionExecutionError</fullName>
+        <categories>PEG Component LWC Action Execution Error Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default error message displayed upon action execution failure</shortDescription>
+        <value>Processing failure!</value>
+    </labels>
+    <labels>
+        <fullName>sfpegActionNoRecordError</fullName>
+        <categories>PEG Component LWC Action Execution Error Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message displayed for a mass action without any selection</shortDescription>
+        <value>No record to process!</value>
+    </labels>
+    <labels>
+        <fullName>sfpegActionTooManyRecordsError</fullName>
+        <categories>PEG Component LWC Action Execution Error Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message displayed for a too large selection in a mass action</shortDescription>
+        <value>Too many ({0}) records to process: please select less than {1} items!</value>
+    </labels>
+
+    <labels>
+        <fullName>sfpegActionDefaultConfirmHeader</fullName>
+        <categories>PEG Component LWC Popup Header</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default header displayed in the popup when confirming an action</shortDescription>
+        <value>Validating Operation</value>
+    </labels>
+    <labels>
+        <fullName>sfpegActionDefaultConfirmMessage</fullName>
+        <categories>PEG Component LWC Popup Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default message displayed in the popup when confirming an action</shortDescription>
+        <value>Please validate or cancel the requested operation</value>
+    </labels>
+    <labels>
+        <fullName>sfpegActionDefaultExecHeader</fullName>
+        <categories>PEG Component LWC Popup Header</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default header displayed in the popup when executing an action</shortDescription>
+        <value>Executing Operation</value>
+    </labels>
+    <labels>
+        <fullName>sfpegActionDefaultExecMessage</fullName>
+        <categories>PEG Component LWC Popup Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default message displayed in the popup when executing an action</shortDescription>
+        <value>Please wait while processing the requested operation</value>
+    </labels>
+    <labels>
+        <fullName>sfpegActionDefaultFormHeader</fullName>
+        <categories>PEG Component LWC Popup Header</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default header displayed in the popup when displaying a form</shortDescription>
+        <value>Data Entry</value>
+    </labels>
+    <labels>
+        <fullName>sfpegActionDefaultFormMessage</fullName>
+        <categories>PEG Component LWC Popup Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default header displayed in the popup when displaying a form</shortDescription>
+        <value>Please fill in the requested fields before submitting the changes.</value>
+    </labels>
+    
+    <labels>
+        <fullName>sfpegActionDefaultMassConfirmHeader</fullName>
+        <categories>PEG Component LWC Popup Header</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default header displayed in a mass action confirm popup</shortDescription>
+        <value>Validating Operation for {0} items</value>
+    </labels>
+    <labels>
+        <fullName>sfpegActionDefaultMassConfirmMessage</fullName>
+        <categories>PEG Component LWC Popup Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default message displayed in a mass action confirm popup</shortDescription>
+        <value>Please validate or cancel the requested operation for the {0} items.</value>
+    </labels>
+    <labels>
+        <fullName>sfpegActionDefaultMassFormHeader</fullName>
+        <categories>PEG Component LWC Popup Header</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default header displayed in mass actionform popup</shortDescription>
+        <value>Data Entry for {0} items</value>
+    </labels>
+    <labels>
+        <fullName>sfpegActionDefaultMassFormMessage</fullName>
+        <categories>PEG Component LWC Popup Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default header displayed in mass action form popup</shortDescription>
+        <value>Please fill in the requested fields before applying the changes on the {0} items.</value>
+    </labels>
+    <labels>
+        <fullName>sfpegActionDefaultMassExecHeader</fullName>
+        <categories>PEG Component LWC Popup Header</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default header displayed in the popup when executing a mass action</shortDescription>
+        <value>Executing Operation for {0} items</value>
+    </labels>
+    <labels>
+        <fullName>sfpegActionDefaultMassExecMessage</fullName>
+        <categories>PEG Component LWC Popup Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default message displayed in the popup when executing a mass action</shortDescription>
+        <value>Please wait while processing the requested operation for {0} items</value>
+    </labels>
+
+    <labels>
+        <fullName>sfpegActionDefaultFileUploadHeader</fullName>
+        <categories>PEG Component LWC Popup Header</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default header displayed in the file upload popups</shortDescription>
+        <value>Uploading File(s)</value>
+    </labels>
+    <labels>
+        <fullName>sfpegActionDefaultFileUploadFormMessage</fullName>
+        <categories>PEG Component LWC Popup Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default message displayed in file upload form popup</shortDescription>
+        <value>Please fill in the required metadata for the file(s) to upload.</value>
+    </labels>
+    <labels>
+        <fullName>sfpegActionDefaultFileUploadMessage</fullName>
+        <categories>PEG Component LWC Popup Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default message displayed in file upload popup</shortDescription>
+        <value>Please upload your media files.</value>
+    </labels>
+
+    <labels>
+        <fullName>sfpegActionDefaultDisplayHeader</fullName>
+        <categories>PEG Component LWC Popup Header</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default header displayed in record display popup</shortDescription>
+        <value>Record Details</value>
+    </labels>
+    <labels>
+        <fullName>sfpegActionDefaultDisplayMessage</fullName>
+        <categories>PEG Component LWC Popup Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default message displayed in record display form popup</shortDescription>
+        <value>Please find some details about the selected record.</value>
+    </labels>
+
+    <labels>
+        <fullName>sfpegActionApexRightsError</fullName>
+        <categories>PEG Component Apex Action Error Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message raised when usermay not execute an Apex action</shortDescription>
+        <value>You may not execute this action.</value>
+    </labels>
+    <labels>
+        <fullName>sfpegActionDmlRightsError</fullName>
+        <categories>PEG Component Apex Action Error Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message raised when user may not execute a DML action</shortDescription>
+        <value>Yo may not execute this operation.</value>
+    </labels>
+
+    <labels>
+        <fullName>sfpegPopupCloseLabel</fullName>
+        <categories>PEG Component LWC Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label of the modal popup close buttons</shortDescription>
+        <value>Close</value>
+    </labels>
+    <labels>
+        <fullName>sfpegPopupCloseTitle</fullName>
+        <categories>PEG Component LWC Button Title</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Title of the modal popup close buttons</shortDescription>
+        <value>Close current modal popup</value>
+    </labels>
+
+    <labels>
+        <fullName>sfpegPopupSaveLabel</fullName>
+        <categories>PEG Component LWC Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label of the modal popup save buttons</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>sfpegPopupSaveTitle</fullName>
+        <categories>PEG Component LWC Button Title</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Title of the modal popup save buttons</shortDescription>
+        <value>Apply the current changes and close the modal popup</value>
+    </labels>
+
+    <labels>
+        <fullName>sfpegPopupConfirmLabel</fullName>
+        <categories>PEG Component LWC Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label of the modal popup confirm buttons</shortDescription>
+        <value>Confirm</value>
+    </labels>
+    <labels>
+        <fullName>sfpegPopupConfirmTitle</fullName>
+        <categories>PEG Component LWC Button Title</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Title of the modal popup confirm buttons</shortDescription>
+        <value>Confirm the requested operation and proceed with its execution</value>
+    </labels>
+
+    <labels>
+        <fullName>sfpegPopupCancelLabel</fullName>
+        <categories>PEG Component LWC Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label of the modal popup cancel buttons</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>sfpegPopupCancelTitle</fullName>
+        <categories>PEG Component LWC Button Title</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Title of the modal popup cancel buttons</shortDescription>
+        <value>Cancel the current operation and close the modal popup</value>
+    </labels>
+
+    <labels>
+        <fullName>sfpegPopupSpinnerMessage</fullName>
+        <categories>PEG Component LWC Alt Text</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Alt Text for the modal popup spinners</shortDescription>
+        <value>Processing...</value>
+    </labels>
+
+    <labels>
+        <fullName>sfpegPopupErrorMessage</fullName>
+        <categories>PEG Component LWC Error Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message header for the modal popups</shortDescription>
+        <value>Operation failure detected.</value>
+    </labels>
+    
+
+    <labels>
+        <fullName>sfpegPopupDefaultFormLabel</fullName>
+        <categories>PEG Component LWC Default Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default label for the form modal popup</shortDescription>
+        <value>Creating or editing record</value>
+    </labels>
+    
+    <labels>
+        <fullName>sfpegActionMassPopupMessage</fullName>
+        <categories>PEG Component LWC Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default message to tell about the number of records to process.</shortDescription>
+        <value>{0} items to process. {1}</value>
+    </labels>
+
+    
+</CustomLabels>

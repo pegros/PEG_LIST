@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>RelatedFileActions</label>
+    <protected>false</protected>
+    <values>
+        <field>ActionControls__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Actions__c</field>
+        <value xsi:type="xsd:string">[
+{
+&quot;name&quot;:&quot;preview&quot;,
+&quot;label&quot;:&quot;preview&quot;,
+&quot;iconName&quot;:&quot;utility:preview&quot;,
+&quot;action&quot;: {
+&quot;type&quot;:&quot;navigation&quot;,
+&quot;params&quot;: {
+&quot;type&quot;: &quot;standard__namedPage&quot;,
+&quot;attributes&quot;: {
+&quot;pageName&quot;: &quot;filePreview&quot;
+},
+&quot;state&quot; : {
+&quot;recordIds&quot;: &quot;{{{ROW.ContentDocumentId}}}&quot;,
+&quot;selectedRecordId&quot;: &quot;{{{ROW.ContentDocumentId}}}&quot;
+}
+}
+}
+},
+{
+&quot;name&quot;:&quot;previewCty&quot;,
+&quot;label&quot;:&quot;preview CTY&quot;,
+&quot;iconName&quot;:&quot;utility:preview&quot;,
+&quot;action&quot;: {
+&quot;type&quot;:&quot;utility&quot;,
+&quot;params&quot;: {
+&quot;type&quot;: &quot;fireEvent&quot;,
+&quot;params&quot;: {
+&quot;type&quot;:&quot;e.lightning:openFiles&quot;,
+&quot;params&quot;:{
+&quot;recordIds&quot;: [&quot;{{{ROW.ContentDocumentId}}}&quot;]
+}
+}
+}
+}
+},
+{
+&quot;name&quot;:&quot;open&quot;,
+&quot;label&quot;:&quot;open&quot;,
+&quot;iconName&quot;:&quot;utility:open&quot;,
+&quot;action&quot;: {
+&quot;type&quot;:&quot;navigation&quot;,
+&quot;params&quot;: {
+&quot;type&quot;: &quot;standard__recordPage&quot;,
+&quot;attributes&quot;: {
+&quot;recordId&quot;: &quot;{{{ROW.ContentDocumentId}}}&quot;,
+&quot;objectApiName&quot;: &quot;ContentDocument&quot;,
+&quot;actionName&quot;: &quot;view&quot;
+}
+}
+}
+},
+{
+&quot;name&quot;:&quot;edit&quot;,
+&quot;label&quot;:&quot;edit&quot;,
+&quot;iconName&quot;:&quot;utility:edit&quot;,
+&quot;action&quot;: {
+&quot;type&quot;:&quot;navigation&quot;,
+&quot;params&quot;: {
+&quot;type&quot;: &quot;standard__recordPage&quot;,
+&quot;attributes&quot;: {
+&quot;recordId&quot;: &quot;{{{ROW.ContentDocument.LatestPublishedVersionId}}}&quot;,
+&quot;objectApiName&quot;: &quot;ContentVersion&quot;,
+&quot;actionName&quot;: &quot;edit&quot;
+}
+}
+}
+}
+]</value>
+    </values>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">Set of row level actions for files (preview, open, edit)</value>
+    </values>
+    <values>
+        <field>DoEvaluation__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>NotificationChannels__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Permission__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Scope__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

@@ -1,5 +1,13 @@
 # ![Logo](/media/Logo.png) &nbsp; **sfpegProfileCmp** Component
 
+This component is part of the [`sfpegList-extensions`](/help/sfpegListPkgExtensions.md) package
+of the **[PEG_LIST](/README.md)** repository.
+
+⚠️ This page applies to the most recent (unlocked) packaging of the **PEG_LIST** repository.
+Some features described here may thus not be available on the old **[v0](https://github.com/pegros/PEG_LIST/tree/v0)** version.
+See v0 documentation of the same component [here](/blob/v0/help/sfpegProfileCmp.md).
+
+
 ## Introduction
 
 The **sfpegProfileCmp** component displays an actionable graphical summary of a record.
@@ -31,9 +39,11 @@ to fetch all data necessary to display the profile. This thus requires all data 
 fields of the current record.
 
 
----
-
 ## Component Configuration
+
+ℹ️ Please refer to the [Component Configuration](/help/configuration.md) dedicated page to 
+get more general information about the way the included components may be configured. 
+
 
 ### Global Layout
 
@@ -50,6 +60,7 @@ as well as a possible max. number of actions displayed to control its width
 
 Banner and avatar images may either come from standard static resources provided by the package (**sfpegAvatars** or
 **sfpegBanners**) or from standard asset files or even any related file.
+
 
 ### App Builder Configuration
 
@@ -111,7 +122,6 @@ The following properties are available to configure the different profile widget
             * `fieldName`: API name of the field
             * `iconName`: name of the icon to display (as a name supported by the **[sfpegIconDsp](/help/sfpegIconDsp.md)** component for non-dynamic icons)
 
----
 
 ## Configuration Examples
 
@@ -195,7 +205,6 @@ Hereafter is a configuration example for the Profile details in `media` display 
 }
 ```
 
----
 
 ## Technical Details
 
@@ -210,3 +219,6 @@ It also relies on
 * a **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** component to display the action bar 
 * **[sfpegIconDsp](/help/sfpegIconDsp.md)** components to display field icons instead of names if needed.
 * the **sfpegBanners** and **sfpegAvatars** static resources respectively for banner background and avatar image display, these resources being easily extended to include any addditional custom `.jpg` or `.png` image files.
+
+ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to 
+get more global information about the way the components have been implemented.

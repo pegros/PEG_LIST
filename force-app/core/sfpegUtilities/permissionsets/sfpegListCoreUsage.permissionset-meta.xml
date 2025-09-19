@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>sfpegActionSelector_CTL</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>sfpegAction_CTL</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>sfpegAction_SVC</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    
+    <classAccesses>
+        <apexClass>sfpegListQuery_SVC</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>sfpegListSelector_CTL</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>sfpegList_CTL</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+
+    <classAccesses>
+        <apexClass>sfpegMergeLabels_CTL</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>sfpegMerge_CTL</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+   
+    <classAccesses>
+        <apexClass>sfpegIconCatalog_CTL</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>sfpegAction__mdt</name>
+    </customMetadataTypeAccesses>
+    
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>sfpegConfiguration__mdt</name>
+    </customMetadataTypeAccesses>
+    
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>sfpegList__mdt</name>
+    </customMetadataTypeAccesses>
+    
+    <description>Permission Set providing access rights to all Apex classes required to use the sfpegList-core components</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>sfpegListCoreUsage</label>
+    <pageAccesses>
+        <apexPage>sfpegMergeLabels_VFP</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+</PermissionSet>

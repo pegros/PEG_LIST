@@ -1,5 +1,13 @@
 # ![Logo](/media/Logo.png) &nbsp; **sfpegRecordDisplayCmp** Component
 
+This component is part of the [`sfpegList-extensions`](/help/sfpegListPkgExtensions.md) package
+of the **[PEG_LIST](/README.md)** repository.
+
+⚠️ This page applies to the most recent (unlocked) packaging of the **PEG_LIST** repository.
+Some features described here may thus not be available on the old **[v0](https://github.com/pegros/PEG_LIST/tree/v0)** version.
+See v0 documentation of the same component [here](/blob/v0/help/sfpegRecordDisplayCmp.md).
+
+
 ## Introduction
 
 The **sfpegRecordDisplayCmp** component enables to display record fields in a structured way, with
@@ -14,9 +22,12 @@ conditional display of content.
 One key feature is also its ability to use SOQL instead of Lightning Data Service (LDS) to fetch the displayed
 record information (for objects not supported by LDS yet).
 
----
 
 ## Component Configuration
+
+ℹ️ Please refer to the [Component Configuration](/help/configuration.md) dedicated page to 
+get more general information about the way the included components may be configured. 
+
 
 ### Global Layout
 
@@ -30,11 +41,14 @@ as well as a possible max. number of actions displayed to control its width
     * a list of fields
     * a possible record list (via the **[sfpegListCmp](/help/sfpegCardCmp.md)** component)
 
-![Record Display Example](/media/sfpegRecordDisplay.png)<br/>
-_Tab with only fields_
+Hereafter are shown display examples with:
+* only fields
 
-![Record Display Example with sub-list](/media/sfpegRecordDisplayList.png)<br/>
-_Tab with fields and list_
+![Record Display Example](/media/sfpegRecordDisplay.png)
+
+* fields and a list
+
+![Record Display Example with sub-list](/media/sfpegRecordDisplayList.png)
 
 
 ### App Builder Configuration
@@ -84,8 +98,6 @@ In such cases, explicit **ESCAPE(((...)))** directives are required required. Th
 when using this component with to display text or richtext areas.
 
 
----
-
 ## Configuration Examples
 
 For the displayed component example, the configuration is the following.
@@ -110,7 +122,6 @@ For the displayed component example, the configuration is the following.
 }
 ```
 
----
 
 ## Technical Details
 
@@ -118,3 +129,6 @@ It relies on:
 * the **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** component to fetch record data, either
 via Lightning Data Service (recommended) or via direct SOQL (for LDS unsupported objects).
 * the **[lightning-tabset](https://developer.salesforce.com/docs/component-library/bundle/lightning-tabset/documentation)** standard component to display the tabs (see variants supported)
+
+ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to 
+get more global information about the way the components have been implemented.

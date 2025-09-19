@@ -1,5 +1,13 @@
 # ![Logo](/media/Logo.png) &nbsp; **sfpegCardCmp** Component
 
+This component is part of the [`sfpegList-extensions`](/help/sfpegListPkgExtensions.md) package
+of the **[PEG_LIST](/README.md)** repository.
+
+⚠️ This page applies to the most recent (unlocked) packaging of the **PEG_LIST** repository.
+Some features described here may thus not be available on the old **[v0](https://github.com/pegros/PEG_LIST/tree/v0)** version.
+See v0 documentation of the same component [here](/blob/v0/help/sfpegCardCmp.md).
+
+
 ## Introduction
 
 The **sfpegCardCmp** component displays a structured card, with a custom
@@ -14,9 +22,11 @@ It basically provides:
 The component enables to switch between `view` and `edit` modes via an `edit`
 button. `Read-Only` mode is therefore possible by deactivating this button.
 
----
 
 ## Component Configuration
+
+ℹ️ Please refer to the [Component Configuration](/help/configuration.md) dedicated page to 
+get more general information about the way the included components may be configured. 
 
 ### Global Layout
 
@@ -29,12 +39,10 @@ with a title, icon and set of header actions (via the **[sfpegActionBarCmp](/hel
 The following snapshot presents two successive instances of the component, the first one
 applying to the current record and the second to a parent record (identified via a lookup
 field on the current record).
-
 ![Cards on different records](/media/sfpegCard.png) 
 
 Cards may also include icons next to the fields, the example below being in read-only mode on 
 an Experience/Community Site.
-
 ![Card with icons](/media/sfpegCardIcons.png) 
 
 
@@ -75,7 +83,7 @@ on the current record.
 The second **Configuration** section describes the internal field layout of the component,
 as a JSON object with the following properties :
 * `size` defines the default size (in portion of 12) for each field
-* `iconSize` defines the size of the icons displayed (if any), as "small", "medium"...)
+* `iconSize` defines the size of the icons displayed (if any), as "small", "medium"...
 * `density` defines how the labels are displayed (above vs next to the field value, see **lightning-record-view-form** or **lightning-record-edit-form**)
 * `variant` may be alternatively defined for similar  (see **lightning-input-field** or **lightning-output-field**)
 * `description` and `help` text may be specified to be displayed (in this order) above the input fields.
@@ -95,7 +103,7 @@ definition objects
   * Each section definition has a mandatory `label` property (possibly using a Custom Label
   leveraging the `{{{LBL.xxx}}}` merge syntax)
   * It then has a mandatory `fields` property to define the fields displayed in the section
-  (similarly to the main _fields_ property)
+  (similarly to the main `fields` property)
   * It may include `isCollapsible` an `isCollapsed` boolean properties to set a section
   as collapsible and set its initial state
   * It may also include a `size` one to override the main default value for the section
@@ -105,7 +113,6 @@ definition objects
 user (e.g. a picklist field controlling other picklist fields editable in the card)
   * It has the same structure as the `fields`property, only the `name` of each field definition
   being used
-
 
 ```
 {
@@ -137,14 +144,11 @@ user (e.g. a picklist field controlling other picklist fields editable in the ca
 }
 ```
 
----
-
 ## Configuration Examples
 
 ### Card with Icons
 
 For the example provided below on the Account object
-
 ![Card with icons](/media/sfpegCardIcons.png) 
 
 the configuration in the **sfpegCard** custom metadata should be 
@@ -168,8 +172,6 @@ All standard **[SLDS](https://www.lightningdesignsystem.com/icons/)** icon names
 (e.g. `utility:info` or `standard:account`). Dynamic icons are not supported.
 
 
----
-
 ## Technical Details
 
 This component relies on:
@@ -188,3 +190,6 @@ These limitations come from the standard LWC
 and
 [input-field](https://developer.salesforce.com/docs/component-library/bundle/lightning-input-field/documentation)
 base components, which only display `mailto:` (for email) and `tel:` (for phone) hyperlinks.
+
+ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to 
+get more global information about the way the components have been implemented.

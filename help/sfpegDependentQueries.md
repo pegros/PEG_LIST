@@ -1,4 +1,12 @@
-# ![Logo](/media/Logo.png) &nbsp; **sfpegDependentQueries_SVC** Extension
+# ![Logo](/media/Logo.png) &nbsp; **sfpegDependentQueries_SVC** Query Extension
+
+This extension is part of the [`sfpegList-core`](/help/sfpegListPkgCore.md) package
+of the **[PEG_LIST](/README.md)** repository.
+
+⚠️ This page applies to the most recent (unlocked) packaging of the **PEG_LIST** repository.
+Some features described here may thus not be available on the old **[v0](https://github.com/pegros/PEG_LIST/tree/v0)** version.
+See v0 documentation of the same component [here](/blob/v0/help/sfpegDependentQueries.md).
+
 
 ## Introduction
 
@@ -6,16 +14,17 @@ The **sfpegDependentQueries_SVC** Apex Class is an extension to the **[sfpegList
 component capabilities. It basically enables to execute multiple different SOQL subqueries
 to extract lists of IDs or String values to be used in `IN` conditions of a main SOQL query.
 
-This enables to workaround various limitations of standard SOQL subqueries, e.g. when both
-query and subquery operate on the same SObject.
+This enables to workaround various limitations of standard SOQL subqueries, e.g.
+when both query and subquery operate on the same SObject.
 
 
 ## Configuration
 
-Configuration relies on standard **[sfpegListCmp](/help/sfpegListCmp.md)** configuration principles.
+ℹ️ Please refer to the [Component Configuration](/help/configuration.md) dedicated page to 
+get more general information about the way the included components may be configured. 
 
-In order to leverage this new capability, the `sfpegList` metadata record should be configured as
-follows:
+This Apex class may be leveraged within standard **[sfpegListCmp](/help/sfpegListCmp.md)** configuration.
+In order to use it, the `sfpegList` metadata record should be configured as follows:
 * `Query Type`should be set to `Apex`
 * `Query Class` should be set to `sfpegDependentQueries_SVC` 
 * `Query Template` should contain a JSON object with the following properties
@@ -28,13 +37,14 @@ follows:
 
 ## Configuration Example
 
-The following example shows a **[sfpegListCmp](/help/sfpegListCmp.md)** in a **TrnCourse** record page
-providing the other **TrnCourse** contained in any of the **Catalogue__c** the current  **TrnCourse** 
-is member of (via a **CatalogueCourse__c** relation object).
-FYI, **TrnCourse** is a standard **Public Sector Solution** Industry object.
+The following example applies to a **[sfpegListCmp](/help/sfpegListCmp.md)**
+in a **TrnCourse** (standard **Public Sector Solution** Industry object) record page
+and enables to implement a query not supported in standard SOQL.
+* the **TrnCourse** records have a N-N relationship with a custom **Catalogue__c**
+object via a custom  **CatalogueCourse__c** relation object.
+* the query enables to list all other **TrnCourse** contained in any of the **Catalogue__c** the current **TrnCourse** is member of (via the **CatalogueCourse__c** relation).
 
-![Dependent SOQL Queries](/media/sfpegDependentQueries.png)
-
+This configuration enables 
 For this result, the **sfpegList** metadata record should be configured as follows:
 * `Scope`set to `CourseOffering`
 * `Query Type`set to `Apex`
@@ -71,10 +81,12 @@ For this result, the **sfpegList** metadata record should be configured as follo
 
 ## Technical Details
 
-This class implements only the `getData()` method of the **sfpegListQuery_SVC** interface class. 
-This means that pagination is (currently) not supported.
+This class implements only the `getData()` method of the **sfpegListQuery_SVC** interface class. This means that pagination is (currently) not supported.
 
-ℹ️ Beware that, when a subquery returns no value, the resulting statement leveraging its result is `IN ('')`.
+⚠️ **Beware** that, when a subquery returns no value, the resulting statement leveraging its result is `IN ('')`.
 
 This class comes with the **sfpegDependentQueries_TST** test class requiring 3 test custom metadata
 (**sfpegTestDependentQueriesOK**, **sfpegTestDependentQueriesKOparse**, **sfpegTestDependentQueriesKOquery**).
+
+ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to 
+get more global information about the way the components have been implemented.

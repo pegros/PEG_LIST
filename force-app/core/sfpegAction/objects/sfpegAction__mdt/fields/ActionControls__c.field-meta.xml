@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ActionControls__c</fullName>
+    <description>When bypassing standard action controls, enables to configure server side controls for each applicable action by providing a custom permission required and/or control the input actually provided.</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>When bypassing standard action controls, enables to configure server side controls for each applicable action by providing a custom permission required and/or control the input actually provided.</inlineHelpText>
+    <label>Action Controls</label>
+    <length>100000</length>
+    <type>LongTextArea</type>
+    <visibleLines>5</visibleLines>
+</CustomField>

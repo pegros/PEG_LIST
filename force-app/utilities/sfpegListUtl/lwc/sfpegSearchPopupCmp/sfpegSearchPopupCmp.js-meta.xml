@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SF PEG Search Popup</masterLabel>
+    <description>This component enables to display a Query Form with its related result list in a popup.</description>
+
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__UtilityBar</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage,lightning__RecordPage,lightning__UtilityBar,lightningCommunity__Default">
+            <property name="notifChannel" label="Notif. Channel" type="String" default="'sfpegSearchPopup'" description="Name of the sfpegCustomAction notification channel to subscribe to (to activate component display)."/>
+
+            <property name="isDebug" label="Debug?" type="Boolean" default="false" description="Flag to show debug information."/>
+            <property name="isDebugFine" label="Fine Debug?" type="Boolean" default="false" description="Flag to show fine debug information."/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

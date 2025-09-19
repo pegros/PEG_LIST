@@ -1,0 +1,118 @@
+<template>
+
+    <!-- Component Display -->
+    <div class={mainCardClass}>
+        <lightning-card icon-name={cardIcon} title={formatTitle}>
+
+            <!-- Card Header Actions -->
+            <lightning-button-group slot="actions">
+                <c-sfpeg-action-bar-cmp bar-class= ""
+                                        config-name={actionConfigName}
+                                        object-api-name={objectApiName}
+                                        record-id={recordId}
+                                        user-id={userId}
+                                        max-size={maxSize}
+                                        parent-context={parentContext}
+                                        ondone={handleActionDone}
+                                        is-debug={isDebugFine} >
+                </c-sfpeg-action-bar-cmp>
+            </lightning-button-group>
+
+            <!-- Card Mode Control -->
+            <template if:true={showRefresh}>
+                <lightning-button-group slot="actions"  style="position:relative;top:-1.5px;">
+                    <lightning-button-icon  icon-name="utility:refresh"
+                                            title="Refresh Record List"
+                                            size={buttonSize}
+                                            onclick={handleRefresh} >
+                    </lightning-button-icon>
+                </lightning-button-group>
+            </template>
+
+            <!-- Debug Info Display -->
+            <template if:true={isDebug}>
+                <div slot="footer" class="slds-text-align_left"  >
+                    <dl class="slds-dl_horizontal slds-text-align_left">
+                        <dt class="slds-dl_horizontal__label slds-truncate">Configuration:</dt>
+                        <dd class="slds-dl_horizontal__detail">Query:
+                            <lightning-formatted-url    value={configUrl}
+                                                        label={configName}
+                                                        target="_blank">
+                            </lightning-formatted-url>
+                            / Header Actions: {actionConfigName}
+                        </dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Record:</dt>
+                        <dd class="slds-dl_horizontal__detail">{objectApiName} - {recordId}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Target:</dt>
+                        <dd class="slds-dl_horizontal__detail"></dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+                        <dd class="slds-dl_horizontal__detail">
+                            <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegCardListCmp.md"
+                                                        label="See Help on GitHub"
+                                                        target="_blank">
+                            </lightning-formatted-url>
+                        </dd>
+                    </dl>
+                </div>
+            </template>
+
+
+            <template if:true={isReady}>
+                
+                <!-- Error Display -->
+                <template if:true={hasErrorMsg}>
+                    <div class="slds-card__body_inner">
+                        <c-sfpeg-warning-dsp message={errorMsg}>
+                        </c-sfpeg-warning-dsp>
+                    </div>
+                </template>
+
+                <!-- Config Display -->
+                <template if:true={hasConfig}>
+
+                    <div class="slds-hide">
+                        <c-sfpeg-list-cmp   object-api-name={objectApiName} record-id={recordId} user-id={userId}
+                                            config-name={configDetails.query}
+                                            parent-context={parentContext}
+                                            onload={handleRecordLoad}>
+                        </c-sfpeg-list-cmp>
+                    </div>
+
+                    <template if:true={recordList}>
+                    <!-- horizontal-align="end" -->
+                        <lightning-layout   multiple-rows="true"  >
+                            <template for:each={recordList} for:item="iterRecord">
+                                <lightning-layout-item  key={iterRecord.id}  size={cardSize} padding="around-small" alignment-bump="right" >
+                                    <c-sfpeg-card-cmp   card-class={cardClass}
+                                                        card-title={iterRecord.name}
+                                                        card-icon={iterRecord.icon}
+                                                        button-size={buttonSize}
+                                                        config-name={iterRecord.card}
+                                                        action-config-name={iterRecord.actions}
+                                                        object-api-name={iterRecord.object}
+                                                        record-id={iterRecord.id}
+                                                        user-id={userId}
+                                                        max-size={maxCardSize}
+                                                        parent-context={parentContext}
+                                                        ondone={handleActionDone}
+                                                        is-debug={isDebugFine} 
+                                                        is-debug-fine={isDebugFine} 
+                                                        is-read-only={isReadOnly}>
+                                    </c-sfpeg-card-cmp>
+                                </lightning-layout-item>
+                            </template>
+                        </lightning-layout>
+                    </template>
+                </template>
+            </template>
+
+                <!-- Spinner display (Init) -->
+            <template if:false={isReady}>
+                <div class="slds-card__body slds-card__body_inner" style="height:150px;">
+                    <lightning-spinner alternative-text="Loading..." size="medium">
+                    </lightning-spinner>
+                </div>
+            </template>
+        </lightning-card>            
+    </div>
+</template>

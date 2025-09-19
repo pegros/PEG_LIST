@@ -1,0 +1,58 @@
+<template>
+    <template lwc:if={isDisplayed}>
+    <div class={cardClass}>
+        <lightning-card title={cardTitle} icon-name={cardIcon}>
+            <template lwc:if={formRecord}>
+                <div class="slds-p-horizontal_medium">
+                    <div class="slds-box searchForm">
+                        <lightning-record-edit-form     object-api-name={formRecord.objectApiName}
+                                                        record-type-id={formRecord.RecordTypeId}
+                                                        onload={handleLoad}
+                                                        onsubmit={handleSubmit}
+                                                        onerror={handleError}
+                                                        onsuccess={handleSave} >
+                            <lightning-messages class="formMessages">
+                            </lightning-messages>
+                            <lightning-layout   multiple-rows="true"
+                                                pull-to-boundary="small">
+                                <template for:each={searchFields} for:item="iterForm">
+                                    <lightning-layout-item  key={iterForm.name}  size={formFieldSize} 
+                                                            padding="horizontal-small">
+                                        <lightning-input-field  field-name={iterForm.name}
+                                                                required={iterForm.required}
+                                                                disabled={iterForm.disabled}
+                                                                value={iterForm.value} >
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+                                </template>
+                            </lightning-layout>
+                            <div class="slds-align_absolute-center slds-m-top_small">
+                                <template lwc:if={notifChannel}>
+                                    <lightning-button   variant="neutral"   class="slds-m-right_x-small"
+                                                        label="Close"       onclick={handleClose}>
+                                    </lightning-button>
+                                </template>
+                                <lightning-button   variant="brand" 
+                                                    label="Search"  onclick={handleSearch}>
+                                </lightning-button>
+                            </div>
+                        </lightning-record-edit-form>
+                    </div>
+
+                    <div lwc:if={contextString} class="slds-m-top_small">
+                        <c-sfpeg-list-cmp   object-api-name={objectApiName}
+                                            record-id={recordId}
+                                            card-title="Résultats"
+                                            config-name={configName}
+                                            action-config-name="N/A"
+                                            is-debug={isDebug}
+                                            is-debug-fine={isDebugFine}
+                                            context-string={contextString} >
+                        </c-sfpeg-list-cmp>
+                    </div>
+                </div>
+            </template>
+        </lightning-card>
+    </div>
+    </template>
+</template>

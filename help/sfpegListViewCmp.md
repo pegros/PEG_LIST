@@ -1,5 +1,13 @@
 # ![Logo](/media/Logo.png) &nbsp; **sfpegListViewCmp** Component
 
+This component is part of the [`sfpegList-utilities`](/help/sfpegListPkgUtilities.md) package
+of the **[PEG_LIST](/README.md)** repository.
+
+⚠️ This page applies to the most recent (unlocked) packaging of the **PEG_LIST** repository.
+Some features described here may thus not be available on the old **[v0](https://github.com/pegros/PEG_LIST/tree/v0)** version.
+See v0 documentation of the same component [here](/blob/v0/help/sfpegListViewCmp.md).
+
+
 ## Introduction
 
 The **sfpegListViewCmp** component is an [adressable](https://developer.salesforce.com/docs/component-library/bundle/lightning:isUrlAddressable/documentation) Aura component enabling to display a
@@ -11,9 +19,12 @@ related list components from within this LWC component.
 It also enables to expand a **[sfpegListCmp](/help/sfpegListCmp.md)** component displayed in
 a record page layout section (often 2/3 or less of the page width) into a full width page.
 
----
 
 ## Component Configuration
+
+ℹ️ Please refer to the [Component Configuration](/help/configuration.md) dedicated page to 
+get more general information about the way the included components may be configured. 
+
 
 ### Global Layout
 
@@ -27,21 +38,20 @@ in a dedicated page.<br/>
 As an [adressable](https://developer.salesforce.com/docs/component-library/bundle/lightning:isUrlAddressable/documentation) Aura component, it relies entirely on URL parameters to customise:
 * the Lightning page tab label, via the *c__label* parameter
 * the configuration of the embedded **[sfpegListCmp](/help/sfpegListCmp.md)** component (i.e. what data are displayed, how they are displayed and what actions are available)
-    * *c__list*: Developer name of the **sfpegList__mdt** custom metadata record to be used to fetch the and display the records.
-    * *c__actions*: Developer name of the **sfpegAction__mdt** custom metadata record to be used as header actions.
-    * *c__actions*: Developer name of the **sfpegAction__mdt** custom metadata record to be used as header actions.
-    * *c__showSearch*: Same boolean flag as for the **sfpegListCmp** component (displayed by default).
-    * *c__showExport*: Same boolean flag as for the **sfpegListCmp** component (false by default).
-    * *c__displayHeight*: Same property as for the **sfpegListCmp** component.
-    * *c__buttonSize*: Same property as for the **sfpegListCmp** component.
-    * *c__contextString*: Same property as for the **sfpegListCmp** component.
-    * *c__title*: title to be set on the card wrapping the list
-    * *c__icon*: name of the icon (see [SLDS](https://www.lightningdesignsystem.com/icons/)) to be set on the card wrapping the list
-    * *c__recordId*: Id of the record to be provided as input to the list query
-    * *c__objectApiName*: Object API Name of the record to be provided as input to the list query
-    * *c__isDebug*: flag to set the component in debug mode
+    * `c__list`: Developer name of the **sfpegList__mdt** custom metadata record to be used to fetch the and display the records.
+    * `c__actions`: Developer name of the **sfpegAction__mdt** custom metadata record to be used as header actions.
+    * `c__actions`: Developer name of the **sfpegAction__mdt** custom metadata record to be used as header actions.
+    * `c__showSearch`: Same boolean flag as for the **sfpegListCmp** component (displayed by default).
+    * `c__showExport`: Same boolean flag as for the **sfpegListCmp** component (false by default).
+    * `c__displayHeight`: Same property as for the **sfpegListCmp** component.
+    * `c__buttonSize`: Same property as for the **sfpegListCmp** component.
+    * `c__contextString`: Same property as for the **sfpegListCmp** component.
+    * `c__title`: title to be set on the card wrapping the list
+    * `c__icon`: name of the icon (see [SLDS](https://www.lightningdesignsystem.com/icons/)) to be set on the card wrapping the list
+    * `c__recordId`: Id of the record to be provided as input to the list query
+    * `c__objectApiName`: Object API Name of the record to be provided as input to the list query
+    * `c__isDebug`: flag to set the component in debug mode
 
----
 
 ## Configuration Example
 
@@ -74,7 +84,6 @@ custom metadata record (e.g. for **[sfpegListCmp](/help/sfpegListCmp.md)** compo
 }]
 ```
 
----
 
 ## Technical Details
 
@@ -85,3 +94,6 @@ is not systematically triggered. Therefore, some of the initialisation logic has
 moved in the _afterRender_ (via a
 [aura:doneRendering](https://developer.salesforce.com/docs/component-library/bundle/aura:doneRendering/documentation)
 event handler) in order to properly apply the parameters provided in the URL.
+
+ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to 
+get more global information about the way the components have been implemented.

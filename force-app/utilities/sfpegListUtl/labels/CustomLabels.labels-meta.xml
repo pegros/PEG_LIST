@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>sfpegSearchListApply</fullName>
+        <categories>PEG Component LWC Action Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label of the search criteria apply button</shortDescription>
+        <value>Apply</value>
+    </labels>
+    <labels>
+        <fullName>sfpegSearchListResults</fullName>
+        <categories>PEG Component LWC Table Header</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Header of the results list</shortDescription>
+        <value>Matching results found</value>
+    </labels>
+</CustomLabels>

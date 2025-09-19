@@ -1,5 +1,13 @@
 # ![Logo](/media/Logo.png) &nbsp; **sfpegCardListCmp** Component
 
+This component is part of the [`sfpegList-extensions`](/help/sfpegListPkgExtensions.md) package
+of the **[PEG_LIST](/README.md)** repository.
+
+⚠️ This page applies to the most recent (unlocked) packaging of the **PEG_LIST** repository.
+Some features described here may thus not be available on the old **[v0](https://github.com/pegros/PEG_LIST/tree/v0)** version.
+See v0 documentation of the same component [here](/blob/v0/help/sfpegCardListCmp.md).
+
+
 ## Introduction
 
 The **sfpegCardListCmp** component enables to fetch a list of records (via a SOQL/Apex... query) and display
@@ -13,9 +21,12 @@ to the current one
 * display being adapted to the each record situation (status, record type, object API name)
 * direct edit being possible on each record
 
----
 
 ## Component Configuration
+
+ℹ️ Please refer to the [Component Configuration](/help/configuration.md) dedicated page to 
+get more general information about the way the included components may be configured. 
+
 
 ### Global Layout
 
@@ -39,7 +50,7 @@ configuration of the header action button bar (see the **[sfpegActionBarCmp](/he
 component for details)
 * setting a possible max. number of actions displayed at global header and card header levels
 to control the width of the corresponding action bars
-* setting various behaviour options (_Read-Only_, _Button Size_, _Show #Records?_, _Show Refresh?_...)
+* setting various behaviour options (`Read-Only?`, `Button Size`, `Show #Records?`, `Show Refresh?`...)
 
 ![Record Card List Configuration](/media/sfpegCardListConfig.png)
 
@@ -68,13 +79,11 @@ header actions of each record card
 _Note_: _Card Context_ is currently reserved for future use (to set the root record context in each record card for
 their header actions)
 
----
 
 ## Configuration Examples
 
-***TO BE CCONTINUED***
+_TO BE CONTINUED_
 
----
 
 ## Technical Details
 
@@ -83,4 +92,8 @@ It as this component relies on the standard
 [record-view-form](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-view-form/documentation)
 base component to fetch and display record data, data load may become inefficient when the record list
 becomes too large.
-> The **sfpegCardList** component should therefore be used carefully on small record list sizes to mitigate performance impacts.
+
+⚠️ The **sfpegCardList** component should therefore be used carefully on small record list sizes to mitigate performance impacts.
+
+ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to 
+get more global information about the way the components have been implemented.
