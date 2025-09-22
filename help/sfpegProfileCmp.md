@@ -91,7 +91,7 @@ The following properties are available to configure the different profile widget
         * All may be set simultaneously (e.g. as `{"fieldName":"avatar__c", "fileFieldName":"avatarFileId__c", "assetFieldName":"avatarAssetName__c"}`) in which
         case the displayed banner comes from `fileFieldName` if its value is not null on the record, then from `assetFieldName` and `fieldName` otherwise (kind of fallback mechanism).
     * Custom `.jpg` or `.png` image files may added to the **sfpegBanners**  static resource and later referenced in this configuration.
-    * The **sfpegFileManagerCmp** component (see **(PEG_MISC)[https://github.com/pegros/PEG_MISC]** package) may be leveraged
+    * The **sfpegFileManagerCmp** component (see **[PEG_MISC](https://github.com/pegros/PEG_MISC)** package) may be leveraged
     to upload and register ContentDocument files on the records.
     * No value hides the background widget.
 * `Profile Avatar` defines the name of the avatar image to display

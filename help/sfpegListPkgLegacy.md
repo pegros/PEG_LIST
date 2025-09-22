@@ -53,5 +53,5 @@ better understand their behaviours.
 
 ### September 2025 - v1.0.0
 * First version with the new unlocked package structure.
-* Install it from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04TBD) for production orgs
-or [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04TBD) for sandboxes.
+* Install it from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xHDVIA2) for production orgs
+or [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xHDVIA2) for sandboxes.
