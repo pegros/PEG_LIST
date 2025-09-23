@@ -32,19 +32,15 @@
 * SOFTWARE.
 ***/
 
+@SuppressWarnings('PMD.ClassNamingConventions,PMD.FieldNamingConventions')
 public with sharing class sfpegSearch_SVC extends sfpegListQuery_SVC {
-
-    /***
-    * @description  regex patterns to extract context tokens.
-    ***/
-    static final Pattern TOKEN_PATTERN = Pattern.compile('\\{\\{\\{(\\w+)\\}\\}\\}');
 
     /***
     * @description  Override of the standard getdata() method to execute a query.
     *               It executes a SOSL or SOQL query depending on the query configuration
     *               and search term provided in the context.
     ***/
-    public override List<Object> getData(final Object context, final String queryName) {
+    public override List<Object> getData(final Object context, final String queryName) { // NOPMD Complexity is not very high
         System.debug('getData: START sfpegSearch_SVC implementation');
         System.debug('getData: context provided ' + context);
         Map<Object,Object> contextMap = (Map<Object,Object>) context;
@@ -66,29 +62,29 @@ public with sharing class sfpegSearch_SVC extends sfpegListQuery_SVC {
                 if (	(String.isNotBlank(soslTerm))
                     &&	(	(soslTerm.length() > 2)
                          || ((soslTerm.length() == 2) && !(soslTerm.endsWith('*') || soslTerm.endsWith('?'))))) {
-                    System.debug('getData: END / launching SOSL search');
+                    System.debug('getData: END sfpegSearch_SVC / launching SOSL search');
                     return executeSOSL((Map<String,Object>)soslConfig,contextMap,soslTerm);
                 }
                 else if (queryConfig.containsKey('soql')) {
-                    System.debug('getData: END / launching SOQL query as fallback to SOSL search with no term set');
+                    System.debug('getData: END sfpegSearch_SVC / launching SOQL query as fallback to SOSL search with no term set');
                     return executeSOQL((Map<String,Object>)queryConfig.get('soql'),contextMap);
                 }
                 else {
-                    System.debug('getData: END / returning empty SOSL results');
+                    System.debug('getData: END sfpegSearch_SVC / returning empty SOSL results');
                     return null;
                 }
             }
             else {
-                System.debug(LoggingLevel.Error,'getData: END KO / missing "term" parameter in "sosl" section');
+                System.debug(LoggingLevel.Error,'getData: END sfpegSearch_SVC KO / missing "term" parameter in "sosl" section');
                 throw new DmlException('Missing "term" parameter in "sosl" section of Complex SOSL/SOQL configuration');
             }
         }
         else if (queryConfig.containsKey('soql')) {
-            System.debug('getData: END OK / launching SOQL query');
+            System.debug('getData: END OsfpegSearch_SVC / launching SOQL query');
             return executeSOQL((Map<String,Object>)queryConfig.get('soql'),contextMap);
         }
         else {
-            System.debug(LoggingLevel.Error,'getData: END KO / missing "sosl" or "soql" section in query configuration');
+            System.debug(LoggingLevel.Error,'getData: END sfpegSearch_SVC KO / missing "sosl" or "soql" section in query configuration');
             throw new DmlException('Missing "sosl" or "soql" section in Complex SOSL/SOQL configuration');
         }
     }
@@ -98,8 +94,8 @@ public with sharing class sfpegSearch_SVC extends sfpegListQuery_SVC {
     //#####################################################
 
     /***
-    * @description  Private utility method to fetch the complex SOSL/SOQL query configuration for a given
-    *               sfpegList__mdt name (assumed to be set in the QuerySOQL__c field).
+    * @description  Private utility method to fetch the complex SOSL/SOQL query configuration for
+    *               the current sfpegList__mdt record (assumed to be set in the QuerySOQL__c field).
     ***/
     @TestVisible
     private Map<String,Object> getConfig() {

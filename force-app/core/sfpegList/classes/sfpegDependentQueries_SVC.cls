@@ -34,6 +34,7 @@
 * SOFTWARE.
 ***/
 
+@SuppressWarnings('PMD.ClassNamingConventions,PMD.FieldNamingConventions')
 public with sharing class sfpegDependentQueries_SVC extends sfpegListQuery_SVC {
     
     /***
@@ -115,8 +116,8 @@ public with sharing class sfpegDependentQueries_SVC extends sfpegListQuery_SVC {
     //#####################################################
 
     /***
-    * @description  Private utility method to fetch the complex SOSL/SOQL query configuration for a given
-    *               sfpegList__mdt name (assumed to be set in the QuerySOQL__c field).
+    * @description  Private utility method to fetch the complex SOSL/SOQL query configuration for
+    *               the current sfpegList__mdt record (assumed to be set in the QuerySOQL__c field).
     ***/
     @TestVisible
     private Map<String,Object> getConfig() {

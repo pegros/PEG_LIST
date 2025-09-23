@@ -32,7 +32,7 @@
 ***/
 
 @isTest
-@SuppressWarnings('PMD.ClassNamingConventions')
+@SuppressWarnings('PMD.ClassNamingConventions,PMD.FieldNamingConventions')
 public class  sfpegHierarchy_TST {
 
     @testSetup

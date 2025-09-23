@@ -32,7 +32,7 @@
 ***/
 
 @isTest
-@SuppressWarnings('PMD.ClassNamingConventions')
+@SuppressWarnings('PMD.ClassNamingConventions,PMD.FieldNamingConventions')
 public class  sfpegSearch_TST {
 
     @testSetup
@@ -75,7 +75,7 @@ public class  sfpegSearch_TST {
 	***/
 
 	@isTest
-	static void testGetData() {
+	static void testGetData() { // NOPMD Complexity os not so high
 		System.debug('testGetData: START');
 
         List<sfpegTestObject__c> rcdList = new List<sfpegTestObject__c>();
@@ -159,7 +159,7 @@ public class  sfpegSearch_TST {
 		}
 		catch (Exception e) {
 			System.debug('testGetData: error properly raised for wrong SOQL statement in query template ' + e.getMessage());
-			System.assert(true);
+			System.assert(true,'Error properly raised for wrong SOQL statement in query template');
 		}
 
         System.debug('testGetData: TEST 7 - Wrong SOSL query');
@@ -171,7 +171,7 @@ public class  sfpegSearch_TST {
 		}
 		catch (Exception e) {
 			System.debug('testGetData: error properly raised for wrong SOSL statement in query template ' + e.getMessage());
-			System.assert(true);
+			System.assert(true,'Error properly raised for wrong SOSL statement in query template');
 		}
 
 		Test.stopTest();
