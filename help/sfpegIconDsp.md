@@ -61,10 +61,10 @@ As icon names, the following options are supported
 `iconVariant` property being available only for `utility` ones
 * **custom icons** as `resource:<iconName>` where each `<iconName>` should reference
 (with its size) a SVG icon sprite in the **sfpegIcons** static resource (see further below)
-* **dynamic icons** either `utility:score`, `utility:strength` or `utility:trend` with a
+* **dynamic icons** either `dynamic:score`, `dynamic:strength` or `dynamic:trend` with a
 required `iconValue` (corresponding to the `option` of the underlying **lightning-dynamic-icon**)
 but no `iconSize` nor `iconVariant` properties
-* dynamic **progress rings** as `utility:progress` with a
+* dynamic **progress rings** as `dynamic:progress` with a
 required `iconValue` and optional `iconSize` and `iconVariant` properties.
 
 
