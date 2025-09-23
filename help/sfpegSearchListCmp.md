@@ -17,10 +17,12 @@ Typical use cases is to implement a query page letting users set various
 search criteria before displaying the matching list.
 
 At first, only the search form is displayed.
-![sfpegSearchListCmp Initialization](/media/sfpegSearchListCmInit.png)
+
+![sfpegSearchListCmp Initialization](/media/sfpegSearchListCmpInit.png)
 
 Then, once the _Apply_ button has been clicked, the result list is displayed
 below teh search form.
+
 ![sfpegSearchListCmp Completion](/media/sfpegSearchListCmp.png)
 
 

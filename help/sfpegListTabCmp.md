@@ -14,7 +14,7 @@ list component within a dedicated independent tab. Among others, it enables to m
 footer actions on related lists and redirect the user from a short and narrow related list to a wide
 and more exhaustive table display of the same related list.
 
-![sfpegListTabCmp Display](/help/sfpegListTabCmp.md)
+![sfpegListTabCmp Display](/media/sfpegListTabCmp.md)
 
 
 ## Component Configuration

@@ -13,9 +13,11 @@ See v0 documentation of the same component [here](/blob/v0/help/sfpegKpiListCmp.
 The **sfpegKpiListCmp** component displays an actionable list of KPI field values in a structured
 and graphical way. It enables to display key information in a very dense format, grouping KPIs
 by business/functional domains.
+
 ![List of KPIs](/media/sfpegKpis.png)
 
 Such a grouping is optional and a single list of KPIs may be used.
+
 ![Simple List of KPIs](/media/sfpegKpisSingle.png)
 
 Actions may be defined per group and activated on a per KPI basis (the icon next to the main KPI

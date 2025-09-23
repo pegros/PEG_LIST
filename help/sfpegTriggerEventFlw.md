@@ -39,7 +39,7 @@ being available:
 * `Debug ?`: Activation of debug mode: display of debug information and switch to manual
 manual notification via a button
 
-![sfpegTriggerEventFlw Configuration](/help/sfpegTriggerEventConfig.md)
+![sfpegTriggerEventFlw Configuration](/media/sfpegTriggerEventConfig.md)
 
 
 ## Technical Details
