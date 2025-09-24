@@ -21,14 +21,66 @@
     <values>
         <field>DisplayConfig__c</field>
         <value xsi:type="xsd:string">{
-&quot;keyField&quot;:&quot;Name&quot;,
-&quot;widthMode&quot;:&quot;auto&quot;,
-&quot;stacked&quot;:false,
+&quot;keyField&quot;: &quot;Name&quot;,
+&quot;widthMode&quot;: &quot;auto&quot;,
+&quot;stacked&quot;: false,
+&quot;title&quot;: {
+&quot;label&quot;: &quot;Name&quot;,
+&quot;fieldName&quot;: &quot;Name&quot;,
+&quot;sortable&quot;: true
+},
 &quot;columns&quot;: [
-{ &quot;label&quot;: &quot;Name&quot;, &quot;fieldName&quot;: &quot;Name&quot;, &quot;sortable&quot;: true},
-{ &quot;label&quot;: &quot;Value&quot;, &quot;fieldName&quot;: &quot;Value&quot;, &quot;sortable&quot;: true, &quot;type&quot;: &quot;number&quot;},
-{ &quot;label&quot;: &quot;Limit&quot;, &quot;fieldName&quot;: &quot;Limit&quot;, &quot;sortable&quot;: true, &quot;type&quot;: &quot;number&quot;},
-{ &quot;label&quot;: &quot;Ratio&quot;, &quot;fieldName&quot;: &quot;Ratio&quot;, &quot;sortable&quot;: true, &quot;type&quot;: &quot;percent&quot;,&quot;typeAttributes&quot;: {&quot;minimumFractionDigits&quot;: &quot;2&quot;,&quot;maximumFractionDigits&quot;: &quot;2&quot;}}
+{
+&quot;label&quot;: &quot;Status&quot;,
+&quot;sortable&quot;: true,
+&quot;type&quot;: &quot;icon&quot;,
+&quot;initialWidth&quot;: 50,
+&quot;fieldName&quot;:&quot;Icon&quot;,
+&quot;cellAttributes&quot;:{&quot;alignment&quot;:&quot;center&quot;},
+&quot;typeAttributes&quot;: {
+&quot;iconName&quot;: {&quot;fieldName&quot;: &quot;Icon&quot;},
+&quot;variant&quot;: {&quot;fieldName&quot;: &quot;Variant&quot;}}
+},
+{
+&quot;label&quot;: &quot;Name&quot;,
+&quot;fieldName&quot;: &quot;Name&quot;,
+&quot;sortable&quot;: true,
+&quot;cellAttributes&quot;: { &quot;class&quot;:{&quot;fieldName&quot;:&quot;Class&quot;}}
+},
+{
+&quot;label&quot;: &quot;Value&quot;,
+&quot;fieldName&quot;: &quot;Value&quot;,
+&quot;sortable&quot;: true,
+&quot;type&quot;: &quot;number&quot;
+},
+{
+&quot;label&quot;: &quot;Limit&quot;,
+&quot;fieldName&quot;: &quot;Limit&quot;,
+&quot;sortable&quot;: true,
+&quot;type&quot;: &quot;number&quot;
+},
+{
+&quot;label&quot;: &quot;Ratio&quot;,
+&quot;type&quot;: &quot;percent&quot;,
+&quot;fieldName&quot;: &quot;Ratio&quot;,
+&quot;sortable&quot;: true,
+&quot;cellAttributes&quot;:{&quot;alignment&quot;:&quot;right&quot;,&quot;class&quot;:{&quot;fieldName&quot;:&quot;Class&quot;}}
+}
+],
+&quot;details&quot;:[
+{
+&quot;label&quot;: &quot;Progress&quot;,
+&quot;type&quot;: &quot;icon&quot;,
+&quot;fieldName&quot;: &quot;Progress&quot;,
+&quot;sortable&quot;: true,
+&quot;initialWidth&quot;: 80,
+&quot;cellAttributes&quot;:{&quot;alignment&quot;:&quot;center&quot;},
+&quot;typeAttributes&quot;: {
+&quot;iconName&quot;:&quot;dynamic:progress&quot;,
+&quot;variant&quot;: {&quot;fieldName&quot;: &quot;Variant&quot;},
+&quot;size&quot;: &quot;large&quot;
+}
+}
 ]
 }</value>
     </values>
