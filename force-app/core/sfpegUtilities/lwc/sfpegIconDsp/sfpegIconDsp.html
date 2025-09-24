@@ -3,7 +3,7 @@
      <!-- name={actionName}-->
     <div   class={iconClass}    onclick={handleIconAction}>
         <!-- Standard Icon Case -->
-        <template if:true={isStandardIcon}>
+        <template lwc:if={isStandardIcon}>
             <lightning-icon icon-name={iconName}
                             size={iconSize}
                             variant={iconVariant}
@@ -13,7 +13,7 @@
         </template>
 
         <!-- Icon from Static Resource Case -->
-        <template if:true={isResourceIcon}>
+        <template lwc:elseif={isResourceIcon}>
             <lightning-icon src={iconSrc}
                             size={iconSize}
                             variant={iconVariant} 
@@ -23,7 +23,7 @@
         </template>
 
         <!-- Dynamic Icon Case -->
-        <template if:true={isDynamicIcon}>
+        <template lwc:elseif={isDynamicIcon}>
             <lightning-dynamic-icon type={iconType}
                                     alternative-text={iconType}
                                     option={_iconValue}
@@ -32,7 +32,7 @@
         </template>
 
         <!-- Progress Ring Case -->
-        <template if:true={isProgressRing}>
+        <template lwc:elseif={isProgressRing}>
             <lightning-progress-ring    size={iconSize}     
                                         variant={iconVariant} 
                                         value={_iconValue}       

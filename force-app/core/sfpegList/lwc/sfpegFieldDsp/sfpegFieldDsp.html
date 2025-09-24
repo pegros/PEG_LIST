@@ -1,61 +1,112 @@
 <template>
 
-    <template if:true={isBoolean}>
-        <lightning-icon icon-name={iconValue} title={fieldLabel} size="x-small">
+    <template lwc:if={isBoolean}>
+        <lightning-icon icon-name={iconValue}   title={fieldLabel}
+                        size="x-small"          class={fieldClass}>
         </lightning-icon>
     </template>
 
-    <template if:true={isEmail}>
-        <lightning-formatted-email value={fieldValue} title={fieldLabel} hide-icon>
+    <template lwc:elseif={isEmail}>
+        <lightning-formatted-email  value={fieldValue}  title={fieldLabel}
+                                    class={fieldClass}  hide-icon>
         </lightning-formatted-email>
     </template>
 
-    <template if:true={isPhone}>
-        <lightning-formatted-phone value={fieldValue} title={fieldLabel}>
+    <template lwc:elseif={isPhone}>
+        <lightning-formatted-phone  value={fieldValue} title={fieldLabel}
+                                    class={fieldClass}>
         </lightning-formatted-phone>
     </template>
 
-    <template if:true={isNumber}>
-        <lightning-formatted-number value={fieldValue} format-style="decimal" title={fieldLabel}>
+    <template lwc:elseif={isNumber}>
+        <lightning-formatted-number value={fieldValue}  format-style="decimal"
+                                    title={fieldLabel}  class={fieldClass}>
         </lightning-formatted-number>
     </template>
 
-    <template if:true={isPercent}>
-        <lightning-formatted-number value={percentValue} format-style="percent" title={fieldLabel}>
+    <template lwc:elseif={isPercent}>
+        <lightning-formatted-number value={fieldValue}  format-style="percent"
+                                    title={fieldLabel}  class={fieldClass}>
         </lightning-formatted-number>
     </template>
 
-    <template if:true={isCurrency}>
-        <lightning-formatted-number value={fieldValue} format-style="currency" currency-code={currencyCode} title={fieldLabel}>
+    <template lwc:elseif={isPercentFixed}>
+        <lightning-formatted-number value={fieldValue}  format-style="percent-fixed"
+                                    title={fieldLabel}  class={fieldClass}>
         </lightning-formatted-number>
     </template>
 
-    <template if:true={isDate}>
-        <lightning-formatted-date-time value={fieldValue} title={fieldLabel}>
-        </lightning-formatted-date-time>
+    <template lwc:elseif={isCurrency}>
+        <lightning-formatted-number value={fieldValue}           format-style="currency"
+                                    currency-code={currencyCode} title={fieldLabel}
+                                    class={fieldClass}>
+        </lightning-formatted-number>
     </template>
 
-    <template if:true={isDateTime}>
+    <template lwc:elseif={isDate}>
         <lightning-formatted-date-time  value={fieldValue} title={fieldLabel}
-                                        year="numeric" month="numeric" day="numeric"
-                                        hour="2-digit" minute="2-digit" >
+                                        class={fieldClass}>
         </lightning-formatted-date-time>
     </template>
 
-    <template if:true={isDateLocal}>
-        <lightning-formatted-date-time value={fieldValue} title={fieldLabel}>
+    <template lwc:elseif={isDateTime}>
+        <lightning-formatted-date-time  value={fieldValue}  title={fieldLabel}
+                                        year="numeric"      month="numeric" day="numeric"
+                                        hour="2-digit"      minute="2-digit" 
+                                        class={fieldClass}>
         </lightning-formatted-date-time>
     </template>
 
-    <template if:true={isRichText}>
+    <template lwc:elseif={isDateLocal}>
+        <lightning-formatted-date-time  value={fieldValue} title={fieldLabel}
+                                        class={fieldClass}>
+        </lightning-formatted-date-time>
+    </template>
+
+    <template lwc:elseif={isRichText}>
         <div>
-        <lightning-formatted-rich-text value={fieldValue} title={fieldLabel}>
+        <lightning-formatted-rich-text  value={fieldValue} title={fieldLabel}
+                                        class={fieldClass}>
         </lightning-formatted-rich-text>
         </div>
     </template>
 
-    <template if:true={isDefault}>
-        <lightning-formatted-text value={fieldValue} title={fieldLabel}>
+    <template lwc:elseif={isIcon}>
+        <div>
+            <c-sfpeg-icon-dsp   icon-name={fieldIconName}
+                                icon-variant={fieldVariant}
+                                icon-size="x-small"
+                                icon-title={fieldLabel}
+                                icon-value={fieldValue}>
+            </c-sfpeg-icon-dsp>
+        </div>
+    </template>
+
+    <template lwc:elseif={isAvatar}>
+        <div>
+            <lightning-avatar   src={fieldValue}
+                                fallback-icon-name={fieldIconName}
+                                variant={fieldVariant}
+                                size="small"
+                                alternative-text={fieldLabel}
+                                title={fieldLabel}>
+            </lightning-avatar>
+        </div>
+    </template>
+
+    <template lwc:elseif={isBadge}>
+        <div>
+            <lightning-badge    label={fieldValue}
+                                icon-name={fieldIconName}
+                                icon-position={fieldVariant}
+                                class={fieldClass}>
+            </lightning-badge>
+        </div>
+    </template>
+
+    <template lwc:else>
+        <lightning-formatted-text   value={fieldValue} title={fieldLabel}
+                                    class={fieldClass}>
         </lightning-formatted-text>
     </template>
 </template>

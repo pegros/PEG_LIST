@@ -28,13 +28,19 @@ The supported type values are very similar to the ones listed for the standard
 * `boolean` displays a [lightning-icon](https://developer.salesforce.com/docs/component-library/bundle/lightning-icon/documentation) depending on the value (`utility:check` if true, `utility:step` if false)
 * `email` displays a [lightning-formatted-email](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-email/documentation) with hidden icon.
 * `phone` displays a [lightning-formatted-phone](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-phone/documentation)
-* `number` displays a [lightning-formatted-number](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-number/documentation) in decimal style
-* `percent` displays a [lightning-formatted-number](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-number/documentation) in percent style, the provided value being divided by 100
+* `number` displays a [lightning-formatted-number](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-number/documentation) in _decimal_ style
+* `percent` displays a [lightning-formatted-number](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-number/documentation) in _percent_ style
+* `percentFixed` displays a [lightning-formatted-number](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-number/documentation) in _percent-fixed_ style
 * `currency` displays a [lightning-formatted-number](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-number/documentation) in currency style with the user currency
 * `date` and `dateLocal` displays a [lightning-formatted-date-time](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-date-time/documentation) 
 * `dateTime` displays a [lightning-formatted-date-time](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-date-time/documentation) with day, month, year in numeric format and hour, minute in 2 digit format
 * `richText` displays a [lightning-formatted-rich-text](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-rich-text/documentation) 
 * `text` (default) displays a [lightning-formatted-text](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-text/documentation) 
+
+
+⚠️ The behaviour of the `percent` has changed compared to older version of the component:
+The numerical value is no longer divided by 100 and the `percentFixed` option should be
+used instead when displaying standard Salesforce percent fields.
 
 
 ## Technical Details

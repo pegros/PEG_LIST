@@ -38,6 +38,9 @@ export default class SfpegFieldDsp extends LightningElement {
  
     @api fieldType = 'text';
     @api fieldLabel = '';
+    @api fieldVariant = '';
+    @api fieldClass = '';
+    @api fieldIconName = '';
 
     _fieldValue = {};
     // Implementation with setter to ensure proper update of display data upon fieldValue change.
@@ -74,9 +77,12 @@ export default class SfpegFieldDsp extends LightningElement {
     get isPercent() {
         return (this.fieldType) && (this.fieldType === "percent");
     }
-    get percentValue() {
-        return ((this.fieldValue || 0) / 100);
+    get isPercentFixed() {
+        return (this.fieldType) && (this.fieldType === "percent-fixed");
     }
+    /*get percentValue() {
+        return ((this.fieldValue || 0) / 100);
+    }*/
     get isCurrency() {
         return (this.fieldType) && (this.fieldType === "currency");
     }
@@ -95,7 +101,16 @@ export default class SfpegFieldDsp extends LightningElement {
     get isRichText() {
         return (this.fieldType) && (this.fieldType === "richText");
     }
-    get isDefault() {
-        return (this.fieldType == null) || (this.fieldType === "text");
+    get isIcon() {
+        return (this.fieldType) && (this.fieldType === "icon");
     }
+    get isAvatar() {
+        return (this.fieldType) && (this.fieldType === "avatar");
+    }
+    get isBadge() {
+        return (this.fieldType) && (this.fieldType === "badge");
+    }
+    /*get isDefault() {
+        return (this.fieldType == null) || (this.fieldType === "text");
+    }*/
 }

@@ -484,7 +484,7 @@ export default class SfpegListCmp extends LightningElement {
                     }
 
                     this.finalizeConfig();
-                    if (this.isDebug) console.log('connected: List configuration parsed');
+                    if (this.isDebug) console.log('connected: List configuration finalized',JSON.stringify(this.configDetails));
                     //this.errorMsg = 'Configuration fetched and parsed: ' + LIST_CONFIGS[this.configName].label;
                 }
                 catch (parseError){

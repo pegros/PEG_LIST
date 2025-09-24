@@ -175,8 +175,26 @@ as when related record fields are fetched)
     * Beware that conditional activation of actions does not work for _action_ entries in the _DataTable_ and _TreeGrid_
     columns (i.e. only for _button_ ones), while they properly work in the menu for the _TileList_ and _CardList_ modes.
 
-Hereafter is an example of the **sfpegAction__mdt** record used for row level actions in the previous example.<br/>
+Hereafter is an example of the **sfpegAction__mdt** record used for row level actions in the previous example.
+
 ![Row Action Metadata Record](/media/sfpegListConfigMetaAction.png)
+
+
+### Custom Field Types (richText, percent-fixed, badge, avatar, icon)
+
+The standard **[lightning-datatable](https://developer.salesforce.com/docs/component-library/bundle/lightning-datatable/documentation)** base component supports a rich set of out-of-the-box field types with specific configuration
+properties.
+
+However, a few important UX cases are not supported natively and a few custom field types have been added
+within the **sfpegListCmp** component:
+* `richText` for richtext fields (see **[lightning-formatted-rich-text](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-rich-text/documentation)**
+for details)
+* `percent-fixed` for percent fields to prevent the multiplication by 100 of the standard `percent` option (see **[lightning-formatted-number](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-number/documentation)** for details).
+* `badge` to display a **[lightning-badge](https://developer.salesforce.com/docs/component-library/bundle/lightning-badge/documentation)**, with `iconName` and `variant` (for the icon position) as type attributes.
+* `avatar` to display an asset file as a **[lightning-avatar](https://developer.salesforce.com/docs/component-library/bundle/lightning-avatar/documentation)**, with `iconName` (for fallback icon name), `variant` and `size` as type attributes.
+* `badge` to display a **[sfpegIconDsp](/help/sfpegIconDsp.md)** icon, with `iconName`, `variant` and `size` as type attributes.
+
+⚠️ These custom field types are still unsupported in the _dataTree_ display mode. This should come ASAP.
 
 
 ### No Data Display Handling
@@ -855,15 +873,145 @@ It also provides the ability to dynamically build `WHERE` clauses based on filte
 provided in the context.
 
 
-### Current Org Limits Status
+### Current Org Limits Status (Icon Field Type Display)
 
 In order to display in an App page the current state of the Org Limits,
 two elements are available off-the-shelf in the examples:
 * the **sfpegOrgLimits_SVC** Apex extension class (calling see **[OrgLimits.getMap()](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_class_System_OrgLimits.htm)**)
-* the **sfpegOrgLimits** **sfpegList** list medatada record
+* the **sfpegOrgLimits** **sfpegList** list metadada record
 
-![List as tiles](/media/sfpegOrgLimits.png)
-_<center>Monitoring of the Org limits</center>_
+You may configure the list metadada record either as _tilelist_ or _datatable_ 
+as shown hereafter.
+![Org Limits with Icons](/media/sfpegOrgLimits.png)
+
+Its display configuration highlights the way to leverage the `icon` field type for
+standard or dynamic (progress ring) cases and the `class` for dynamic colouring of records.
+```
+{
+    "keyField": "Name",
+    "widthMode": "auto",
+    "stacked": false,
+    "title": {"label": "Name","fieldName": "Name","sortable": true},
+    "columns": [
+        {
+            "label": "Status", "fieldName":"Icon", "sortable": true,
+            "type": "icon", "initialWidth": 50,
+            "cellAttributes":{"alignment":"center"},
+            "typeAttributes": {"iconName": {"fieldName": "Icon"},"variant": {"fieldName": "Variant"}}
+        },
+        {
+            "label": "Name", "fieldName": "Name", "sortable": true,
+            "cellAttributes": { "class":{"fieldName":"Class"}}
+        },
+        {
+            "label": "Value", "fieldName": "Value", "sortable": true,
+            "type": "number"
+        },
+        {
+            "label": "Limit", "fieldName": "Limit", "sortable": true,
+            "type": "number"
+        },
+        {
+            "label": "Ratio", "fieldName": "Ratio", "sortable": true,
+            "type": "percent",
+            "cellAttributes": {"class":{"fieldName":"Class"}}
+        }
+    ],
+    "details":[
+        {
+            "label": "Progress", "fieldName": "Progress", "sortable": true,
+            "type": "icon",
+            "cellAttributes":{"alignment":"center"},
+            "typeAttributes": { "iconName":"dynamic:progress","variant": {"fieldName": "Variant"},"size": "large"}
+        }
+    ]
+}
+```
+
+_Notes_
+* For _static_ icons (e.g. _utility:xxx_ ones provided by the `Icon`property), the value
+of the `fieldName` property is ignored for display but is usable for sorting
+* For _dynamic_ icons, (e.g. _dynamic:progress_ as in tnis case), the value
+of the `fieldName` property is used as `iconValue` property
+
+
+### Avatar and Badge Field Type Display
+
+You may configure the list metadada record either to display icons, avatars or badges
+as displayed hereafter.
+
+![Files with badges and avatars](/media/sfpegListAvatars.png)
+
+The display configuration highlights the way to leverage the `avatar` field type for 
+image file display and the `badge` one for text value emphasis. It also presents
+other simple custom types such as `richText` or `percent-fixed` as well as the
+standard way to include standard icons next to a field value. 
+
+```
+{
+    "keyField": "Id",
+    "widthMode": "auto",
+    "columns": [
+        {
+            "label": "Title","fieldName": "ContentDocument.Title",
+            "sortable": true,
+            "typeAttributes": {
+                "iconName": {"fieldName": "ContentDocument.LatestPublishedVersion.DocTypeIcon__c"},
+                "iconVariant":"circle"
+            }
+        },
+        {
+            "label": "Type","fieldName": "ContentDocument.LatestPublishedVersion.Type__c",
+            "sortable": true,
+            "type":"badge",
+            "cellAttributes": { "alignment": "center", "class":"slds-badge_inverse" },
+            "typeAttributes": {
+                "iconName": {"fieldName": "ContentDocument.LatestPublishedVersion.DocTypeIcon__c"}
+            }
+        },
+        {
+            "label": "Avatar","fieldName": "ContentDocument.LatestPublishedVersion.Avatar__c",
+            "sortable": true,
+            "type":"avatar",
+            "cellAttributes": { "alignment": "center" },
+            "typeAttributes": {"size":"small","iconName": "standard:file","variant":"circle"}
+        },
+        {
+            "label": "Dernière modification","fieldName": "ContentDocument.LatestPublishedVersion.LastModifiedDate",
+            "sortable": true,
+            "type": "date"
+        },
+        {
+            "label": "Nombre de versions","fieldName": "ContentDocument.LatestPublishedVersion.VersionNumber",
+            "sortable": true,
+            "type":"number"
+        },
+        {
+            "label": "Comment","fieldName": "ContentDocument.LatestPublishedVersion.Comment__c",
+            "type":"richText"
+        },
+        {
+            "label": "Percent","fieldName": "ContentDocument.LatestPublishedVersion.PercentF__c",
+            "type":"percent-fixed",
+            "cellAttributes": {"alignment":"right","class":"slds-text-color_destructive"}
+        },
+        {
+            "label": "Extension de fichier", "fieldName": "ContentDocument.FileType",
+            "sortable": true,
+            "cellAttributes": {"iconName": {"fieldName": "ContentDocument.LatestPublishedVersion.DocTypeIcon__c"}}
+        }
+    ]
+}
+```
+
+_Notes_:
+* for the `avatar` type, the `iconName` property provides a fallback standard icon name 
+if the URL value (e.g. `/file-asset/JsonFile`) provided by the `fieldName` property does
+not render (e.g. if its value is empty, incorrect or not allowed to the current user)
+* for the `badge` type, the `iconName` property is of course optional and the `variant`
+property may be used to display the icon at the `end`.
+* for the `percent-fixed` type, please use the `alignment` cell attribute to force a `right`
+alignment. 
 
 
 ## Technical Details
@@ -880,6 +1028,7 @@ It also relies on the following **[PEG_LIST](https://github.com/pegros/PEG_LIST)
 _merge tokens_)
 * **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** for header and row actions
 * **sfpegTileDsp** for record tile display (thus also **[sfpegIconDsp](/help/sfpegIconDsp.md)** for tile icons)
+* **sfpegCustomListDsp** for custom datatable field types
 * **sfpegCsvUtl** for CSV list export
 * **sfpegJsonUtl** for various JSON operations (e.g. data _flattening_)
 

@@ -108,10 +108,10 @@ export default class SfpegTileDsp extends LightningElement {
     // Component initialisation 
     //--------------------------------------------------------------------
     connectedCallback() {
-        if (this.isDebug) console.log('connected: START');
+        if (this.isDebug) console.log('connected: START TileDsp');
 
         if (this.isReady) {
-            console.warn('connected: END / already ready');
+            console.warn('connected: END TileDsp / already ready');
             return;
         }
 
@@ -135,7 +135,7 @@ export default class SfpegTileDsp extends LightningElement {
         }
 
         this.isReady = true;
-        if (this.isDebug) console.log('connected: END');
+        if (this.isDebug) console.log('connected: END TileDsp');
     }
 
     resetDisplayData() {
@@ -208,14 +208,27 @@ export default class SfpegTileDsp extends LightningElement {
             sfpegJsonUtl.sfpegJsonUtl.isDebug = this.isDebug;
             this.cardData = [];
             this.configDetails.columns.forEach(item => {
-                if (item.fieldName !== titleFieldName) {
-                    if (this.isDebug) console.log('resetDisplayData: procesing item ', item);
+                if (this.isDebug) console.log('resetDisplayData: processing item ',JSON.stringify(item));
+                let itemData = this.initFieldData(item,titleFieldName);
+                if (itemData) {
+                    if (this.isDebug) console.log('resetDisplayData: registering itemData ',JSON.stringify(itemData));
+                    this.cardData.push(itemData);
+                }
+            });
+            
+                /*if (item.fieldName !== titleFieldName) {
+                    if (this.isDebug) console.log('resetDisplayData: processing item ', item);
+                
                     if (this._recordData[item.fieldName] != null) {
                         if (this.isDebug) console.log('resetDisplayData: registering standard field ', item.fieldName);
                         this.cardData.push({
                             label: item.label,
                             //value: ((item.type && (item.type == 'boolean')) ? eval(this._recordData[item.fieldName]) : this._recordData[item.fieldName]),
                             value: ((item.type && (item.type == 'boolean')) ? (String(this._recordData[item.fieldName]).toLowerCase() == "true") : this._recordData[item.fieldName]),
+                            iconName: (item.typeAttributes?.iconName ? this._recordData[item.typeAttributes.iconName] : null),
+                            iconValue: (item.typeAttributes?.iconValue ? this._recordData[item.typeAttributes.iconValue] : null),
+                            variant: (item.typeAttributes?.variant ? this._recordData[item.typeAttributes.variant] : null),
+                            class: (item.typeAttributes?.class ? this._recordData[item.typeAttributes.class] : null),
                             //value: sfpegJsonUtl.sfpegJsonUtl.formatField(this._recordData[item.fieldName],item),
                             type: item.type || 'text',
                             name: item.fieldName
@@ -228,7 +241,7 @@ export default class SfpegTileDsp extends LightningElement {
                 else {
                     if (this.isDebug) console.log('resetDisplayData: ignoring title field ', item.fieldName);
                 }
-            });
+            });*/
             if (this.isDebug) console.log('resetDisplayData: card data init', this.cardData);  
         }
         else {
@@ -242,6 +255,15 @@ export default class SfpegTileDsp extends LightningElement {
             if (this.isDebug) console.log('resetDisplayData: initializing card details');
             sfpegJsonUtl.sfpegJsonUtl.isDebug = this.isDebug;
             this.cardDetails = [];
+            this.configDetails.details.forEach(item => {
+                if (this.isDebug) console.log('resetDisplayData: processing item ',JSON.stringify(item));
+                let itemData = this.initFieldData(item,titleFieldName);
+                if (itemData) {
+                    if (this.isDebug) console.log('resetDisplayData: registering itemData ',JSON.stringify(itemData));
+                    this.cardDetails.push(itemData);
+                }
+            });
+            /*
             this.configDetails.details.forEach(item => {
                 if (item.fieldName !== titleFieldName) {
                     if (this.isDebug) console.log('resetDisplayData: processing item ', item);
@@ -265,6 +287,7 @@ export default class SfpegTileDsp extends LightningElement {
                     if (this.isDebug) console.log('resetDisplayData: ignoring title field ', item.fieldName);
                 }
             });
+            */
             if (this.cardDetails.length == 0) this.cardDetails = null;
             if (this.isDebug) console.log('resetDisplayData: card details init', this.cardDetails);  
         }
@@ -332,6 +355,74 @@ export default class SfpegTileDsp extends LightningElement {
         }
 
         if (this.isDebug) console.log('resetDisplayData: END ');
+    }
+
+    initFieldData = function(fieldConfig,titleFieldName){
+        if (this.isDebug) console.log('initFieldData: START with ',JSON.stringify(fieldConfig));
+
+        if (fieldConfig?.fieldName == null) {
+            if (this.isDebug) console.log('initFieldData: END / ignoring field with no fieldName');
+            return null;
+        }
+
+        if (fieldConfig.fieldName === titleFieldName) {
+            if (this.isDebug) console.log('initFieldData: END / ignoring title field ', titleFieldName);
+            return null;
+        }
+
+        let result = {
+            label: fieldConfig.label,
+            type:  fieldConfig.type || 'text',
+            name:  fieldConfig.fieldName,
+            value: this._recordData[fieldConfig.fieldName]
+        }
+        if ((fieldConfig.type == 'icon') || (fieldConfig.type == 'avatar')) {
+            if (this.isDebug) console.log('initFieldData: processing icon/avatar field ', fieldConfig.fieldName);
+            //if (this.isDebug) console.log('initFieldData: icon name ', JSON.stringify(fieldConfig.typeAttributes?.iconName)); 
+            result.iconName = this.getFieldValue(fieldConfig.typeAttributes?.iconName); 
+            //if (this.isDebug) console.log('initFieldData: icon variant ', JSON.stringify(fieldConfig.typeAttributes?.variant)); 
+            result.variant = this.getFieldValue(fieldConfig.typeAttributes?.variant); 
+        }
+        else if (this._recordData[fieldConfig.fieldName] == null) {
+            if (this.isDebug) console.log('initFieldData: END / ignoring empty standard field', fieldConfig.fieldName);
+            return null;
+        }
+        else if (fieldConfig.type == 'boolean') {
+            if (this.isDebug) console.log('initFieldData: converting boolean field ', fieldConfig.fieldName);
+            result.value = (String(result.value).toLowerCase() == "true");
+        }
+        else if (fieldConfig.type == 'badge') {
+            if (this.isDebug) console.log('initFieldData: processing badge field ', fieldConfig.fieldName);
+            result.iconName = this.getFieldValue(fieldConfig.typeAttributes?.iconName); 
+            result.variant = this.getFieldValue(fieldConfig.typeAttributes?.variant); 
+        }
+
+        if (fieldConfig.cellAttributes?.class) {
+            if (this.isDebug) console.log('initFieldData: processing class property');
+            result.class = this.getFieldValue(fieldConfig.cellAttributes.class);
+        }
+        /*let classProperty = fieldConfig?.cellAttributes?.class || fieldConfig?.typeAttributes?.class;
+        //if (this.isDebug) console.log('initFieldData: cell class ', JSON.stringify(fieldConfig?.cellAttributes?.class));
+        //if (this.isDebug) console.log('initFieldData: type class ', JSON.stringify(fieldConfig?.typeAttributes?.class));
+        if (classProperty) {
+            if (this.isDebug) console.log('initFieldData: processing field class ', JSON.stringify(classProperty));
+            result.class = this.getFieldValue(classProperty);
+        }*/
+        if (this.isDebug) console.log('initFieldData: END / returning  ', JSON.stringify(result));
+        return result;
+    }
+
+    getFieldValue = function(fieldProperty) {
+        if (this.isDebug) console.log('getFieldValue: START with ',JSON.stringify(fieldProperty));
+
+        if (fieldProperty?.fieldName) {
+            if (this.isDebug) console.log('getFieldValue: END / rerurning value from field');
+            return this._recordData[fieldProperty.fieldName];
+        }
+        else {
+            if (this.isDebug) console.log('getFieldValue: END / returning direct value');
+            return fieldProperty;
+        }
     }
 
     renderedCallback() {
