@@ -35,38 +35,41 @@
                     </lightning-record-edit-form>
                 </div>
             </template>
-            <template lwc:if={isDebug}>
-                <div slot="footer" class="slds-text-align_left slds-border_bottom slds-p-horizontal_small slds-p-bottom_small slds-m-bottom_small"  >
-                    <dl class="slds-dl_horizontal slds-text-align_left">
-                        <dt class="slds-dl_horizontal__label slds-truncate">(aria-)description:</dt>
-                        <dd class="slds-dl_horizontal__detail">{description}</dd>
-                        <dt class="slds-dl_horizontal__label slds-truncate">searchForm fields:</dt>
-                        <dd class="slds-dl_horizontal__detail">{searchFormFields}</dd>
-                        <dt class="slds-dl_horizontal__label slds-truncate">resultsConfig name:</dt>
-                        <dd class="slds-dl_horizontal__detail">{resultsConfig.name}</dd>
-                        <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
-                        <dd class="slds-dl_horizontal__detail">
-                            <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegSearchPopupCmp.md"
-                                                        label="See Help on GitHub"
-                                                        target="_blank">
-                            </lightning-formatted-url>
-                        </dd>
-                    </dl>
-                </div>
-            </template>
+        </div>
+        <template lwc:if={isDebug}>
+            <div slot="footer" class="slds-text-align_left slds-border_bottom slds-p-horizontal_small slds-p-bottom_small slds-m-bottom_small"  >
+                <dl class="slds-dl_horizontal slds-text-align_left">
+                    <dt class="slds-dl_horizontal__label slds-truncate">(aria-)description:</dt>
+                    <dd class="slds-dl_horizontal__detail">{description}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">searchForm fields:</dt>
+                    <dd class="slds-dl_horizontal__detail">{searchFormFields}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">resultsConfig name:</dt>
+                    <dd class="slds-dl_horizontal__detail">{resultsConfig.name}</dd>
+                    <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+                    <dd class="slds-dl_horizontal__detail">
+                        <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegSearchPopupCmp.md"
+                                                    label="See Help on GitHub"
+                                                    target="_blank">
+                        </lightning-formatted-url>
+                    </dd>
+                </dl>
+            </div>
+        </template>
             <template lwc:if={showResults}>
-                <c-sfpeg-list-cmp   object-api-name={resultsConfig.objectApiName}
-                                    record-id={resultsConfig.recordId}
-                                    display-height={resultsConfig.displayHeight}
-                                    show-search={resultsConfig.showSearch}
-                                    card-title={resultsTitle}
-                                    config-name={resultsConfig.name}
-                                    action-config-name={resultsConfig.actionConfigName}
-                                    footer-config-name={resultsConfig.footerConfigName}
-                                    parent-context={queryContext}
-                                    is-debug={isDebug}
-                                    is-debug-fine={isDebugFine}>
-                </c-sfpeg-list-cmp>
+                <div class="slds-p-horizontal_x-small">
+                    <c-sfpeg-list-cmp   object-api-name={resultsConfig.objectApiName}
+                                        record-id={resultsConfig.recordId}
+                                        display-height={resultsConfig.displayHeight}
+                                        show-search={resultsConfig.showSearch}
+                                        card-title={resultsTitle}
+                                        config-name={resultsConfig.name}
+                                        action-config-name={resultsConfig.actionConfigName}
+                                        footer-config-name={resultsConfig.footerConfigName}
+                                        parent-context={queryContext}
+                                        is-debug={isDebug}
+                                        is-debug-fine={isDebugFine}>
+                    </c-sfpeg-list-cmp>
+                </div>
             </template>
         </div>
     </lightning-modal-body>

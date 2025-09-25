@@ -48,7 +48,10 @@ header actions of the **sfpegListCmp** component
 
 ## Configuration Examples
 
-A standard **sfpegAction** configuration is the following:
+### List Tab Opening
+
+A standard **sfpegAction** configuration to open a new **sfpegListTabCmp** 
+tab is the following:
 ```
 {
     "name": "ViewAll",
@@ -78,6 +81,31 @@ A standard **sfpegAction** configuration is the following:
     }
 }
 ```
+
+### Back to Original Tab
+
+A standard **sfpegAction** configuration to use in a **sfpegListTabCmp** 
+header to navigate back to the source record page (especially when in 
+standard mode) is the following:
+
+```
+{
+    "name": "backNav", "title": "Back to main page",
+    "iconName": "utility:back", "variant": "base",
+    "action": {
+        "type": "navigation",
+        "params": {
+            "type": "standard__recordPage",
+            "attributes": {
+                "recordId": "{{{GEN.recordId}}}",
+                "objectApiName": "{{{GEN.objectApiName}}}",
+                "actionName": "view"
+            }
+        }
+    }
+}
+```
+
 
 ## Technical Details
 
