@@ -34,6 +34,7 @@ import { LightningElement, api } from 'lwc';
 import sfpegAvatarDsp           from "./sfpegAvatarDsp.html";
 import sfpegBadgeDsp            from "./sfpegBadgeDsp.html";
 import sfpegIconOnlyDsp         from "./sfpegIconOnlyDsp.html";
+import sfpegMultiValueDsp       from "./sfpegMultiValueDsp.html";
 import sfpegPercentFixedDsp     from "./sfpegPercentFixedDsp.html";
 import sfpegRichTextDsp         from "./sfpegRichTextDsp.html";
 
@@ -56,6 +57,11 @@ export default class SfpegCustomListDsp extends LightningElement {
           template: sfpegIconOnlyDsp,
           standardCellLayout: true,
           typeAttributes: ["iconName","size","variant"]
+        },
+        'multi-value': {
+          template: sfpegMultiValueDsp,
+          standardCellLayout: true,
+          typeAttributes: ["size","variant","iconVariant","iconName"]
         },
         'percent-fixed': {
           template: sfpegPercentFixedDsp,

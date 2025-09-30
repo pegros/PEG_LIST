@@ -1,7 +1,8 @@
 <template>
 
      <!-- name={actionName}-->
-    <div   class={iconClass}    onclick={handleIconAction}>
+    <span   class={iconClass}  title={iconTitle}  onclick={handleIconAction}>
+
         <!-- Standard Icon Case -->
         <template lwc:if={isStandardIcon}>
             <lightning-icon icon-name={iconName}
@@ -40,5 +41,5 @@
             </lightning-progress-ring>
         </template>
 
-    </div>
+    </span>
 </template>

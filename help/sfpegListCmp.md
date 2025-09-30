@@ -193,6 +193,12 @@ for details)
 * `badge` to display a **[lightning-badge](https://developer.salesforce.com/docs/component-library/bundle/lightning-badge/documentation)**, with `iconName` and `variant` (for the icon position) as type attributes.
 * `avatar` to display an asset file as a **[lightning-avatar](https://developer.salesforce.com/docs/component-library/bundle/lightning-avatar/documentation)**, with `iconName` (for fallback icon name), `variant` and `size` as type attributes.
 * `badge` to display a **[sfpegIconDsp](/help/sfpegIconDsp.md)** icon, with `iconName`, `variant` and `size` as type attributes.
+* `multi-value` to display a multi-picklist field (or any `;` separated text field)
+in various more user friendly variants (comma separated strings, list of badges,
+list of icons, list of avatars) with `iconName`, `variant`, `iconVariant` and
+`size` as type attributes.
+
+See  section further below for configuration examples.
 
 ⚠️ These custom field types are still unsupported in the _dataTree_ display mode. This should come ASAP.
 
@@ -873,7 +879,7 @@ It also provides the ability to dynamically build `WHERE` clauses based on filte
 provided in the context.
 
 
-### Current Org Limits Status (Icon Field Type Display)
+### Icon Field Type Display (Current Org Limits Status)
 
 In order to display in an App page the current state of the Org Limits,
 two elements are available off-the-shelf in the examples:
@@ -1012,6 +1018,74 @@ not render (e.g. if its value is empty, incorrect or not allowed to the current 
 property may be used to display the icon at the `end`.
 * for the `percent-fixed` type, please use the `alignment` cell attribute to force a `right`
 alignment. 
+
+
+## Multi-Value Field Type Display
+
+You may configure the list metadada record either to display multi-value fields
+either as `,`separate strings, list of badges, list of icons or avatars as
+displayed hereafter in a _tileList_ mode.
+
+![Files with multi-value fields](/media/sfpegListMultiValue.png)
+
+The display configuration highlights the way to leverage the `multi-value` field
+display type to split the different values of a multi-picklist field (or any 
+`;` separated string text field) under various `variant` type attribute
+possibilities:
+* `csv` (by default) for a `, ` separated string display
+* `badge` for badge list display
+* `avatar` for avatar list display
+* `icon` for icon list display
+
+```
+...
+{
+    "label": "Categories",
+    "fieldName": "ContentDocument.LatestPublishedVersion.Categories__c",
+    "type":"multi-value",
+    "cellAttributes": {"alignment":"left","class":"slds-text-color_destructive"}
+},
+{
+    "label": "Badges",
+    "fieldName": "ContentDocument.LatestPublishedVersion.Categories__c",
+    "type":"multi-value",
+    "cellAttributes": {"alignment":"left","class":"slds-badge_inverse"},
+    "typeAttributes": {"variant": "badge"}
+},
+{
+    "label": "Avatars",
+    "fieldName": "ContentDocument.LatestPublishedVersion.Avatars__c",
+    "type":"multi-value",
+    "cellAttributes": {"alignment":"left","class":"slds-text-color_destructive"},
+    "typeAttributes": {"variant": "avatar", "size":"small","iconName": "standard:file","iconVariant":"circle"}
+},
+{
+    "label": "Icons",
+    "fieldName": "ContentDocument.LatestPublishedVersion.Icons__c",
+    "type":"multi-value",
+    "cellAttributes": {"alignment":"left","class":"slds-text-color_destructive"},
+    "typeAttributes": {"variant": "icon","iconVariant":"error","size":"small"}
+}
+...
+```
+
+_Notes_:
+* for the `avatar` variant, the `iconName` property provides a fallback standard
+icon name if the URL value (e.g. `/file-asset/JsonFile`) provided by the `fieldName`
+property does not render (e.g. if its value is empty, incorrect or not allowed to
+the current user).
+* for the `icon` and `avatar` variants, `iconVariant` enables to set the actual
+variant of the icon or avatar component.
+* `"wrapText":true` statements may be added to force the wrapping and ensure a
+full display of all elements.
+* As a baseline, the different parts of the multi-picklist field are split and
+injected in the proper unitary display component.
+    * The `label` of the field is used by default as title for the icons and avatars.
+    * However, it is possible to leverage `#` in the picklist values to specify
+    different `label` and even `variant` values for each individual value, e.g.
+    `standard:contact#Contacts` for the _contact_ standard icon with _Contacts_ as
+    title or `utility:shield#Shield#success` for the _shield_ utility
+    icon with _Shield_ as title and _error_ as variant
 
 
 ## Technical Details

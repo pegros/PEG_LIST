@@ -396,6 +396,13 @@ export default class SfpegTileDsp extends LightningElement {
             result.iconName = this.getFieldValue(fieldConfig.typeAttributes?.iconName); 
             result.variant = this.getFieldValue(fieldConfig.typeAttributes?.variant); 
         }
+        else if (fieldConfig.type == 'multi-value') {
+            if (this.isDebug) console.log('initFieldData: processing multi-value field ', fieldConfig.fieldName);
+            result.iconVariant = this.getFieldValue(fieldConfig.typeAttributes?.iconVariant); 
+            result.iconName = this.getFieldValue(fieldConfig.typeAttributes?.iconName); 
+            result.iconSize = this.getFieldValue(fieldConfig.typeAttributes?.size); 
+            result.variant = this.getFieldValue(fieldConfig.typeAttributes?.variant); 
+        }
 
         if (fieldConfig.cellAttributes?.class) {
             if (this.isDebug) console.log('initFieldData: processing class property');

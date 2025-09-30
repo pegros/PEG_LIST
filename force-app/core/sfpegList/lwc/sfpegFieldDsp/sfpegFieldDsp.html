@@ -75,7 +75,7 @@
         <div>
             <c-sfpeg-icon-dsp   icon-name={fieldIconName}
                                 icon-variant={fieldVariant}
-                                icon-size="x-small"
+                                icon-size={fieldIconSize}
                                 icon-title={fieldLabel}
                                 icon-value={fieldValue}>
             </c-sfpeg-icon-dsp>
@@ -87,7 +87,7 @@
             <lightning-avatar   src={fieldValue}
                                 fallback-icon-name={fieldIconName}
                                 variant={fieldVariant}
-                                size="small"
+                                size={fieldIconSize}
                                 alternative-text={fieldLabel}
                                 title={fieldLabel}>
             </lightning-avatar>
@@ -102,6 +102,16 @@
                                 class={fieldClass}>
             </lightning-badge>
         </div>
+    </template>
+
+    <template lwc:elseif={isMultiValue}>
+        <c-sfpeg-multi-picklist-dsp value={fieldValue}
+                                    variant={fieldVariant}
+                                    icon-variant={fieldIconVariant}
+                                    fallback-icon-name={fieldIconName}
+                                    size={fieldIconSize}
+                                    label={fieldLabel}>
+        </c-sfpeg-multi-picklist-dsp>
     </template>
 
     <template lwc:else>
