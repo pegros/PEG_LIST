@@ -1020,7 +1020,7 @@ property may be used to display the icon at the `end`.
 alignment. 
 
 
-## Multi-Value Field Type Display
+### Multi-Value Field Type Display
 
 You may configure the list metadada record either to display multi-value fields
 either as `,`separate strings, list of badges, list of icons or avatars as
