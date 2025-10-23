@@ -10,7 +10,6 @@
                             variant={iconVariant}
                             title={iconTitle}>
             </lightning-icon>
-            <!-- name={actionName}-->
         </template>
 
         <!-- Icon from Static Resource Case -->
@@ -20,7 +19,15 @@
                             variant={iconVariant} 
                             title={iconTitle}>
             </lightning-icon>
-            <!-- name={cmpName} class={iconClass}   onclick={handleIconAction}-->
+        </template>
+
+        <!-- Icon from Static Resource Case -->
+        <template lwc:elseif={isFlagIcon}>
+            <lightning-icon src={iconSrc}
+                            size={iconSize}
+                            variant={iconVariant} 
+                            title={iconTitle}>
+            </lightning-icon>
         </template>
 
         <!-- Dynamic Icon Case -->

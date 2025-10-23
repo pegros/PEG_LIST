@@ -2,8 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Parent__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
     <description>For hierarchy test cases</description>
-    <externalId>false</externalId>
     <inlineHelpText>For hierarchy test cases</inlineHelpText>
     <label>Parent</label>
     <referenceTo>sfpegTestObject__c</referenceTo>

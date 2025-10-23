@@ -1,7 +1,7 @@
 <template>
 
-    <lightning-card	title="Available resource:xxx Icons for the SF PEG Components" icon-name="standard:all" >
-        <template if:true={isReady}>
+    <lightning-card	title="Available resource:xxx Icons (and Sizes) for the SF PEG Components" icon-name="standard:all" class="slds-m-bottom_small">
+        <template lwc:if={isReady}>
             <lightning-layout multiple-rows="true" horizontal-align="center">
                 <template for:each={iconCatalog} for:item="iterIcon">
                     <lightning-layout-item padding="around-small" key={iterIcon.name}>
@@ -9,24 +9,25 @@
                             <lightning-layout vertical-align="end" horizontal-align="center">
                                 <template for:each={iterIcon.sizes} for:item="iterSize">
                                     <lightning-layout-item  padding="around-small" key={iterSize} >
-                                        <div style="border: 1px rgb(201, 201, 201) dashed; border-radius: 3px;" class="slds-grow-none slds-theme_shade slds-p-around_x-small">
-                                        <c-sfpeg-icon-dsp   icon-name={iterIcon.name}
-                                                            icon-size={iterSize}
-                                                            icon-variant="inverse">
-                                        </c-sfpeg-icon-dsp>
+                                        <div    style="border: 1px rgb(201, 201, 201) dashed; border-radius: 3px;"
+                                                class="slds-grow-none slds-theme_shade slds-p-around_x-small">
+                                            <c-sfpeg-icon-dsp   icon-name={iterIcon.name}
+                                                                icon-size={iterSize}
+                                                                icon-variant="inverse">
+                                            </c-sfpeg-icon-dsp>
                                         </div>
                                         <p class="slds-text-title slds-align_absolute-center">{iterSize}</p>
                                     </lightning-layout-item>
                                 </template>
                             </lightning-layout>
-                           <p class="slds-align_absolute-center slds-m-bottom_x-small">{iterIcon.label}</p>
+                            <p class="slds-align_absolute-center slds-m-bottom_x-small">{iterIcon.label}</p>
                         </div>
                     </lightning-layout-item>
                 </template>
             </lightning-layout>
         </template>
         
-        <template if:false={isReady}>
+        <template lwc:else>
             <div style="min-height: 100px;">
                 <lightning-spinner alternative-text="Loading..." size="small">
                 </lightning-spinner>

@@ -1,0 +1,57 @@
+<template>
+
+    <lightning-card	title="Available flag:XX Icons for the SF PEG Components" icon-name="custom:custom26" class="slds-m-top_medium">
+        <template lwc:if={isReady}>
+            <lightning-layout multiple-rows="true" horizontal-align="center">
+                <template for:each={iconCatalog} for:item="iterIcon">
+                    <lightning-layout-item padding="around-small" key={iterIcon}>
+                        <div class="slds-box slds-box_xx-small ">
+                            <lightning-layout vertical-align="end" horizontal-align="center">
+                                <lightning-layout-item  padding="around-small" >
+                                    <div    style="border: 1px rgb(201, 201, 201) dashed; border-radius: 3px;"
+                                            class="slds-grow-none slds-theme_shade slds-p-around_x-small">
+                                        <c-sfpeg-icon-dsp   icon-name={iterIcon.icon}
+                                                            icon-size="large"
+                                                            is-debug="true">
+                                        </c-sfpeg-icon-dsp>
+                                    </div>
+                                    <p class="slds-text-title slds-align_absolute-center">large</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item  padding="around-small" >
+                                    <div    style="border: 1px rgb(201, 201, 201) dashed; border-radius: 3px;"
+                                            class="slds-grow-none slds-theme_shade slds-p-around_x-small">
+                                        <c-sfpeg-icon-dsp   icon-name={iterIcon.icon}
+                                                            icon-size="medium"
+                                                            is-debug="true">
+                                        </c-sfpeg-icon-dsp>
+                                    </div>
+                                    <p class="slds-text-title slds-align_absolute-center">medium</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item  padding="around-small" >
+                                    <div    style="border: 1px rgb(201, 201, 201) dashed; border-radius: 3px;"
+                                            class="slds-grow-none slds-theme_shade slds-p-around_x-small">
+                                        <c-sfpeg-icon-dsp   icon-name={iterIcon.icon}
+                                                            icon-size="small"
+                                                            is-debug="true">
+                                        </c-sfpeg-icon-dsp>
+                                    </div>
+                                    <p class="slds-text-title slds-align_absolute-center">small</p>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <p class="slds-align_absolute-center slds-m-bottom_x-small">
+                                {iterIcon.code2} - {iterIcon.code3} - {iterIcon.label}
+                            </p>
+                        </div>
+                    </lightning-layout-item>
+                </template>
+            </lightning-layout>
+        </template>
+        <template lwc:else>
+            <div style="min-height: 100px;">
+                <lightning-spinner alternative-text="Loading..." size="small">
+                </lightning-spinner>
+            </div>
+        </template>
+    </lightning-card>
+</div>
+</template>

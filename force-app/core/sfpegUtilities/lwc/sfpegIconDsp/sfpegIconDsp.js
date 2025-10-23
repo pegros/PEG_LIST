@@ -35,6 +35,7 @@
 import { LightningElement,track,api } from 'lwc';
 
 import CUSTOM_ICONS from '@salesforce/resourceUrl/sfpegIcons';
+import FLAG_ICONS from '@salesforce/resourceUrl/sfpegFlagIcons';
 
 export default class SfpegIconDsp extends LightningElement {
 
@@ -64,21 +65,23 @@ export default class SfpegIconDsp extends LightningElement {
 
     // Internal technical parameters
     @track isResourceIcon = false;  // Indicates that the iconName is leveraging the custom SVG static resource
-    @track iconSrc;                 // Source if the custom SVG to display (with name + size)
+    @track isFlagIcon = false;      // Indicates that the iconName is leveraging the custom Flag SVG static resource
+    @track iconSrc;                 // Source if the custom / flag SVG to display (with name + size)
     @track iconClass = "";          // CSS class to apply
     @track isDynamicIcon = false;   // Indicates that the iconName is a type of lightning:dynamicIcon 
     @track iconType;                // Type of lightning:dynamicIcon to display
     @track isProgressRing = false;  // Indicates that the iconName is a lightning:progressRing
 
     //Widget Labels & Titles from custom labels
-    customIconsRsc = CUSTOM_ICONS; // Static resource for custom SVG Icons
+    customIconsRsc = CUSTOM_ICONS;  // Static resource for custom SVG Icons
+    flagIconsRsc = FLAG_ICONS;      // Static resource for custom SVG Flag Icons
 
     //----------------------------------------------------------------
     // Custom Getters
     //----------------------------------------------------------------
     get isStandardIcon () {
-        if (this.isDebug) console.log('isStandardIcon: returning ', !(this.isResourceIcon || this.isDynamicIcon || this.isProgressRing));
-        return !(this.isResourceIcon || this.isDynamicIcon || this.isProgressRing);
+        if (this.isDebug) console.log('isStandardIcon: returning ', !(this.isResourceIcon || this.isFlagIcon || this.isDynamicIcon || this.isProgressRing));
+        return !(this.isResourceIcon || this.isFlagIcon || this.isDynamicIcon || this.isProgressRing);
     }
 
     //----------------------------------------------------------------
@@ -97,6 +100,15 @@ export default class SfpegIconDsp extends LightningElement {
                 this.isResourceIcon = true;
                 this.iconSrc = this.customIconsRsc + '#' + this.iconName.substring(9) + '-' + this.iconSize;
                 if (this.isDebug) console.log('connected: setting custom icon src ',this.iconSrc);
+                if (this.iconVariant === "inverse") {
+                    this.iconClass = "slds-icon_container slds-theme_default";
+                    if (this.isDebug) console.log('connected: setting inverse icon class ',this.iconClass);
+                }
+            }
+            else if (this.iconName.includes('flag:')) {
+                this.isFlagIcon = true;
+                this.iconSrc = this.flagIconsRsc + '#' + this.iconName.substring(5) + '-' + this.iconSize;
+                if (this.isDebug) console.log('connected: setting flag icon src ',this.iconSrc);
                 if (this.iconVariant === "inverse") {
                     this.iconClass = "slds-icon_container slds-theme_default";
                     if (this.isDebug) console.log('connected: setting inverse icon class ',this.iconClass);

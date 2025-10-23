@@ -14,8 +14,11 @@ The **sfpegIconDsp** component is a pure display and interaction component enabl
 to easily display various types of icons while masking the underlying technical
 implementation variations.
 
-It mainly relies on the standard [lightning-icon](https://developer.salesforce.com/docs/component-library/bundle/lightning-icon/documentation) component to display standard [SLDS icons](https://www.lightningdesignsystem.com/icons/) or custom SVG icons from the **sfpegIcons** static resource if the `resource:` prefix is used in the
-icon name.
+It mainly relies on the standard [lightning-icon](https://developer.salesforce.com/docs/component-library/bundle/lightning-icon/documentation) component to display standard [SLDS icons](https://www.lightningdesignsystem.com/icons/) or custom SVG icons from:
+* the **sfpegIcons** static resource if the `resource:` prefix is used in the
+icon name
+* the **sfpegFlagIcons** static resource if the `flag:` prefix is used in the
+icon name
 
 If the _dynamic:_ prefix is used, it may also use the
 [lightning-dynamic-icon](https://developer.salesforce.com/docs/component-library/bundle/lightning-dynamic-icon/documentation)
@@ -60,7 +63,9 @@ As icon names, the following options are supported
 * **SLDS icons** such as `utility:check`, `custom:custom12`, `standard:account`...,
 `iconVariant` property being available only for `utility` ones
 * **custom icons** as `resource:<iconName>` where each `<iconName>` should reference
-(with its size) a SVG icon sprite in the **sfpegIcons** static resource (see further below)
+a SVG icon sprite in the **sfpegIcons** static resource (see further below)
+* **custom flag icons** as `flag:<countryCode>` where each `<countryCode>` should reference
+a valid ISO2 country code or a custom registered for specific flags in the **sfpegFlagIcons** static resource (see further below)
 * **dynamic icons** either `dynamic:score`, `dynamic:strength` or `dynamic:trend` with a
 required `iconValue` (corresponding to the `option` of the underlying **lightning-dynamic-icon**)
 but no `iconSize` nor `iconVariant` properties
@@ -93,8 +98,9 @@ static resource as it will be overridden!
 Please retrieve first a copy of the previous version before deploying the new package version and
 redeploy the first copy (or a merge with the new version) afterwards.
 
-The content of the static resource is easily accessible via the **sfpegIconCatalog** App page.
-![Icon Catalog Page](/media/sfpegIconCatalog.png)
+The content of the static resource is easily accessible via the first tab of the
+**sfpegIconCatalog** App page.
+![Icon Catalog Page](/media/sfpegIconCatalogIcons.png)
 
 In the following example, the `resource:total` icon is defined in both medium and small formats.
 * the id of the sprite is built following the `<iconName>-<iconSize>` format
@@ -118,6 +124,61 @@ the stroke-width may also be adapted to the size.
 ```
 
 Please refer to the standard [lightning-icon](https://developer.salesforce.com/docs/component-library/bundle/lightning-icon/documentation) component for more details about how custom icons work.
+
+
+### Custom Flag Icons Extension (via Static Resource)
+
+The **sfpegFlagIcons** static resource contains SVG flag icons usable
+in the other components via the `flag:XX` syntax. By default, it includes
+the flags for all official ISO countries in `small`, `medium`and `large` sizes.
+SVG flag icons are indexed by ISO2 country code  and size (e.g. `FR-medium`
+for the medium French flag).
+
+If new flags are required, new SVG definitions may be added in the static
+resource for the new icon in all target sizes.
+
+The list of countries is available in 2 `Global Value Sets`:
+* **sfpegCountries** enables to define custom country picklists (as the standard
+Salesforce ne may not be reused),only English labels being provided for now.
+* **sfpegCountryCodes** enables to convert ISO3 to ISO2 codes (e.g. when ISO3
+codes are used in a system integration)
+
+A few non ISO standard country codes (with 3 or 4 digits instead of 2) have been
+added to support special flags:
+* for organisations such as the UNO or the European Union 
+* for England, Wales and Scotland
+* for some special islands having separate flags but teh same ISO code
+
+The content of the static resource is easily accessible via the first tab of the
+**sfpegIconCatalog** App page.
+![Icon Catalog Page](/media/sfpegIconCatalogFlags.png)
+
+ℹ️ ISO2 country codes have been used for flag icon identification as it matches
+the values stored for address country fields when enabling the standard Salesforce
+_State and Country/Territory Picklists_.
+
+
+## Usage Example
+
+### Address with Flag
+
+Leveraging the **[Message List](/help/sfpegMessageListCmp.md)** component of the 
+**[sfpegList-extensions](/help/sfpegListPkgExtensions.md)** unlocked package, it is
+easy to display an address with the flag corresponding to the country displayed next
+to it.
+![Country Flag of Address](/media/sfpegIconDspFlag.png)
+
+After having activated the standard Salesforce country and state picklists, the message
+configuration is the following (e.g. for the Account object):
+```
+{
+    "size":"12",
+    "header":"Billing Address",
+    "message":"{{{RCD.BillingStreet}}}<BR/>{{{RCD.BillingPostalCode}}} {{{RCD.BillingCity}}}<BR/>{{{RCD.BillingCountryCode.LBL}}}",
+    "iconName":"flag:{{{RCD.BillingCountryCode}}}",
+    "iconSize":"large"
+}
+```
 
 
 ## Technical Details

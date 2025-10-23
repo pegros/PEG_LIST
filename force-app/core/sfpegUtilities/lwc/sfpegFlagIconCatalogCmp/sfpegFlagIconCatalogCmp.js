@@ -1,15 +1,15 @@
 /***
 * @author P-E GROS
-* @date   Feb 2022
-* @description  LWC Component to display all the custom Icons available in the
-*               sfpegIcons static resource used by the sfpegIconDsp component.
+* @date   Oct 2025
+* @description  LWC Component to display all the custom Flag Icons available in the
+*               sfpegFlagIcons static resource used by the sfpegIconDsp component.
 * @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 
 * MIT License
 * 
-* Copyright (c) 2022 pegros
+* Copyright (c) 2025 pegros
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -31,9 +31,9 @@
 ***/
 
 import { LightningElement, track, api} from 'lwc';
-import getIconList     from '@salesforce/apex/sfpegIconCatalog_CTL.getIconList';
+import getFlagIconList     from '@salesforce/apex/sfpegIconCatalog_CTL.getFlagIconList';
 
-export default class SfpegIconCatalogCmp extends LightningElement {
+export default class SfpegFlagIconCatalogCmp extends LightningElement {
 
     //----------------------------------------------------------------
     // Main configuration fields (for App Builder)
@@ -54,14 +54,10 @@ export default class SfpegIconCatalogCmp extends LightningElement {
 
         console.log('connected: fetching icon catalog from server');
 
-        getIconList({})
+        getFlagIconList({})
         .then( result => {
-            console.log('connected: icon catalog received ',JSON.stringify(result));
-
-            for (let iter of Object.keys(result)) {
-                console.log('connected: proccessing icon ',iter);
-                this.iconCatalog.push({name: 'resource:' + iter, label: iter, sizes: result[iter]});
-            }
+            console.log('connected: flag icon catalog received ',JSON.stringify(result));
+            this.iconCatalog = result;
             console.log('connected: END / catalog init ', JSON.stringify(this.iconCatalog));
             this.isReady = true;                
         }).catch( error => {

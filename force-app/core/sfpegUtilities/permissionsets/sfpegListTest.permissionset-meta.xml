@@ -7,6 +7,16 @@
     <description>Permission Set providing access to the custom elements required for Apex tests of all sfpegList components</description>
     <fieldPermissions>
         <editable>true</editable>
+        <field>sfpegTestObject__c.CountryCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>sfpegTestObject__c.Country__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>sfpegTestObject__c.ExternalId__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -39,6 +49,7 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>sfpegTestObject__c</object>
+        <viewAllFields>true</viewAllFields>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>

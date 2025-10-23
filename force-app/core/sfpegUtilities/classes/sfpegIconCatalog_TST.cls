@@ -90,6 +90,25 @@ public class  sfpegIconCatalog_TST {
 		}
 
 		Test.stopTest();
-		System.debug('testGetConfiguration: END');
+		System.debug('testGetIconList: END');
+	}
+
+	@isTest
+	static void testGetFlagIconList() {
+		System.debug('testGetFlagIconList: START');
+		Test.startTest();
+
+		try {
+			sfpegIconCatalog_CTL.getFlagIconList();
+			System.debug(LoggingLevel.Error,'testGetFlagIconList: catalog properly fetched');
+			System.assert(true);
+		}
+		catch (Exception e) {
+			System.debug('testGetFlagIconList: exception raised when fetching catalog ' + e.getMessage());
+			System.assert(false);
+		}
+
+		Test.stopTest();
+		System.debug('testGetFlagIconList: END');
 	}
 }

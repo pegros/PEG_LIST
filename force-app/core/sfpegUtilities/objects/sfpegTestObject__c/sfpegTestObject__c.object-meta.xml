@@ -143,6 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
     <description>Custom Object to support the test classes of the Apex controllers for the sfpeg LWC components</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
