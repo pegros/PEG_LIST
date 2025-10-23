@@ -185,3 +185,8 @@ configuration is the following (e.g. for the Account object):
 
 ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to 
 get more global information about the way the components have been implemented.
+
+ℹ️ Custom and flag icons provided by default in the package are derived from
+opensource SVG files found on the [svgrepo](https://www.svgrepo.com/) site.
+Colors and sizing have been modified and all unitary SCG files grouped in
+two SVG sprite files (**sfpegIcons** and **sfpegFlagIcons** static resources).
