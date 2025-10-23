@@ -182,7 +182,9 @@ Hereafter is an example of the **sfpegAction__mdt** record used for row level ac
 
 ### Custom Field Types (richText, percent-fixed, badge, avatar, icon)
 
-The standard **[lightning-datatable](https://developer.salesforce.com/docs/component-library/bundle/lightning-datatable/documentation)** base component supports a rich set of out-of-the-box field types with specific configuration
+The standard **[lightning-datatable](https://developer.salesforce.com/docs/component-library/bundle/lightning-datatable/documentation)**
+and **[lightning-tree-grid](https://developer.salesforce.com/docs/component-library/bundle/lightning-tree-grid/documentation)**
+base components support a rich set of out-of-the-box field types with specific configuration
 properties.
 
 However, a few important UX cases are not supported natively and a few custom field types have been added
@@ -192,15 +194,13 @@ for details)
 * `percent-fixed` for percent fields to prevent the multiplication by 100 of the standard `percent` option (see **[lightning-formatted-number](https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-number/documentation)** for details).
 * `badge` to display a **[lightning-badge](https://developer.salesforce.com/docs/component-library/bundle/lightning-badge/documentation)**, with `iconName` and `variant` (for the icon position) as type attributes.
 * `avatar` to display an asset file as a **[lightning-avatar](https://developer.salesforce.com/docs/component-library/bundle/lightning-avatar/documentation)**, with `iconName` (for fallback icon name), `variant` and `size` as type attributes.
-* `badge` to display a **[sfpegIconDsp](/help/sfpegIconDsp.md)** icon, with `iconName`, `variant` and `size` as type attributes.
+* `icon` to display a **[sfpegIconDsp](/help/sfpegIconDsp.md)** icon, with `iconName`, `variant` and `size` as type attributes.
 * `multi-value` to display a multi-picklist field (or any `;` separated text field)
 in various more user friendly variants (comma separated strings, list of badges,
 list of icons, list of avatars) with `iconName`, `variant`, `iconVariant` and
 `size` as type attributes.
 
-See  section further below for configuration examples.
-
-⚠️ These custom field types are still unsupported in the _dataTree_ display mode. This should come ASAP.
+See section further below for configuration examples.
 
 
 ### No Data Display Handling
