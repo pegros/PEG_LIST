@@ -531,10 +531,18 @@ public with sharing class sfpegList_CTL {
 			throw new AuraHandledException('Paginated Query failure: No OrderBy field configured');
 		}
 
-		String paginationClause = ' Id != null '; // default initial page clause.
-		if (String.isNotEmpty(lastValue)) {
-			System.debug(LoggingLevel.FINE,'initPagination: computing clause');
-			paginationClause = fieldName + ((orderDir == 'ASC') ? ' > \'' : ' < \'') + lastValue + '\'';
+		String paginationClause; 
+		if (fieldName == 'OFFSET') {
+			System.debug(LoggingLevel.FINE,'initPagination: initializing offset pagination clause');
+			paginationClause = ' OFFSET ' + lastValue;
+		}
+		else {// default initial page clause.
+			System.debug(LoggingLevel.FINE,'initPagination: initializing custom pagination clause');
+			paginationClause = ' Id != null ';
+			if (String.isNotEmpty(lastValue)) {
+				System.debug(LoggingLevel.FINE,'initPagination: computing clause');
+				paginationClause = fieldName + ((orderDir == 'ASC') ? ' > \'' : ' < \'') + lastValue + '\'';
+			}
 		}
 
 		Map<Object,Object> returnMap = new Map<Object,Object>{

@@ -125,14 +125,19 @@ _Note_: Additional security related parameters will be soon added for the SOQL m
 The **PaginationHandling** section defines how pagination (for progressive data load for large data sets) should work:
 * `Do Pagination ?` to check to activate pagination (supported only in SOQL and Apex modes for now)
 * `Query Count` to provide a SOQL `count()` query corresponding to the _Query SOQL_ (if SOQL mode retrieval is used)
-* `Query Order By Field` and `Order Direction` to let the component properly manage the pagination (the feature not
-relying in the standard SOQL `OFFSET` mechanism but on explicit `WHERE` clause statements).
+* `Query Order By Field` and `Order Direction` to let the component properly manage the pagination
+(the feature relying either on the the standard SOQL `OFFSET` mechanism or custom explicit `WHERE`
+clause statements).
+    * `OFFSET` mechanism is triggered when `Query Order By Field` is set to `OFFSET` value.
+    * Otherwise `Query Order By Field` should be set to a valid field API Name (having no duplicate
+    values to ensure proper pagination)
 * When pagination mode is activated in SOQL mode, the _Query SOQL_ should then include 
-    * a specific `{{{PAGE}}}` merge token within its `WHERE` clause to set the page range limit (lower or higher depending on direction)
+    * a specific `{{{PAGE}}}` merge token either at the end (if `OFFSET` mechanism  is used) or within
+    its `WHERE` clause to set the page range limit (lower or higher depending on direction) otherwise
     * a `LIMIT` clause to set the page size (in number of records)
-    * an `ORDER BY` clause corresponding to the specified _Query Order By Field_ and _Order Direction_ properties
-* When pagination mode is activated in Apex mode, the called _Query Class_ should then implement the  `getCount()`
-and `getPaginatedData()` methods instead of the base `getData()` one.
+    * an `ORDER BY` clause corresponding to the specified _Query Order By Field_ and _Order Direction_ properties (unless when using the `OFFSET` mechanism)
+* When pagination mode is activated in Apex mode, the called _Query Class_ should then implement
+the  `getCount()` and `getPaginatedData()` methods instead of the base `getData()` one.
 
 
 The **Display** section defines how data are displayed in the component:
@@ -236,19 +241,50 @@ Hereafter is such an example.
 }
 ```
 
+
 ### Special Paginated Use Cases
 
-When using the pagination, this example should be modified the following way:
+#### OFFSET Pagination Mode
+
+When using the standard SOQL `OFFSET` pagination, this example should be modified the following way:
 * `Query Template` should be modified to :<br/>
 ```
-SELECT...  WHERE  WhatId = '{{{RECORD}}}' and IsClosed = false and RecordType.DeveloperName = 'NBA' and {{{PAGE}}} order by Id desc limit 5
+SELECT...  FROM Task    WHERE   WhatId = '{{{RECORD}}}' AND IsClosed = false
+                                AND RecordType.DeveloperName = 'NBA'
+                        ORDER BY by Id desc LIMIT 5 {{{PAGE}}}
 ```
 * `Query Count` should be set to : <br/>
 ```
-SELECT count() FROM Task WHERE  WhatId = '{{{ID}}}' and IsClosed = false and RecordType.DeveloperName = 'NBA'
+SELECT count() FROM Task WHERE  WhatId = '{{{ID}}}' AND IsClosed = false
+                                AND RecordType.DeveloperName = 'NBA'
+```
+* `Query OrderBy Field` should be set to `OFFSET`
+* `Order Direction` should be set to any value (ignored)
+
+⚠️ The `{{{PAGE}}}` token should be included at the end of the `Query Template`  and 
+will be replaced by ` OFFSET 10 ` if pagination done every 10 records.
+
+
+#### Custom Pagination Mode
+
+When using the custom pagination, this example should be modified the following way:
+* `Query Template` should be modified to :<br/>
+```
+SELECT...  FROM Task WHERE      WhatId = '{{{RECORD}}}' and IsClosed = false
+                                AND RecordType.DeveloperName = 'NBA'
+                                AND {{{PAGE}}}
+                                ORDER BY Id desc LIMIT 5
+```
+* `Query Count` should be set to : <br/>
+```
+SELECT count() FROM Task WHERE  WhatId = '{{{ID}}}' and IsClosed = false
+                                AND RecordType.DeveloperName = 'NBA'
 ```
 * `Query OrderBy Field` should be set to `Id`
 * `Order Direction` should be set to `Descending`
+
+⚠️ The `{{{PAGE}}}` token should be included in the `WHERE` clause of the `Query Template` and 
+will be replaced by e.g. `<Query OrderBy Field>  > 'xxxx'` if pagination done in ascending direction.
 
 
 ### Special Preset List Filter

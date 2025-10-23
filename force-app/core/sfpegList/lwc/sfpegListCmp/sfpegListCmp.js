@@ -456,12 +456,6 @@ export default class SfpegListCmp extends LightningElement {
                         this.configDetails.type = "TileList"; 
                         this.configDetails.display.cardNbr = 1; 
                         this.configDetails.display.fieldNbr = 1; 
-                        /*if (this.configDetails.display.menu) {
-                            this.configDetails.display.menu.forEach(item => {
-                                if (!item.title) item.title = item.label;
-                                if (item.label) delete item.label;
-                            });
-                        }*/
                     }
                     else if (((this.isDataTable) || (this.isTreeGrid)) && (this.configDetails.display.columns) && (this.configDetails.display.details)) {
                         if (this.isDebug) console.log('connected: registering detail fields as columns');
@@ -795,7 +789,8 @@ export default class SfpegListCmp extends LightningElement {
                     if (this.isDebug) console.log('executeQuery: fetching data (1st page)');
                     return getPaginatedData({   name:   this.configName,
                                                 input:  inputData,
-                                                lastRecord: null    });
+                                                lastRecord: (this.configDetails?.query?.orderByField === 'OFFSET') ? 0 : null
+                                            });
                 }
                 else {
                     if (this.isDebug) console.log('executeQuery: no data to fetch');
@@ -831,10 +826,16 @@ export default class SfpegListCmp extends LightningElement {
                 if (this.isDebug) console.log('executeQuery: selectedRecords init ', JSON.stringify(this.selectedRecords || null));
 
                 if (this.isDebug) console.log('executeQuery: tracking last record key ', this.configDetails.query.orderByField);
-                let lastRecord = (this.resultList.length > 0 ? (this.resultList.slice(-1)) : null);
-                if (this.isDebug) console.log('executeQuery: lastRecord fetched ', JSON.stringify(lastRecord));
-                this.lastRecordKey = (lastRecord ? (lastRecord[0])[(this.configDetails.query.orderByField)] : null);
-                if (this.isDebug) console.log('executeQuery: lastRecordKey registered ', this.lastRecordKey);
+                if (this.configDetails?.query?.orderByField === 'OFFSET') {
+                    this.lastRecordKey = this.resultList?.length || 0;
+                    if (this.isDebug) console.log('executeQuery: lastRecordKey registered with result length ', this.lastRecordKey);
+                }
+                else {
+                    let lastRecord = (this.resultList.length > 0 ? (this.resultList.slice(-1)) : null);
+                    if (this.isDebug) console.log('executeQuery: lastRecord fetched ', JSON.stringify(lastRecord));
+                    this.lastRecordKey = (lastRecord ? (lastRecord[0])[(this.configDetails.query.orderByField)] : null);
+                    if (this.isDebug) console.log('executeQuery: lastRecordKey registered from last record ', this.lastRecordKey);
+                }
 
                 if (this.filterString) {
                     if (this.isDebug) console.log('executeQuery: filtering results ');
@@ -1023,11 +1024,17 @@ export default class SfpegListCmp extends LightningElement {
             if (this.isDebug) console.log('handleLoadNext: #original results ', this.resultListOrig?.length);
 
             if (this.isDebug) console.log('handleLoadNext: tracking last record key ', this.configDetails.query.orderByField);
-            let lastRecord = (resultList.length > 0 ? (resultList.slice(-1)) : null);
-            if (this.isDebug) console.log('handleLoadNext: lastRecord fetched ', JSON.stringify(lastRecord));
-            this.lastRecordKey = ((lastRecord || [{}])[0])[(this.configDetails.query.orderByField)];
-            if (this.isDebug) console.log('handleLoadNext: lastRecordKey registered ', this.lastRecordKey);
-                
+            if (this.configDetails?.query?.orderByField === 'OFFSET') {
+                this.lastRecordKey = (resultList?.length > 0 ? this.lastRecordKey + resultList.length : null);
+                if (this.isDebug) console.log('handleLoadNext: lastRecordKey registered with result length ', this.lastRecordKey);
+            }
+            else {
+                let lastRecord = (resultList.length > 0 ? (resultList.slice(-1)) : null);
+                if (this.isDebug) console.log('handleLoadNext: lastRecord fetched ', JSON.stringify(lastRecord));
+                this.lastRecordKey = ((lastRecord || [{}])[0])[(this.configDetails.query.orderByField)];
+                if (this.isDebug) console.log('handleLoadNext: lastRecordKey registered ', this.lastRecordKey);
+            }
+
             if (this.filterString) {
                 if (this.isDebug) console.log('handleLoadNext: filtering results ');
                 this.filterRecords();
@@ -1103,9 +1110,9 @@ export default class SfpegListCmp extends LightningElement {
         if (this.isDebug) console.log('handleSort: selected sortDirection ',sortDirection);
 
         let results2sort = [...this.resultList];
-        if (this.isDebug) console.log('handleSort: results2sort init ',results2sort);
+        if (this.isDebug) console.log('handleSort: results2sort init ',JSON.stringify(results2sort));
         results2sort.sort(sfpegJsonUtl.sfpegJsonUtl.sortBy(sortedBy, sortDirection !== 'asc'));
-        if (this.isDebug) console.log('handleSort: results2sort sorted ',results2sort);
+        if (this.isDebug) console.log('handleSort: results2sort sorted ',JSON.stringify(results2sort));
         this.resultList = results2sort;
 
         this.sortDirection = sortDirection;
