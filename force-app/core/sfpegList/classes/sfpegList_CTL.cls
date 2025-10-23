@@ -617,7 +617,7 @@ public with sharing class sfpegList_CTL {
 			results = Database.query(query);
 		}
 
-		if ((bypassFLS) || (query.contains('WITH USER_MODE'))) {
+		if ((bypassFLS) || (query.contains('WITH SYSTEM_MODE')) || (Schema.AggregateResult.getSObjectType() == results[0]?.getSObjectType())) {
 			System.debug('executeSoql:END / FLS field stripping bypassed returning #items ' + results.size());
 			return results;
 		}
