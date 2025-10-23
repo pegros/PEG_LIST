@@ -65,7 +65,10 @@ All of the confguration lies in the `Display Config` property, which should cont
 of KPI group definitions, each one consisting in:
 * a `header` with
     * `label` and `iconName` properties to display in the header title
-    * a `size` property to control the width of the group container withiin the component (in sub-units of a 12 column grid)
+    * a `size` property to control the width of the group container within the component (in sub-units of a 12 column grid)
+    * an optional `kpiAlign` property to override the layout of the list of individual
+    KPIs within the group (`middle` by default but may be set to `start` to align left or
+    `end` to align right) 
     * an optional `actions` property to display an action bar in the group header (with the name of an applicable 
     **sfpegAction__mdt** custom metadata record, see **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** for details),
     with additional `actionMaxSize` and `actionHidden` parameters to control actual display of the action bar.

@@ -150,7 +150,8 @@ export default class SfpegKpiListCmp extends LightningElement {
                             iterGrp.cardClass = 'cardWrapper' + (iterGrp.border ? ' slds-card_boundary' : '');
                             //iterGrp.cardClass = 'cardWrapper' + (iterGrp.border ? ' cardWrapperBorder' : '');
                             if (this.isDebug) console.log('connected: cardClass set ',iterGrp.cardClass);
-                        
+                            iterGrp.contentClass = 'slds-grid slds-wrap slds-grid_pull-padded-medium slds-gutters_x-small slds-var-m-horizontal_xxx-small slds-grid_vertical-align-center slds-var-p-bottom_small slds-grid_align-' + (iterGrp.kpiAlign ? iterGrp.kpiAlign : 'center');
+                            if (this.isDebug) console.log('connected: contentClass set ',iterGrp.contentClass);
 
                             // Unitary KPI processing
                             if (iterGrp.kpis) {
