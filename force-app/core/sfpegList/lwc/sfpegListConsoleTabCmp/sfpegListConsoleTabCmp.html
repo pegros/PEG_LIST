@@ -1,0 +1,20 @@
+<template>
+    <template lwc:if={isReady}>
+        <template lwc:if={isDebug}>
+            <div class="slds-box slds-theme_default slds-m-bottom_small">
+                <p>List Tab instantiated ✅</p>
+            </div>
+        </template>
+        <c-sfpeg-list-tab-cmp is-debug={isDebug}>
+        </c-sfpeg-list-tab-cmp>
+    </template>
+    <template lwc:else>
+        <template lwc:if={isDebug}>
+            <div class="slds-box slds-theme_default">
+                <p>⚠️ Waiting...</p>
+            </div>
+        </template>
+        <lightning-spinner  alternative-text="loading"  size="medium">
+        </lightning-spinner>
+    </template>
+</template>

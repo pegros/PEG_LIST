@@ -17,6 +17,11 @@ and more exhaustive table display of the same related list.
 ![sfpegListTabCmp Display](/media/sfpegListTabCmp.md)
 
 
+🚨 Because of a Lightning page context initialization issue in console
+mode with _pinned_ Lightning Page Layouts, a **sfpegListConsoleTabCmp** wrapper
+component is also provided and should be used preferrably in such use cases.
+
+
 ## Component Configuration
 
 ℹ️ Please refer to the [Component Configuration](/help/configuration.md) dedicated page to 
@@ -82,6 +87,11 @@ tab is the following:
 }
 ```
 
+⚠️ When in console mode with _pinned_ Lightning Page Layouts, please use the
+`c__sfpegListConsoleTabCmp` LWC component name instead of `c__sfpegListTabCmp`
+to avoid any rendering issue.
+
+
 ### Back to Original Tab
 
 A standard **sfpegAction** configuration to use in a **sfpegListTabCmp** 
@@ -114,9 +124,15 @@ This component implements the standard LWC **[Addressable](https://developer.sal
 It also relies on the **[sfpegListCmp](/help/sfpegListCmp.md)** and **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**
 of the **PEG_LIST** package.
 
-⚠️ A strange behaviour has been identified with _Pinned_ Lightning Page Layouts in console mode.
-User may need to refresh from the action available in the sub-tab for the list to be display correctly.
-The problem does not arise with other layout types and a Case has been registered.
+🚨 A strange behaviour has been identified with _pinned_ Lightning Page Layouts in console mode.
+User may need to refresh from the action available in the sub-tab for the list to be display correctly. This issue does not arise with other
+layout types.
+In such a case, the Lightning page context is not properly initialized
+after the first navigation to an addressable LWC component.
+An official [issue](https://help.salesforce.com/s/issue?id=a028c00000zLPu5AAG) is registered at Salesforce and the proposed
+workaround has been implemented in the **sfpegListConsoleTabCmp**
+component (wrapping the **sfpegListTabCmp** one and delaying its
+rendering by 500ms).
 
 ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to 
 get more global information about the way the components have been implemented.
