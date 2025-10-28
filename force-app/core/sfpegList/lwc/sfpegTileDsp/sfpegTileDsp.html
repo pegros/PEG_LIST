@@ -137,21 +137,6 @@
 
                     <!-- Tile Content -->
                     <div class="slds-media slds-var-m-bottom_xx-small slds-var-m-top_xx-small">
-                        <!-- expand/collapse Icon display -->
-                        <!--
-                        <template if:true={cardDetails}>
-                            <div class="slds-media__figure slds-m-right_xx-small">
-                                <lightning-button-stateful  class="expandCollapse"
-                                                            variant="text"
-                                                            selected={isExpanded}
-                                                            icon-name-when-off="utility:chevronright"
-                                                            icon-name-when-on="utility:chevrondown"
-                                                            onclick={handleExpandCollapse}>
-                                </lightning-button-stateful>
-                            </div>
-                        </template>
-                        -->
-
                         <div class="slds-media__body">
                             <!-- Main Content fields -->
                             <div class="slds-media">
@@ -169,6 +154,7 @@
                                                                     field-icon-variant={iter.iconVariant}
                                                                     field-icon-size={iter.iconSize}
                                                                     field-variant={iter.variant}
+                                                                    field-target={iter.target}
                                                                     field-class={iter.class}>
                                                 </c-sfpeg-field-dsp>
                                             </li>
@@ -194,6 +180,7 @@
                                                                             field-icon-variant={iter.iconVariant}
                                                                             field-icon-size={iter.iconSize}
                                                                             field-variant={iter.variant}
+                                                                            field-target={iter.target}
                                                                             field-class={iter.class}>
                                                         </c-sfpeg-field-dsp>
                                                     </div>
@@ -223,6 +210,7 @@
                                                                             field-icon-variant={iter.iconVariant}
                                                                             field-icon-size={iter.iconSize}
                                                                             field-variant={iter.variant}
+                                                                            field-target={iter.target}
                                                                             field-class={iter.class}>
                                                         </c-sfpeg-field-dsp>
                                                     </div>

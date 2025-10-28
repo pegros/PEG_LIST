@@ -43,6 +43,7 @@ export default class SfpegFieldDsp extends LightningElement {
     @api fieldIconName = '';
     @api fieldIconVariant = '';
     @api fieldIconSize = '';
+    @api fieldTarget = '';
 
     _fieldValue = {};
     // Implementation with setter to ensure proper update of display data upon fieldValue change.
@@ -114,6 +115,9 @@ export default class SfpegFieldDsp extends LightningElement {
     }
     get isMultiValue() {
         return (this.fieldType) && (this.fieldType === "multi-value");
+    }
+    get isLookup() {
+        return (this.fieldType) && (this.fieldType === "lookup");
     }
     /*get isDefault() {
         return (this.fieldType == null) || (this.fieldType === "text");

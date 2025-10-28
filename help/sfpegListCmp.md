@@ -204,6 +204,9 @@ for details)
 in various more user friendly variants (comma separated strings, list of badges,
 list of icons, list of avatars) with `iconName`, `variant`, `iconVariant` and
 `size` as type attributes.
+* `lookup` to display a lookup field with an automatic redirection link and an
+_on hover_ display of the compact layout (with `lookup` as type attribute to 
+provide the record ID).
 
 See section further below for configuration examples.
 
@@ -982,7 +985,7 @@ of the `fieldName` property is used as `iconValue` property
 You may configure the list metadada record either to display icons, avatars or badges
 as displayed hereafter.
 
-![Files with badges and avatars](/media/sfpegListAvatars.png)
+![Records with badges and avatars](/media/sfpegListAvatars.png)
 
 The display configuration highlights the way to leverage the `avatar` field type for 
 image file display and the `badge` one for text value emphasis. It also presents
@@ -1062,7 +1065,7 @@ You may configure the list metadada record either to display multi-value fields
 either as `,`separate strings, list of badges, list of icons or avatars as
 displayed hereafter in a _tileList_ mode.
 
-![Files with multi-value fields](/media/sfpegListMultiValue.png)
+![Records with multi-value fields](/media/sfpegListMultiValue.png)
 
 The display configuration highlights the way to leverage the `multi-value` field
 display type to split the different values of a multi-picklist field (or any 
@@ -1122,6 +1125,49 @@ injected in the proper unitary display component.
     `standard:contact#Contacts` for the _contact_ standard icon with _Contacts_ as
     title or `utility:shield#Shield#success` for the _shield_ utility
     icon with _Shield_ as title and _error_ as variant
+
+
+### Lookup Field Type Display
+
+You may configure the list metadada record to handle lookup fields with 
+special behaviour:
+* the `fieldName` value is displayed as a clickable link enabling to navigate
+to the lookup record automatically (the ID of which being provided in the 
+`lookup` type attribute field)
+* when hovering over the link, the compact layout of the lookup record is 
+automatically displayed in a _popover_.
+
+The example hereafter is displayed in _cardList_ mode and show the hovering
+over a lookup field.
+
+![Records with lookup fields](/media/sfpegListLookup.png)
+
+
+The display configuration should be set as follows:
+
+```
+...
+{
+    "label":"Name",
+    "fieldName": "Name",
+    "type": "lookup",
+    "sortable": "true",
+    "typeAttributes":{"lookup":{"fieldName": "Id"}}
+},
+{
+    "label":"Owner",
+    "fieldName": "Owner.Name",
+    "type": "lookup",
+    "sortable": "true",
+    "typeAttributes":{"lookup":{"fieldName": "OwnerId"}}
+},
+...
+```
+
+_Notes_:
+* Object icon is not displayed in the compact layout _popover_ as it is not
+easily retrievable without the standard **lightning-icon** component
+* Related lists are not displayed either in this _popover_
 
 
 ## Technical Details

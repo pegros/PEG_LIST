@@ -33,7 +33,7 @@
 * SOFTWARE.
 ***/
 
-@SuppressWarnings('PMD.ClassNamingConventions,PMD.FieldNamingConventions')
+@SuppressWarnings('PMD.ClassNamingConventions,PMD.FieldNamingConventions,PMD.CognitiveComplexity,PMD.NcssMethodCount')
 public with sharing class sfpegList_CTL {
 
 	/***

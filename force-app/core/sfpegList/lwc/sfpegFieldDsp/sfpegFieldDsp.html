@@ -114,6 +114,13 @@
         </c-sfpeg-multi-picklist-dsp>
     </template>
 
+    <template lwc:elseif={isLookup}>
+        <c-sfpeg-lookup-dsp     record-name={fieldValue}
+                                record-id={fieldTarget}
+                                field-class={fieldClass}>
+        </c-sfpeg-lookup-dsp>
+    </template>
+
     <template lwc:else>
         <lightning-formatted-text   value={fieldValue} title={fieldLabel}
                                     class={fieldClass}>

@@ -215,33 +215,6 @@ export default class SfpegTileDsp extends LightningElement {
                     this.cardData.push(itemData);
                 }
             });
-            
-                /*if (item.fieldName !== titleFieldName) {
-                    if (this.isDebug) console.log('resetDisplayData: processing item ', item);
-                
-                    if (this._recordData[item.fieldName] != null) {
-                        if (this.isDebug) console.log('resetDisplayData: registering standard field ', item.fieldName);
-                        this.cardData.push({
-                            label: item.label,
-                            //value: ((item.type && (item.type == 'boolean')) ? eval(this._recordData[item.fieldName]) : this._recordData[item.fieldName]),
-                            value: ((item.type && (item.type == 'boolean')) ? (String(this._recordData[item.fieldName]).toLowerCase() == "true") : this._recordData[item.fieldName]),
-                            iconName: (item.typeAttributes?.iconName ? this._recordData[item.typeAttributes.iconName] : null),
-                            iconValue: (item.typeAttributes?.iconValue ? this._recordData[item.typeAttributes.iconValue] : null),
-                            variant: (item.typeAttributes?.variant ? this._recordData[item.typeAttributes.variant] : null),
-                            class: (item.typeAttributes?.class ? this._recordData[item.typeAttributes.class] : null),
-                            //value: sfpegJsonUtl.sfpegJsonUtl.formatField(this._recordData[item.fieldName],item),
-                            type: item.type || 'text',
-                            name: item.fieldName
-                        });
-                    }
-                    else {
-                        if (this.isDebug) console.log('resetDisplayData: ignoring empty field ', item.fieldName);
-                    }
-                }
-                else {
-                    if (this.isDebug) console.log('resetDisplayData: ignoring title field ', item.fieldName);
-                }
-            });*/
             if (this.isDebug) console.log('resetDisplayData: card data init', this.cardData);  
         }
         else {
@@ -263,31 +236,6 @@ export default class SfpegTileDsp extends LightningElement {
                     this.cardDetails.push(itemData);
                 }
             });
-            /*
-            this.configDetails.details.forEach(item => {
-                if (item.fieldName !== titleFieldName) {
-                    if (this.isDebug) console.log('resetDisplayData: processing item ', item);
-                    if (this._recordData[item.fieldName] != null) {
-                        if (this.isDebug) console.log('resetDisplayData: registering standard field ', item.fieldName);
-                        this.cardDetails.push({
-                            label: item.label,
-                            //value: ((item.type && (item.type == 'boolean')) ? eval(this._recordData[item.fieldName]) : this._recordData[item.fieldName]),
-                            value: ((item.type && (item.type == 'boolean')) ? (String(this._recordData[item.fieldName]).toLowerCase() == "true") : this._recordData[item.fieldName]),
-                            //value: sfpegJsonUtl.sfpegJsonUtl.formatField(this._recordData[item.fieldName],item),
-                            type: item.type || 'text',
-                            name: item.fieldName
-                        });
-                    }
-                    
-                    else {
-                        if (this.isDebug) console.log('resetDisplayData: ignoring empty field ', item.fieldName);
-                    }
-                }
-                else {
-                    if (this.isDebug) console.log('resetDisplayData: ignoring title field ', item.fieldName);
-                }
-            });
-            */
             if (this.cardDetails.length == 0) this.cardDetails = null;
             if (this.isDebug) console.log('resetDisplayData: card details init', this.cardDetails);  
         }
@@ -402,6 +350,10 @@ export default class SfpegTileDsp extends LightningElement {
             result.iconName = this.getFieldValue(fieldConfig.typeAttributes?.iconName); 
             result.iconSize = this.getFieldValue(fieldConfig.typeAttributes?.size); 
             result.variant = this.getFieldValue(fieldConfig.typeAttributes?.variant); 
+        }
+        else if (fieldConfig.type == 'lookup') {
+            if (this.isDebug) console.log('initFieldData: processing lookup field ', fieldConfig.fieldName);
+            result.target = this.getFieldValue(fieldConfig.typeAttributes?.lookup); 
         }
 
         if (fieldConfig.cellAttributes?.class) {

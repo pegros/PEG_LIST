@@ -46,8 +46,8 @@ export default class SfpegDisplayPopupDsp extends LightningModal {
     // Main configuration fields (for App Builder)
     //----------------------------------------------------------------
     @api modalHeader;       // Modal header title
-    @api modalMessage;      // Message displayed above the flow
-    @api modalHelp;         // Help message displayed above the flow
+    @api modalMessage;      // Message displayed above the content
+    @api modalHelp;         // Help message displayed above the content
     @api modalClass;        // CSS for the body container div
 
     @api fields;            // Field data to display (as label, name, type JSON configs)

@@ -1,0 +1,12 @@
+/* Portal popover styles */
+.sfpeg-lookup-popover-portal {
+    position: fixed !important;
+    z-index: 10000 !important;
+    pointer-events: none;
+}
+
+.sfpeg-lookup-popover-portal .slds-popover {
+    position: relative !important;
+    pointer-events: auto;
+    max-width: 100vw;
+}
