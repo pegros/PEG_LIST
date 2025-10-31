@@ -263,7 +263,7 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
         if ((targetRect.bottom + 400) < window.innerHeight) {
             if (popupNubbin === 'center') {
                 if (this.isDebug) console.log('showPopover: nubbin positionned centered top ',targetRect.bottom + 25);
-                this.popoverElement.style.top = (targetRect.bottom + 25) + 'px';
+                this.popoverElement.style.top = (targetRect.bottom + 20) + 'px';
                 popupNubbin = 'top';
             }
             else {
@@ -276,7 +276,7 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
         else {
             if (popupNubbin === 'center') {
                 if (this.isDebug) console.log('showPopover: nubbin positionned centered bottom ',(window.innerHeight - targetRect.bottom - 25));
-                this.popoverElement.style.bottom = (window.innerHeight - targetRect.bottom + 20) + 'px';
+                this.popoverElement.style.bottom = (window.innerHeight - targetRect.top + 20) + 'px';
                 popupNubbin = 'bottom';
             }
             else {
@@ -308,7 +308,8 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
         
         // Create the popover structure using DOM methods
         const section = document.createElement('section');
-        section.className = 'slds-popover slds-popover_panel slds-popover_large slds-nubbin_' + popupNubbin;
+        section.className = 'slds-popover slds-popover_panel slds-nubbin_' + popupNubbin;
+        section.style = 'background-color:rgb(243, 243, 243);';
         section.setAttribute('role', 'dialog');
         section.style.pointerEvents = 'auto';
         if (this.isDebug) console.log('showPopover: section class set ',section.className);
@@ -371,7 +372,7 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
     
     hidePopover() {
         if (this.isDebug) console.log('hidePopover: START');
-        
+
         if (this.popoverElement && this.popoverElement.parentNode) {
             this.popoverElement.parentNode.removeChild(this.popoverElement);
             this.popoverElement = null;

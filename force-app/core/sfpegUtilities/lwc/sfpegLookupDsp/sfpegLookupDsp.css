@@ -10,3 +10,9 @@
     pointer-events: auto;
     max-width: 100vw;
 }
+
+.sfpeg-lookup-popover-portal .slds-popover {
+    position: relative !important;
+    pointer-events: auto;
+    max-width: 100vw;
+}

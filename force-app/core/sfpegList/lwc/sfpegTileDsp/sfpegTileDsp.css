@@ -95,3 +95,6 @@
 .sfpegTile {
     height: calc(100% - 7px);
 }
+.slds-text-title_bold {
+    font-size: 14px !important;
+}
