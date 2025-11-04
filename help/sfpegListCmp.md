@@ -918,6 +918,12 @@ It also provides the ability to dynamically build `WHERE` clauses based on filte
 provided in the context.
 
 
+### REST Queries Execution
+
+Please refer to **[sfpegRestQueries_SVC](/help/sfpegRestQueries.md)** Apex extension class to get an example 
+about how to fetch record data via a REST callout to an external system and display them in a **sfpegListCmp**.
+
+
 ### Icon Field Type Display (Current Org Limits Status)
 
 In order to display in an App page the current state of the Org Limits,
