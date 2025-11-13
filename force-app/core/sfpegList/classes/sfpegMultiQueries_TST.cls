@@ -31,6 +31,7 @@
 * SOFTWARE.
 ***/
 
+@isTest
 @SuppressWarnings('PMD.ClassNamingConventions,PMD.FieldNamingConventions')
 public class  sfpegMultiQueries_TST {
 

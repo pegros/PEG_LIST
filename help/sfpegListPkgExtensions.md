@@ -62,6 +62,23 @@ better understand their behaviours.
 ## Release Notes
 
 ### September 2025 - v1.0.0
-* First version with the new unlocked package structure.
-* Install it from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xHDGIA2) for production orgs
-or [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xHDGIA2) for sandboxes.
+
+First version with the new unlocked package structure.
+
+Install it:
+* from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xHDGIA2) for production orgs,
+* from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xHDGIA2) for sandboxes,
+* or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xHDGIA2`
+
+
+### November 2025 - v1.1.0
+
+Version content:
+* `kpiAlign` property added for the **[sfpegKpiListCmp](/help/sfpegKpiListCmp.md)**
+component (to override the default centered layout)
+* dependency with `sfpegList-core` package upgraded
+
+Install it:
+* from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIgjIAE) for production orgs,
+* from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIgjIAE) for sandboxes,
+* or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xIgjIAE`

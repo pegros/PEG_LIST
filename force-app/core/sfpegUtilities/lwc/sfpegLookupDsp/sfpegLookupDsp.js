@@ -31,10 +31,9 @@
 ***/
 
 import { LightningElement, api, wire } from 'lwc';
-import { NavigationMixin } from 'lightning/navigation';
-import sfpegPreviewPopupDsp from "c/sfpegPreviewPopupDsp";
+import { NavigationMixin }  from 'lightning/navigation';
 import { getRecord }        from 'lightning/uiRecordApi';
-import { getLayout } from "lightning/uiLayoutApi";
+import { getLayout }        from "lightning/uiLayoutApi";
 
 export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
 

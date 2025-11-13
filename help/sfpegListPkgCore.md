@@ -79,6 +79,8 @@ multiple SOQL queries, e.g. to simplify the `WHERE` clause.
 *  **[sfpegSearchQueries](/help/sfpegSearchQueries.md)** to dynamically choose between
 SOSL and SOQL depending on the presence of a search `term` and dynamically build the filtering `WHERE`
 based on the provided non-null criteria.
+*  **[sfpegRestQueries](/help/sfpegRestQueries.md)** to fetch data via a REST callout
+to an external system and display them in a **sfpegListCmp**.
 
 
 ## Technical Details
@@ -91,6 +93,36 @@ better understand their behaviours.
 ## Release Notes
 
 ### September 2025 - v1.0.0
-* First version with the new unlocked package structure.
-* Install it from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xHDBIA2) for production orgs
-or [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xHDBIA2) for sandboxes.
+
+First version with the new unlocked package structure.
+
+Install it:
+* from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xHDBIA2) for production orgs,
+* from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xHDBIA2) for sandboxes,
+* or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xHDBIA2`
+
+
+### November 2025 - v1.1.0
+
+Version content:
+* many custom field types added for **[sfpegListCmp](/help/sfpegListCmp.md)**
+component to enhance results display in all modes (datatable, data-tree, tiles...):
+`richText`, `percent-fixed`, `badge`, `avatar`, `multi-value`, `lookup`.
+* workaround implemented for **[sfpegListTabCmp](/help/sfpegListTabCmp.md)**
+when using _pinned_ Lightning page layouts in console mode.
+* standard **SOQL** `OFFSET` statements now supported for paginated queries
+to handle situations where issues arise with the `ORDER BY` field values
+and the query result size is compatible with SOQL offset limits.
+* better handling of _AggregateResults_ (FLS bypassed)
+* **sfpegIconDsp** extended with various custom icons (available
+as `resource:xxx`) and country flags (available as `flag:xxx`, with
+also out-of-the-box picklist value sets for country ISO codes). See
+the **sfpegIconCatalog** Lightning App page for details.
+* **sfpegRestQueries_SVC** query extension class added, to fetch
+data from external systems via REST callouts and display them
+in a **sfpegListCmp**.
+
+Install it:
+* from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIgeIAE) for production orgs,
+* from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIgeIAE) for sandboxes,
+* or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xIgeIAE`
