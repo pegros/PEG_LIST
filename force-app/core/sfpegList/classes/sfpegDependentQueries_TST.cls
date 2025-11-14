@@ -76,7 +76,7 @@ public class  sfpegDependentQueries_TST {
 
 	@isTest
 	static void testGetData() {
-		System.debug('testGetData: ##### START #####');
+		System.debug('testGetData: ############### START ###############');
 
         List<sfpegTestObject__c> rcdList = new List<sfpegTestObject__c>();
 		rcdList.add(new sfpegTestObject__c(Name='Test 1',Picklist__c='P1',MultiPicklist__c='MP1'));
@@ -93,7 +93,7 @@ public class  sfpegDependentQueries_TST {
         Map<Object,Object> inputData = new Map<Object,Object>{'NAME' => 'Test 1', 'PL' => 'P1', 'MPL' => 'MP1'};
 		System.debug('testGetData: inputData init ' + inputData);
 
-        System.debug('testGetData: ##### TEST 1 - 2 subqueries returning data #####');
+        System.debug('testGetData: ############### TEST 1 - 2 subqueries returning data ###############');
 		try {
 			List<Object> outputList = sfpegList_CTL.getData('sfpegTestDependentQueriesOK', (Object)inputData);
 			System.debug('testGetData: returning outputList ' + outputList);
@@ -104,7 +104,7 @@ public class  sfpegDependentQueries_TST {
 			Assert.fail('No exception should be raised when no filter/search term specified');
 		}
 
-        System.debug('testGetData: ##### TEST 2 - 1 subquery returning data #####');
+        System.debug('testGetData: ############### TEST 2 - 1 subquery returning data ###############');
         inputData.put('NAME','Test 4');
         inputData.put('PL','P2');
         inputData.put('MPL','MP3');
@@ -122,7 +122,7 @@ public class  sfpegDependentQueries_TST {
 		}
 
 		// Error cases
-        System.debug('testGetData: ##### TEST 3 - Invalid query template configuration #####');
+        System.debug('testGetData: ############### TEST 3 - Invalid query template configuration ###############');
 		try {
 			sfpegList_CTL.getData('sfpegTestDependentQueriesKOparse',inputData);
 			System.debug(LoggingLevel.Error,'testGetData: no exception raised for invalid query template');
@@ -132,7 +132,7 @@ public class  sfpegDependentQueries_TST {
 			System.debug('testGetData: exception properly raised for invalid query template ' + e.getMessage());
 		}
 
-        System.debug('testGetData: ##### TEST 4 - Wrong SOQL query #####');
+        System.debug('testGetData: ############### TEST 4 - Wrong SOQL query ###############');
 		try {
 			sfpegList_CTL.getData('sfpegTestDependentQueriesKOquery',inputData);
 			System.debug(LoggingLevel.Error,'testGetData: no exception raised for wrong soql statement in query template');
@@ -140,11 +140,10 @@ public class  sfpegDependentQueries_TST {
 		}
 		catch (Exception e) {
 			System.debug('testGetData: error properly raised for wrong SOQL statement in query template ' + e.getMessage());
-			System.assert(true);
 		}
 
 		Test.stopTest();
-		System.debug('testGetData: ##### END #####');
+		System.debug('testGetData: ############### END ###############');
 	}
 
 }

@@ -625,14 +625,18 @@ public with sharing class sfpegList_CTL {
 			results = Database.query(query);
 		}
 
-		if ((bypassFLS) || (query.contains('WITH SYSTEM_MODE')) || (Schema.AggregateResult.getSObjectType() == results[0]?.getSObjectType())) {
-			System.debug('executeSoql:END / FLS field stripping bypassed returning #items ' + results.size());
+		if (results?.size() == 0) {
+			System.debug('executeSoql: END / Returning no result');
+			return results;
+		}
+		else if ((bypassFLS) || (query.contains('WITH SYSTEM_MODE')) || (Schema.AggregateResult.getSObjectType() == results[0]?.getSObjectType())) {
+			System.debug('executeSoql: END / FLS field stripping bypassed returning #items ' + results.size());
 			return results;
 		}
 		else {
-			System.debug('executeSoql: enforcing FLS field stripping on #items ' + results.size());
+			System.debug('executeSoql: enforcing FLS field stripping on #items ' + results?.size());
 			SObjectAccessDecision securityDecision = Security.stripInaccessible(AccessType.READABLE, results);
-			System.debug('executeSoql:END ');
+			System.debug('executeSoql: END');
 			return securityDecision.getRecords();
 		}
 	}
