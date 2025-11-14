@@ -135,7 +135,6 @@ public class  sfpegMultiQueries_TST {
 		}
 		catch (Exception e) {
 			System.debug('testGetData: error properly raised for wrong SOQL statement in query template ' + e.getMessage());
-			System.assert(true);
 		}
 
 		Test.stopTest();
