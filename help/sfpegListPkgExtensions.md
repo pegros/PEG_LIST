@@ -79,6 +79,6 @@ component (to override the default centered layout)
 * dependency with `sfpegList-core` package upgraded
 
 Install it:
-* from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIgjIAE) for production orgs,
-* from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIgjIAE) for sandboxes,
-* or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xIgjIAE`
+* from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIh8IAE) for production orgs,
+* from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIh8IAE) for sandboxes,
+* or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xIh8IAE`

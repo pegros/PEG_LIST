@@ -54,9 +54,9 @@ better understand their behaviours.
 First version with the new unlocked package structure.
 
 🚧 **Pending final packaging** 🚧
-Install it directly from github repo.
+Install it directly by fetching metadata from github repo.
 
 ### November 2025 - v1.0.1
 
 🚧 **Pending final packaging** 🚧
-Install it directly from github repo.
+Install it directly by fetching metadata from github repo.
