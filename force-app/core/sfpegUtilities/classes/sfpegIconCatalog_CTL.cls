@@ -52,16 +52,36 @@ public with sharing class sfpegIconCatalog_CTL {
 		StaticResource sr = [select Id, Name, Body from StaticResource where Name = 'sfpegIcons' WITH SYSTEM_MODE limit 1];
 		System.debug('getIconList: static resource fetched ' + sr.Body);
 		String srStr = sr.Body.toString();
+		System.debug('getIconList: resource length ' + srStr.length());
 
-		Pattern namePattern = Pattern.compile('<g\\s+id="(\\S+)-(\\S+)"');
-		Matcher nameMatcher = namePattern.matcher(srStr);
 		Map<String,List<String>> nameTokens = new Map<String,List<String>>();
-		while (nameMatcher.find()) {
-			System.debug('getIconList: processing name ' + nameMatcher.group(1) + ' with size ' + nameMatcher.group(2));
-			if (!nameTokens.containsKey(nameMatcher.group(1))) {
-				nameTokens.put(nameMatcher.group(1),new List<String>());
+		Pattern namePattern = Pattern.compile('<g\\s+id="(\\S+)-(\\S+)"');
+		String str2parse = srStr.left(Math.min(100000,srStr.length()));
+		Integer parseIndex = 0;
+
+		while (String.isNotBlank(str2parse)) {
+			System.debug('getIconList: processing substring from index ' + parseIndex);
+			System.debug('getIconList: str2parse ' + str2parse);
+
+			Matcher nameMatcher = namePattern.matcher(str2parse);
+			while (nameMatcher.find()) {
+				System.debug('getIconList: processing name ' + nameMatcher.group(1) + ' with size ' + nameMatcher.group(2));
+				if (!nameTokens.containsKey(nameMatcher.group(1))) {
+					nameTokens.put(nameMatcher.group(1),new List<String>());
+				}
+				if (nameTokens.get(nameMatcher.group(1)).contains(nameMatcher.group(2))) {
+					System.debug('getIconList: skipping duplicate size');
+					continue;
+				}
+				nameTokens.get(nameMatcher.group(1)).add(nameMatcher.group(2));
 			}
-			nameTokens.get(nameMatcher.group(1)).add(nameMatcher.group(2));
+			parseIndex += 99900;
+			if (parseIndex >= srStr.length()) {
+				System.debug('getIconList: end of resource reached');
+				break;
+			}
+			System.debug('getIconList: index changed ' + parseIndex);
+			str2parse = srStr.mid(parseIndex,Math.min(100000,srStr.length() - parseIndex));
 		}
 
 		System.debug('getIconList: END with ' + nameTokens);// NOPMD ApexDangerousMethods suppress warning
