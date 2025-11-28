@@ -79,6 +79,12 @@ package's introduction page.
 ⚠️ When deploying them, pay attention to the possible dependencies!
 E.g. all packages in this repository depend on the `sfpegList-core` package.
 
+ℹ️ When installing them via the unlocked package installation links, you should rather
+choose the `Install for Admins only` and `Compaile only the Apex in the Package` options.
+
+![Unlocked Package Installation](/media/sfpegListInstallation.png)
+
+
 ⚠️ After installation, please assign to your users the _sfpegListXxxUsage_ `PermissionSets`
 provided by the packages in order to use the components without access error.
 
