@@ -1,16 +1,16 @@
 /***
-* @description  Test class of the sfpegOrgLimits_SVC class.
+* @description  Test class of the sfpegObjectKeys_SVC class.
 *               Only code coverage objective for now (no real functional test).
 * @author       P-E GROS
-* @date         April 2024
-* @see          sfpegOrgLimits_SVC
+* @date         Dec 2025
+* @see          sfpegObjectKeys_SVC
 * @see PEG_LIST package (https://github.com/pegros/PEG_LIST)
 *
 * Legal Notice
 * 
 * MIT License
 * 
-* Copyright (c) 2024 pegros
+* Copyright (c) 2025 pegros
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -34,14 +34,14 @@
 @SuppressWarnings('PMD.ClassNamingConventions')
 
 @istest
-public class sfpegOrgLimits_TST {
+public class sfpegObjectKeys_TST {
 
     /***
-    * @description Test of the main sfpegOrgLimits_SVC execute logic.
+    * @description Test of the main sfpegObjectKeys_SVC execute logic.
     ***/
     static testmethod void testGetData() {
         System.debug('testGetData: START');
-        sfpegOrgLimits_SVC getDataSvc = new sfpegOrgLimits_SVC();
+        sfpegObjectKeys_SVC getDataSvc = new sfpegObjectKeys_SVC();
         getDataSvc.getData(null,null);
         System.debug('testGetData: END');
     }

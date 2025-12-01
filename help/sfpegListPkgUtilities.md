@@ -40,12 +40,14 @@ Lightning page display performance optimisation)
 * the **[sfpegSearchListCmp](/help/sfpegSearchListCmp.md)** component adding a search form
 on top of a **[sfpegListCmp](/help/sfpegListCmp.md)** (search form data being passed in the
 query context)
-* the **[sfpegSearcPopupCmp](/help/sfpegSearcPopupCmp.md)** component enabling to open a 
+* the **[sfpegSearchPopupCmp](/help/sfpegSearchPopupCmp.md)** component enabling to open a 
 adding any **[sfpegSearchListCmp](/help/sfpegSearchListCmp.md)** in a Popup
 
 It also provides a few useful Apex extensions:
 * the **sfpegOrgLimits_SVC** class (as well as a **sfpegList** metadata record) to 
 display the current situation of the Org Limits
+* the **sfpegObjectKeys_SVC** class (as well as a **sfpegList** metadata record) to 
+display the set of Objects (with their key prefixes) defined on the Org
 
 
 ## Technical Details
@@ -76,3 +78,10 @@ Install it:
 * from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIhDIAU) for production orgs,
 * from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIhDIAU) for sandboxes,
 * or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xIhDIAU`
+
+
+### December 2025 - v1.2.0 (TO BE RELEASED)
+
+Version content:
+* added the **sfpegObjectKeys_SVC** (and its **sfpegList** metadata record) for quick object identification
+from key prefix
