@@ -1,0 +1,149 @@
+.slds-form-element {
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.slds-form-element__control {
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+/* Container for input and dropdown - ensures proper alignment */
+.input-dropdown-container {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    /* Override any parent flex/grid positioning */
+    flex: none !important;
+    align-self: auto !important;
+}
+
+/* Ensure the input takes full width - responsive */
+.input-dropdown-container lightning-input {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    position: relative;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+}
+
+/* Force the input field inside to be responsive */
+.input-dropdown-container lightning-input ::slotted(input),
+.input-dropdown-container lightning-input input {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+}
+
+/* Responsive font sizes for searchable combobox input */
+@media (max-width: 1000px) {
+    .input-dropdown-container lightning-input {
+        font-size: 0.875rem; /* Smaller font on mobile */
+    }
+}
+
+@media (min-width: 1001px) and (max-width: 2089px) {
+    .input-dropdown-container lightning-input {
+        font-size: 0.8125rem; /* Smaller font on tablet */
+    }
+}
+
+@media (min-width: 2090px) {
+    .input-dropdown-container lightning-input {
+        font-size: 0.875rem; /* Standard font on extra large screens */
+    }
+}
+
+.slds-dropdown {
+    z-index: 10000 !important;
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    right: auto !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: var(--lwc-colorBackground, #ffffff);
+    border: 1px solid var(--lwc-colorBorder, #dddbda);
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
+    margin-top: 0.125rem;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    /* Ensure dropdown is not affected by parent flex/grid */
+    transform: translateX(0) !important;
+}
+
+.slds-listbox__option {
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.slds-listbox__option:hover {
+    background-color: var(--lwc-colorBackgroundRowHover, #f3f2f2);
+}
+
+.slds-listbox__option[aria-selected="true"] {
+    background-color: var(--lwc-colorBackgroundRowSelected, #ecebea);
+}
+
+.pills-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    min-height: 1.5rem;
+    gap: 0.25rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+/* Wrapper to allow pill truncation */
+.pill-wrapper {
+    flex: 0 1 auto;
+    min-width: 0;
+}
+
+/* Constrain individual pill width to prevent taking full line - responsive */
+.pill-wrapper lightning-pill {
+    display: inline-block;
+    max-width: 300px; /* Default - will be overridden by media queries */
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Responsive pill max-widths */
+@media (max-width: 1000px) {
+    .pill-wrapper lightning-pill {
+        max-width: 200px !important; /* Smaller on mobile screens */
+    }
+}
+
+@media (min-width: 1001px) and (max-width: 2089px) {
+    .pill-wrapper lightning-pill {
+        max-width: 100px !important; /* Medium size for tablet (3 per row layout) */
+    }
+}
+
+@media (min-width: 2090px) {
+    .pill-wrapper lightning-pill {
+        max-width: 300px !important; /* Larger size for extra large screens (6 per row layout) */
+    }
+}

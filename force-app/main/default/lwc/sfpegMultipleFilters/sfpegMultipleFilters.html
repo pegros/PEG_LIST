@@ -1,0 +1,203 @@
+<template>
+    <template if:true={hasColumns}>
+        <div class="slds-var-p-around_small filter-container">
+            <!-- Header with Search and Clear Filters buttons -->
+            <div class="slds-grid slds-grid_align-spread slds-var-m-bottom_small">
+                <div class="slds-col">
+                    <h3 class="slds-text-heading_small slds-var-m-bottom_x-small">Filtres</h3>
+                    <lightning-input
+                        type="checkbox"
+                        label="Filtrer uniquement avec le bouton Recherche"
+                        checked={useButtonFilter}
+                        onchange={handleFilterModeChange}
+                        class="filter-mode-checkbox">
+                    </lightning-input>
+                    <lightning-input
+                        type="checkbox"
+                        label="Utiliser le combobox recherchable"
+                        checked={useSearchableCombobox}
+                        onchange={handleSearchableComboboxModeChange}
+                        class="searchable-combobox-checkbox">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-no-flex">
+                    <lightning-button-group>
+                        <template if:true={useButtonFilter}>
+                            <lightning-button
+                                label="Rechercher"
+                                variant="brand"
+                                icon-name="utility:search"
+                                onclick={handleSearchClick}
+                                title="Appliquer les filtres"
+                                disabled={isFiltering}
+                                class="search-button">
+                            </lightning-button>
+                        </template>
+                        <lightning-button
+                            label="Effacer les filtres"
+                            variant="neutral"
+                            icon-name="utility:clear"
+                            onclick={handleClearFilters}
+                            title="Effacer tous les filtres"
+                            disabled={isFiltering}
+                            class="clear-filters-button">
+                        </lightning-button>
+                    </lightning-button-group>
+                </div>
+            </div>
+
+            <!-- General Search Bar and Field Selector - Side by Side -->
+            <div class="slds-grid slds-gutters slds-var-m-bottom_small">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input
+                        type="search"
+                        label="Rechercher tout"
+                        placeholder="Rechercher dans toutes les colonnes..."
+                        value={generalSearchValue}
+                        onchange={handleGeneralSearchChange}
+                        onkeypress={handleGeneralSearchKeyPress}
+                        variant="label-stacked"
+                        class="general-search-input">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-combobox
+                        data-field-selector
+                        label="Ajouter un champ de filtre"
+                        placeholder="Rechercher et sélectionner un champ à filtrer..."
+                        options={fieldSelectorOptions}
+                        value=""
+                        onchange={handleFieldSelectorChange}
+                        variant="label-stacked">
+                    </lightning-combobox>
+                </div>
+            </div>
+
+            <!-- Active Filters Display -->
+            <template if:true={activeFilters.length}>
+                <div class="active-filters-container">
+                    <lightning-layout multiple-rows pull-to-boundary="small">
+                        <template for:each={filterItemsWithComputed} for:item="filter">
+                            <lightning-layout-item key={filter.fieldName} size="2" small-device-size="6" medium-device-size="4" large-device-size="2" padding="around-small" class="filter-item-wrapper">
+                                <div class="filter-item">
+                                    <div class="slds-grid slds-grid_vertical-align-center">
+                                        <div class="slds-col slds-grow">
+                                            <!-- Date Filter -->
+                                            <template if:true={filter.isDate}>
+                                                <div class="date-filter-container">
+                                                    <!-- Field Label - Compact -->
+                                                    <label class="slds-form-element__label date-filter-label">
+                                                        {filter.label}
+                                                    </label>
+                                                    <!-- Date Inputs on Same Line -->
+                                                    <div class="slds-grid slds-gutters date-inputs-row">
+                                                        <div class="slds-col slds-size_1-of-2">
+                                                            <lightning-input
+                                                                data-fieldname={filter.fieldName}
+                                                                data-date-type="start"
+                                                                type="date"
+                                                                value={filter.startDate}
+                                                                onchange={handleDateFilterChange}
+                                                                variant="label-hidden"
+                                                                label="Début"
+                                                                class="filter-input date-input">
+                                                            </lightning-input>
+                                                        </div>
+                                                        <div class="slds-col slds-size_1-of-2">
+                                                            <lightning-input
+                                                                data-fieldname={filter.fieldName}
+                                                                data-date-type="end"
+                                                                type="date"
+                                                                value={filter.endDate}
+                                                                onchange={handleDateFilterChange}
+                                                                variant="label-hidden"
+                                                                label="Fin"
+                                                                class="filter-input date-input">
+                                                            </lightning-input>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+
+                                            <!-- Combobox Filter (text with < 10 distinct values) -->
+                                            <template if:true={filter.isCombobox}>
+                                                <!-- Searchable Multi-Select Combobox -->
+                                                <template if:true={useSearchableCombobox}>
+                                                    <div data-fieldname={filter.fieldName} class="searchable-combobox-wrapper">
+                                                        <c-sfpeg-multi-select-combobox
+                                                            label-text={filter.label}
+                                                            pick-list={filter.availableOptions}
+                                                            picklist-value={filter.filterValue}
+                                                            onvaluechange={handleSearchableComboboxChange}>
+                                                        </c-sfpeg-multi-select-combobox>
+                                                    </div>
+                                                </template>
+                                                
+                                                <!-- Standard Lightning Combobox with Pills -->
+                                                <template if:false={useSearchableCombobox}>
+                                                    <div class="combobox-with-pills">
+                                                        <!-- Selected Pills -->
+                                                        <div if:true={filter.selectedPills.length} class="slds-var-m-bottom_x-small pills-container">
+                                                            <template for:each={filter.selectedPills} for:item="pill">
+                                                                <div key={pill.value} class="pill-wrapper">
+                                                                    <lightning-pill
+                                                                        label={pill.label}
+                                                                        title={pill.label}
+                                                                        data-fieldname={filter.fieldName}
+                                                                        data-value={pill.value}
+                                                                        onremove={handleRemovePill}
+                                                                        class="slds-var-m-right_xx-small slds-var-m-bottom_xx-small">
+                                                                    </lightning-pill>
+                                                                </div>
+                                                            </template>
+                                                        </div>
+                                                        <!-- Lightning Combobox -->
+                                                        <lightning-combobox
+                                                            data-fieldname={filter.fieldName}
+                                                            label={filter.label}
+                                                            placeholder="Sélectionner une valeur..."
+                                                            options={filter.availableOptions}
+                                                            value=""
+                                                            onchange={handleComboboxChange}
+                                                            variant="label-stacked"
+                                                            class="filter-input">
+                                                        </lightning-combobox>
+                                                    </div>
+                                                </template>
+                                            </template>
+
+                                            <!-- Text Filter (text with >= 10 values or other types) -->
+                                            <template if:true={filter.isText}>
+                                                <lightning-input
+                                                    data-fieldname={filter.fieldName}
+                                                    type="text"
+                                                    value={filter.filterValue}
+                                                    onchange={handleTextFilterChange}
+                                                    variant="label-stacked"
+                                                    label={filter.label}
+                                                    placeholder="Entrer une valeur de filtre..."
+                                                    class="filter-input">
+                                                </lightning-input>
+                                            </template>
+                                        </div>
+                                        <div class="slds-col slds-no-flex slds-var-m-left_x-small">
+                                            <lightning-button-icon
+                                                icon-name="utility:delete"
+                                                alternative-text="Supprimer le filtre"
+                                                title="Supprimer le filtre"
+                                                data-fieldname={filter.fieldName}
+                                                onclick={handleRemoveFilter}
+                                                variant="bare"
+                                                class="remove-filter-button">
+                                            </lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                </div>
+            </template>
+        </div>
+    </template>
+</template>

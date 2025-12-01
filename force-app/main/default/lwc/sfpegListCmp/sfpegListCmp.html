@@ -149,7 +149,14 @@
 
             <!-- Ready state display -->
             <template if:true={isReady}>
-
+                <template if:true={multipleFilters}>
+                    <c-sfpeg-multiple-filters
+                        columns={configDetails.display.columns}
+                        records={resultList}
+                        is-debug={isDebugFine}
+                        onfilterchange={handleMultipleFiltersChange}>
+                    </c-sfpeg-multiple-filters>
+                </template>
                 <!-- Error Message display -->
                 <template if:true={hasErrorMsg}>
                     <c-sfpeg-warning-dsp    wrapping-class="slds-var-m-horizontal_medium slds-var-m-bottom_small slds-media slds-media_center"
@@ -181,9 +188,6 @@
                                     onrowaction={handleRowAction}
                                     onrowselection={handleRowSelection}
                                     render-config={renderConfig}>
-                                    <!-- Call custom type provider component for datatable  -->
-                                     <!-- [DOC REF] : https://developer.salesforce.com/docs/platform/lwc/guide/data-table-custom-types.html -->
-                                     <c-sfpeg-list-custom-data-types-provider slot="customdatatypes"></c-sfpeg-list-custom-data-types-provider>
                                 </lightning-datatable>
                             </template>
 
@@ -204,9 +208,6 @@
                                     onrowaction={handleRowAction} 
                                     onrowselection={handleRowSelection} 
                                     render-config={renderConfig} >
-                                     <!-- Call custom type provider component for datatable  -->
-                                     <!-- [DOC REF] : https://developer.salesforce.com/docs/platform/lwc/guide/tree-grid-custom-types.html-->
-                                     <c-sfpeg-list-custom-data-types-provider slot="customdatatypes"></c-sfpeg-list-custom-data-types-provider>
                                 </lightning-tree-grid>
                             </template>
 

@@ -1,0 +1,62 @@
+<template>
+    <div class="slds-form-element">
+        <div class="slds-form-element__control">
+            <!-- Selected Pills -->
+            <div if:true={selectedPills.length} class="pills-container">
+                <template for:each={selectedPills} for:item="pill">
+                    <div key={pill.value} class="pill-wrapper">
+                        <lightning-pill
+                            label={pill.label}
+                            title={pill.label}
+                            data-value={pill.value}
+                            onremove={handleRemovePill}
+                            class="slds-var-m-right_xx-small slds-var-m-bottom_xx-small">
+                        </lightning-pill>
+                    </div>
+                </template>
+            </div>
+            
+            <!-- Input and Dropdown Container -->
+            <div class="input-dropdown-container">
+                <!-- Search Input -->
+                <lightning-input
+                    id="combobox-input"
+                    onchange={search}
+                    label={labelText}
+                    onfocus={showPickListOptions}
+                    type="search"
+                    placeholder="Search and select values..."
+                    value={selectedValue}>
+                </lightning-input>
+
+                <!-- Dropdown Results -->
+                <div 
+                    if:true={searchResults} 
+                    class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" 
+                    role="listbox">
+
+                <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                    <template for:each={searchResults} for:item="searchResult">
+                        <li 
+                            key={searchResult.value} 
+                            data-value={searchResult.value} 
+                            role="presentation" 
+                            onclick={selectSearchResult} 
+                            class="slds-listbox__item">
+                            <div 
+                                class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" 
+                                role="option">
+                                <span class="slds-media__body">
+                                    <span class="slds-truncate" title={searchResult.label}>
+                                        {searchResult.label}
+                                    </span>
+                                </span>
+                            </div>
+                        </li>
+                    </template>
+                </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -77,6 +77,7 @@ export default class SfpegListCmp extends LightningElement {
     @api showCount = 'right';   // Flag to display the items count.
     @api showSearch = false;    // Flag to show Filter action in header.
     @api showExport = false;    // Flag to show Export action in header.
+    @api multipleFilters = false; // Flag to show multiple column filters component
     @api displayHeight = 0;     // Max-height of the content Div (0 meaning no limit)
     @api maxSize = 100;         // Header Action list overflow limit
     @api isCollapsible = false; // Flag to set the list details as collapsible 
@@ -1239,6 +1240,126 @@ export default class SfpegListCmp extends LightningElement {
             if (this.isDebug) console.log('filterRecords: timeOut set');
         });
         
+    }
+
+    // Multiple Filters handling
+    handleMultipleFiltersChange(event) {
+        if (this.isDebug) console.log('handleMultipleFiltersChange: START', JSON.stringify(event.detail));
+        
+        this.isFiltering = true;
+        
+        // Child component already validates and normalizes filters, but add minimal safety check
+        const rawFilters = event.detail || {};
+        this.multipleFilterValues = {};
+        
+        // Lightweight validation: only include valid keys and non-null values (child does full validation)
+        for (const key in rawFilters) {
+            if (key && rawFilters[key] != null) {
+                this.multipleFilterValues[key] = rawFilters[key];
+            }
+        }
+        
+        const filterKeys = Object.keys(this.multipleFilterValues);
+        const hasFilters = filterKeys.length > 0;
+        
+        // Store original list if not already stored
+        if (!this.resultListOrig) {
+            if (this.isDebug) console.log('handleMultipleFiltersChange: storing original list');
+            this.resultListOrig = [...this.resultList];
+        }
+        
+        // Early exit: no filters - restore original list
+        if (!hasFilters) {
+            if (this.isDebug) console.log('handleMultipleFiltersChange: no filters - restoring original list');
+            this.isFiltered = false;
+            setTimeout(() => {
+                this.resultList = [...this.resultListOrig];
+                if (this.hideCheckbox) this.selectedRecords = this.resultList;
+                this.isFiltering = false;
+                if (this.isDebug) console.log('handleMultipleFiltersChange: END (no filters)');
+            }, 0);
+            return;
+        }
+        
+        // Extract filter criteria
+        const generalSearchKeywords = this.multipleFilterValues._generalSearch;
+        const columnFilterKeys = filterKeys.filter(key => key !== '_generalSearch');
+        const hasColumnFilters = columnFilterKeys.length > 0;
+        const hasGeneralSearch = generalSearchKeywords && generalSearchKeywords.length > 0;
+        
+        if (this.isDebug) console.log('handleMultipleFiltersChange: applying filters', JSON.stringify(this.multipleFilterValues));
+        this.isFiltered = true;
+        
+        // Apply filters - all logic inline
+        const filteredList = this.resultListOrig.filter(record => {
+            if (!record) return false;
+            
+            // Check column-specific filters
+            if (hasColumnFilters) {
+                for (const fieldName of columnFilterKeys) {
+                    const filterValue = this.multipleFilterValues[fieldName];
+                    if (!filterValue) continue;
+                    
+                    const fieldValue = record[fieldName];
+                    
+                    // Date range filter
+                    if (typeof filterValue === 'object' && filterValue.mode === 'range') {
+                        let recordDateStr = String(fieldValue || '').trim();
+                        if (recordDateStr.includes('T')) recordDateStr = recordDateStr.split('T')[0];
+                        if (!recordDateStr) return false;
+                        if (filterValue.startDate && recordDateStr < filterValue.startDate.trim()) return false;
+                        if (filterValue.endDate && recordDateStr > filterValue.endDate.trim()) return false;
+                    }
+                    // Date specific filter
+                    else if (typeof filterValue === 'object' && filterValue.mode === 'specific') {
+                        let recordDateStr = String(fieldValue || '').trim();
+                        if (recordDateStr.includes('T')) recordDateStr = recordDateStr.split('T')[0];
+                        let filterDateStr = String(filterValue.value || '').trim();
+                        if (filterDateStr.includes('T')) filterDateStr = filterDateStr.split('T')[0];
+                        if (recordDateStr !== filterDateStr) return false;
+                    }
+                    // Multi-select filter (OR logic) - values already normalized to lowercase by child
+                    else if (Array.isArray(filterValue)) {
+                        const fieldValueStr = String(fieldValue || '').toLowerCase();
+                        const matches = filterValue.some(selectedValue => {
+                            const selectedValueLower = String(selectedValue || '').toLowerCase();
+                            return fieldValueStr === selectedValueLower || fieldValueStr.includes(selectedValueLower);
+                        });
+                        if (!matches) return false;
+                    }
+                    // String filter - value already normalized to lowercase by child
+                    else {
+                        const fieldValueLower = String(fieldValue || '').toLowerCase();
+                        const filterValueLower = String(filterValue || '').toLowerCase();
+                        if (!fieldValueLower.includes(filterValueLower)) return false;
+                    }
+                }
+            }
+            
+            // Check general search if present (OR logic - any keyword match)
+            if (hasGeneralSearch) {
+                let searchableText = '';
+                for (const value of Object.values(record)) {
+                    if (value != null) searchableText += String(value).toLowerCase() + ' ';
+                }
+                const hasMatch = generalSearchKeywords.some(keyword => searchableText.includes(keyword));
+                if (!hasMatch) return false;
+            }
+            
+            return true;
+        });
+        
+        // Use setTimeout to defer assignment (same pattern as filterRecords)
+        setTimeout(() => {
+            this.resultList = filteredList;
+            if (this.hideCheckbox) this.selectedRecords = this.resultList;
+            this.isFiltering = false;
+            
+            if (this.isDebug) {
+                console.log('handleMultipleFiltersChange: filtered', filteredList.length, 'of', this.resultListOrig.length, 'records');
+                console.log('handleMultipleFiltersChange: END');
+            }
+        }, 0);
     }
 
     // Expand / Collapse management

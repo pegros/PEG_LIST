@@ -1,0 +1,221 @@
+.filter-container {
+    background-color: var(--lwc-colorBackgroundAlt, #f3f3f3);
+    border-bottom: var(--lwc-borderWidthThin, 1px) solid var(--lwc-colorBorder, #dddbda);
+    border-top: var(--lwc-borderWidthThin, 1px) solid var(--lwc-colorBorder, #dddbda);
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: visible;
+    position: relative;
+}
+
+.active-filters-container {
+    width: 100%;
+    overflow: visible; /* Allow dropdowns to extend outside */
+}
+
+.filter-item-wrapper {
+    min-width: 0; /* Allow flex items to shrink */
+    overflow: visible; /* Allow dropdowns to extend outside */
+}
+
+.filter-item {
+    background-color: var(--lwc-colorBackground, #ffffff);
+    border: var(--lwc-borderWidthThin, 1px) solid var(--lwc-colorBorder, #dddbda);
+    border-radius: var(--lwc-borderRadiusMedium, 0.25rem);
+    padding: var(--lwc-spacingSmall, 0.75rem);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    height: 100%;
+    min-width: 0; /* Allow content to shrink */
+    overflow: visible; /* Allow dropdowns to extend outside */
+}
+
+.filter-input {
+    --sds-c-input-radius-border: 0.25rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    min-width: 0; /* Allow inputs to shrink */
+}
+
+
+.general-search-input {
+    --sds-c-input-radius-border: 0.25rem;
+}
+
+.clear-filters-button {
+    --sds-c-button-neutral-color-background: var(--lwc-colorBackground, #ffffff);
+    --sds-c-button-neutral-color-border: var(--lwc-colorBorder, #dddbda);
+}
+
+.filter-mode-checkbox {
+    --sds-c-input-checkbox-label-color: var(--lwc-colorTextDefault, #080707);
+    margin-right: var(--lwc-spacingSmall, 0.75rem);
+}
+
+.remove-filter-button {
+    margin-top: var(--lwc-spacingXxLarge, 1.5rem);
+}
+
+.combobox-with-pills {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0; /* Allow combobox to shrink */
+    box-sizing: border-box;
+}
+
+.pills-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    min-height: 1.5rem;
+    gap: 0.25rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Wrapper to allow pill truncation */
+.pill-wrapper {
+    flex: 0 1 auto;
+    min-width: 0;
+}
+
+/* Constrain individual pill width to prevent taking full line */
+.pill-wrapper lightning-pill {
+    display: inline-block;
+    max-width: 300px; /* Truncate pills that exceed this width */
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Also apply to pills in searchable combobox wrapper */
+.searchable-combobox-wrapper .pill-wrapper {
+    flex: 1 1 100%; /* Take full width of parent */
+    min-width: 0;
+}
+
+.searchable-combobox-wrapper .pill-wrapper lightning-pill {
+    display: inline-block;
+    max-width: 300px; /* Default - will be overridden by media queries */
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: auto; /* Allow responsive sizing */
+}
+
+.date-filter-container {
+    width: 100%;
+    min-width: 0; /* Allow date filters to shrink */
+}
+
+.date-filter-label {
+    display: block;
+    margin-bottom: var(--lwc-spacingXxSmall, 0.25rem);
+    font-weight: var(--lwc-fontWeightBold, 700);
+    font-size: 0.75rem; /* Much smaller font for compact display */
+    line-height: 1.2;
+}
+
+.date-inputs-row {
+    margin-top: 0;
+}
+
+/* Wrapper for searchable combobox to prevent parent flex/grid from affecting dropdown positioning */
+.searchable-combobox-wrapper {
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    /* Override parent flex properties that might affect positioning */
+    flex: none;
+    align-self: auto;
+    min-width: 0; /* Allow searchable combobox to shrink */
+    box-sizing: border-box;
+}
+
+/* Ensure the searchable combobox component scales with parent */
+.searchable-combobox-wrapper c-sfpeg-multi-select-combobox {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    display: block;
+    box-sizing: border-box;
+}
+
+/* Responsive styles for mobile and tablet */
+@media (max-width: 1000px) {
+    /* Stack header elements vertically on mobile */
+    .slds-grid.slds-grid_align-spread {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .slds-grid.slds-grid_align-spread .slds-col.slds-no-flex {
+        width: 100%;
+        margin-top: var(--lwc-spacingXSmall, 0.5rem);
+    }
+    
+    /* Stack general search and field selector on mobile */
+    .slds-grid.slds-gutters {
+        flex-direction: column;
+    }
+    
+    .slds-grid.slds-gutters > .slds-col {
+        width: 100%;
+        margin-bottom: var(--lwc-spacingXSmall, 0.5rem);
+    }
+    
+    /* Reduce pill max-width on mobile - responsive to screen dimension */
+    .pills-container .pill-wrapper lightning-pill {
+        max-width: 200px !important; /* Smaller on mobile screens */
+    }
+    
+    .searchable-combobox-wrapper .pill-wrapper lightning-pill {
+        max-width: 200px !important; /* Responsive to screen dimension - same as regular pills */
+    }
+    
+    /* Make filter items stack on mobile */
+    .active-filters-container {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .filter-item-wrapper {
+        width: 100%;
+        margin-bottom: var(--lwc-spacingXSmall, 0.5rem);
+    }
+}
+
+/* Tablet-specific adjustments - responsive to screen dimension */
+@media (min-width: 1001px) and (max-width: 2089px) {
+    /* Medium max-width on tablet screens */
+    .pills-container .pill-wrapper lightning-pill {
+        max-width: 100px !important; /* Medium size for tablet (3 per row layout) */
+    }
+    
+    .searchable-combobox-wrapper .pill-wrapper lightning-pill {
+        max-width: 100px !important; /* Responsive to screen dimension - same as regular pills for tablet */
+    }
+}
+
+/* Large screen adjustments - responsive to screen dimension */
+/* @media (min-width: 1025px) and (max-width: 1440px) {
+  
+    .pill-wrapper lightning-pill {
+        max-width: 250px; 
+    }
+} *
+
+/* Extra large screen adjustments */
+@media (min-width: 2090px) {
+    /* Larger max-width on extra large screens */
+    .pills-container .pill-wrapper lightning-pill {
+        max-width: 300px !important; /* Larger size for extra large screens (6 per row layout) */
+    }
+    
+    .searchable-combobox-wrapper .pill-wrapper lightning-pill {
+        max-width: 300px !important; /* Responsive to screen dimension - same as regular pills for extra large */
+    }
+}
