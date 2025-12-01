@@ -43,6 +43,7 @@
         {
             &quot;label&quot;: &quot;Key Prefix&quot;,
             &quot;fieldName&quot;: &quot;keyPrefix&quot;,
+            &quot;initialWidth&quot;: 100,
             &quot;sortable&quot;: true
         },
         {
@@ -54,17 +55,20 @@
             &quot;label&quot;: &quot;Custom?&quot;,
             &quot;fieldName&quot;: &quot;isCustom&quot;,
             &quot;sortable&quot;: true,
+            &quot;initialWidth&quot;: 100,
             &quot;type&quot;: &quot;boolean&quot;
         },
         {
-            &quot;label&quot;: &quot;Setting?&quot;,
+            &quot;label&quot;: &quot;Custom Setting?&quot;,
             &quot;fieldName&quot;: &quot;isCustomSetting&quot;,
             &quot;sortable&quot;: true,
+            &quot;initialWidth&quot;: 100,
             &quot;type&quot;: &quot;boolean&quot;
         },
         {
-            &quot;label&quot;: &quot;#RTs&quot;,
+            &quot;label&quot;: &quot;#Record Types&quot;,
             &quot;fieldName&quot;: &quot;rtCount&quot;,
+            &quot;initialWidth&quot;: 100,
             &quot;sortable&quot;: true,
             &quot;type&quot;: &quot;number&quot;
         }
@@ -73,7 +77,7 @@
     </values>
     <values>
         <field>DisplayType__c</field>
-        <value xsi:type="xsd:string">TileList</value>
+        <value xsi:type="xsd:string">DataTable</value>
     </values>
     <values>
         <field>DoPagination__c</field>

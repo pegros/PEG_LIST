@@ -927,12 +927,14 @@ about how to fetch record data via a REST callout to an external system and disp
 ### Icon Field Type Display (Current Org Limits Status)
 
 In order to display in an App page the current state of the Org Limits,
-two elements are available off-the-shelf in the examples:
-* the **sfpegOrgLimits_SVC** Apex extension class (calling see **[OrgLimits.getMap()](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_class_System_OrgLimits.htm)**)
+an off-the-shelf configuration is provided in the **[sfpegList-utilities](/help/sfpegListOrgUtilities.md)** package:
+* the **sfpegOrgLimits_SVC** Apex extension class 
 * the **sfpegOrgLimits** **sfpegList** list metadada record
+* the **sfpegGovernorLimitsPage** Lightning App page and **sfpegGovernorLimitsTab** tab
 
-You may configure the list metadada record either as _tilelist_ or _datatable_ 
-as shown hereafter.
+The list metadada record is set in _datatable_ mode by default, but you may 
+also set it in _tilelist_ mode, as shown in the example below:
+
 ![Org Limits with Icons](/media/sfpegOrgLimits.png)
 
 Its display configuration highlights the way to leverage the `icon` field type for

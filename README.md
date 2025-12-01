@@ -42,7 +42,7 @@ actionability (via the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**).
 The whole set of components (and this repository) is structured as 4 complementary
 packages (with their dedicated folders and overview pages):
 * **[sfpegList-core](/help/sfpegListPkgCore.md)** providing the core functionality of the
-repository, with focus on the contextualised list component (**[sfpegListCmp](/help/README.md)**)
+repository, with focus on the contextualised list component (**[sfpegListCmp](/help/sfpegListCmp.md)**)
 and supporting contextualization and action framework
 * **[sfpegList-extensions](/help/sfpegListPkgExtensions.md)** providing other components to enhance
 the standard Lightning UX and leveraging more or less the same underlying framework
@@ -61,7 +61,7 @@ included in the reporstory (with links to their _help_ page when available).
 
 ## Repository Availability
 
-The source code is freely available for use under the MIT license from this GiHub repository.
+The source code is freely available for use under the MIT license from this GitHub repository.
 Periodic upgrades will be posted depending on fixes/evolutions implemented as part of assignments
 and personal interactions.
 

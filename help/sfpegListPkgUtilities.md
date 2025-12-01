@@ -43,11 +43,13 @@ query context)
 * the **[sfpegSearchPopupCmp](/help/sfpegSearchPopupCmp.md)** component enabling to open a 
 adding any **[sfpegSearchListCmp](/help/sfpegSearchListCmp.md)** in a Popup
 
-It also provides a few useful Apex extensions:
-* the **sfpegOrgLimits_SVC** class (as well as a **sfpegList** metadata record) to 
-display the current situation of the Org Limits
-* the **sfpegObjectKeys_SVC** class (as well as a **sfpegList** metadata record) to 
-display the set of Objects (with their key prefixes) defined on the Org
+It also provides various off-the-shelf **[Org Utilities](/help/sfpegListOrgUtilities.md)**
+consisting in a set of **sfpegList** configurations with underlying Apex extensions
+(for data fetch) and related Lightning tabs (for display in Lightning UX).
+They provide Salesforce administrator with a quick and filterable access to various
+interesting technical information about their Org:
+* the current status of all **Governor Limits**
+* the list of all available **Objects** (and corresponding key prefixes)
 
 
 ## Technical Details

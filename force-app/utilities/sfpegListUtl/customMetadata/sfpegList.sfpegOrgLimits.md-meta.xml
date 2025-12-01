@@ -34,7 +34,7 @@
 &quot;label&quot;: &quot;Status&quot;,
 &quot;sortable&quot;: true,
 &quot;type&quot;: &quot;icon&quot;,
-&quot;initialWidth&quot;: 50,
+&quot;initialWidth&quot;: 100,
 &quot;fieldName&quot;:&quot;Icon&quot;,
 &quot;cellAttributes&quot;:{&quot;alignment&quot;:&quot;center&quot;},
 &quot;typeAttributes&quot;: {
@@ -50,18 +50,22 @@
 {
 &quot;label&quot;: &quot;Value&quot;,
 &quot;fieldName&quot;: &quot;Value&quot;,
+&quot;initialWidth&quot;: 100,
 &quot;sortable&quot;: true,
 &quot;type&quot;: &quot;number&quot;
 },
 {
 &quot;label&quot;: &quot;Limit&quot;,
 &quot;fieldName&quot;: &quot;Limit&quot;,
+&quot;initialWidth&quot;: 100,
 &quot;sortable&quot;: true,
+&quot;sortDirection&quot;:&quot;desc&quot;,
 &quot;type&quot;: &quot;number&quot;
 },
 {
 &quot;label&quot;: &quot;Ratio&quot;,
 &quot;type&quot;: &quot;percent&quot;,
+&quot;initialWidth&quot;: 100,
 &quot;fieldName&quot;: &quot;Ratio&quot;,
 &quot;sortable&quot;: true,
 &quot;cellAttributes&quot;:{&quot;alignment&quot;:&quot;right&quot;,&quot;class&quot;:{&quot;fieldName&quot;:&quot;Class&quot;}}
@@ -72,8 +76,8 @@
 &quot;label&quot;: &quot;Progress&quot;,
 &quot;type&quot;: &quot;icon&quot;,
 &quot;fieldName&quot;: &quot;Progress&quot;,
+&quot;initialWidth&quot;: 100,
 &quot;sortable&quot;: true,
-&quot;initialWidth&quot;: 80,
 &quot;cellAttributes&quot;:{&quot;alignment&quot;:&quot;center&quot;},
 &quot;typeAttributes&quot;: {
 &quot;iconName&quot;:&quot;dynamic:progress&quot;,
