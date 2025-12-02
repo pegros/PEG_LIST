@@ -72,15 +72,15 @@ may then be then merged after review.
 ## Installation
 
 As described in the [Technical Details](/help/technical.md) page, you may either deploy
-the whole repository or part of it via **Git** and **SF CLI** or leverage individual
+the whole repository (or part of it) via **Git** and **SF CLI** or leverage individual
 unlocked package installation links available in the _Release Notes_ section of each
-package's introduction page.  
+package's overview page.  
 
 ⚠️ When deploying them, pay attention to the possible dependencies!
 E.g. all packages in this repository depend on the `sfpegList-core` package.
 
 ℹ️ When installing them via the unlocked package installation links, you should rather
-choose the `Install for Admins only` and `Compaile only the Apex in the Package` options.
+choose the `Install for Admins only` and `Compile only the Apex in the Package` options.
 
 ![Unlocked Package Installation](/media/sfpegListInstallation.png)
 

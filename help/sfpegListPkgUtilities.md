@@ -87,3 +87,4 @@ Install it:
 Version content:
 * added the **sfpegObjectKeys_SVC** (and its **sfpegList** metadata record) for quick object identification
 from key prefix
+* added tabs and pages for the **[Org Utilities](/help/sfpegListOrgUtilities.md)**
