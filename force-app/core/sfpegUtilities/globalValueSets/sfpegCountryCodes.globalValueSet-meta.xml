@@ -1241,7 +1241,7 @@
         <label>ZWE</label>
     </customValue>
     <customValue>
-        <fullName>UNO</fullName>
+        <fullName>UN</fullName>
         <default>false</default>
         <label>UNO</label>
     </customValue>
@@ -1251,22 +1251,27 @@
         <label>VAT</label>
     </customValue>
     <customValue>
-        <fullName>ENG</fullName>
+        <fullName>GB-ENG</fullName>
         <default>false</default>
-        <label>ENG</label>
+        <label>GBR-ENG</label>
     </customValue>
     <customValue>
-        <fullName>WAL</fullName>
+        <fullName>GB-WLS</fullName>
         <default>false</default>
-        <label>WAL</label>
+        <label>GBR-WLS</label>
     </customValue>
     <customValue>
-        <fullName>SCO</fullName>
+        <fullName>GB-SCT</fullName>
         <default>false</default>
-        <label>SCO</label>
+        <label>GBR-SCT</label>
     </customValue>
     <customValue>
-        <fullName>EUR</fullName>
+        <fullName>GB-NIR</fullName>
+        <default>false</default>
+        <label>GBR-NIR</label>
+    </customValue>
+    <customValue>
+        <fullName>EU</fullName>
         <default>false</default>
         <label>EUR</label>
     </customValue>

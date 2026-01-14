@@ -1241,7 +1241,7 @@
         <label>Zimbabwe</label>
     </customValue>
     <customValue>
-        <fullName>UNO</fullName>
+        <fullName>UN</fullName>
         <default>false</default>
         <label>United Nations</label>
     </customValue>
@@ -1251,22 +1251,27 @@
         <label>Vatican</label>
     </customValue>
     <customValue>
-        <fullName>ENG</fullName>
+        <fullName>GB-ENG</fullName>
         <default>false</default>
         <label>England</label>
     </customValue>
     <customValue>
-        <fullName>WAL</fullName>
+        <fullName>GB-WLS</fullName>
         <default>false</default>
         <label>Wales</label>
     </customValue>
     <customValue>
-        <fullName>SCO</fullName>
+        <fullName>GB-SCT</fullName>
         <default>false</default>
         <label>Scotland</label>
     </customValue>
     <customValue>
-        <fullName>EUR</fullName>
+        <fullName>GB-NIR</fullName>
+        <default>false</default>
+        <label>Northern Ireland</label>
+    </customValue>
+    <customValue>
+        <fullName>EU</fullName>
         <default>false</default>
         <label>European Union</label>
     </customValue>
