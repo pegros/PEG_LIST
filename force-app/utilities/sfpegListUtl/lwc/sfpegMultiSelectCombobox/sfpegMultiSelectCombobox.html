@@ -1,0 +1,60 @@
+<template>
+    <!-- Searchable Combobox -->
+    <template lwc:if={isSearchable}>
+        <div onfocusout={hideOption}  >
+            <div>
+                <lightning-input    lwc:ref="searchInput"
+                                    label={fieldLabel}
+                                    placeholder={searchPlaceholder}
+                                    type="search"
+                                    onchange={searchOption}
+                                    onfocusin={showOption}
+                                    oninput={handleInput}>
+                </lightning-input>
+            </div>
+            <!-- Search Dropdown Results -->
+            <template lwc:if={displaySearch}>
+                <div   class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" role="listbox">
+                    <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                        <template for:each={searchResults} for:item="searchResult">
+                            <li key={searchResult.value} 
+                                data-value={searchResult.value}
+                                onclick={selectOption}
+                                role="presentation" 
+                                class="slds-listbox__item">
+                                <div    class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" 
+                                        role="option"
+                                        data-value={searchResult.value} onclick={selectOption}>
+                                    <span class="slds-media__body slds-truncate" title={searchResult.label} data-value={searchResult.value} onclick={selectOption}>
+                                        {searchResult.label}
+                                    </span>
+                                </div>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </template>
+        </div>
+    </template>
+
+    <!-- Standard Lightning Combobox  -->
+    <template lwc:else>                                            
+        <lightning-combobox lwc:ref="valueSelector"
+                            label={fieldLabel}
+                            placeholder={selectPlaceholder}
+                            options={searchResults}
+                            value=""
+                            onchange={selectOption}
+                            variant="label-stacked">
+        </lightning-combobox>
+    </template>
+
+    <!-- Selection Display as Pills -->
+    <template lwc:if={selectedOptions.length}>
+        <div class="slds-var-p-horizontal_x-small slds-var-p-top_x-small">
+            <lightning-pill-container   items={selectedPills}
+                                        onitemremove={deselectOption}>
+            </lightning-pill-container>
+        </div>
+    </template>
+</template>

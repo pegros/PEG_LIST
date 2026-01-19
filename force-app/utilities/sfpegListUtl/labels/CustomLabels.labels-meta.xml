@@ -16,4 +16,168 @@
         <shortDescription>Header of the results list</shortDescription>
         <value>Matching results found</value>
     </labels>
+
+    <labels>
+        <fullName>sfpegFilterableListFilters</fullName>
+        <categories>PEG Component LWC Section Header</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Header of the filter section of the sfpegMFilterableListCmp</shortDescription>
+        <value>Select your filters</value>
+    </labels>
+
+    <labels>
+        <fullName>sfpegMultiSelectSelectPlaceholder</fullName>
+        <categories>PEG Component LWC Combobox placeholder</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Placeholder for the Search input of sfpegMultiSelectCombobox</shortDescription>
+        <value>Select options</value>
+    </labels>
+    <labels>
+        <fullName>sfpegMultiSelectSearchPlaceholder</fullName>
+        <categories>PEG Component LWC Combobox placeholder</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Placeholder for the Select input of sfpegMultiSelectCombobox</shortDescription>
+        <value>Search and select options</value>
+    </labels>
+
+
+    <labels>
+        <fullName>sfpegMultipleFilterSearchLabel</fullName>
+        <categories>PEG Component LWC Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label for the manual Search button of sfpegMultipleFilters</shortDescription>
+        <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>sfpegMultipleFilterSearchTitle</fullName>
+        <categories>PEG Component LWC Button Title</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Title for the manual Search button of sfpegMultipleFilters</shortDescription>
+        <value>Apply filter changes</value>
+    </labels>
+    <labels>
+        <fullName>sfpegMultipleFilterClearLabel</fullName>
+        <categories>PEG Component LWC Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label for the Clear button of sfpegMultipleFilters</shortDescription>
+        <value>Reset</value>
+    </labels>
+    <labels>
+        <fullName>sfpegMultipleFilterClearTitle</fullName>
+        <categories>PEG Component LWC Button Title</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Title for the Clear button of sfpegMultipleFilters</shortDescription>
+        <value>Remove all set filters</value>
+    </labels>
+    <labels>
+        <fullName>sfpegMultipleFilterExpandLabel</fullName>
+        <categories>PEG Component LWC Button Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Fallback label for the Expand/Collapse buttonIcon of sfpegMultipleFilters</shortDescription>
+        <value>Expand/Collapse</value>
+    </labels>
+    <labels>
+        <fullName>sfpegMultipleFilterExpandTitle</fullName>
+        <categories>PEG Component LWC Button Title</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Title for the Expand/Collapse buttonIcon of sfpegMultipleFilters</shortDescription>
+        <value>Expand or collapse filter section</value>
+    </labels>
+    <labels>
+        <fullName>sfpegMultipleFilterFilterModeLabel</fullName>
+        <categories>PEG Component LWC Input Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label for the Filter Mode checkbox of sfpegMultipleFilters</shortDescription>
+        <value>Use Search button to apply filters</value>
+    </labels>
+    <labels>
+        <fullName>sfpegMultipleFilterComboModeLabel</fullName>
+        <categories>PEG Component LWC Input Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label for the Combobox Mode checkbox of sfpegMultipleFilters</shortDescription>
+        <value>Use searchable combobox mode</value>
+    </labels>
+    <labels>
+        <fullName>sfpegMultipleFilterGlobalSearchLabel</fullName>
+        <categories>PEG Component LWC Input Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label for the Global Search input of sfpegMultipleFilters</shortDescription>
+        <value>Search on all fields</value>
+    </labels>
+    <labels>
+        <fullName>sfpegMultipleFilterGlobalSearchPlaceholder</fullName>
+        <categories>PEG Component LWC Input Placeholder</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Placeholder for the Global Search input of sfpegMultipleFilters</shortDescription>
+        <value>Enter your keywords</value>
+    </labels>
+    <labels>
+        <fullName>sfpegMultipleFilterFieldSelectLabel</fullName>
+        <categories>PEG Component LWC Input Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label for the Filter Add Combobox of sfpegMultipleFilters</shortDescription>
+        <value>Add specific filter</value>
+    </labels>
+    <labels>
+        <fullName>sfpegMultipleFilterFieldSelectPlaceholder</fullName>
+        <categories>PEG Component LWC Input Placeholder</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Placeholder for the Filter Add Combobox of sfpegMultipleFilters</shortDescription>
+        <value>Select one of the available field</value>
+    </labels>
+    <labels>
+        <fullName>sfpegMultipleFilterRangeStartTitle</fullName>
+        <categories>PEG Component LWC Input Placeholder</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Placeholder for the Range Start Inputs of sfpegMultipleFilters</shortDescription>
+        <value>From</value>
+    </labels>
+    <labels>
+        <fullName>sfpegMultipleFilterRangeEndTitle</fullName>
+        <categories>PEG Component LWC Input Placeholder</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Placeholder for the Range End Inputs of sfpegMultipleFilters</shortDescription>
+        <value>To</value>
+    </labels>
+    <labels>
+        <fullName>sfpegMultipleFilterInputPlaceholder</fullName>
+        <categories>PEG Component LWC Input Placeholder</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Placeholder for the Text Input of sfpegMultipleFilters</shortDescription>
+        <value>Enter your keywords</value>
+    </labels>
+    <labels>
+        <fullName>sfpegMultipleFilterRemoveTitle</fullName>
+        <categories>PEG Component LWC Input Placeholder</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Title for the Filter Remove ButtonIcon of sfpegMultipleFilters</shortDescription>
+        <value>Remove this filter</value>
+    </labels>
+    <labels>
+        <fullName>sfpegMultipleFilterProcessingLabel</fullName>
+        <categories>PEG Component LWC Spinner Text</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Alternative text for the spinner of sfpegMultipleFilters</shortDescription>
+        <value>Processing...</value>
+    </labels>
 </CustomLabels>

@@ -1,0 +1,235 @@
+<template>
+    <template lwc:if={isInitDone}>
+        <lightning-card title={cardTitle}>
+            <!-- Main Card Actions -->
+            <div slot="actions" >
+                <lightning-button-group>
+                    <template lwc:if={isExpanded}>
+                        <template lwc:if={useButtonFilter}>
+                            <lightning-button   lwc:ref="searchButton"
+                                                label={searchButtonLabel}
+                                                title={searchButtonTitle}
+                                                variant="brand"
+                                                icon-name="utility:search"
+                                                onclick={doSearch}
+                                                disabled={isProcessing}>
+                            </lightning-button>
+                        </template>
+                        <lightning-button   lwc:ref="clearFiltersButton"
+                                            label={clearButtonLabel}
+                                            title={clearButtonTitle}
+                                            variant="neutral"
+                                            icon-name="utility:clear"
+                                            onclick={clearFilters}
+                                            disabled={isProcessing}>
+                        </lightning-button>
+                    </template>
+                    <lightning-button-icon-stateful lwc:ref="expandCollapseButton"
+                                                    alternative-text={expandButtonLabel}
+                                                    title={expandButtonTitle}
+                                                    icon-name={expandButtonIcon}
+                                                    selected={isExpanded}
+                                                    onclick={expandCollapse}>
+                    </lightning-button-icon-stateful>
+                </lightning-button-group>
+            </div>
+
+            <!-- Main Filter Section -->
+            <div class={filterDivClass} ><div class="slds-theme_shade slds-box slds-box_small">
+                <!-- slds-var-p-around_medium  slds-box_x-small-->
+                <lightning-layout horizontal-align="spread" vertical-align="start" pull-to-boundary="small" multiple-rows >
+
+                    <!-- Main Checbox Options -->
+                    <lightning-layout-item padding="horizontal-small" size="12" large-device-size="6">
+                        <lightning-input    lwc:ref="filterModeCheckbox"
+                                            type="checkbox"
+                                            class="slds-var-p-horizontal_x-small slds-var-p-vertical_x-small"
+                                            label={filterModeCheckboxLabel}
+                                            checked={useButtonFilter}
+                                            onchange={updateFilterMode}>
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="horizontal-small" size="12" large-device-size="6">
+                        <lightning-input    lwc:ref="comboboxModeCheckbox"
+                                            type="checkbox"
+                                            class="slds-var-p-horizontal_x-small slds-var-p-vertical_x-small"
+                                            label={comboboxModeCheckboxLabel}
+                                            checked={useSearchableCombobox}
+                                            onchange={updateComboboxMode}>
+                        </lightning-input>
+                    </lightning-layout-item>
+
+                    <!-- General Search Bar and Field Selector - Side by Side -->
+                    <lightning-layout-item padding="horizontal-small" size="12" large-device-size="6">
+                        <lightning-input    lwc:ref="generalSearchBox"
+                                            type="search"
+                                            label={generalSearchLabel}
+                                            placeholder={generalSearchPlaceholder}
+                                            variant="label-stacked"
+                                            value={generalSearchValue}
+                                            onchange={doGeneralSearch}>
+                                            <!--onkeypress={handleGeneralSearchKeyPress}> -->
+                        </lightning-input>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item padding="horizontal-small" size="12" large-device-size="6">
+                        <lightning-combobox lwc:ref="fieldSelectCombobox"
+                                            label={fieldSelectLabel}
+                                            placeholder={fieldSelectPlaceholder}
+                                            variant="label-stacked"
+                                            options={fieldSelectorOptions}
+                                            value=""
+                                            onchange={selectField}>
+                        </lightning-combobox>
+                    </lightning-layout-item>
+
+                    <!-- Active Filters Display -->
+                    <template lwc:if={activeFilters.length}>
+                        <lightning-layout-item size="12" padding="horizontal-small">
+                            <hr class="slds-var-m-vertical_x-small"/>
+                        </lightning-layout-item>
+
+                        <template for:each={activeFilters} for:item="filter">
+                            <lightning-layout-item key={filter.fieldName} padding="horizontal-small" size="12" large-device-size="6" class="filter-item-wrapper-orig">
+                                <div class="slds-media slds-var-p-bottom_x-small">
+                                    <div class="slds-media__body">
+
+                                        <!-- Date Range Selector -->
+                                        <template lwc:if={filter.isDate}>
+                                            <div class="filter-input slds-form-element_stacked slds-form-element">
+                                                <lightning-layout pull-to-boundary="small" multiple-rows="true">
+                                                    <lightning-layout-item padding="horizontal-small" size="12">
+                                                        <label class="slds-form-element__label date-filter-label-stacked">
+                                                            {filter.label}
+                                                        </label>
+                                                    </lightning-layout-item>
+                                                    <lightning-layout-item padding="horizontal-small"  size="12" large-device-size="6">
+                                                        <lightning-input    type="date"
+                                                                            class="filter-input date-input"
+                                                                            variant="label-hidden"
+                                                                            data-fieldname={filter.name}
+                                                                            data-range-type="startValue"
+                                                                            title={rangeStartTitle}
+                                                                            placeholder={rangeStartTitle}
+                                                                            value={filter.startValue}
+                                                                            onchange={changeRangeFilter}>
+                                                        </lightning-input>
+                                                    </lightning-layout-item>
+                                                    <lightning-layout-item padding="horizontal-small"  size="12" large-device-size="6">
+                                                        <lightning-input    type="date"
+                                                                            class="filter-input date-input"
+                                                                            variant="label-hidden"
+                                                                            data-fieldname={filter.name}
+                                                                            data-range-type="endValue"
+                                                                            title={rangeEndTitle}
+                                                                            placeholder={rangeEndTitle}
+                                                                            value={filter.endValue}
+                                                                            onchange={changeRangeFilter}>
+                                                        </lightning-input>
+                                                    </lightning-layout-item>
+                                                </lightning-layout>
+                                            </div>
+                                        </template>
+
+                                        <!-- Numeric Range Selector -->
+                                        <template lwc:elseif={filter.isNumber}>
+                                            <div class="filter-input slds-form-element_stacked slds-form-element">
+                                                <lightning-layout pull-to-boundary="small" multiple-rows="true">
+                                                    <lightning-layout-item padding="horizontal-small" size="12">
+                                                        <label class="slds-form-element__label date-filter-label-stacked">
+                                                            {filter.label}
+                                                        </label>
+                                                    </lightning-layout-item>
+                                                    <lightning-layout-item padding="horizontal-small"  size="12" large-device-size="6">
+                                                        <lightning-input    type="number"
+                                                                            formatter={filter.formatter}
+                                                                            class="filter-input number-input"
+                                                                            variant="label-hidden"
+                                                                            data-fieldname={filter.name}
+                                                                            data-range-type="startValue"
+                                                                            title={rangeStartTitle}
+                                                                            placeholder={rangeStartTitle}
+                                                                            value={filter.startValue}
+                                                                            onchange={changeRangeFilter}>
+                                                        </lightning-input>
+                                                    </lightning-layout-item>
+                                                    <lightning-layout-item padding="horizontal-small"  size="12" large-device-size="6">
+                                                        <lightning-input    type="number"
+                                                                            formatter={filter.formatter}
+                                                                            class="filter-input number-input"
+                                                                            variant="label-hidden"
+                                                                            data-fieldname={filter.name}
+                                                                            data-range-type="endValue"
+                                                                            title={rangeEndTitle}
+                                                                            placeholder={rangeEndTitle}
+                                                                            value={filter.endValue}
+                                                                            onchange={changeRangeFilter}>
+                                                        </lightning-input>
+                                                    </lightning-layout-item>
+                                                </lightning-layout>
+                                            </div>
+                                        </template>
+
+                                        <!-- Combobox Filter (text with < 10 distinct values) -->
+                                        <template lwc:elseif={filter.isCombobox}>
+                                            <c-sfpeg-multi-select-combobox  is-searchable={useSearchCombobox}
+                                                                            class="filter-input slds-form-element_stacked slds-form-element"
+                                                                            field-name={filter.name}
+                                                                            field-label={filter.label}
+                                                                            option-list={filter.options}
+                                                                            onvaluechange={changeComboboxFilter}
+                                                                            is-debug={isDebug}>
+                                            </c-sfpeg-multi-select-combobox>
+                                        </template> 
+
+                                        <!-- Boolean Filter -->
+                                        <template lwc:elseif={filter.isBoolean}>
+                                            <lightning-combobox variant="label-stacked"
+                                                                data-fieldname={filter.name}
+                                                                label={filter.label}
+                                                                options={booleanOptions}
+                                                                value=""
+                                                                onchange={changeBooleanFilter}>
+                                            </lightning-combobox>
+                                        </template>
+
+                                        <!-- Text Filter (text with >= 10 values or other types) -->
+                                        <template lwc:else>
+                                            <lightning-input    type="text"
+                                                                class="filter-input"
+                                                                variant="label-stacked"
+                                                                data-fieldname={filter.name}
+                                                                label={filter.label}
+                                                                placeholder={textInputPlaceholder}
+                                                                value={filter.filterValue}
+                                                                onchange={changeTextFilter}>
+                                            </lightning-input>
+                                        </template>
+                                    </div>
+
+                                    <div class="slds-media__figure slds-media__figure_reverse slds-p-top_xxx-small">
+                                        {filter.fieldName}
+                                        <lightning-button-icon  icon-name="utility:delete"
+                                                                class="remove-filter-button"
+                                                                variant="bare"
+                                                                alternative-text={filterRemoveTitle}
+                                                                title={filterRemoveTitle}
+                                                                data-fieldname={filter.name}
+                                                                onclick={removeFilter}>
+                                        </lightning-button-icon>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                        </template>
+                    </template>
+                </lightning-layout>
+            </div></div>
+
+            <!-- Spinner Display -->
+            <template lwc:if={isProcessing}>
+                <lightning-spinner alternative-text={processingLabel} size="medium">
+                </lightning-spinner>
+            </template>
+        </lightning-card>
+    </template>
+</template>

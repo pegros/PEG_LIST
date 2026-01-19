@@ -1,0 +1,67 @@
+<template>
+    <div class={cardClass} >
+        <lightning-card title={cardTitle} icon-name={cardIcon}>
+            <div class="slds-p-horizontal_small">
+
+                <!-- FILTER FORM DISPLAY -->
+                <template lwc:if={filterForm}>
+                    <div class="slds-m-bottom_small">
+                        <c-sfpeg-multiple-filters   card-title={filterTitle}
+                                                    columns={filterForm}
+                                                    records={resultList}
+                                                    is-expanded={isFilterExpanded}
+                                                    is-debug={isDebugFine}
+                                                    onfilterchange={handleApply}>
+                        </c-sfpeg-multiple-filters>
+                    </div>
+                </template>
+            
+                <!-- RESULT LIST DISPLAY -->
+                <c-sfpeg-list-cmp   lwc:ref="listLoader"
+                                    object-api-name={objectApiName}
+                                    record-id={recordId}
+                                    card-title={resultsTitle}
+                                    card-class="slds-border_top slds-var-m-top_small"
+                                    display-height={displayHeight}
+                                    button-size={buttonSize}
+                                    show-export={showExport}
+                                    max-size={maxSize}
+                                    config-name={configName}
+                                    action-config-name={actionConfigName}
+                                    footer-config-name={footerConfigName}
+                                    context-string={contextString}
+                                    onload={handleRecordLoad}
+                                    filter-records={multipleFilterRecords}
+                                    is-debug={isDebug}
+                                    is-debug-fine={isDebugFine}>
+                </c-sfpeg-list-cmp>
+            </div>
+
+            <!-- DEBUG INFO DISPLAY -->
+            <template lwc:if={isDebug}>
+                <div slot="footer" class="slds-text-align_left slds-p-horizontal_small slds-p-bottom_small slds-m-bottom_small"  >
+                    <dl class="slds-dl_horizontal slds-text-align_left">
+                        <dt class="slds-dl_horizontal__label slds-truncate">Filter List configuration:</dt>
+                        <dd class="slds-dl_horizontal__detail">
+                            <lightning-formatted-url    value={configUrl}
+                                                        label={configName}
+                                                        target="_blank">
+                            </lightning-formatted-url>
+                        </dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Header configuration:</dt>
+                        <dd class="slds-dl_horizontal__detail">{actionConfigName}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Footer configuration:</dt>
+                        <dd class="slds-dl_horizontal__detail">{footerConfigName}</dd>
+                        <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+                        <dd class="slds-dl_horizontal__detail">
+                            <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegFilterableListCmp.md"
+                                                        label="See Help on GitHub"
+                                                        target="_blank">
+                            </lightning-formatted-url>
+                        </dd>
+                    </dl>
+                </div>
+            </template>
+        </lightning-card>
+    </div>
+</template>
