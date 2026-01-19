@@ -62,6 +62,8 @@ public with sharing class sfpegOrgLimits_SVC extends sfpegListQuery_SVC {
             iterMap.put('Progress',iterProgress);
             String iterVariant = (iterProgress > 75 ? 'error' : (iterProgress > 50 ? 'warning' : 'success'));
             iterMap.put('Variant',iterVariant);
+            String iterPrgVariant = (iterProgress > 75 ? 'expired' : (iterProgress > 50 ? 'warning' : 'base'));
+            iterMap.put('PrgVariant',iterPrgVariant);
             iterMap.put('Class','slds-text-title_bold slds-text-color_' + iterVariant);
             iterMap.put('Icon','utility:' + iterVariant);
             //iterMap.put('Ratio',((Decimal) iterLimit.getValue()) / Math.max(1,iterLimit.getLimit()));

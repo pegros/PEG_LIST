@@ -81,7 +81,7 @@
 &quot;cellAttributes&quot;:{&quot;alignment&quot;:&quot;center&quot;},
 &quot;typeAttributes&quot;: {
 &quot;iconName&quot;:&quot;dynamic:progress&quot;,
-&quot;variant&quot;: {&quot;fieldName&quot;: &quot;Variant&quot;},
+&quot;variant&quot;: {&quot;fieldName&quot;: &quot;PrgVariant&quot;},
 &quot;size&quot;: &quot;large&quot;
 }
 }
