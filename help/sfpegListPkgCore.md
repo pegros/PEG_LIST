@@ -126,3 +126,26 @@ Install it:
 * from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIh3IAE) for production orgs,
 * from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIh3IAE) for sandboxes,
 * or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xIh3IAE`
+
+
+### Jan 2026 - v1.2.0
+
+Version content:
+* modified the **Country global value sets** to change the codes for non registered countries or organisations:
+England, Wales, Scotland, Northern Ireland, United Nations Organisation and Europe.
+* added the flag SVG icon for Northern Ireland
+* upgraded the **sfpegTileDsp** component to let its title behave as a lookup with on-hover display
+of compact layout as well as automatic naigation link to the record
+* upgraded the **sfpegListCmp** to support external injection of a filter method for more complex
+use cases (see **[sfpegFilterableListCmp](/help/sfpegListOrgUtilities.md)** wrapper component)
+* minor fixes/enhacements to the **sfpegLookupDsp** component on positioning and object icon
+
+
+Install it:
+* from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=tbd) for production orgs,
+* from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=tbd) for sandboxes,
+* or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xIh3IAE`
+
+⚠️ If you deploy this version as an upgrade to the `Nov 2025` (v1.1.0) version, you need to first delete the entries
+for the modified country codes in both `sfpegCountries` and `sfpegCountryCodes` global picklists. It is indeed
+impossible to change the code of an existing picklist label.

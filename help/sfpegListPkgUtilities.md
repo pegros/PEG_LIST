@@ -42,6 +42,8 @@ on top of a **[sfpegListCmp](/help/sfpegListCmp.md)** (search form data being pa
 query context)
 * the **[sfpegSearchPopupCmp](/help/sfpegSearchPopupCmp.md)** component enabling to open a 
 adding any **[sfpegSearchListCmp](/help/sfpegSearchListCmp.md)** in a Popup
+* the **[sfpegFilterableListCmp](/help/sfpegFilterableListCmp.md)** component providing richer 
+filtering capabilities on the **[sfpegListCmp](/help/sfpegListCmp.md)**
 
 It also provides various off-the-shelf **[Org Utilities](/help/sfpegListOrgUtilities.md)**
 consisting in a set of **sfpegList** configurations with underlying Apex extensions
@@ -82,9 +84,17 @@ Install it:
 * or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xIhDIAU`
 
 
-### December 2025 - v1.2.0 (TO BE RELEASED)
+### January 2025 - v1.2.0 (TO BE RELEASED)
 
 Version content:
-* added the **sfpegObjectKeys_SVC** (and its **sfpegList** metadata record) for quick object identification
-from key prefix
 * added tabs and pages for the **[Org Utilities](/help/sfpegListOrgUtilities.md)**
+* added the **[sfpegObjectKeys_SVC](/help/sfpegListOrgUtilities.md)** (and its **sfpegList** metadata record)
+for quick object identification from key prefix
+* fixed some display design issues on the **[sfpegOrgLimits_SVC](/help/sfpegListOrgUtilities.md)** Org utility
+* added the **[sfpegFilterableListCmp](/help/sfpegListOrgUtilities.md)** component for richer filtering capabilities
+within **sfpegListCmp** (with its **sfpegMultipleFilters** and **sfpegMultiSelectCombobox** sub-components)
+
+Install it:
+* from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=TBD) for production orgs,
+* from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=TBD) for sandboxes,
+* or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=TBD`
