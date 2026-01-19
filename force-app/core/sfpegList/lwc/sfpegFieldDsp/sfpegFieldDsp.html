@@ -1,56 +1,56 @@
 <template>
 
     <template lwc:if={isBoolean}>
-        <lightning-icon icon-name={iconValue}   title={fieldLabel}
+        <lightning-icon icon-name={iconValue}   title={fieldTitle}
                         size="x-small"          class={fieldClass}>
         </lightning-icon>
     </template>
 
     <template lwc:elseif={isEmail}>
-        <lightning-formatted-email  value={fieldValue}  title={fieldLabel}
+        <lightning-formatted-email  value={fieldValue}
                                     class={fieldClass}  hide-icon>
         </lightning-formatted-email>
     </template>
 
     <template lwc:elseif={isPhone}>
-        <lightning-formatted-phone  value={fieldValue} title={fieldLabel}
+        <lightning-formatted-phone  value={fieldValue}
                                     class={fieldClass}>
         </lightning-formatted-phone>
     </template>
 
     <template lwc:elseif={isNumber}>
         <lightning-formatted-number value={fieldValue}  format-style="decimal"
-                                    title={fieldLabel}  class={fieldClass}>
+                                    class={fieldClass}>
         </lightning-formatted-number>
     </template>
 
     <template lwc:elseif={isPercent}>
         <lightning-formatted-number value={fieldValue}  format-style="percent"
-                                    title={fieldLabel}  class={fieldClass}>
+                                    class={fieldClass}>
         </lightning-formatted-number>
     </template>
 
     <template lwc:elseif={isPercentFixed}>
         <lightning-formatted-number value={fieldValue}  format-style="percent-fixed"
-                                    title={fieldLabel}  class={fieldClass}>
+                                    class={fieldClass}>
         </lightning-formatted-number>
     </template>
 
     <template lwc:elseif={isCurrency}>
-        <lightning-formatted-number value={fieldValue}           format-style="currency"
-                                    currency-code={currencyCode} title={fieldLabel}
+        <lightning-formatted-number value={fieldValue}  format-style="currency"
+                                    currency-code={currencyCode}
                                     class={fieldClass}>
         </lightning-formatted-number>
     </template>
 
     <template lwc:elseif={isDate}>
-        <lightning-formatted-date-time  value={fieldValue} title={fieldLabel}
+        <lightning-formatted-date-time  value={fieldValue}
                                         class={fieldClass}>
         </lightning-formatted-date-time>
     </template>
 
     <template lwc:elseif={isDateTime}>
-        <lightning-formatted-date-time  value={fieldValue}  title={fieldLabel}
+        <lightning-formatted-date-time  value={fieldValue} 
                                         year="numeric"      month="numeric" day="numeric"
                                         hour="2-digit"      minute="2-digit" 
                                         class={fieldClass}>
@@ -58,14 +58,14 @@
     </template>
 
     <template lwc:elseif={isDateLocal}>
-        <lightning-formatted-date-time  value={fieldValue} title={fieldLabel}
+        <lightning-formatted-date-time  value={fieldValue}
                                         class={fieldClass}>
         </lightning-formatted-date-time>
     </template>
 
     <template lwc:elseif={isRichText}>
         <div>
-        <lightning-formatted-rich-text  value={fieldValue} title={fieldLabel}
+        <lightning-formatted-rich-text  value={fieldValue}
                                         class={fieldClass}>
         </lightning-formatted-rich-text>
         </div>
@@ -76,7 +76,7 @@
             <c-sfpeg-icon-dsp   icon-name={fieldIconName}
                                 icon-variant={fieldVariant}
                                 icon-size={fieldIconSize}
-                                icon-title={fieldLabel}
+                                icon-title={fieldTitle}
                                 icon-value={fieldValue}>
             </c-sfpeg-icon-dsp>
         </div>
@@ -88,8 +88,7 @@
                                 fallback-icon-name={fieldIconName}
                                 variant={fieldVariant}
                                 size={fieldIconSize}
-                                alternative-text={fieldLabel}
-                                title={fieldLabel}>
+                                alternative-text={fieldLabel}>
             </lightning-avatar>
         </div>
     </template>
@@ -117,12 +116,13 @@
     <template lwc:elseif={isLookup}>
         <c-sfpeg-lookup-dsp     record-name={fieldValue}
                                 record-id={fieldTarget}
-                                field-class={fieldClass}>
+                                field-class={fieldClass}
+                                is-debug={isDebug}>
         </c-sfpeg-lookup-dsp>
     </template>
 
     <template lwc:else>
-        <lightning-formatted-text   value={fieldValue} title={fieldLabel}
+        <lightning-formatted-text   value={fieldValue}
                                     class={fieldClass}>
         </lightning-formatted-text>
     </template>

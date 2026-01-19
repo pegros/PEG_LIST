@@ -171,8 +171,8 @@ export default class SfpegListCmp extends LightningElement {
     @track isFiltered = false;      // State of the filter applied 
     @track showFilter = false;      // State of the filter popup
     @track filterFields = null;     // List of field filter scope options
-    @track filterScope = null;      // Applicable filter scope selected (default being "ALL")
-    @track filterString = null;     // Applicable filter keywords entered
+    @api filterScope = null;      // Applicable filter scope selected (default being "ALL")
+    @api filterString = null;     // Applicable filter keywords entered
     @track isFiltering = false;     // Ongoing Filter state  (to control spinner)
 
     //Form Factor (fo mobile specific configuration override)
@@ -196,6 +196,7 @@ export default class SfpegListCmp extends LightningElement {
     //Rendering optimisation (Summer22)
     renderConfig = {virtualize: 'vertical'};
 
+    
     //----------------------------------------------------------------
     // Custom UI Display getters
     //----------------------------------------------------------------
@@ -389,6 +390,19 @@ export default class SfpegListCmp extends LightningElement {
         return this.selectedRecords;
     }
     
+    //----------------------------------------------------------------
+    // Filter Override
+    //----------------------------------------------------------------
+
+    @api get filterRecords() {
+        return this._filterRecords;
+    }
+
+    set filterRecords(value) {
+        if (this.isDebug) console.log('set filterRecords: overriding default filter');
+        this._filterRecords = value;
+    }
+
     //----------------------------------------------------------------
     // Component initialisation  
     //----------------------------------------------------------------      
@@ -852,6 +866,10 @@ export default class SfpegListCmp extends LightningElement {
                     this.sortFields = sortFields;
                 }
 
+                let loadEvt = new CustomEvent('load', { detail: this.resultList });
+                if (this.isDebug) console.log('executeQuery: triggering load event for parent component ', JSON.stringify(loadEvt));
+                this.dispatchEvent(loadEvt);
+
                 if (this.isDebug) console.log('executeQuery: END OK (pagination)');
             }).catch( error => {
                 if (this.isDebug) console.warn('executeQuery: END / KO (pagination) ', error);
@@ -925,7 +943,7 @@ export default class SfpegListCmp extends LightningElement {
                 }
 
                 let loadEvt = new CustomEvent('load', { detail: this.resultList });
-                if (this.isDebug) console.log('triggerParentEvt: triggering load event for parent component ', JSON.stringify(loadEvt));
+                if (this.isDebug) console.log('executeQuery: END / triggering load event for parent component ', JSON.stringify(loadEvt));
                 this.dispatchEvent(loadEvt);
 
                 if (this.isDebug) console.log('executeQuery: END OK (no pagination)');
@@ -935,7 +953,7 @@ export default class SfpegListCmp extends LightningElement {
                 this.selectedRecords = [];
                 this.errorMsg = 'Data fetch failed : ' + ((error.body || error).message || error);
                 let loadEvt = new CustomEvent('load', { detail: null });
-                if (this.isDebug) console.log('triggerParentEvt: triggering load event for parent component ', JSON.stringify(loadEvt));
+                if (this.isDebug) console.log('executeQuery: END / triggering load event for parent component ', JSON.stringify(loadEvt));
                 this.dispatchEvent(loadEvt);
             }).finally( () => {
                 sfpegMergeUtl.sfpegMergeUtl.isDebug = false;
@@ -965,6 +983,13 @@ export default class SfpegListCmp extends LightningElement {
         if (this.isDebug) console.log('doRowAction: START with event',event);
         this.handleRowAction(event);
         if (this.isDebug) console.log('doRowAction: END');
+    }
+    @api doFilter(filterString,filterScope) {
+        if (this.isDebug) console.log('doFilter: START with filterString',filterString,'and filterScope', JSON.stringify(filterScope));
+        this.filterString = filterString;
+        this.filterScope = filterScope;
+        this.filterRecords();
+        if (this.isDebug) console.log('doFilter: END');
     }
 
     //----------------------------------------------------------------
@@ -1049,6 +1074,10 @@ export default class SfpegListCmp extends LightningElement {
                 if (this.isDebug) console.log('handleLoadNext: sortFields reset ',JSON.stringify(sortFields));
                 this.sortFields = sortFields;
             }
+
+            let loadEvt = new CustomEvent('load', { detail: this.resultListOrig });
+            if (this.isDebug) console.log('handleLoadNext: triggering load event for parent component ', JSON.stringify(loadEvt));
+            this.dispatchEvent(loadEvt);
 
             if (this.isDebug) console.log('handleLoadNext: END OK');
         }).catch( error => {
@@ -1211,7 +1240,7 @@ export default class SfpegListCmp extends LightningElement {
             if (this.isDebug) console.log('handleFilterReset: END / ignoring key stroke');
         }
     }
-    filterRecords = function(){
+    _filterRecords = () => {
         if (this.isDebug) console.log('filterRecords: START');
         this.isFiltering = true;
 
@@ -1265,8 +1294,7 @@ export default class SfpegListCmp extends LightningElement {
                 resolve();
             }, 0);
             if (this.isDebug) console.log('filterRecords: timeOut set');
-        });
-        
+        });  
     }
 
     // Expand / Collapse management

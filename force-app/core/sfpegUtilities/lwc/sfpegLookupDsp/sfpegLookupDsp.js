@@ -34,6 +34,7 @@ import { LightningElement, api, wire } from 'lwc';
 import { NavigationMixin }  from 'lightning/navigation';
 import { getRecord }        from 'lightning/uiRecordApi';
 import { getLayout }        from "lightning/uiLayoutApi";
+import { getObjectInfo }    from "lightning/uiObjectInfoApi";
 
 export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
 
@@ -54,12 +55,14 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
 
     popoverElement;     // reference to the portal popover element
     popupContainer;     // reference to the popover form details element
+    targetRect;         // Target to the source lookup field
 
     popupRecordId;      // Record ID to trigger Compact Layout data fetch
     popupData;          // Compact Layout record data
     popupObject;        // Record Object API Name from Compact Layout record data
     popupRecordType;    // Record RecordType Id from Compact Layout record data
     popupLayout;        // Compact Layout description for the record
+    popupIconTheme;     // Icon theme or the record Object (with color and iconURL)
 
     doRedirect = false; // Flag to control the navigation to the target record
 
@@ -72,20 +75,22 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
             console.log('connected: START with name ',this.recordName);
             console.log('connected: recordId ',this.recordId);
             console.log('connected: objectApiName ',this.objectApiName);
-            console.log('connected: iconName ',this.iconName);
             console.log('connected: fieldClass ',this.fieldClass);
             console.log('connected: END');
         }
     }
 
     disconnectedCallback() {
+        if (this.isDebug) console.log('disconnected: START with name ',this.recordName);
         // Clean up portal popover when component is destroyed
         this.hidePopover();
+        if (this.isDebug) console.log('disconnected: END');
     }
 
     //----------------------------------------------------------------
     // Contextual Data Fetch via LDS
     //----------------------------------------------------------------
+
     // Current Record 
     @wire(getRecord, { recordId: '$popupRecordId', layoutTypes: 'Compact' })
     wiredRecord({ error, data }) {
@@ -108,6 +113,34 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
         }
     }
 
+    // Current Record 
+    @wire(getObjectInfo, { objectApiName: '$popupObject'})
+    wiredObject({ error, data }) {
+        if (this.isDebug) console.log('wiredObject: START for LookupPopup with ID ', this.popupRecordId);
+
+        if (data) {
+            if (this.isDebug) console.log('wiredObject: data fetch OK', JSON.stringify(data));
+            this.popupIconTheme = data?.themeInfo;
+            if (this.isDebug) console.log('wiredObject: popupIconTheme init', JSON.stringify(this.popupIconTheme));
+            if (this.isDebug) console.log('wiredObject: current popup Layout', JSON.stringify(this.popupLayout));
+            if (this.popupLayout) {
+                if (this.isDebug) console.log('wiredObject: displaying popup');
+                //this.createRecordForm(this.popupContainer);
+                this.showPopover(this.targetRect);
+                if (this.isDebug) console.log('wiredObject: END for LookupPopup / popup displayed');
+            }
+            else {
+                if (this.isDebug) console.log('wiredObject: END for LookupPopup / waiting for popup Layout');
+            }
+        }
+        else if (error) {
+            console.warn('wiredObject: END KO for LookupPopup / data fetch error', JSON.stringify(error));
+        }
+        else {
+            if (this.isDebug) console.log('wiredObject: END for LookupPopup / No data');
+        }
+    }
+
     @wire(getLayout, { objectApiName: '$popupObject', layoutType: 'Compact', mode: 'View', recordTypeId: '$popupRecordType' })
     wiredLayout({ error, data }) {
         if (this.isDebug) console.log('wiredLayout: START for LookupPopup with ID ', this.popupRecordId);
@@ -115,13 +148,21 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
         if (data) {
             if (this.isDebug) console.log('wiredLayout: data fetch OK', JSON.stringify(data));
             this.popupLayout = data;
+            if (this.isDebug) console.log('wiredLayout: popup layout init', JSON.stringify(this.popupLayout));
+            if (this.isDebug) console.log('wiredLayout: popupIconTheme fetched',JSON.stringify(this.popupIconTheme));
             if (this.doRedirect) {
                 this.handleClick(null);
                 if (this.isDebug) console.log('wiredLayout: END for LookupPopup / redirection requested');
             }
-            else {
-                this.createRecordForm(this.popupContainer);
+            else if (this.popupIconTheme) {
+                if (this.isDebug) console.log('wiredLayout: displaying popup');
+                //this.createRecordForm(this.popupContainer);
+                this.showPopover(this.targetRect);
+                //this.createRecordForm(this.popupContainer);
                 if (this.isDebug) console.log('wiredLayout: END for LookupPopup / popup displayed');
+            }
+            else {
+                if (this.isDebug) console.log('wiredLayout: END for LookupPopup / waiting for Object Icon');
             }
         }
         else if (error) {
@@ -143,6 +184,9 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
             console.log('handleClick: fieldClass ',this.fieldClass);
         }
 
+        event.stopPropagation();
+        event.preventDefault();
+        
         if (this.popupObject == null) {
             if (this.isDebug) console.log('handleClick: requesting compact layout data fetch');
             this.popupRecordId = this.recordId;
@@ -168,8 +212,34 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
 
     // Hovering 
     handleHover(event){
-        if (this.isDebug) console.log('handleHover: START on record ', this.recordName);
-        if (this.isDebug) console.log('handleHover: event ', event);        
+        if (this.isDebug) {
+            console.log('handleHover: START with name ',this.recordName);
+            console.log('handleHover: recordId ',this.recordId);
+            console.log('handleHover: fieldClass ',this.fieldClass);
+            console.log('handleHover: popupIconTheme ',JSON.stringify(this.popupIconTheme));
+            console.log('handleHover: popupData',JSON.stringify(this.popupData));
+            console.log('handleHover: doRedirect ?',this.doRedirect);
+            console.log('handleHover: event ', event);
+            console.log('handleHover: popupRecordId', this.popupRecordId);
+        }
+
+        event.stopPropagation();
+        event.preventDefault();
+
+        let clientX = event.clientX;
+        let clientY = event.clientY;
+        this.targetRect = event.target.getBoundingClientRect();
+        if (this.isDebug) console.log('handleHover: targetRect init ', JSON.stringify(this.targetRect)); 
+
+        if (!this.popupRecordId) {
+            this.popupRecordId = this.recordId;
+            if (this.isDebug) console.log('handleHover: END / initializing data fetch for record ID', this.popupRecordId);
+            return;
+        }
+        else if (!this.popupIconTheme || !this.popupData) {
+            if (this.isDebug) console.log('handleHover: END / awaiting icon or record data');
+            return;
+        }
 
         if (this.hoverTimeout) {
             if (this.isDebug) console.log('handleHover: clearing prior timeout ');
@@ -177,11 +247,6 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
             this.hoverTimeout = null;
             if (this.isDebug) console.log('handleHover: hover timeout cleared');
         }
-
-        let clientX = event.clientX;
-        let clientY = event.clientY;
-        let targetRect = event.target.getBoundingClientRect();
-        if (this.isDebug) console.log('handleHover: targetRect init ', targetRect);        
 
         /*if (this.isDebug) console.log('handleHover: clientX extracted ', clientX);
         if (this.isDebug) console.log('handleHover: window innerWidth ', window.innerWidth);
@@ -199,7 +264,7 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
                 if (this.isDebug) console.log('handleHover: END / redirection requested');
                 return;
             }
-            this.showPopover(targetRect);
+            this.showPopover(this.targetRect);
             if (this.isDebug) console.log('handleHover: END / popup displayed');
         }, 500);
 
@@ -207,7 +272,18 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
     }
 
     handleLeave(event){
-        if (this.isDebug) console.log('handleLeave: START on record ', this.recordName);
+        if (this.isDebug) {
+            console.log('handleLeave: START with name ',this.recordName);
+            console.log('handleLeave: recordId ',this.recordId);
+            console.log('handleLeave: fieldClass ',this.fieldClass);
+            console.log('handleLeave: popupIconTheme ',JSON.stringify(this.popupIconTheme));
+            console.log('handleLeave: popupData',JSON.stringify(this.popupData));
+            console.log('handleLeave: doRedirect ?',this.doRedirect);
+            console.log('handleLeave: event ', event);
+        }  
+
+        event.stopPropagation();
+        event.preventDefault();
 
         if (this.hoverTimeout) {
             if (this.isDebug) console.log('handleLeave: clearing prior timeout ');
@@ -216,6 +292,7 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
             if (this.isDebug) console.log('handleLeave: hover timeout cleared');
         }
 
+        this.targetRect = null;
         this.hidePopover();
         if (this.isDebug) console.log('handleLeave: END');
     }
@@ -224,8 +301,19 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
     // Portal Popover Methods
     //----------------------------------------------------------------
     showPopover(targetRect) {
-        if (this.isDebug) console.log('showPopover: START');
-        
+        if (this.isDebug) console.log('showPopover: START with target',targetRect);
+        if (this.isDebug) console.log('showPopover: with icon theme', JSON.stringify(this.popupIconTheme));
+        if (this.isDebug) console.log('showPopover: with record data', JSON.stringify(this.popupData));
+
+        if (!targetRect) {
+            if (this.isDebug) console.log('showPopover: END / no targetRect');
+            return;
+        }
+        if (!this.popupIconTheme || !this.popupData) {
+            if (this.isDebug) console.log('showPopover: END / awaiting data or theme');
+            return;
+        }
+
         // Hide any existing popover first
         this.hidePopover();
         if (this.isDebug) console.log('showPopover: current popover removed');
@@ -236,8 +324,7 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
         this.popoverElement.style.cssText = `
             position: fixed;
             z-index: 10000;
-            pointer-events: none;
-        `;
+            pointer-events: none;`;
         
         // Calculate position and nubbin
         let popupNubbin;
@@ -249,7 +336,7 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
         }
         else if ((targetRect.left - 512) > 0) {
             if (this.isDebug) console.log('showPopover: nubbin positioned right',targetRect.left - 20);
-            this.popoverElement.style.right = (targetRect.left - 20) + 'px';
+            this.popoverElement.style.right = (window.innerWidth - targetRect.left + 20) + 'px';
             popupNubbin = 'right';
         }
         else {
@@ -271,7 +358,6 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
                 popupNubbin += '-top';
             }
         }
-        //else if ((targetRect.top - 400) > 0) {
         else {
             if (popupNubbin === 'center') {
                 if (this.isDebug) console.log('showPopover: nubbin positionned centered bottom ',(window.innerHeight - targetRect.bottom - 25));
@@ -284,26 +370,11 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
                 popupNubbin += '-bottom';
             }
         }
-        if (this.isDebug) console.log('showPopover: style init ',this.popoverElement.style);
+        if (this.isDebug) console.log('showPopover: top init ',this.popoverElement.style.top);
+        if (this.isDebug) console.log('showPopover: bottom init ',this.popoverElement.style.bottom);
+        if (this.isDebug) console.log('showPopover: left init ',this.popoverElement.style.left);
+        if (this.isDebug) console.log('showPopover: right init ',this.popoverElement.style.right);
         if (this.isDebug) console.log('showPopover: nubbin init ',popupNubbin);
-
-        /*let left = clientX + 40;
-        let top = clientY - 40;
-        
-        // Adjust if popover would go off screen
-        const popoverWidth = 400; // Approximate width
-        const popoverHeight = 200; // Approximate height
-        
-        if (left + popoverWidth > window.innerWidth) {
-            left = clientX - popoverWidth - 10;
-        }
-        
-        if (top < 0) {
-            top = clientY + 10;
-        }
-        
-        this.popoverElement.style.left = left + 'px';
-        this.popoverElement.style.top = top + 'px';*/
         
         // Create the popover structure using DOM methods
         const section = document.createElement('section');
@@ -318,27 +389,30 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
         headerDiv.className = 'slds-popover__header  ';
         // slds-theme_shade
         const header = document.createElement('header');
-        header.className = 'slds-media slds-media_center slds-m-bottom_small';    
-       /*const headerIcon = document.createElement('span');
-        headerIcon.className = 'slds-icon_container slds-icon-standard-account slds-media__figure';
-        //headerIcon.innerHTML = '<img src="https://sfpegorg-dev-ed.develop.my.salesforce.com/img/icon/t4v35/standard/account_120.png"/>';
-        headerIcon.innerHTML = `
-            <svg class="slds-icon slds-icon_small" aria-hidden="true">
-                <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#account"></use>
-            </svg>
-        `;*/
+        header.className = 'slds-media slds-media_center slds-m-bottom_small';
 
+        if (this.isDebug) console.log('showPopover: adding Icon theme',JSON.stringify(this.popupIconTheme));
+        const headerIcon = document.createElement('div');
+        headerIcon.className = 'slds-media__figure';
+        //headerIcon.innerHTML = '<span class="slds-icon_container"><img class="slds-icon" style="background-color:#' + this.popupIconTheme.color + ';" src="' + this.popupIconTheme.iconUrl + '"/></span>';
+        headerIcon.innerHTML = '<span class="slds-avatar slds-avatar_circle"><img style="background-color:#' + this.popupIconTheme.color + ';" src="' + this.popupIconTheme.iconUrl + '"/></span>';
+        
+        header.appendChild(headerIcon);
+        if (this.isDebug) console.log('showPopover: Icon registered');
+            
         const headerTitle = document.createElement('div');
         headerTitle.className = 'slds-media__body'
         const title = document.createElement('h2');
         title.className = 'slds-text-heading_medium slds-hyphenate slds-truncate';
         title.textContent = this.recordName;
+        if (this.isDebug) console.log('showPopover: title created');
         
         // Assemble header
         headerTitle.appendChild(title);
         //header.appendChild(headerIcon);
         header.appendChild(headerTitle);
         headerDiv.appendChild(header);
+        if (this.isDebug) console.log('showPopover: header assembly done');
         
         // Create body with record form
         const footer = document.createElement('footer');
@@ -351,7 +425,8 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
         // Assemble the complete popover
         section.appendChild(headerDiv);
         this.popoverElement.appendChild(section);
-        
+        if (this.isDebug) console.log('showPopover: footer assembly done');
+
         // Add to document body
         document.body.appendChild(this.popoverElement);
         
@@ -382,7 +457,7 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
     }
     
     createRecordForm(container) {
-        if (this.isDebug) console.log('createRecordForm: START');
+        if (this.isDebug) console.log('createRecordForm: START',container);
 
         if (this.popupRecordId == null) {
             if (this.isDebug) console.log('createRecordForm: requesting compact layout data fetch');
@@ -401,9 +476,9 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
         
         let isContentField = false;
         this.popupLayout?.sections.forEach(iterSection => {
-            if (this.isDebug) console.log('createRecordForm: processing section');
+            if (this.isDebug) console.log('createRecordForm: processing section',JSON.stringify(iterSection));
             iterSection?.layoutRows.forEach(iterRow => {
-                if (this.isDebug) console.log('createRecordForm: processing row');
+                if (this.isDebug) console.log('createRecordForm: processing row',JSON.stringify(iterRow));
                 iterRow?.layoutItems.forEach(iterField => {
                     if (isContentField) {
                         let iterFieldApiName = '' + (iterField.layoutComponents[0]).apiName;
@@ -427,7 +502,7 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
                         if (this.isDebug) console.log('createRecordForm: with value ',JSON.stringify(iterFieldValue));
     
                         if (iterFieldValue.displayValue) {
-                            if (this.isDebug) console.log('createRecordForm: adding field display value ');
+                            if (this.isDebug) console.log('createRecordForm: adding field display value',iterFieldValue.displayValue);
 
                             const iterFieldDiv = document.createElement('div');
                             iterFieldDiv.className = 'slds-p-horizontal_small slds-size_1-of-2 slds-p-bottom_x-small';

@@ -90,7 +90,7 @@
         <shortDescription>Default header displayed in the popup when displaying a form</shortDescription>
         <value>Please fill in the requested fields before submitting the changes.</value>
     </labels>
-    
+
     <labels>
         <fullName>sfpegActionDefaultMassConfirmHeader</fullName>
         <categories>PEG Component LWC Popup Header</categories>
@@ -284,7 +284,7 @@
         <shortDescription>Error message header for the modal popups</shortDescription>
         <value>Operation failure detected.</value>
     </labels>
-    
+
 
     <labels>
         <fullName>sfpegPopupDefaultFormLabel</fullName>
@@ -294,7 +294,7 @@
         <shortDescription>Default label for the form modal popup</shortDescription>
         <value>Creating or editing record</value>
     </labels>
-    
+
     <labels>
         <fullName>sfpegActionMassPopupMessage</fullName>
         <categories>PEG Component LWC Message</categories>
@@ -304,5 +304,5 @@
         <value>{0} items to process. {1}</value>
     </labels>
 
-    
+
 </CustomLabels>

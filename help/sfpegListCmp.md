@@ -445,73 +445,6 @@ to inject additional context information to be leveraged as additional `{{{CTX.x
 
 ## Configuration Examples
 
-### Lookup Field Handling 
-
-Lookup fields do not work natively in the component. Depending on the display mode selected, different
-workarounds are available.
-
-For the `Datatable` and `DataTree` modes, the strategy consists in configuring a button in `base` variant,
-this button having the name of the target record as label and triggering a `navigation` action (or simply `open`
-addressing the current row)
-```
-"columns": [
-    ...
-    {
-        "label":"Nom",
-        "fieldName":"Name",
-        "type":"button",
-        "sortable":"true",
-        "typeAttributes":{
-            "label":{"fieldName":"Name"},
-            "title":{"fieldName":"RecordSummary__c"},
-            "name":"open",
-            "variant":"base"
-        }
-    }
-    ...
-]
-```
-_Notes_:
-* in the example above the `Name` field displayed is specified twice in the configuration, once as root `fieldName`
-to be used for sorting and a second time within the `label` property of the button `typeAttributes` to be 
-actually displayed in the button.
-* the button `title` may also be specified dynamically to display contextual additional information upon
-hovering (no compact layout preview available for now but PLANNED).
-* the `name` property in the button `typeAttributes` should identify the name of the row action to be triggered
-(which should match one of the actions available in the **sfpegAction__mdt** record referenced in the `Row Actions`
-property of the current **sfpegList__mdt** record)
-
-
-For the `CardList` and `TileList` modes, the solution is slightly different
-* an action may be specified for the tile title (referencing one of the row actions)
-```
-    ...
-    "title": {
-        "fieldName": "Name",
-        "sortable": true,
-        "action": "open"
-    },
-    ...   
-```
-* other navigation actions may be specified in the menu (referencing any row action),
-a generic button icon menu being displayed if more than one option is configured
-(single button or button icon otherwise).
-```
-"menu": [
-    ...
-    {
-        "name": "openAccount",
-        "label": "Open Account",
-        "iconName": "utility:open"
-    },
-    ...
-]
-```
-
-As a workaround for record previews, the `showPreview` action type may be used instead of the `navigation`
-one (see **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**) to display a summary of the record.
-
-
 ### Timeline Configuration
 
 The **sfpegListCmp** may be configured to look as follows:
@@ -1137,8 +1070,7 @@ injected in the proper unitary display component.
 
 ### Lookup Field Type Display
 
-You may configure the list metadada record to handle lookup fields with 
-special behaviour:
+You may configure the list metadada record to handle lookup fields with special behaviour:
 * the `fieldName` value is displayed as a clickable link enabling to navigate
 to the lookup record automatically (the ID of which being provided in the 
 `lookup` type attribute field)
@@ -1176,6 +1108,77 @@ _Notes_:
 * Object icon is not displayed in the compact layout _popover_ as it is not
 easily retrievable without the standard **lightning-icon** component
 * Related lists are not displayed either in this _popover_
+
+
+ℹ️ If you need more custom navigation logic for your lookup fields, you may use the 
+following strategies previously recommended (i.e.before the `lookup` custom type was introduced):
+* For the `Datatable` and `DataTree` modes, the strategy consists in configuring a button in `base` variant,
+this button having the name of the target record as label and triggering a `navigation` action (or simply `open`
+addressing the current row)
+    * in the example below the `Name` field displayed is specified twice in the configuration, once as root `fieldName`
+    to be used for sorting and a second time within the `label` property of the button `typeAttributes` to be 
+    actually displayed in the button.
+    * the button `title` may also be specified dynamically to display contextual additional information upon
+    hovering (no compact layout preview available for now but PLANNED).
+    * the `name` property in the button `typeAttributes` should identify the name of the row action to be triggered
+    (which should match one of the actions available in the **sfpegAction__mdt** record referenced in the `Row Actions`
+    property of the current **sfpegList__mdt** record)
+```
+"columns": [
+    ...
+    {
+        "label":"Nom",
+        "fieldName":"Name",
+        "type":"button",
+        "sortable":"true",
+        "typeAttributes":{
+            "label":{"fieldName":"Name"},
+            "title":{"fieldName":"RecordSummary__c"},
+            "name":"open",
+            "variant":"base"
+        }
+    }
+    ...
+]
+```
+* For the `CardList` and `TileList` modes, the solution is slightly different
+    * the tile title may be configured as a custom `lookup` field (with on hover display of the compact layout)
+```
+...
+"title": {
+     "fieldName": "Name",
+    "sortable": true,
+    "lookup": "Id"
+},
+...   
+```
+    * an action may be specified for the tile title (referencing one of the row actions)
+```
+...
+"title": {
+    "fieldName": "Name",
+    "sortable": true,
+    "action": "open"
+},
+...   
+```
+    * other navigation actions may be specified in the menu (referencing any row action),
+    a generic button icon menu being displayed if more than one option is configured
+    (single button or button icon otherwise).
+```
+"menu": [
+    ...
+    {
+        "name": "openAccount",
+        "label": "Open Account",
+        "iconName": "utility:open"
+    },
+    ...
+]
+```
+* For record previews, the `showPreview` action type may be used instead of the `navigation`
+one (see **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**) to display first a custom summary
+of the record before opting for redirection to the record.
 
 
 ## Technical Details

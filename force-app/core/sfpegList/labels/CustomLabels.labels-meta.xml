@@ -113,11 +113,19 @@
         <value>User has not the {0} permission required to access the {1} list configuration record!</value>
     </labels>
     <labels>
-        <fullName>sfpegListAccessErrorObject</fullName>
-        <categories>PEG Component LWC List Error Message</categories>
+        <fullName>sfpegFieldTrueLabel</fullName>
+        <categories>PEG Component LWC Value Label</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Error message raised when user has not access to the list configs</shortDescription>
-        <value>User has no access the list configuration object!</value>
+        <shortDescription>Label displayed when a boolean value field is true</shortDescription>
+        <value>Yes</value>
+    </labels>
+    <labels>
+        <fullName>sfpegFieldFalseLabel</fullName>
+        <categories>PEG Component LWC Value Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label displayed when a boolean value field is false</shortDescription>
+        <value>No</value>
     </labels>
 </CustomLabels>

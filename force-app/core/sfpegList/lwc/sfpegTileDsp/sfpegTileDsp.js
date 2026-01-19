@@ -65,6 +65,7 @@ export default class SfpegTileDsp extends LightningElement {
     @track cardIconValue;       // Display Icon value (for dynamic icons)
     @track cardTitle = null;    // Displayed title (if any)
     @track cardTitleLabel = null // Displayed title on hover label
+    @track cardTitleLookup = null; // Title lookup (if any) triggering lookup display mode for title
     @track cardData = [];       // Displayed field data (if any)
     @track isExpanded = false;  // Expanded detail fields section (if any)
     @track cardDetails = null;  // Displayed detail field data (if any)
@@ -84,7 +85,7 @@ export default class SfpegTileDsp extends LightningElement {
         return (this.cardIcon != null);
     }
     get fieldClass() {
-        let detailClass = "slds-col slds-form-element slds-size_1-of-" + (this.configDetails.fieldNbr || "1")
+        let detailClass = "slds-col slds-form-element slds-size_1-of-1 slds-large-size_1-of-" + (this.configDetails.fieldNbr || "1")
                         + (this.configDetails.stacked ? " slds-form-element_stacked" : " horizontalField slds-form-element_horizontal");
         //console.log('fieldClass: tableFieldClass --> detailClass',detailClass);
         return detailClass;
@@ -166,6 +167,10 @@ export default class SfpegTileDsp extends LightningElement {
             else {
                 console.warn('resetDisplayData: END / wrong title configuration');
                 return;
+            }
+            if (this.configDetails.title.lookup) {
+                if (this.isDebug) console.log('resetDisplayData: title lookup');
+                this.cardTitleLookup = this._recordData[this.configDetails.title.lookup];
             }
         }
         if (this.isDebug) console.log('resetDisplayData: card title init', this.cardTitle);

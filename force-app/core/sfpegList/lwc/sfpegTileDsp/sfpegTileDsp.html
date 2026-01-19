@@ -43,8 +43,16 @@
                         <!-- Main Title display -->
                         <div class="slds-media__body">
                             <div class="slds-truncate" title={cardTitleLabel} >
-
-                                <template lwc:if={hasTitleLink}>
+                                <template lwc:if={cardTitleLookup}>
+                                    <c-sfpeg-field-dsp  field-type="lookup"
+                                                        field-label={cardTitleLabel}
+                                                        field-value={cardTitle}
+                                                        field-target={cardTitleLookup}
+                                                        field-class="slds-text-title_bold"
+                                                        is-debug={isDebug}>
+                                    </c-sfpeg-field-dsp>
+                                </template>
+                                <template lwc:elseif={hasTitleLink}>
                                     <a onclick={handleTitleLink}>
                                         <lightning-formatted-text   value={cardTitle}
                                                                     class="slds-text-title_bold">
@@ -142,7 +150,7 @@
                             <!-- Main Content fields -->
                             <div class="slds-media">
                                 <!-- Main content as field list -->
-                                <template if:true={isTile}>
+                                <template lwc:if={isTile}>
                                     <ul class="slds-list_horizontal slds-has-dividers_left slds-listbox slds-listbox_horizontal">      
                                         <template for:each={cardData} for:item="iter">
                                             <li key={iter.name}
@@ -164,7 +172,7 @@
                                 </template>
 
                                 <!-- Main content as field form -->
-                                <template if:true={isCard}>
+                                <template lwc:else>
                                     <div class="slds-form slds-grid slds-gutters slds-wrap fullWidth">
                                         <template for:each={cardData} for:item="iter">
                                             <div class={fieldClass} key={iter.name} >
@@ -175,7 +183,6 @@
                                                 <div class="slds-form-element__control">
                                                     <div class="slds-form-element__static slds-text-body_small">
                                                         <c-sfpeg-field-dsp  field-type={iter.type}
-                                                                            field-label={iter.label}
                                                                             field-value={iter.value}
                                                                             field-icon-name={iter.iconName}
                                                                             field-icon-variant={iter.iconVariant}
@@ -193,7 +200,7 @@
                             </div>
 
                             <!-- Tile Expanded details (always displayed as form)-->
-                            <template if:true={isExpanded}>
+                            <template lwc:if={isExpanded}>
                                 <div class="slds-media slds-var-m-top_xx-small">
                                     <div class="slds-form slds-grid slds-gutters slds-wrap fullWidth">
                                         <template for:each={cardDetails} for:item="iter">
@@ -205,7 +212,6 @@
                                                 <div class="slds-form-element__control">
                                                     <div class="slds-form-element__static slds-text-body_small">
                                                         <c-sfpeg-field-dsp  field-type={iter.type}
-                                                                            field-label={iter.label}
                                                                             field-value={iter.value}
                                                                             field-icon-name={iter.iconName}
                                                                             field-icon-variant={iter.iconVariant}

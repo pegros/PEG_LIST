@@ -34,8 +34,14 @@
 import { LightningElement, api } from 'lwc';
 import sfpegJsonUtl from 'c/sfpegJsonUtl';
 
+import TRUE_LABEL   from '@salesforce/label/c.sfpegFieldTrueLabel';
+import FALSE_LABEL  from '@salesforce/label/c.sfpegFieldFalseLabel';
 export default class SfpegFieldDsp extends LightningElement {
  
+    //----------------------------------------------------------------
+    // Main configuration fields
+    //----------------------------------------------------------------
+
     @api fieldType = 'text';
     @api fieldLabel = '';
     @api fieldVariant = '';
@@ -44,6 +50,7 @@ export default class SfpegFieldDsp extends LightningElement {
     @api fieldIconVariant = '';
     @api fieldIconSize = '';
     @api fieldTarget = '';
+    @api isDebug = false;
 
     _fieldValue = {};
     // Implementation with setter to ensure proper update of display data upon fieldValue change.
@@ -60,6 +67,17 @@ export default class SfpegFieldDsp extends LightningElement {
             this._fieldValue = value;
         }
     }
+
+    //----------------------------------------------------------------
+    // Custom Labels
+    //----------------------------------------------------------------
+
+    booleanTrueLabel = TRUE_LABEL;
+    booleanFalseLabel = FALSE_LABEL;
+
+    //----------------------------------------------------------------
+    // Custom Getters
+    //----------------------------------------------------------------
 
     // Custom getter for type dependent display
     get isBoolean() {
@@ -122,4 +140,9 @@ export default class SfpegFieldDsp extends LightningElement {
     /*get isDefault() {
         return (this.fieldType == null) || (this.fieldType === "text");
     }*/
+    get fieldTitle() {
+        return (this.fieldLabel ?  this.fieldLabel + ': ' : '')
+                 + (this.isBoolean ? (this.fieldValue ? this.booleanTrueLabel : this.booleanFalseLabel)
+                    : this.fieldValue);
+    }
 }

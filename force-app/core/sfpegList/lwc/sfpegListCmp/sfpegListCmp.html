@@ -165,7 +165,7 @@
                         <div style={contentStyle} class={contentClass} >
 
                             <!-- Data Table mode data display -->
-                            <template if:true={isDataTable}>
+                            <template lwc:if={isDataTable}>
                                 <lightning-datatable
                                     data-id="dataTable"
                                     class="sfpegTable"
@@ -188,7 +188,7 @@
                             </template>
 
                             <!-- Tree Grid mode data display -->
-                            <template if:true={isTreeGrid}>
+                            <template lwc:elseif={isTreeGrid}>
                                 <lightning-tree-grid
                                     data-id="treeGrid"
                                     class="sfpegTable"
@@ -210,7 +210,7 @@
                             </template>
 
                             <!-- List mode data display -->
-                            <template if:true={isList}>
+                            <template lwc:else>
                                 <div class="slds-m-horizontal_xx-small">
                                     <lightning-layout   multiple-rows="true"  vertical-align="stretch" >
                                         <template for:each={resultList} for:item="iter">
