@@ -73,23 +73,18 @@
 }
 .filterInput {
     --sds-c-input-radius-border : 0px;
+    --slds-c-input-radius-border: 0px;
+    --slds-s-input-radius-border: 0px;
+    --slds-g-spacing-1: 0px;
     min-width: calc(50% + 30px) !important;
     width:auto !important;
-    /*display: inline-block;*/
 }
 .filterSelect {
-    /*overflow-wrap: break-word;*/
     text-overflow: ellipsis !important;
-    /*background-color: white !important;
-    overflow-x: hidden !important;
-    white-space: nowrap !important;*/
-    /*--slds-c-button-line-height : 5px !important;
-    padding: 1.875rem !important;*/
-    /*max-width: 25% !important;
-    text-overflow: ellipsis;
-    overflow-wrap: break-word;*/
-    /*--slds-c-button-line-height : 5px !important;*/
-    /*min-height: 30px !important;*/
+    --slds-c-button-color-background: var(--slds-c-button-neutral-color-background, var(--slds-g-color-surface-container-1));
+    --slds-c-button-color-border: var(--slds-c-button-neutral-color-border, var(--slds-g-color-border-2));
+    --slds-c-button-color-background-hover: var(--slds-c-button-neutral-color-background-hover, var(--slds-g-color-surface-container-2, revert));
+    --slds-c-button-color-border-hover: var(--slds-c-button-neutral-color-border-hover, var(--slds-g-color-border-2, revert));
 }
 .expandCollapse {
     --sds-c-button-color-background : transparent !important;

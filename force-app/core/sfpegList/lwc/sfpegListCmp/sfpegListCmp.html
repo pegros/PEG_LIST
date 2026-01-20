@@ -84,7 +84,7 @@
                     <template lwc:if={showSearch}>
                         <lightning-button-icon-stateful icon-name="utility:filterList"  size={buttonSize}
                                                         alternative-text={filterTitle}  title={filterTitle}
-                                                        selected={isFiltered}           variant="border-filled"
+                                                        selected={showFilter}           variant="border-filled"
                                                         onclick={handleFilterShow}>
                         </lightning-button-icon-stateful>
                         <template lwc:if={showFilter}>
