@@ -687,6 +687,10 @@ export default class SfpegMultipleFilters extends LightningElement {
                 iterFilter.options = [];
                 iterFilter.optionsMap = new Map();
             }
+            else if (iterFilter.isNumber) {
+                if (this.isDebug) console.log("initFilters: init number formatter");
+                iterFilter.formatter = iterFieldType;
+            }
             this.filters.set(iterField.fieldName,iterFilter);
             this.fieldSelectorOptions.push({value: iterField.fieldName, label: iterField.label});
             if (this.isDebug) console.log("initFilters: filter registered",JSON.stringify(iterFilter));

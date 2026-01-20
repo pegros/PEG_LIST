@@ -90,22 +90,21 @@
                         </lightning-layout-item>
 
                         <template for:each={activeFilters} for:item="filter">
-                            <lightning-layout-item key={filter.fieldName} padding="horizontal-small" size="12" large-device-size="6" class="filter-item-wrapper-orig">
+                            <lightning-layout-item key={filter.fieldName} padding="horizontal-small" size="12" large-device-size="6">
                                 <div class="slds-media slds-var-p-bottom_x-small">
                                     <div class="slds-media__body">
 
                                         <!-- Date Range Selector -->
                                         <template lwc:if={filter.isDate}>
-                                            <div class="filter-input slds-form-element_stacked slds-form-element">
+                                            <div class="slds-form-element_stacked slds-form-element">
                                                 <lightning-layout pull-to-boundary="small" multiple-rows="true">
                                                     <lightning-layout-item padding="horizontal-small" size="12">
-                                                        <label class="slds-form-element__label date-filter-label-stacked">
+                                                        <label class="slds-form-element__label">
                                                             {filter.label}
                                                         </label>
                                                     </lightning-layout-item>
                                                     <lightning-layout-item padding="horizontal-small"  size="12" large-device-size="6">
                                                         <lightning-input    type="date"
-                                                                            class="filter-input date-input"
                                                                             variant="label-hidden"
                                                                             data-fieldname={filter.name}
                                                                             data-range-type="startValue"
@@ -117,7 +116,6 @@
                                                     </lightning-layout-item>
                                                     <lightning-layout-item padding="horizontal-small"  size="12" large-device-size="6">
                                                         <lightning-input    type="date"
-                                                                            class="filter-input date-input"
                                                                             variant="label-hidden"
                                                                             data-fieldname={filter.name}
                                                                             data-range-type="endValue"
@@ -133,17 +131,16 @@
 
                                         <!-- Numeric Range Selector -->
                                         <template lwc:elseif={filter.isNumber}>
-                                            <div class="filter-input slds-form-element_stacked slds-form-element">
+                                            <div class="slds-form-element_stacked slds-form-element">
                                                 <lightning-layout pull-to-boundary="small" multiple-rows="true">
                                                     <lightning-layout-item padding="horizontal-small" size="12">
-                                                        <label class="slds-form-element__label date-filter-label-stacked">
+                                                        <label class="slds-form-element__label">
                                                             {filter.label}
                                                         </label>
                                                     </lightning-layout-item>
                                                     <lightning-layout-item padding="horizontal-small"  size="12" large-device-size="6">
                                                         <lightning-input    type="number"
                                                                             formatter={filter.formatter}
-                                                                            class="filter-input number-input"
                                                                             variant="label-hidden"
                                                                             data-fieldname={filter.name}
                                                                             data-range-type="startValue"
@@ -156,7 +153,6 @@
                                                     <lightning-layout-item padding="horizontal-small"  size="12" large-device-size="6">
                                                         <lightning-input    type="number"
                                                                             formatter={filter.formatter}
-                                                                            class="filter-input number-input"
                                                                             variant="label-hidden"
                                                                             data-fieldname={filter.name}
                                                                             data-range-type="endValue"
@@ -173,7 +169,7 @@
                                         <!-- Combobox Filter (text with < 10 distinct values) -->
                                         <template lwc:elseif={filter.isCombobox}>
                                             <c-sfpeg-multi-select-combobox  is-searchable={useSearchCombobox}
-                                                                            class="filter-input slds-form-element_stacked slds-form-element"
+                                                                            class="slds-form-element_stacked slds-form-element"
                                                                             field-name={filter.name}
                                                                             field-label={filter.label}
                                                                             option-list={filter.options}
@@ -196,7 +192,6 @@
                                         <!-- Text Filter (text with >= 10 values or other types) -->
                                         <template lwc:else>
                                             <lightning-input    type="text"
-                                                                class="filter-input"
                                                                 variant="label-stacked"
                                                                 data-fieldname={filter.name}
                                                                 label={filter.label}
@@ -210,7 +205,6 @@
                                     <div class="slds-media__figure slds-media__figure_reverse slds-p-top_xxx-small">
                                         {filter.fieldName}
                                         <lightning-button-icon  icon-name="utility:delete"
-                                                                class="remove-filter-button"
                                                                 variant="bare"
                                                                 alternative-text={filterRemoveTitle}
                                                                 title={filterRemoveTitle}
