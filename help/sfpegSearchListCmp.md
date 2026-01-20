@@ -21,7 +21,7 @@ At first, only the search form is displayed.
 ![sfpegSearchListCmp Initialization](/media/sfpegSearchListCmpInit.png)
 
 Then, once the _Apply_ button has been clicked, the result list is displayed
-below teh search form.
+below the search form.
 
 ![sfpegSearchListCmp Completion](/media/sfpegSearchListCmp.png)
 

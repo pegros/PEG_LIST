@@ -30,9 +30,10 @@ from a UX perspective
 automatically fetched upon instantiation, a _load more_ button being displayed in the component's footer as long
 as this total count has not been loaded)
 
-ℹ️ If you wish to actually load the data only when the user explicitly requests it, you
-may use the **sfpegOnDemandListCmp** _wrapper_ component (see in the examples) which
-includes an _expand_ button icon to control the actual display of a **sfpegListCmp**.
+ℹ️ If you wish to actually load the data only when the user explicitly requests it, you may use the
+**sfpegOnDemandListCmp** _wrapper_ component (see [`sfpegList-utilities`](/help/sfpegListPkgUtilities.md) 
+package) as it includes an _expand_ button icon to control the actual display and loading of
+a **sfpegListCmp**.
 
 
 ## Component Configuration
@@ -208,7 +209,10 @@ list of icons, list of avatars) with `iconName`, `variant`, `iconVariant` and
 _on hover_ display of the compact layout (with `lookup` as type attribute to 
 provide the record ID).
 
-See section further below for configuration examples.
+Herafter is an example with a `lookup` field with expanded on hover popup, an `icon` field displaying flag icons, a`multi-value` field displayed as _badge_ 
+![List with Custom Types](/media/sfpegListCustomTypes.png).
+
+See sections further below for configuration examples.
 
 
 ### No Data Display Handling
@@ -448,6 +452,7 @@ to inject additional context information to be leveraged as additional `{{{CTX.x
 ### Timeline Configuration
 
 The **sfpegListCmp** may be configured to look as follows:
+
 ![List as timeline](/media/sfpegListTimeline.png)
 _<center>Display as list of Tiles in timeline variant with expandable section</center>_
 
@@ -1201,3 +1206,8 @@ _merge tokens_)
 
 ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to 
 get more global information about the way the components have been implemented.
+
+ℹ️ FYI, the [`sfpegList-utilities`](/help/sfpegListPkgUtilities.md) package includes 
+a few wrapper components which enable to extend the base capabilities of the **sfpegListCmp**,
+e.g. **sfpegOnDemandListCmp**, **[sfpegFilterableListCmp](/help/sfpegFilterableListCmp.md)**
+or **[sfpegSearchListCmp](/help/sfpegSearchListCmp.md)**.
