@@ -84,16 +84,14 @@
                     <template lwc:if={showSearch}>
                         <lightning-button-icon-stateful icon-name="utility:filterList"  size={buttonSize}
                                                         alternative-text={filterTitle}  title={filterTitle}
-                                                        selected={showFilter}           variant="border-filled"
+                                                        selected={isFiltered}           variant="border-filled"
                                                         onclick={handleFilterShow}>
                         </lightning-button-icon-stateful>
                         <template lwc:if={showFilter}>
-                            <!-- slds-popover_full-width slds-popover_large slds-theme_shade slds-popover_walkthrough slds-popover_walkthrough-alt slds-popover_brand -->
                             <section    class="slds-popover slds-nubbin_top-right slds-dynamic-menu slds-popover_full-width filterPopup"
                                         role="dialog" style="position:absolute;right:23px;top:52px;">
                                 <div class="slds-popover__body slds-var-p-around_medium">
                                     <lightning-button-group class="slds-col slds-text-color_default slds-align_absolute-center">
-                                        <!-- slds-truncate formatSearchScope formatSearchScope variant="border-filled" filterScope.label slds-has-flexi-truncate slds-hyphenate slds-truncate -->
                                         <lightning-button-menu  class="filterSelect"
                                                                 alternative-text={filterScopeTitle} title={filterScope.label}
                                                                 label={formatSearchScope}           value={filterScope}
@@ -106,7 +104,6 @@
                                                 </lightning-menu-item>
                                             </template>
                                         </lightning-button-menu>
-                                        <!-- slds-button_stretch slds-button_full-width -->
                                         <div onkeyup={handleFilterReset} class="slds-button_last" >
                                             <lightning-input    class="filterInput"
                                                                 placeholder={filterPlaceholder}
@@ -332,7 +329,7 @@
                     </lightning-spinner>
                 </div>
             </template>
-            <template if:true={isLoading}>
+            <template lwc:if={isLoading}>
                 <div class="slds-card__body slds-card__body_inner cardContent">
                     <p>{searchLabel}</p>
                     <lightning-spinner alternative-text={searchLabel} size="medium">
@@ -350,19 +347,19 @@
                 <template lwc:if={isDebug}>
                     <span class="slds-p-around_x-small">Row actions</span>
                 </template>
-                    <c-sfpeg-action-bar-cmp bar-class= "slds-hide"
-                            config-name={configDetails.rowActions}
-                            object-api-name={objectApiName}
-                            record-id={recordId}
-                            user-id={userId}
-                            is-hidden="true"
-                            parent-context={parentContext}
-                            is-debug={isDebug}
-                            is-debug-fine={isDebugFine}
-                            ondone={handleActionDone}
-                            data-my-id="rowActions"
-                            lwc:ref="rowActions">
-                    </c-sfpeg-action-bar-cmp>
+                <c-sfpeg-action-bar-cmp bar-class= "slds-hide"
+                        config-name={configDetails.rowActions}
+                        object-api-name={objectApiName}
+                        record-id={recordId}
+                        user-id={userId}
+                        is-hidden="true"
+                        parent-context={parentContext}
+                        is-debug={isDebug}
+                        is-debug-fine={isDebugFine}
+                        ondone={handleActionDone}
+                        data-my-id="rowActions"
+                        lwc:ref="rowActions">
+                </c-sfpeg-action-bar-cmp>
             </div>
         </template>
     </template>
