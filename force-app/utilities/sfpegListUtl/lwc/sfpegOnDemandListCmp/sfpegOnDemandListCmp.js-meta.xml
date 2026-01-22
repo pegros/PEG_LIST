@@ -22,7 +22,8 @@
             <property name="cardTitle" label="Card Title" type="String" />
             <property name="cardIcon" label="Card Icon" type="String"/>
             <property name="cardClass" label="Card CSS Class" type="String" default="slds-card slds-card_boundary" description="CSS Classes for the wrapping card div"/>
-            <property name="displayHeight" label="Display height" type="String" description="Height in px/em... of the result display content div."/>
+            <property name="displayHeight" label="Display Height" type="String" description="Height in px/em... of the result display content div."/>
+            <property name="buttonLabel" label="Expand Button"  type="String" description="Label of the first expand header button"/>
             <property name="buttonSize" label="Button Size" type="String" datasource="x-small,small,medium" default="small" description="Size of the standard header buttons (to align with custom header actions)"/>
 
             <property name="configName" label="Query Configuration" type="String" datasource="apex://sfpegListSelector_CTL" description="(Developer)Name of the Query Configuration record to be used (see sfpegList__mdt)."/>
@@ -46,6 +47,7 @@
             <property name="cardIcon" label="Card Icon" type="String"/>
             <property name="cardClass" label="Card CSS Class" type="String" default="slds-card slds-card_boundary" description="CSS Classes for the wrapping card div"/>
             <property name="displayHeight" label="Display height" type="String" description="Height in px/em... of the result display content div."/>
+            <property name="buttonLabel" label="Expand Button"  type="String" description="Label of the first expand header button"/>
             <property name="buttonSize" label="Button Size" type="String" datasource="x-small,small,medium" default="small" description="Size of the standard header buttons (to align with custom header actions)"/>
 
             <property name="configName" label="Query Configuration" type="String" datasource="apex://sfpegListSelector_CTL" description="(Developer)Name of the Query Configuration record to be used (see sfpegList__mdt)."/>

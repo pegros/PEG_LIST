@@ -33,6 +33,8 @@
 import { LightningElement, api} from 'lwc';
 import currentUserId    from '@salesforce/user/Id';
 
+import EXPAND_TITLE     from '@salesforce/label/c.sfpegOnDemandListExpandTitle';
+
 export default class SfpegOnDemandListCmp extends LightningElement {
 
     //----------------------------------------------------------------
@@ -41,6 +43,7 @@ export default class SfpegOnDemandListCmp extends LightningElement {
     @api cardTitle;             // Title of the wrapping Card
     @api cardIcon;              // Icon of the wrapping Card
     @api cardClass;             // CSS Classes for the wrapping card div
+    @api buttonLabel;           // Label of the first expand header button
     @api buttonSize = 'small';  // Size of the standard header buttons (to align with custom header actions)
 
     @api configName;            // DeveloperName of the sfpegList__mdt record to be used
@@ -69,6 +72,12 @@ export default class SfpegOnDemandListCmp extends LightningElement {
     @api recordId;              // ID of current page record (if any)
     userId = currentUserId;     // ID of current User
    
+    //----------------------------------------------------------------
+    // Custom Labels
+    //----------------------------------------------------------------
+
+    expandTitle = EXPAND_TITLE;
+
     //----------------------------------------------------------------
     // Initialization
     //----------------------------------------------------------------

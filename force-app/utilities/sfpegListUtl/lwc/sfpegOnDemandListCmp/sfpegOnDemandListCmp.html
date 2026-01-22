@@ -27,11 +27,21 @@
         <div class={cardClass} >
             <lightning-card class="cardHeader" title={cardTitle} icon-name={cardIcon}>
                 <div class="headerActions" slot="actions">
-                    <lightning-button-icon
-                                icon-name="utility:expand"  size={buttonSize}
-                                variant="border-filled"     title="Expand"
+                    <template lwc:if={buttonLabel}>
+                        <lightning-button
+                                label={buttonLabel}         title={expandTitle}
+                                icon-name="utility:expand"  icon-position="right"
+                                variant="border-filled"     size={buttonSize}
                                 onclick={handleOpen}>
-                    </lightning-button-icon>
+                        </lightning-button>
+                    </template>
+                    <template lwc:else>
+                        <lightning-button-icon
+                                icon-name="utility:expand"  title={expandTitle}
+                                variant="border-filled"     size={buttonSize}
+                                onclick={handleOpen}>
+                        </lightning-button-icon>
+                    </template>
                 </div>
             </lightning-card>
         </div>
