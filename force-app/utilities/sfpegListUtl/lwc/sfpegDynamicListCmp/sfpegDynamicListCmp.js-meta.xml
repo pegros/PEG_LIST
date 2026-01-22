@@ -14,6 +14,9 @@
             <property   name="channel"          label="Channel"
                         type="String"           default="DynamicList"
                         description="Channel from which notifications should be processed."/>
+            <property   name="defaultMessage"   label="Message"
+                        type="String"
+                        description="Information message displayed when no list is active."/>
             <property   name="isDebug"          label="Debug?"
                         type="Boolean"          default="false"
                         description="Flag to activate debug mode."/>

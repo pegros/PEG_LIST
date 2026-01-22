@@ -24,12 +24,18 @@
                             is-debug-fine={isDebugFine}>
         </c-sfpeg-list-cmp>
     </template>
+    <template lwc:elseif={defaultMessage}>
+        <c-sfpeg-warning-dsp    message={defaultMessage}    variant="info">
+        </c-sfpeg-warning-dsp>
+    </template>
 
     <!-- Debug Information Display -->
     <div lwc:if={isDebug} class="slds-box slds-box_small slds-m-top_small slds-theme_default footerContent">
         <dl class="slds-dl_horizontal">
             <dt class="slds-dl_horizontal__label slds-truncate">Channel:</dt>
             <dd class="slds-dl_horizontal__detail">{channel}</dd>
+            <dt class="slds-dl_horizontal__label slds-truncate">Message:</dt>
+            <dd class="slds-dl_horizontal__detail">{defaultMessage}</dd>
             <dt class="slds-dl_horizontal__label slds-truncate">Current Config:</dt>
             <dd class="slds-dl_horizontal__detail">{listConfigSerialized}</dd>
             <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>

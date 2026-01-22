@@ -45,6 +45,7 @@ export default class SfpegDynamicListCmp extends LightningElement {
     // Main configuration fields (for App Builder)
     //----------------------------------------------------------------
     @api channel;               // Channel from which notifications should be processed.
+    @api defaultMessage;        // Information message when no listConfig is active
     @api isDebug = false;       // Debug mode activation
     @api isDebugFine = false;   // Debug mode activation for all subcomponents.
 
