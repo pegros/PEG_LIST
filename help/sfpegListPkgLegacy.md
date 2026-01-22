@@ -4,15 +4,13 @@ This page presents the content of the `sfpegList-legacy` package of the **[PEG_L
 
 ⚠️ It applies to the most recent (unlocked) packaging of the **PEG_LIST** repository.
 
-
 ## Introduction
 
 The **legacy** package of the **PEG_LIST** repository mainly provides _legacy_ Aura
 components now replaced by LWC equivalents in the other packages. They are kept in
 this package for historical reasons.
 
-
-## Installation 
+## Installation
 
 It may be installed and upgraded as the `sfpegList-legacy` unlocked package directly on your Org
 via the installation links provided in the [release notes](#release-notes).
@@ -20,34 +18,31 @@ via the installation links provided in the [release notes](#release-notes).
 ℹ️ It requires the **[sfpegApex-core](/help/sfpegListPkgCore.md)**
 package to be already installed on your Org (as it provides extensions to it).
 
-
 ## Solution Principles
 
-Please refer to the [Component Configuration](/help/configuration.md) dedicated page to 
-get more information about the way the included components may be configured. 
-
+Please refer to the [Component Configuration](/help/configuration.md) dedicated page to
+get more information about the way the included components may be configured.
 
 ## Package content
 
 At last, it provides a small set of Aura components previsouly implemented because
 LWC was not supporting the Lightning frameworks used:
-* **[sfpegActionUtilityCmp](/help/sfpegActionUtilityCmp.md)** utility bar action menu,
-reintegrated almost completely in the undelying 
-**[sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md)** LWC component
-* **sfpegAFlowDsp** used by the **sfpegActionUtilityCmp** component to display 
-Flows in popups, feature now natively available in the 
-**[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** LWC component
-* **[sfpegListViewCmp](/help/sfpegListViewCmp.md)** addressable List component,
-replaced by its
-**[sfpegListTabCmp](/help/sfpegListTabCmp.md)** LWC equivalent
 
+- **[sfpegActionUtilityCmp](/help/sfpegActionUtilityCmp.md)** utility bar action menu,
+  reintegrated almost completely in the undelying
+  **[sfpegActionHandlerCmp](/help/sfpegActionHandlerCmp.md)** LWC component
+- **sfpegAFlowDsp** used by the **sfpegActionUtilityCmp** component to display
+  Flows in popups, feature now natively available in the
+  **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)** LWC component
+- **[sfpegListViewCmp](/help/sfpegListViewCmp.md)** addressable List component,
+  replaced by its
+  **[sfpegListTabCmp](/help/sfpegListTabCmp.md)** LWC equivalent
 
 ## Technical Details
 
-Please refer to the [Technical Details](/help/technical.md) dedicated page to 
-get more information about the way the components have been implemented, which may help 
-better understand their behaviours. 
-
+Please refer to the [Technical Details](/help/technical.md) dedicated page to
+get more information about the way the components have been implemented, which may help
+better understand their behaviours.
 
 ## Release Notes
 
@@ -56,17 +51,31 @@ better understand their behaviours.
 First version with the new unlocked package structure.
 
 Install it:
-* from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xHDVIA2) for production orgs,
-* from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xHDVIA2) for sandboxes,
-* or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xHDVIA2`
 
+- from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xHDVIA2) for production orgs,
+- from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xHDVIA2) for sandboxes,
+- or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xHDVIA2`
 
 ### November 2025 - v1.1.0
 
 Version content:
-* dependency with `sfpegList-core` package upgraded
+
+- dependency with `sfpegList-core` package upgraded
 
 Install it:
-* from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIhIIAU) for production orgs,
-* from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIhIIAU) for sandboxes,
-* or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xIhIIAU`
+
+- from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIhIIAU) for production orgs,
+- from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIhIIAU) for sandboxes,
+- or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xIhIIAU`
+
+### January 2026 - v1.2.0
+
+Version content:
+
+- dependency with `sfpegList-core` package upgraded
+
+Install it: 🚧 PENDING PACKAGE PROMOTION 🚧
+
+- from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=XXX) for production orgs,
+- from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=XXX) for sandboxes,
+- or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=XXX`
