@@ -31,9 +31,9 @@
 
 import { LightningElement, api } from 'lwc';
 
-import APPLY_BUTTON     from '@salesforce/label/c.sfpegSearchListApply';
-import RESULTS_TITLE    from '@salesforce/label/c.sfpegSearchListResults';
-import FILTER_TITLE    from '@salesforce/label/c.sfpegFilterableListFilters';
+import APPLY_BUTTON     from '@salesforce/label/c.sfpegFilterableListApply';
+import RESULTS_TITLE    from '@salesforce/label/c.sfpegFilterableListResults';
+import FILTER_TITLE     from '@salesforce/label/c.sfpegFilterableListFilters';
 
 export default class SfpegFilterListCmp extends LightningElement {
 
