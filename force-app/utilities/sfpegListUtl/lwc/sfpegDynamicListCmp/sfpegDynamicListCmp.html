@@ -1,0 +1,44 @@
+<template>
+    <template lwc:if={listConfig}>
+        <c-sfpeg-list-cmp   card-title={listConfig.cardLabel}
+                            card-icon={listConfig.cardIcon}
+                            card-class={listConfig.cardClass}
+                            display-height={listConfig.displayHeight}
+                            button-size={listConfig.buttonSize}
+                            config-name={listConfig.configName}
+                            context-string={listConfig.contextString}
+                            parent-context={listConfig.parentContext}
+                            show-count={listConfig.showCount}
+                            show-search={listConfig.showSearch}
+                            show-export={listConfig.showExport}
+                            is-collapsible={listConfig.isCollapsible}
+                            is-collapsed={listConfig.isCollapsed}
+                            action-config-name={listConfig.actionConfigName}
+                            footer-config-name={listConfig.footerConfigName}
+                            max-size={listConfig.maxSize}
+                            object-api-name={listConfig.objectApiName}
+                            record-id={listConfig.recordId}
+                            user-id={userId}
+                            ondone={handleActionDone}
+                            is-debug={isDebugFine} 
+                            is-debug-fine={isDebugFine}>
+        </c-sfpeg-list-cmp>
+    </template>
+
+    <!-- Debug Information Display -->
+    <div lwc:if={isDebug} class="slds-box slds-box_small slds-m-top_small slds-theme_default footerContent">
+        <dl class="slds-dl_horizontal">
+            <dt class="slds-dl_horizontal__label slds-truncate">Channel:</dt>
+            <dd class="slds-dl_horizontal__detail">{channel}</dd>
+            <dt class="slds-dl_horizontal__label slds-truncate">Current Config:</dt>
+            <dd class="slds-dl_horizontal__detail">{listConfigSerialized}</dd>
+            <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+            <dd class="slds-dl_horizontal__detail">
+                <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegDynamicListCmp.md"
+                                            label="See Help on GitHub"
+                                            target="_blank">
+                </lightning-formatted-url>
+            </dd>
+        </dl>
+    </div>
+</template>

@@ -1,0 +1,13 @@
+.footerContent {
+    /*padding-top: var(--lwc-varSpacingVerticalMedium);
+    padding-bottom: var(--lwc-varSpacingVerticalMedium);
+    padding-left: var(--lwc-varSpacingVerticalMedium);
+    padding-right: var(--lwc-varSpacingVerticalMedium);*/
+    width:100%;
+    word-break: break-all;
+}
+.contextItem ~ .contextItem {
+    /*background: blue;
+    padding: 5px;*/
+    margin-top: var(--lwc-varSpacingVerticalMedium);
+}
