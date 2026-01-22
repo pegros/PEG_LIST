@@ -112,32 +112,6 @@
           "versionNumber": "1.1.0.LATEST"
         }
       ]
-    },
-    {
-      "versionName": "Nov. 2025",
-      "versionNumber": "1.1.0.NEXT",
-      "path": "force-app/dataCloud",
-      "default": false,
-      "package": "sfpegList-dataCloud",
-      "versionDescription": "Data Cloud specific utilities for the PEG_LIST package as of mid Nov. 2025",
-      "postInstallUrl": "https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListPkgDataCloud.md#installation",
-      "releaseNotesUrl": "https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListPkgDataCloud.md#november-2025---v110",
-      "dependencies": [
-        {
-          "package": "sfpegList-core",
-          "versionNumber": "1.1.0.LATEST"
-        }
-      ],
-      "apexTestAccess": {
-        "permissionSets": [
-          "sfpegListTest",
-          "sfpegListCoreUsage"
-        ],
-        "permissionSetLicenses": [
-          "RemoteDataCloudPsl",
-          "GenieDataPlatformStarterPsl"
-        ]
-      }
     }
   ],
   "namespace": "",
@@ -149,15 +123,17 @@
     "sfpegList-utilities": "0HoJ7000000XZBeKAO",
     "sfpegList-examples": "0HoJ7000000XZBjKAO",
     "sfpegList-legacy": "0HoJ7000000XZD6KAO",
-    "sfpegList-dataCloud": "0HoJ7000000XZDBKA4",
     "sfpegList-core@1.0.0-2": "04tJ7000000xHDBIA2",
     "sfpegList-extensions@1.0.0-1": "04tJ7000000xHDGIA2",
     "sfpegList-utilities@1.0.0-1": "04tJ7000000xHDLIA2",
     "sfpegList-legacy@1.0.0-1": "04tJ7000000xHDVIA2",
-    "sfpegList-dataCloud@1.0.0-1": "04tJ7000000xIg0IAE",
     "sfpegList-core@1.1.0-1": "04tJ7000000xIgeIAE",
     "sfpegList-extensions@1.1.0-1": "04tJ7000000xIgjIAE",
     "sfpegList-utilities@1.1.0-1": "04tJ7000000xIgoIAE",
-    "sfpegList-legacy@1.1.0-1": "04tJ7000000xIgtIAE"
+    "sfpegList-legacy@1.1.0-1": "04tJ7000000xIgtIAE",
+    "sfpegList-core@1.1.0-2": "04tJ7000000xIh3IAE",
+    "sfpegList-extensions@1.1.0-2": "04tJ7000000xIh8IAE",
+    "sfpegList-utilities@1.1.0-2": "04tJ7000000xIhDIAU",
+    "sfpegList-legacy@1.1.0-2": "04tJ7000000xIhIIAU"
   }
 }
