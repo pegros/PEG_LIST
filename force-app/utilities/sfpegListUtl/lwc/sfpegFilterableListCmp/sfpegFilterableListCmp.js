@@ -128,13 +128,15 @@ export default class SfpegFilterListCmp extends LightningElement {
     // sfpegList initialization handling
     handleRecordLoad(event) {
         if (this.isDebug) console.log('handleRecordLoad: START FilterableList',event);
+        if (this.isDebug) console.log('handleRecordLoad: #results received ',event.detail?.length);
+        if (this.isDebugFine) console.log('handleRecordLoad: results received',JSON.stringify(event.detail));
         if (!this.configDetails) {
             if (this.isDebug) console.log('handleRecordLoad: initializing filterForm');
             this.initFilterForm();
         }
         
         this.resultList = [...event.detail];
-        if (this.isDebug) console.log('handleRecordLoad: #results received ',this.resultList?.length);
+        if (this.isDebug) console.log('handleRecordLoad: #results init ',this.resultList?.length);
 
         if (this.isDebug) console.log('handleRecordLoad: END FilterableList');
     }

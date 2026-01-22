@@ -1075,7 +1075,7 @@ export default class SfpegListCmp extends LightningElement {
                 this.sortFields = sortFields;
             }
 
-            let loadEvt = new CustomEvent('load', { detail: this.resultListOrig });
+            let loadEvt = new CustomEvent('load', { detail: this.resultList });
             if (this.isDebug) console.log('handleLoadNext: triggering load event for parent component ', JSON.stringify(loadEvt));
             this.dispatchEvent(loadEvt);
 
