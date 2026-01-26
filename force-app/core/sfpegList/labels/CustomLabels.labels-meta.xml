@@ -105,6 +105,14 @@
         <value>Load more...</value>
     </labels>
     <labels>
+        <fullName>sfpegListAccessErrorObject</fullName>
+        <categories>PEG Component LWC List Error Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message raised when user has not access to the list configs</shortDescription>
+        <value>User has no access the list configuration object!</value>
+    </labels>
+    <labels>
         <fullName>sfpegListAccessErrorRecord</fullName>
         <categories>PEG Component LWC List Error Message</categories>
         <language>en_US</language>

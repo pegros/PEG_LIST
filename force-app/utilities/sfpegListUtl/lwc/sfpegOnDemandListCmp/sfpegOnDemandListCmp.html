@@ -43,6 +43,28 @@
                         </lightning-button-icon>
                     </template>
                 </div>
+
+                <template lwc:if={isDebug}>
+                    <div slot="footer" class="footerContent">
+                        <div class="debugInfo"  >
+                           <dl class="slds-dl_horizontal">
+                                <dt class="slds-dl_horizontal__label slds-truncate">Configuration</dt>
+                                <dd class="slds-dl_horizontal__detail">Query:&nbsp;
+                                    <lightning-formatted-url    value={configUrl}
+                                                                label={configName}
+                                                                target="_blank">
+                                    </lightning-formatted-url></dd>
+                                <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
+                                <dd class="slds-dl_horizontal__detail">
+                                    <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListPkgUtilities.md"
+                                                                label="See Help on GitHub"
+                                                                target="_blank">
+                                    </lightning-formatted-url>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </template>
             </lightning-card>
         </div>
     </template>

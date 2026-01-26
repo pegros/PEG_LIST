@@ -79,6 +79,14 @@ export default class SfpegOnDemandListCmp extends LightningElement {
     expandTitle = EXPAND_TITLE;
 
     //----------------------------------------------------------------
+    // Custom Getters
+    //----------------------------------------------------------------
+    
+    get configUrl() {
+        return (this.configDetails?.id ? '/lightning/setup/CustomMetadata/page?address=%2F' + this.configDetails?.id : '#');
+    }
+
+    //----------------------------------------------------------------
     // Initialization
     //----------------------------------------------------------------
 
