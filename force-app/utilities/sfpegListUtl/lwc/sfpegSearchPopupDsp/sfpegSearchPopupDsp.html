@@ -55,23 +55,23 @@
                 </dl>
             </div>
         </template>
-            <template lwc:if={showResults}>
+        <template lwc:if={showResults}>
                 <div class="slds-p-horizontal_x-small">
                     <c-sfpeg-list-cmp   object-api-name={resultsConfig.objectApiName}
                                         record-id={resultsConfig.recordId}
                                         display-height={resultsConfig.displayHeight}
                                         show-search={resultsConfig.showSearch}
                                         card-title={resultsTitle}
-                                        config-name={resultsConfig.name}
+                                        config-name={resultsConfig.configName}
                                         action-config-name={resultsConfig.actionConfigName}
                                         footer-config-name={resultsConfig.footerConfigName}
+                                        context-string={resultsConfig.contextString}
                                         parent-context={queryContext}
                                         is-debug={isDebug}
                                         is-debug-fine={isDebugFine}>
                     </c-sfpeg-list-cmp>
                 </div>
-            </template>
-        </div>
+        </template>
     </lightning-modal-body>
     <lightning-modal-footer>
         <lightning-button label={closeLabel} onclick={handleClose}></lightning-button>

@@ -72,6 +72,9 @@ export default class SfpegSearchPopupDsp extends LightningModal {
     get searchFormFields() {
         return JSON.stringify(this.searchForm?.fields);
     }
+    get parentContext() {
+        return {...(this.queryContext || {}), ...(this.resultsConfig?.parentContext || {})};
+    }
 
     //----------------------------------------------------------------
     // Initialization
@@ -81,8 +84,12 @@ export default class SfpegSearchPopupDsp extends LightningModal {
             console.log('connected: START SearchPopup ',this.popupLabel);
             console.log('connected: searchForm ',JSON.stringify(this.searchForm));
             console.log('connected: resultsConfig ',JSON.stringify(this.resultsConfig));
-            console.log('connected: END SearchPopup');
         }
+        if (this.resultsConfig?.parentContext) {
+            if (this.isDebug) console.log('connected: initializing queryContext');
+            this.queryContext = {...this.resultsConfig.parentContext};
+        }
+        if (this.isDebug) console.log('connected: END SearchPopup');
     }
     renderedCallback(event){
         if (this.isDebug) {
@@ -110,7 +117,15 @@ export default class SfpegSearchPopupDsp extends LightningModal {
         event.preventDefault();
         if (this.isDebug) console.log('handleSubmit: details',JSON.stringify(event.detail));
         if (event.detail?.fields) {
-            this.queryContext = event.detail.fields;
+            this.queryContext = {...event.detail.fields};
+            if (this.resultsConfig?.parentContext) {
+                if (this.isDebug) console.log('connected: initializing queryContext with parent');
+                this.queryContext = {...event.detail.fields, ...this.resultsConfig.parentContext};
+            }
+            else {
+                if (this.isDebug) console.log('connected: initializing queryContext from Search only');
+                this.queryContext = {...event.detail.fields};
+            }
             if (this.isDebug) console.log('handleSubmit: queryContext updated',JSON.stringify(this.queryContext));
         }
         if (this.isDebug) console.log('handleSubmit: END SearchPopup');

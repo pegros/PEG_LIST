@@ -105,6 +105,8 @@ export default class SfpegSearchPopupCmp extends LightningElement {
                 let popupParams = {...message.action};
                 popupParams.isDebug = popupParams.isDebug || this.isDebug;
                 popupParams.isDebugFine = popupParams.isDebugFine || this.isDebugFine;
+                // for backward compatibility
+                if (popupParams.resultsConfig?.name) {popupParams.resultsConfig.configName = popupParams.resultsConfig.name;}
                 if (this.isDebug) console.log('handleNotification: popup config reworked ', JSON.stringify(popupParams));
                 sfpegSearchPopupDsp.open(popupParams)
                 .then((result) => {

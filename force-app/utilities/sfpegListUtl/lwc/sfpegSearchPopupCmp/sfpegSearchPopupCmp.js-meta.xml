@@ -16,7 +16,7 @@
 
     <targetConfigs>
         <targetConfig targets="lightning__AppPage,lightning__HomePage,lightning__RecordPage,lightning__UtilityBar,lightningCommunity__Default">
-            <property name="notifChannel" label="Notif. Channel" type="String" default="'sfpegSearchPopup'" description="Name of the sfpegCustomAction notification channel to subscribe to (to activate component display)."/>
+            <property name="notifChannel" label="Notif. Channel" type="String" default="sfpegSearchPopup" description="Name of the sfpegCustomAction notification channel to subscribe to (to activate component display)."/>
 
             <property name="isDebug" label="Debug?" type="Boolean" default="false" description="Flag to show debug information."/>
             <property name="isDebugFine" label="Fine Debug?" type="Boolean" default="false" description="Flag to show fine debug information."/>
