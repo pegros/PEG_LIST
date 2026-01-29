@@ -4,6 +4,7 @@
         <c-sfpeg-list-cmp   object-api-name={objectApiName}
                             record-id={recordId}
                             card-title={cardTitle}
+                            card-icon={cardIcon}
                             card-class={cardClass}
                             button-size={buttonSize}
                             config-name={configName}
@@ -49,11 +50,7 @@
                         <div class="debugInfo"  >
                            <dl class="slds-dl_horizontal">
                                 <dt class="slds-dl_horizontal__label slds-truncate">Configuration</dt>
-                                <dd class="slds-dl_horizontal__detail">Query:&nbsp;
-                                    <lightning-formatted-url    value={configUrl}
-                                                                label={configName}
-                                                                target="_blank">
-                                    </lightning-formatted-url></dd>
+                                <dd class="slds-dl_horizontal__detail">Query:&nbsp;{configName}</dd>
                                 <dt class="slds-dl_horizontal__label slds-truncate">Documentation:</dt>
                                 <dd class="slds-dl_horizontal__detail">
                                     <lightning-formatted-url    value="https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListPkgUtilities.md"
