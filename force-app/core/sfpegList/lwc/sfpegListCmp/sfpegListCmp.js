@@ -408,7 +408,9 @@ export default class SfpegListCmp extends LightningElement {
     //----------------------------------------------------------------      
     connectedCallback() {
         if (this.isDebug) {
-            console.log('connected: START List for config ',this.configName);
+            console.log('connected: START List ',this.cardTitle);
+            console.log('connected: with cardIcon ',this.cardIcon);
+            console.log('connected: config provided ',this.configName);
             console.log('connected: recordId provided ',this.recordId);
             console.log('connected: objectApiName provided ',this.objectApiName);
             console.log('connected: userId provided ',this.userId);

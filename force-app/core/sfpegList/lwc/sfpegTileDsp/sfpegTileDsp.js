@@ -63,6 +63,7 @@ export default class SfpegTileDsp extends LightningElement {
     @track cardIconSize = 'small'; // Displayed icon size (if any)
     @track cardIconVariant;     // Displayed icon size (if any)
     @track cardIconValue;       // Display Icon value (for dynamic icons)
+    @track cardIconTitle;       // Display Icon title
     @track cardTitle = null;    // Displayed title (if any)
     @track cardTitleLabel = null // Displayed title on hover label
     @track cardTitleLookup = null; // Title lookup (if any) triggering lookup display mode for title
@@ -184,7 +185,7 @@ export default class SfpegTileDsp extends LightningElement {
             }
             this.cardIconVariant = this.cardIconVariant || this.configDetails.icon.variant;
             if (this.configDetails.icon.name) {
-                if (this.isDebug) console.log('resetDisplayData: icon label');
+                if (this.isDebug) console.log('resetDisplayData: icon name');
                 this.cardIcon = this.configDetails.icon.name;
             }
             else if (this.configDetails.icon.fieldName) {
@@ -193,8 +194,15 @@ export default class SfpegTileDsp extends LightningElement {
             }
             else {
                 if (this.isDebug) console.log('connected: no icon name configured');
-                //return;
             }
+            if (this.configDetails.icon.label) {
+                if (this.isDebug) console.log('resetDisplayData: icon label');
+                this.cardIconTitle = this.configDetails.icon.label;
+            }
+            else {
+                if (this.isDebug) console.log('connected: no icon label configured');
+            }
+
             if ((this.configDetails.icon.value) && (this.configDetails.icon.value.fieldName)) {
                 if (this.isDebug) console.log('resetDisplayData: setting icon value');
                 this.cardIconValue = this._recordData[this.configDetails.icon.value.fieldName];

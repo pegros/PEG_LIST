@@ -3,9 +3,9 @@
     <div class={cardClass} data-my-id="wrapperDiv" >
         <lightning-card class="cardHeader">
             <div slot="title" class="slds-media slds-media_center">
-                <template if:true={showCardHeaderIcons}>
+                <template lwc:if={showCardHeaderIcons}>
                     <div class="slds-media__figure">
-                        <template if:true={isCollapsible}>
+                        <template lwc:if={isCollapsible}>
                             <lightning-button-stateful 
                                 class="expandCollapse"
                                 variant="text"
@@ -15,7 +15,7 @@
                                 onclick={handleExpandCollapse}>
                             </lightning-button-stateful>
                         </template>
-                        <template if:true={cardIcon}>
+                        <template lwc:if={cardIcon}>
                             <lightning-icon icon-name={cardIcon} size="small" >
                             </lightning-icon>
                         </template>
@@ -144,7 +144,7 @@
             </div>
 
             <!-- Ready state display -->
-            <template if:true={isReady}>
+            <template lwc:if={isReady}>
 
                 <!-- Error Message display -->
                 <template lwc:if={hasErrorMsg}>
@@ -238,6 +238,24 @@
                 </template>
             </template>
 
+            <!-- Spinner display upon init-->
+            <template lwc:else>
+                <div class="slds-card__body slds-card__body_inner cardContent">
+                    <p>{initLabel}</p>
+                    <lightning-spinner alternative-text={initLabel} size="medium">
+                    </lightning-spinner>
+                </div>
+            </template>
+
+            <!-- Spinner display upon Loading/Refreshing -->
+            <template lwc:if={isLoading}>
+                <div class="slds-card__body slds-card__body_inner cardContent">
+                    <p>{searchLabel}</p>
+                    <lightning-spinner alternative-text={searchLabel} size="medium">
+                    </lightning-spinner>
+                </div>
+            </template>
+
             <!-- Footer Display -->
             <!-- Fake action footer for CSS issues -->
             <template lwc:if={hasActionFooter}>
@@ -318,22 +336,6 @@
                                 </dd>
                             </dl>
                     </div>
-                </div>
-            </template>
-
-            <!-- Spinner display (Init vs Loading/Refreshing) -->
-            <template if:false={isReady}>
-                <div class="slds-card__body slds-card__body_inner cardContent">
-                    <p>{initLabel}</p>
-                    <lightning-spinner alternative-text={initLabel} size="medium">
-                    </lightning-spinner>
-                </div>
-            </template>
-            <template lwc:if={isLoading}>
-                <div class="slds-card__body slds-card__body_inner cardContent">
-                    <p>{searchLabel}</p>
-                    <lightning-spinner alternative-text={searchLabel} size="medium">
-                    </lightning-spinner>
                 </div>
             </template>
 
