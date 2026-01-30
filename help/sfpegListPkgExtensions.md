@@ -86,8 +86,8 @@ Version content:
 
 - dependency with `sfpegList-core` package upgraded
 
-Install it: 🚧 PENDING PACKAGE PROMOTION 🚧
+Install it:
 
-- from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=XXX) for production orgs,
-- from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=XXX) for sandboxes,
-- or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=XXX`
+- from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xJCIIA2) for production orgs,
+- from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xJCIIA2) for sandboxes,
+- or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xJCIIA2`

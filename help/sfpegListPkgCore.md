@@ -139,11 +139,11 @@ Version content:
   use cases (see **[sfpegFilterableListCmp](/help/sfpegListOrgUtilities.md)** wrapper component)
 - minor fixes/enhacements to the **sfpegLookupDsp** component on positioning and object icon
 
-Install it: 🚧 PENDING PACKAGE PROMOTION 🚧
+Install it:
 
-- from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=XXX) for production orgs,
-- from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=XXX) for sandboxes,
-- or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=XXX`
+- from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xJCDIA2) for production orgs,
+- from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xJCDIA2) for sandboxes,
+- or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xJCDIA2`
 
 ⚠️ If you deploy this version as an upgrade to the `Nov 2025` (v1.1.0) version, you need to first delete the entries
 for the modified country codes in both `sfpegCountries` and `sfpegCountryCodes` global picklists. It is indeed

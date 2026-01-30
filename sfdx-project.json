@@ -134,6 +134,13 @@
     "sfpegList-core@1.1.0-2": "04tJ7000000xIh3IAE",
     "sfpegList-extensions@1.1.0-2": "04tJ7000000xIh8IAE",
     "sfpegList-utilities@1.1.0-2": "04tJ7000000xIhDIAU",
-    "sfpegList-legacy@1.1.0-2": "04tJ7000000xIhIIAU"
+    "sfpegList-legacy@1.1.0-2": "04tJ7000000xIhIIAU",
+    "sfpegList-core@1.2.0-1": "04tJ7000000xJBeIAM",
+    "sfpegList-extensions@1.2.0-1": "04tJ7000000xJBjIAM",
+    "sfpegList-utilities@1.2.0-1": "04tJ7000000xJBoIAM",
+    "sfpegList-legacy@1.2.0-1": "04tJ7000000xJBtIAM",
+    "sfpegList-core@1.2.0-2": "04tJ7000000xJCDIA2",
+    "sfpegList-extensions@1.2.0-2": "04tJ7000000xJCIIA2",
+    "sfpegList-utilities@1.2.0-2": "04tJ7000000xJCNIA2"
   }
 }

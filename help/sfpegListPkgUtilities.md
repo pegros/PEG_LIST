@@ -86,14 +86,13 @@ Install it:
 Version content:
 
 - added tabs and pages for the **[Org Utilities](/help/sfpegListOrgUtilities.md)**
-- added the **[sfpegObjectKeys_SVC](/help/sfpegListOrgUtilities.md)** (and its **sfpegList** metadata record)
-  for quick object identification from key prefix
+- added the **[sfpegObjectKeys_SVC](/help/sfpegListOrgUtilities.md)** (and its **sfpegList** metadata record) for quick object identification from key prefix
 - fixed some display design issues on the **[sfpegOrgLimits_SVC](/help/sfpegListOrgUtilities.md)** Org utility
 - added the **[sfpegFilterableListCmp](/help/sfpegListOrgUtilities.md)** component for richer filtering capabilities
   within **sfpegListCmp** (with its **sfpegMultipleFilters** and **sfpegMultiSelectCombobox** sub-components)
 
-Install it: 🚧 PENDING PACKAGE PROMOTION 🚧
+Install it:
 
-- from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=TBD) for production orgs,
-- from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=TBD) for sandboxes,
-- or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=TBD`
+- from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xJCNIA2) for production orgs,
+- from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xJCNIA2) for sandboxes,
+- or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xJCNIA2`
