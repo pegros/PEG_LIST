@@ -22,12 +22,14 @@
                     </div>
                 </template>
                 <div class="slds-media__body" >
-                    <!--<h2>{formatTitle}</h3>-->
                     <h2 class="slds-card__header-title">
+                        <span class="slds-truncate">{formatTitle}</span>
+                    </h2>
+                    <!--<h2 class="slds-card__header-title">
                         <a href="#" class="slds-card__header-link slds-truncate">
                             <span>{formatTitle}</span>
                         </a>
-                    </h2>
+                    </h2>-->
                 </div>
             </div>
 
@@ -208,7 +210,8 @@
 
                             <!-- List mode data display -->
                             <template lwc:else>
-                                <div class="slds-m-horizontal_xx-small">
+                                <!-- slds-m-horizontal_xx-small -->
+                                <div class="slds-var-p-horizontal_x-small">
                                     <lightning-layout   multiple-rows="true"  vertical-align="stretch" >
                                         <template for:each={resultList} for:item="iter">
                                             <lightning-layout-item  key={iter.Id}  size="12" medium-device-size={tileSize} >
