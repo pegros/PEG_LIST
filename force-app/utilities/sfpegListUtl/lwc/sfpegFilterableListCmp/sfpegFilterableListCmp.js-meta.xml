@@ -20,6 +20,7 @@
             <property name="cardClass" label="Card CSS Class" type="String" default="slds-card slds-card_boundary" description="CSS Classes for the wrapping card div"/>
             <property name="displayHeight" label="Display height" type="String" description="Height in px/em... of the result display content div."/>
             <property name="buttonSize" label="Button Size" type="String" datasource="x-small,small,medium" default="small" description="Size of the standard header buttons (to align with custom header actions)"/>
+            <property name="columnNumber" label="#Filter Columns" type="Integer" default="2" description="Number of columns for the filters in a large screen display"/>
 
             <property name="configName" label="Query Configuration" type="String" datasource="apex://sfpegListSelector_CTL" description="(Developer)Name of the Query Configuration record to be used (see sfpegList__mdt)."/>
 

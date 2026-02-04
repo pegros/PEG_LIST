@@ -88,6 +88,8 @@ export default class SfpegMultipleFilters extends LightningElement {
     
     @api cardTitle = "Filters";
     @api columns = [];
+    @api columnNumber = 2;
+    
     @api isExpanded = false;
     @api isDebug = false;
     
@@ -131,6 +133,9 @@ export default class SfpegMultipleFilters extends LightningElement {
     generalSearchValue = '';
 
     isProcessing = false;
+
+    largeSize = 6;
+    mediumSize = 12;
 
     //-------------------------------------------------------------------------------
     // CUSTOM LABELS
@@ -186,7 +191,6 @@ export default class SfpegMultipleFilters extends LightningElement {
     get booleanOptions() {
         return [{value: '', label: '---'}, {value: 'true', label: this.booleanTrueLabel}, {value: 'false', label: this.booleanFalseLabel}];
     }
-
     
     //-------------------------------------------------------------------------------
     // COMPONENT LIFECYCLE MANAGEMENT
@@ -197,8 +201,26 @@ export default class SfpegMultipleFilters extends LightningElement {
      * Initializes searchable combobox and computes distinct options if records/columns are available
      */
     connectedCallback() {
-        if (this.isDebug) console.log("connected: START for MultipleFilters");
-        if (this.isDebug) console.log("connected: isExpanded", this.isExpanded);
+        if (this.isDebug) {
+            console.log("connected: START for MultipleFilters");
+            console.log("connected: isExpanded", this.isExpanded);
+            console.log("connected: columnNumber", this.columnNumber);
+        }
+
+        if (this.columnNumber) {
+            if (this.columnNumber >= 4) {
+                this.largeSize = 3;
+                this.mediumSize = 4;
+            }
+            if (this.columnNumber == 3) {
+                this.largeSize = 4;
+                this.mediumSize = 6;
+            }
+        }
+        if (this.isDebug) {
+            console.log("connected: largeSize", this.largeSize);
+            console.log("connected: mediumSize", this.mediumSize);
+        }
 
         if (!this.filters) {
             if (this.isDebug) console.log("connected: initializing filters");

@@ -55,6 +55,8 @@ export default class SfpegFilterListCmp extends LightningElement {
     @api maxSize = 100;         // Header Action list overflow limit
     @api buttonSize = 'small';  // Size of the standard header buttons (to align with custom header actions)
 
+    @api columnNumber;
+    
     @api isDebug;
     @api isDebugFine;
     

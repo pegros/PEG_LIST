@@ -48,7 +48,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Header of the filter section of the sfpegFilterableListCmp</shortDescription>
-        <value>Select your filters</value>
+        <value>Define your filters</value>
     </labels>
 
     <labels>

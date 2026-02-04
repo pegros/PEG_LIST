@@ -1,6 +1,6 @@
 <template>
     <template lwc:if={isInitDone}>
-        <lightning-card title={cardTitle}>
+        <lightning-card title={cardTitle} icon-name="utility:filterList">
             <!-- Main Card Actions -->
             <div slot="actions" >
                 <lightning-button-group>
@@ -36,11 +36,11 @@
 
             <!-- Main Filter Section -->
             <div class={filterDivClass} ><div class="slds-theme_shade slds-box slds-box_small">
-                <!-- slds-var-p-around_medium  slds-box_x-small-->
-                <lightning-layout horizontal-align="spread" vertical-align="start" pull-to-boundary="small" multiple-rows >
+                <!-- slds-var-p-around_medium  slds-box_x-small horizontal-align="spread"-->
+                <lightning-layout  vertical-align="start" pull-to-boundary="small" multiple-rows >
 
                     <!-- Main Checbox Options -->
-                    <lightning-layout-item padding="horizontal-small" size="12" large-device-size="6">
+                    <lightning-layout-item padding="horizontal-small" size="12" medium-device-size={mediumSize} large-device-size={largeSize}  >
                         <lightning-input    lwc:ref="filterModeCheckbox"
                                             type="checkbox"
                                             class="slds-var-p-horizontal_x-small slds-var-p-vertical_x-small"
@@ -49,7 +49,7 @@
                                             onchange={updateFilterMode}>
                         </lightning-input>
                     </lightning-layout-item>
-                    <lightning-layout-item padding="horizontal-small" size="12" large-device-size="6">
+                    <lightning-layout-item padding="horizontal-small" size="12" medium-device-size={mediumSize} large-device-size={largeSize}  >
                         <lightning-input    lwc:ref="comboboxModeCheckbox"
                                             type="checkbox"
                                             class="slds-var-p-horizontal_x-small slds-var-p-vertical_x-small"
@@ -60,7 +60,7 @@
                     </lightning-layout-item>
 
                     <!-- General Search Bar and Field Selector - Side by Side -->
-                    <lightning-layout-item padding="horizontal-small" size="12" large-device-size="6">
+                    <lightning-layout-item padding="horizontal-small" size="12" medium-device-size={mediumSize} large-device-size={largeSize}  >
                         <lightning-input    lwc:ref="generalSearchBox"
                                             type="search"
                                             label={generalSearchLabel}
@@ -72,7 +72,7 @@
                         </lightning-input>
                     </lightning-layout-item>
 
-                    <lightning-layout-item padding="horizontal-small" size="12" large-device-size="6">
+                    <lightning-layout-item padding="horizontal-small" size="12" medium-device-size={mediumSize} large-device-size={largeSize}  >
                         <lightning-combobox lwc:ref="fieldSelectCombobox"
                                             label={fieldSelectLabel}
                                             placeholder={fieldSelectPlaceholder}
@@ -90,7 +90,7 @@
                         </lightning-layout-item>
 
                         <template for:each={activeFilters} for:item="filter">
-                            <lightning-layout-item key={filter.fieldName} padding="horizontal-small" size="12" large-device-size="6">
+                            <lightning-layout-item key={filter.fieldName} padding="horizontal-small" size="12" medium-device-size={mediumSize} large-device-size={largeSize}  >
                                 <div class="slds-media slds-var-p-bottom_x-small">
                                     <div class="slds-media__body">
 
@@ -103,7 +103,7 @@
                                                             {filter.label}
                                                         </label>
                                                     </lightning-layout-item>
-                                                    <lightning-layout-item padding="horizontal-small"  size="12" large-device-size="6">
+                                                    <lightning-layout-item padding="horizontal-small"  size="12" medium-device-size="6"  >
                                                         <lightning-input    type="date"
                                                                             variant="label-hidden"
                                                                             data-fieldname={filter.name}
@@ -114,7 +114,7 @@
                                                                             onchange={changeRangeFilter}>
                                                         </lightning-input>
                                                     </lightning-layout-item>
-                                                    <lightning-layout-item padding="horizontal-small"  size="12" large-device-size="6">
+                                                    <lightning-layout-item padding="horizontal-small"  size="12" medium-device-size="6"  >
                                                         <lightning-input    type="date"
                                                                             variant="label-hidden"
                                                                             data-fieldname={filter.name}
@@ -138,7 +138,7 @@
                                                             {filter.label}
                                                         </label>
                                                     </lightning-layout-item>
-                                                    <lightning-layout-item padding="horizontal-small"  size="12" large-device-size="6">
+                                                    <lightning-layout-item padding="horizontal-small"  size="12" large-device-size="6"  >
                                                         <lightning-input    type="number"
                                                                             formatter={filter.formatter}
                                                                             variant="label-hidden"
@@ -150,7 +150,7 @@
                                                                             onchange={changeRangeFilter}>
                                                         </lightning-input>
                                                     </lightning-layout-item>
-                                                    <lightning-layout-item padding="horizontal-small"  size="12" large-device-size="6">
+                                                    <lightning-layout-item padding="horizontal-small"  size="12" large-device-size="6"  >
                                                         <lightning-input    type="number"
                                                                             formatter={filter.formatter}
                                                                             variant="label-hidden"

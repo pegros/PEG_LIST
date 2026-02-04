@@ -9,6 +9,7 @@
                         <c-sfpeg-multiple-filters   card-title={filterTitle}
                                                     columns={filterForm}
                                                     records={resultList}
+                                                    column-number={columnNumber}
                                                     is-expanded={isFilterExpanded}
                                                     is-debug={isDebugFine}
                                                     onfilterchange={handleApply}>
@@ -21,6 +22,7 @@
                                     object-api-name={objectApiName}
                                     record-id={recordId}
                                     card-title={resultsTitle}
+                                    card-icon="utility:table"
                                     card-class="slds-border_top slds-var-m-top_small"
                                     display-height={displayHeight}
                                     button-size={buttonSize}
@@ -42,12 +44,7 @@
                 <div slot="footer" class="slds-text-align_left slds-p-horizontal_small slds-p-bottom_small slds-m-bottom_small"  >
                     <dl class="slds-dl_horizontal slds-text-align_left">
                         <dt class="slds-dl_horizontal__label slds-truncate">Filter List configuration:</dt>
-                        <dd class="slds-dl_horizontal__detail">
-                            <lightning-formatted-url    value={configUrl}
-                                                        label={configName}
-                                                        target="_blank">
-                            </lightning-formatted-url>
-                        </dd>
+                        <dd class="slds-dl_horizontal__detail">{configName}</dd>
                         <dt class="slds-dl_horizontal__label slds-truncate">Header configuration:</dt>
                         <dd class="slds-dl_horizontal__detail">{actionConfigName}</dd>
                         <dt class="slds-dl_horizontal__label slds-truncate">Footer configuration:</dt>
