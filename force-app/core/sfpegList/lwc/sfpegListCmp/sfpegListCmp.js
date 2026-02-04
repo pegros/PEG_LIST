@@ -175,8 +175,11 @@ export default class SfpegListCmp extends LightningElement {
     @api filterString = null;     // Applicable filter keywords entered
     @track isFiltering = false;     // Ongoing Filter state  (to control spinner)
 
-    //Form Factor (fo mobile specific configuration override)
+    //Form Factor (for mobile specific configuration override)
     formfactor = FORM_FACTOR;
+
+    //SLDS V2 detector for border on card header (V1 only)
+    isSldsV2 = false;
 
     //Widget Labels & Titles from custom labels
     refreshTitle = REFRESH_LABEL;
@@ -256,7 +259,7 @@ export default class SfpegListCmp extends LightningElement {
                             + ((this.configDetails.display.variant === 'timeline') ? ' slds-var-p-top_x-small slds-var-p-bottom_large' : ' slds-var-p-vertical_small');
             }
             else {
-                returnClass = returnClass + ' showTopBorder';
+                returnClass = returnClass + (this.isSldsV2 ? '' : ' showTopBorder');
             }
         }
         if (this.isDebug) console.log('contentClass: value init ', returnClass);
@@ -533,6 +536,18 @@ export default class SfpegListCmp extends LightningElement {
             else {
                 if (this.isDebug) console.log('rendered: treeGridCmp not yet rendered');
             }
+        }
+
+        const style = getComputedStyle(document.documentElement);
+        const v1OnlyToken = style.getPropertyValue('--slds-g-color-border-base-1');
+
+        if (v1OnlyToken) {
+            this.isSldsV2 = false;
+            console.log('rendered: Environment is in SLDS v1');
+        }
+        else {
+            this.isSldsV2 = true;
+            console.log('rendered: Environment is in SLDS v2');
         }
 
         if (this.isDebug) console.log('rendered: END');
