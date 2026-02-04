@@ -1,7 +1,7 @@
 <template>
     <div class={cardClass} >
         <lightning-card title={cardTitle} icon-name={cardIcon}>
-            <div class="slds-p-horizontal_small">
+            <div class="slds-var-p-horizontal_x-small">
 
                 <!-- FILTER FORM DISPLAY -->
                 <template lwc:if={filterForm}>
@@ -10,6 +10,7 @@
                                                     columns={filterForm}
                                                     records={resultList}
                                                     column-number={columnNumber}
+                                                    has-padding={hasFilterPadding}
                                                     is-expanded={isFilterExpanded}
                                                     is-debug={isDebugFine}
                                                     onfilterchange={handleApply}>
@@ -23,7 +24,7 @@
                                     object-api-name={objectApiName}
                                     record-id={recordId}
                                     card-title={resultsTitle}
-                                    card-class="slds-border_top slds-var-m-top_small"
+                                    card-class="slds-border_top slds-var-m-top_small slds-var-p-top_small"
                                     display-height={displayHeight}
                                     button-size={buttonSize}
                                     show-export={showExport}

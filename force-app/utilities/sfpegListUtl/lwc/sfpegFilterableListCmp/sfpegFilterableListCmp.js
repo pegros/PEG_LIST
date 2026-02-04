@@ -79,6 +79,7 @@ export default class SfpegFilterListCmp extends LightningElement {
     resultList
     configDetails;
     filterForm;
+    hasFilterPadding = false;
 
     isFilterExpanded = false;
     
@@ -314,6 +315,9 @@ export default class SfpegFilterListCmp extends LightningElement {
 
         this.filterForm = [...this.configDetails?.display?.columns, ...(this.configDetails?.display?.details ?? [])];
         if (this.isDebug) console.log('initFilterForm: filterForm extracted ',JSON.stringify(this.filterForm));
+
+        this.hasFilterPadding = this.configDetails?.type?.includes('List');
+        if (this.isDebug) console.log('initFilterForm: hasFilterPadding init ',this.hasFilterPadding);
 
         if (this.isDebug) console.log('initFilterForm: END / filterForm init ',JSON.stringify(this.filterForm));
     }

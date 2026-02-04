@@ -89,6 +89,7 @@ export default class SfpegMultipleFilters extends LightningElement {
     @api cardTitle = "Filters";
     @api columns = [];
     @api columnNumber = 2;
+    @api hasPadding = false;
     
     @api isExpanded = false;
     @api isDebug = false;
@@ -180,7 +181,7 @@ export default class SfpegMultipleFilters extends LightningElement {
     }
     
     get filterDivClass() {
-        return "slds-var-p-horizontal_small " + (this.isExpanded ? "slds-is-expanded" : "slds-is-collapsed");
+        return (this.hasPadding ? "slds-var-p-horizontal_small " : '') + (this.isExpanded ? "slds-is-expanded" : "slds-is-collapsed");
     }
 
     get expandButtonIcon() {

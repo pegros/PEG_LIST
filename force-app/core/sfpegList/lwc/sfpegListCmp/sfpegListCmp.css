@@ -2,25 +2,11 @@
     --sds-c-card-color-background:  var(--lwc-colorBackground);
 }
 .slds-card_boundary .cardHeader {
-    /*background-color: rgb(150, 150, 150) !important;*/
     --sds-c-card-color-background:  var(--lwc-colorBackground);
-
-    /*--card-card-spacing-block-start:10px;
-    --card-card-spacing-block-end: 10px;
-    --card-card-spacing-inline-start: 15px;
-    --card-card-spacing-inline-end: 15px;
-    --card-header-spacing-block-start: 20px;
-    --card-header-spacing-block-end: 20px;
-    --card-header-spacing-inline-start: 25px;
-    --card-header-spacing-inline-end: 25px;*/
     --sds-c-card-body-spacing-block-start: 0px;
     --sds-c-card-body-spacing-block-end: 0px;
-    /*--sds-c-card-body-spacing-inline-start: 5px;
-    --sds-c-card-body-spacing-inline-end: 5px;*/
     --sds-c-card-footer-spacing-block-start: 0px;
     --sds-c-card-footer-spacing-block-end: 0px;
-    /*--sds-c-card-footer-spacing-inline-start: 1px;
-    --sds-c-card-footer-spacing-inline-end: 1px;*/
     --sds-c-card-footer-text-align: left;
 }
 .slds-card_boundary .headerActions {
@@ -33,21 +19,14 @@
     background-color:  var(--lwc-colorBackgroundAlt);
     --sds-c-card-color-background:  var(--lwc-colorBackgroundAlt);
     width: 100%;
-    /*border-bottom-left: var(--slds-c-card-radius-border, var(--sds-c-card-radius-border, var(--lwc-borderRadiusMedium, 0.25rem)));*/
     border-bottom-left-radius: var(--slds-c-card-radius-border, var(--sds-c-card-radius-border, var(--lwc-borderRadiusMedium, 0.25rem)));
     border-bottom-right-radius: var(--slds-c-card-radius-border, var(--sds-c-card-radius-border, var(--lwc-borderRadiusMedium, 0.25rem)));
-    /*margin-bottom: var(--slds-c-card-radius-border, var(--sds-c-card-radius-border, var(--lwc-borderRadiusMedium, 0.25rem)));*/
-    /*min-height: 150px !important;*/
-    /*padding-bottom: var(--lwc-varSpacingVerticalMedium);*/
 }
 .slds-card_boundary .footerContent, .debugInfo  {
-    /*background-color:  var(--lwc-colorBackgroundAlt);
-    --sds-c-card-color-background:  var(--lwc-colorBackgroundAlt);*/
     padding-top: var(--lwc-varSpacingVerticalMedium);
     padding-bottom: var(--lwc-varSpacingVerticalMedium);
     padding-left: var(--lwc-varSpacingVerticalMedium);
     padding-right: var(--lwc-varSpacingVerticalMedium);
-    /*text-align:left;*/
     width:100%;
 }
 .debugInfo {
@@ -93,6 +72,12 @@
 .sfpegTable {
     --slds-c-button-line-height : 1rem !important;
 }
+.slds-card_boundary .sfpegTable {
+    --_slds-c-datatable-radius-border: 0 !important;
+}
 .showTopBorder {
     border-top: var(--lwc-borderWidthThin,1px) solid rgb(201, 201, 201) !important;
 }
+
+
+
