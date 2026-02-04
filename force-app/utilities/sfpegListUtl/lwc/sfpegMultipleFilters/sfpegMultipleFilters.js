@@ -87,6 +87,7 @@ export default class SfpegMultipleFilters extends LightningElement {
     //-------------------------------------------------------------------------------
     
     @api cardTitle = "Filters";
+    @api cardClass;
     @api columns = [];
     @api columnNumber = 2;
     @api hasPadding = false;

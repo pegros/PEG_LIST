@@ -81,6 +81,9 @@ export default class SfpegFilterListCmp extends LightningElement {
     filterForm;
     hasFilterPadding = false;
 
+    filterCardClass;
+    listCardClass;
+
     isFilterExpanded = false;
     
     //----------------------------------------------------------------
@@ -111,8 +114,20 @@ export default class SfpegFilterListCmp extends LightningElement {
             console.log('connected: START FilterableList ',this.popupLabel);
             console.log('connected: filterForm ',JSON.stringify(this.filterForm));
             console.log('connected: resultsConfig ',JSON.stringify(this.resultsConfig));
-            console.log('connected: END FilterableList');
         }
+
+        if (this.cardClass.includes('slds-card_boundary')) {
+            if (this.isDebug) console.log('connected: handling card with boundary');
+            this.filterCardClass = "sfpegNoBoxRadius"
+            this.listCardClass = 'slds-border_top sfpegNoTableRadius';
+        }
+        else {
+            if (this.isDebug) console.log('connected: handling card without boundary');
+            this.filterCardClass = '';
+            this.listCardClass = "slds-var-m-top_small"
+        }
+
+        if (this.isDebug)    console.log('connected: END FilterableList');
     }
 
     renderedCallback(event){
@@ -317,6 +332,7 @@ export default class SfpegFilterListCmp extends LightningElement {
         if (this.isDebug) console.log('initFilterForm: filterForm extracted ',JSON.stringify(this.filterForm));
 
         this.hasFilterPadding = this.configDetails?.type?.includes('List');
+        if (this.hasFilterPadding) this.filterCardClass = '';
         if (this.isDebug) console.log('initFilterForm: hasFilterPadding init ',this.hasFilterPadding);
 
         if (this.isDebug) console.log('initFilterForm: END / filterForm init ',JSON.stringify(this.filterForm));

@@ -1,0 +1,3 @@
+.sfpegNoBoxRadius .slds-box {
+    --slds-g-radius-border-2: 0 !important;
+}

@@ -1,50 +1,49 @@
 <template>
     <div class={cardClass} >
         <lightning-card title={cardTitle} icon-name={cardIcon}>
-            <div class="slds-p-horizontal_small">
 
-                <!-- SEARCH FORM DISPLAY -->
-                <template lwc:if={searchForm}>
-                    <div class="slds-m-bottom_small">
-                        <lightning-record-edit-form     object-api-name={searchForm.objectApiName}
-                                                        record-type-id={searchForm.recordTypeId}
-                                                        onload={handleFormLoad}
-                                                        onsubmit={handleApply}>
-                            <lightning-messages class="formMessages">
-                            </lightning-messages>
+            <!-- SEARCH FORM DISPLAY -->
+            <template lwc:if={searchForm}>
+                <div class={searchFormClass}>
+                    <lightning-record-edit-form object-api-name={searchForm.objectApiName}
+                                                record-type-id={searchForm.recordTypeId}
+                                                onload={handleFormLoad}
+                                                onsubmit={handleApply}>
+                        <lightning-messages class="formMessages">
+                        </lightning-messages>
                     
-                            <lightning-layout   multiple-rows="true"  vertical-align="stretch"
-                                                pull-to-boundary="small" >
-                                <template for:each={searchForm.fields} for:item="iterForm">
-                                    <lightning-layout-item  key={iterForm.name}
-                                                            size="12"   large-device-size={iterForm.size}
-                                                            padding="horizontal-small"> 
-                                        <lightning-input-field  field-name={iterForm.name}
-                                                                required={iterForm.required}
-                                                                disabled={iterForm.disabled}
-                                                                variant="label-stacked"
-                                                                value={iterForm.value}>
-                                        </lightning-input-field>
-                                    </lightning-layout-item>
-                                </template>
-                            </lightning-layout>
+                        <lightning-layout   multiple-rows="true"  vertical-align="stretch"
+                                            pull-to-boundary="small" >
+                            <template for:each={searchForm.fields} for:item="iterForm">
+                                <lightning-layout-item  key={iterForm.name}
+                                                        size="12"   large-device-size={iterForm.size}
+                                                        padding="horizontal-small"> 
+                                    <lightning-input-field  field-name={iterForm.name}
+                                                            required={iterForm.required}
+                                                            disabled={iterForm.disabled}
+                                                            variant="label-stacked"
+                                                            value={iterForm.value}>
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                            </template>
+                        </lightning-layout>
                     
-                            <div class="slds-align_absolute-center slds-m-vertical_small">
-                                <lightning-button   variant="brand"     type="submit"
-                                                    label={applyButton} disabled={applyDisabled} >
-                                </lightning-button>
-                            </div>
-                        </lightning-record-edit-form>
-                    </div>
-                </template>
+                        <div class="slds-align_absolute-center">
+                            <lightning-button   variant="brand"     type="submit"
+                                                label={applyButton} disabled={applyDisabled} >
+                            </lightning-button>
+                        </div>
+                    </lightning-record-edit-form>
+                </div>
+            </template>
             
-                <!-- RESULT LIST DISPLAY -->
-                 <!-- card-icon="utility:table" -->
-                <c-sfpeg-list-cmp   lwc:ref="listLoader"
+            <!-- RESULT LIST DISPLAY -->
+            <!-- card-icon="utility:table" -->
+            <c-sfpeg-list-cmp   lwc:ref="listLoader"
                                     object-api-name={objectApiName}
                                     record-id={recordId}
                                     card-title={resultsTitle}
-                                    card-class="slds-border_top slds-var-m-top_small slds-var-p-top_small"
+                                    card-class={listCardClass}
                                     display-height={displayHeight}
                                     button-size={buttonSize}
                                     show-search={showSearch}
@@ -59,8 +58,7 @@
                                     onload={handleRecordLoad}
                                     is-debug={isDebug}
                                     is-debug-fine={isDebugFine}>
-                </c-sfpeg-list-cmp>
-            </div>
+            </c-sfpeg-list-cmp>
 
             <!-- DEBUG INFO DISPLAY -->
             <template lwc:if={isDebug}>

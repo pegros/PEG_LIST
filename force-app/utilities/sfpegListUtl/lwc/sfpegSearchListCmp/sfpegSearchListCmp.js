@@ -75,6 +75,9 @@ export default class SfpegSearchListCmp extends LightningElement {
     searchForm;
     queryContext;   //queryContext
 
+    searchFormClass;
+    listCardClass;
+
     //----------------------------------------------------------------
     // Custom Getters
     //----------------------------------------------------------------
@@ -91,9 +94,17 @@ export default class SfpegSearchListCmp extends LightningElement {
     get searchFormFields() {
         return JSON.stringify(this.searchForm?.fields);
     }
+    get searchFormClass() {
+        return (this.cardClass.includes('slds-card_boundary') ? "slds-var-p-horizontal_small" : '');
+    }
+    get listCardClass() {
+        return "slds-border_top slds-var-m-top_small slds-var-p-top_small";
+    }
     get configUrl() {
         return (this.configDetails?.id ? '/lightning/setup/CustomMetadata/page?address=%2F' + this.configDetails?.id : '#');
     }
+
+
     
     //----------------------------------------------------------------
     // Initialization
@@ -103,8 +114,20 @@ export default class SfpegSearchListCmp extends LightningElement {
             console.log('connected: START SearchList ',this.popupLabel);
             console.log('connected: searchForm ',JSON.stringify(this.searchForm));
             console.log('connected: resultsConfig ',JSON.stringify(this.resultsConfig));
-            console.log('connected: END SearchList');
         }
+
+        if (this.cardClass.includes('slds-card_boundary')) {
+            if (this.isDebug) console.log('connected: handling card with boundary');
+            this.searchFormClass = "slds-var-p-horizontal_small"
+            this.listCardClass = 'slds-border_top slds-var-m-top_small sfpegNoTableRadius';
+        }
+        else {
+            if (this.isDebug) console.log('connected: handling card without boundary');
+            this.searchFormClass = 'slds-box slds-box_small';
+            this.listCardClass = "slds-var-m-top_small"
+        }
+
+        if (this.isDebug) console.log('connected: END SearchList');
     }
 
     renderedCallback(event){

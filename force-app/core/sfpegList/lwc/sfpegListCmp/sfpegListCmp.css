@@ -72,7 +72,7 @@
 .sfpegTable {
     --slds-c-button-line-height : 1rem !important;
 }
-.slds-card_boundary .sfpegTable {
+.slds-card_boundary .sfpegTable, .sfpegNoTableRadius .sfpegTable {
     --_slds-c-datatable-radius-border: 0 !important;
 }
 .showTopBorder {

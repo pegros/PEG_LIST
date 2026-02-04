@@ -1,5 +1,6 @@
 <template>
     <template lwc:if={isInitDone}>
+        <div class={cardClass}>
         <!-- icon-name="utility:filterList" -->
         <lightning-card title={cardTitle} >
             <!-- Main Card Actions -->
@@ -226,5 +227,6 @@
                 </lightning-spinner>
             </template>
         </lightning-card>
+        </div>
     </template>
 </template>

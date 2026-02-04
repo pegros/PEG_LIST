@@ -1,44 +1,41 @@
 <template>
     <div class={cardClass} >
         <lightning-card title={cardTitle} icon-name={cardIcon}>
-            <div class="slds-var-p-horizontal_x-small">
 
-                <!-- FILTER FORM DISPLAY -->
-                <template lwc:if={filterForm}>
-                    <div class="slds-m-bottom_small">
-                        <c-sfpeg-multiple-filters   card-title={filterTitle}
-                                                    columns={filterForm}
-                                                    records={resultList}
-                                                    column-number={columnNumber}
-                                                    has-padding={hasFilterPadding}
-                                                    is-expanded={isFilterExpanded}
-                                                    is-debug={isDebugFine}
-                                                    onfilterchange={handleApply}>
-                        </c-sfpeg-multiple-filters>
-                    </div>
-                </template>
+            <!-- FILTER FORM DISPLAY -->
+            <template lwc:if={filterForm}>
+                <c-sfpeg-multiple-filters   card-title={filterTitle}
+                                            card-class={filterCardClass}
+                                            columns={filterForm}
+                                            records={resultList}
+                                            column-number={columnNumber}
+                                            has-padding={hasFilterPadding}
+                                            is-expanded={isFilterExpanded}
+                                            is-debug={isDebugFine}
+                                            onfilterchange={handleApply}>
+                </c-sfpeg-multiple-filters>
+            </template>
             
-                <!-- RESULT LIST DISPLAY -->
-                <!-- card-icon="utility:table" -->
-                <c-sfpeg-list-cmp   lwc:ref="listLoader"
-                                    object-api-name={objectApiName}
-                                    record-id={recordId}
-                                    card-title={resultsTitle}
-                                    card-class="slds-border_top slds-var-m-top_small slds-var-p-top_small"
-                                    display-height={displayHeight}
-                                    button-size={buttonSize}
-                                    show-export={showExport}
-                                    max-size={maxSize}
-                                    config-name={configName}
-                                    action-config-name={actionConfigName}
-                                    footer-config-name={footerConfigName}
-                                    context-string={contextString}
-                                    onload={handleRecordLoad}
-                                    filter-records={multipleFilterRecords}
-                                    is-debug={isDebug}
-                                    is-debug-fine={isDebugFine}>
-                </c-sfpeg-list-cmp>
-            </div>
+            <!-- RESULT LIST DISPLAY -->
+            <!-- card-icon="utility:table" -->
+            <c-sfpeg-list-cmp   lwc:ref="listLoader"
+                                object-api-name={objectApiName}
+                                record-id={recordId}
+                                card-title={resultsTitle}
+                                card-class={listCardClass}
+                                display-height={displayHeight}
+                                button-size={buttonSize}
+                                show-export={showExport}
+                                max-size={maxSize}
+                                config-name={configName}
+                                action-config-name={actionConfigName}
+                                footer-config-name={footerConfigName}
+                                context-string={contextString}
+                                onload={handleRecordLoad}
+                                filter-records={multipleFilterRecords}
+                                is-debug={isDebug}
+                                is-debug-fine={isDebugFine}>
+            </c-sfpeg-list-cmp>
 
             <!-- DEBUG INFO DISPLAY -->
             <template lwc:if={isDebug}>
