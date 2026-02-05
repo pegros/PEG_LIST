@@ -181,6 +181,8 @@ export default class SfpegListCmp extends LightningElement {
     //SLDS V2 detector for border on card header (V1 only)
     isSldsV2 = false;
 
+    actionFooterClass;
+
     //Widget Labels & Titles from custom labels
     refreshTitle = REFRESH_LABEL;
     filterTitle = FILTER_LABEL;
@@ -256,7 +258,7 @@ export default class SfpegListCmp extends LightningElement {
             if (this.configDetails.type?.includes('List')) {
                 returnClass = returnClass + ' slds-var-p-horizontal_small'
                             + (((this.displayHeight) &&  (this.displayHeight !== '0')) ? ' slds-scrollable_y' : '')
-                            + ((this.configDetails.display.variant === 'timeline') ? ' slds-var-p-top_x-small slds-var-p-bottom_large' : ' slds-var-p-vertical_small');
+                            + ((this.configDetails.display.variant === 'timeline') ? ' slds-var-p-top_x-small slds-var-p-bottom_large' : ' slds-var-p-vertical_small2');
             }
             else {
                 returnClass = returnClass + (this.isSldsV2 ? '' : ' showTopBorder');
@@ -420,6 +422,15 @@ export default class SfpegListCmp extends LightningElement {
             console.log('connected: formfactor provided ',this.formfactor);
         }
         
+        if (this.isDebug) console.log('connected: cardClass provided ',this.cardClass);
+        if (this.cardClass?.includes('slds-card_boundary')) {
+            this.actionFooterClass = 'slds-border_top slds-var-p-top_small slds-align_absolute-center actionFooter';
+        }
+        else {
+            this.actionFooterClass = 'slds-align_absolute-center actionFooter';
+        }
+        if (this.isDebug) console.log('connected: actionFooterClass init ',this.actionFooterClass);
+
         //this.errorMsg = 'Component initialized.';
 
         if (this.isReady) {
@@ -543,11 +554,11 @@ export default class SfpegListCmp extends LightningElement {
 
         if (v1OnlyToken) {
             this.isSldsV2 = false;
-            console.log('rendered: Environment is in SLDS v1');
+            if (this.isDebug) console.log('rendered: Environment is in SLDS v1');
         }
         else {
             this.isSldsV2 = true;
-            console.log('rendered: Environment is in SLDS v2');
+            if (this.isDebug) console.log('rendered: Environment is in SLDS v2');
         }
 
         if (this.isDebug) console.log('rendered: END');

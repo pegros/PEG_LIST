@@ -37,8 +37,10 @@
     word-break: break-word;
 }
 .actionFooter {
-    padding-top: var(--lwc-varSpacingVerticalXSmall);
-    padding-bottom: var(--lwc-varSpacingVerticalXSmall);
+    /*padding-top: 0;*/
+    /*padding-top: var(--lwc-varSpacingVerticalXSmall);*/
+    padding-bottom: 0;
+    /*padding-bottom: var(--lwc-varSpacingVerticalXSmall);*/
     padding-left: var(--lwc-varSpacingVerticalXxSmall);
     padding-right: var(--lwc-varSpacingVerticalXxSmall);
     width:100%;

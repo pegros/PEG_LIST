@@ -262,7 +262,7 @@
             <!-- Footer Display -->
             <!-- Fake action footer for CSS issues -->
             <template lwc:if={hasActionFooter}>
-                <div class="slds-border_top slds-align_absolute-center actionFooter">
+                <div class={actionFooterClass}>
                     <!-- Pagination Control -->
                     <template lwc:if={showPagination}>
                         <lightning-button-group>

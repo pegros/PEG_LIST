@@ -118,8 +118,8 @@ export default class SfpegFilterListCmp extends LightningElement {
 
         if (this.cardClass.includes('slds-card_boundary')) {
             if (this.isDebug) console.log('connected: handling card with boundary');
-            this.filterCardClass = "sfpegNoBoxRadius"
-            this.listCardClass = 'slds-border_top sfpegNoTableRadius';
+            this.filterCardClass = "slds-border_bottom sfpegNoBoxRadius"
+            this.listCardClass = 'sfpegNoTableRadius';
         }
         else {
             if (this.isDebug) console.log('connected: handling card without boundary');
