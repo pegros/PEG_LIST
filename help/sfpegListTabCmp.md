@@ -6,7 +6,6 @@ of the **[PEG_LIST](/README.md)** repository.
 ⚠️ This page applies to the most recent (unlocked) packaging of the **PEG_LIST** repository.
 It is not available on the old **[v0](https://github.com/pegros/PEG_LIST/tree/v0)** version.
 
-
 ## Introduction
 
 The **sfpegListTabCmp** addressable component enables to display the **[sfpegListCmp](/help/sfpegListCmp.md)**
@@ -14,49 +13,48 @@ list component within a dedicated independent tab. Among others, it enables to m
 footer actions on related lists and redirect the user from a short and narrow related list to a wide
 and more exhaustive table display of the same related list.
 
-![sfpegListTabCmp Display](/media/sfpegListTabCmp.md)
-
+![sfpegListTabCmp Display](/media/sfpegListTabCmp.png)
 
 🚨 Because of a Lightning page context initialization issue in console
 mode with _pinned_ Lightning Page Layouts, a **sfpegListConsoleTabCmp** wrapper
 component is also provided and should be used preferrably in such use cases.
 
-
 ## Component Configuration
 
-ℹ️ Please refer to the [Component Configuration](/help/configuration.md) dedicated page to 
-get more general information about the way the included components may be configured. 
+ℹ️ Please refer to the [Component Configuration](/help/configuration.md) dedicated page to
+get more general information about the way the included components may be configured.
 
 It may not be included directly in any Lightning page from the **App Builder** (or **Site Builder**)
-but should be opened e.g. by leveraging *navigation* actions of the  **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**
+but should be opened e.g. by leveraging _navigation_ actions of the **[sfpegActionBarCmp](/help/sfpegActionBarCmp.md)**
 component (using a [page reference](https://developer.salesforce.com/docs/platform/lwc/guide/reference-page-reference-type.html) of `standard__component` type).
 
-This addressable component provides the following properties to be set in the page `state` at 
+This addressable component provides the following properties to be set in the page `state` at
 navigation:
-* `c__list`: Developer name of the **sfpegList__mdt** custom metadata record to be used to fetch
-the and display the records in the **sfpegListCmp** component
-* `c__actions`: Developer name of the **sfpegAction__mdt** custom metadata record to be used as
-header actions of the **sfpegListCmp** component
-* `c__label`: Label to be set on the adressable component tab
-* `c__title`: Title to be set on the card wrapping the list
-* `c__icon`: Icon name (SLDS) to be set on the card wrapping the list and as tab icon
-* `c__icon`: Icon name (SLDS) to be set on the card wrapping the list
-* `c__recordId`: Id of the record to be provided as input to contextualise the list query
-* `c__objectApiName`: API Name of the record to be provided as input to contextualise to the list query
-* `c__showSearch`: Boolean flag to display search button in the **sfpegListCmp** component
-* `c__showExport`: Boolean flag to display export button in the **sfpegListCmp** component
-* `c__displayHeight`: Display height to apply on the **sfpegListCmp** component to trigger scrollbar
-* `c__buttonSize`: SLDS size of the header buttons on the **sfpegListCmp** component
-* `c__contextString`: custom context to be provided as input to contextualise to the list query
-* `c__isDebug`: Flag to set the component in debug mode
 
+- `c__list`: Developer name of the **sfpegList\_\_mdt** custom metadata record to be used to fetch
+  the and display the records in the **sfpegListCmp** component
+- `c__actions`: Developer name of the **sfpegAction\_\_mdt** custom metadata record to be used as
+  header actions of the **sfpegListCmp** component
+- `c__label`: Label to be set on the adressable component tab
+- `c__title`: Title to be set on the card wrapping the list
+- `c__icon`: Icon name (SLDS) to be set on the card wrapping the list and as tab icon
+- `c__icon`: Icon name (SLDS) to be set on the card wrapping the list
+- `c__recordId`: Id of the record to be provided as input to contextualise the list query
+- `c__objectApiName`: API Name of the record to be provided as input to contextualise to the list query
+- `c__showSearch`: Boolean flag to display search button in the **sfpegListCmp** component
+- `c__showExport`: Boolean flag to display export button in the **sfpegListCmp** component
+- `c__displayHeight`: Display height to apply on the **sfpegListCmp** component to trigger scrollbar
+- `c__buttonSize`: SLDS size of the header buttons on the **sfpegListCmp** component
+- `c__contextString`: custom context to be provided as input to contextualise to the list query
+- `c__isDebug`: Flag to set the component in debug mode
 
 ## Configuration Examples
 
 ### List Tab Opening
 
-A standard **sfpegAction** configuration to open a new **sfpegListTabCmp** 
+A standard **sfpegAction** configuration to open a new **sfpegListTabCmp**
 tab is the following:
+
 ```
 {
     "name": "ViewAll",
@@ -91,11 +89,10 @@ tab is the following:
 `c__sfpegListConsoleTabCmp` LWC component name instead of `c__sfpegListTabCmp`
 to avoid any rendering issue.
 
-
 ### Back to Original Tab
 
-A standard **sfpegAction** configuration to use in a **sfpegListTabCmp** 
-header to navigate back to the source record page (especially when in 
+A standard **sfpegAction** configuration to use in a **sfpegListTabCmp**
+header to navigate back to the source record page (especially when in
 standard mode) is the following:
 
 ```
@@ -116,7 +113,6 @@ standard mode) is the following:
 }
 ```
 
-
 ## Technical Details
 
 This component implements the standard LWC **[Addressable](https://developer.salesforce.com/docs/platform/lwc/guide/use-navigate-url-addressable.html?q=lightning__UrlAddressable)** target.
@@ -134,5 +130,5 @@ workaround has been implemented in the **sfpegListConsoleTabCmp**
 component (wrapping the **sfpegListTabCmp** one and delaying its
 rendering by 500ms).
 
-ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to 
+ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to
 get more global information about the way the components have been implemented.
