@@ -150,23 +150,23 @@ The **Display** section defines how data are displayed in the component:
   the JSON display configuration of the standard
   [lightning-datatable](https://developer.salesforce.com/docs/component-library/bundle/lightning-datatable/documentation) and
   [lightning-tree-grid](https://developer.salesforce.com/docs/component-library/bundle/lightning-tree-grid/documentation) base components.
-  _ This is especially applicable to the *columns* property
-  _ Additional root properties have been added for the _CardList_ and _TileList_ modes to tune their specific layouts
-  _ `title` and `icon` to configure the title and optional icon for each tile displayed in these modes,
-  icon name being either static (by providing a `name` property) or dynamic (by providing a `fieldName` property,
-  this field containing the actual icon name to be used)
-  _ `cardNbr` and `fieldNbr` to respectively set the number per row of tiles and fields (within a tile,
-  if _CardList_ mode is used)
-  _ An optional `menu` property describing the row action menu (`name`, `label` and optional `icon` of each menu
-  item) to be displayed in each tile / at the end of each *DataTable*/*TreeGrid* row (see `Row Actions` below).
-  _ An optional `variant` property enables to alter the display of the tiles
-  _ For now, two values are available, i.e. *base* for default tile box display or *timeline* for timeline like display (no box, vertical grey border under the icon)
-  _ An optional `details` property enabling to set a second list of fields (similar to the `columns` one)
-  _ setting this property activates an expand/collapse on the tile content
-  _ when expanded, the fields of this list are displayed below the main ones in a _cardList_ mode
-  _ An optional `expandAll` property enabling to force all rows of a *TreeGrid* to be fully expanded by default.
-  _ An optional `stacked` property enabling to enforce a stacked field display (with labels above values)
-  for `details` and `columns` fields (when in _cardList_ mode for the second)
+  - This is especially applicable to the _columns_ property
+  - Additional root properties have been added for the _CardList_ and _TileList_ modes to tune their specific layouts
+  - `title` and `icon` to configure the title and optional icon for each tile displayed in these modes,
+    icon name being either static (by providing a `name` property) or dynamic (by providing a `fieldName` property,
+    this field containing the actual icon name to be used)
+  - `cardNbr` and `fieldNbr` to respectively set the number per row of tiles and fields (within a tile,
+    if _CardList_ mode is used)
+  - An optional `menu` property describing the row action menu (`name`, `label` and optional `icon` of each menu
+    item) to be displayed in each tile / at the end of each _DataTable_/_TreeGrid_ row (see `Row Actions` below).
+  - An optional `variant` property enables to alter the display of the tiles
+  - For now, two values are available, i.e. _base_ for default tile box display or _timeline_ for timeline like display (no box, vertical grey border under the icon)
+  - An optional `details` property enabling to set a second list of fields (similar to the `columns` one)
+    - setting this property activates an expand/collapse on the tile content
+    - when expanded, the fields of this list are displayed below the main ones in a _cardList_ mode
+    - An optional `expandAll` property enabling to force all rows of a _TreeGrid_ to be fully expanded by default.
+  - An optional `stacked` property enabling to enforce a stacked field display (with labels above values)
+    for `details` and `columns` fields (when in _cardList_ mode for the second)
 - `Flatten Results?` to activate fetched data JSON structure **_flattening_** in order to let related record data being
   properly displayed within _DataTable_ or _TreeGrid_ components (which do not support displaying data from JSON sub-objects,
   as when related record fields are fetched)
