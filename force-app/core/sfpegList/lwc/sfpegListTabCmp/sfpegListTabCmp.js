@@ -52,6 +52,7 @@ export default class SfpegListTabCmp extends LightningElement {
 	// Internal state
 	pageStateContext;       // JSON string of last processed state to avoid loops
 	errorMsg;               // Error message for template display
+	isReady = false;
 
 	// Console context
 	@wire(IsConsoleNavigation) isConsoleNavigation;
@@ -87,27 +88,36 @@ export default class SfpegListTabCmp extends LightningElement {
 			return;
 		}
 
-		this.actions = state.c__actions || 'N/A';
-		this.title = state.c__title || 'Record List';
-		this.icon = state.c__icon || 'utility:list';
-		this.recordId = state.c__recordId;
-		this.objectApiName = state.c__objectApiName;
-		this.showSearch = state.c__showSearch ? (String(state.c__showSearch).toLowerCase() === 'true') : true;
-		this.showExport = state.c__showExport ? (String(state.c__showExport).toLowerCase() === 'true') : false;
-		this.displayHeight = state.c__displayHeight || '0';
-		this.buttonSize = state.c__buttonSize || 'small';
-		this.contextString = state.c__contextString;
-		this.label = state.c__label || this.label;
+		this.isReady = false;
+		setTimeout(() => {
+            if(this.isDebug) console.log('parseState: timer expired');
+            
+			this.actions = state.c__actions || 'N/A';
+			this.title = state.c__title || 'Record List';
+			this.icon = state.c__icon || 'utility:list';
+			this.recordId = state.c__recordId;
+			this.objectApiName = state.c__objectApiName;
+			this.showSearch = state.c__showSearch ? (String(state.c__showSearch).toLowerCase() === 'true') : true;
+			this.showExport = state.c__showExport ? (String(state.c__showExport).toLowerCase() === 'true') : false;
+			this.displayHeight = state.c__displayHeight || '0';
+			this.buttonSize = state.c__buttonSize || 'small';
+			this.contextString = state.c__contextString;
+			this.label = state.c__label || this.label;
 
-		this.pageStateContext = stateJson;
-		if (this.isDebug) console.log('parseState: properties set');
+			this.pageStateContext = stateJson;
+			if (this.isDebug) console.log('parseState: properties set');
 
-		// Tab label/icon updates (console only) if label provided
-		if (this.isConsoleNavigation) {
-			if (this.isDebug) console.log('parseState: updating tab content in console');
-			this.updateTabLabelAndIcon();
-		}
-		if (this.isDebug) console.log('parseState: END ListTab');
+			// Tab label/icon updates (console only) if label provided
+			if (this.isConsoleNavigation) {
+				if (this.isDebug) console.log('parseState: updating tab content in console');
+				this.updateTabLabelAndIcon();
+			}
+			if(this.isDebug) console.log('parseState: (re)rendering list');
+			this.isReady = true;
+
+			if (this.isDebug) console.log('parseState: END ListTab');
+        }, 100);
+        if(this.isDebug) console.log('parseState: forcing list unrendering');
 	}
 
 	updateTabLabelAndIcon() {

@@ -1,9 +1,9 @@
 <template>
-	<template if:true={errorMsg}>
+	<template lwc:if={errorMsg}>
 		<c-sfpeg-warning-dsp message={errorMsg} variant="error">
         </c-sfpeg-warning-dsp>
 	</template>
-	<template if:false={errorMsg}>
+	<template lwc:elseif={isReady}>
 		<c-sfpeg-list-cmp
 			card-title={title}
 			card-icon={icon}
