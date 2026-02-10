@@ -149,18 +149,17 @@ The **Display** section defines how data are displayed in the component:
 - `Display Configuration` to define how data are displayed, as a single JSON object structure leveraging (and extending)
   the JSON display configuration of the standard
   [lightning-datatable](https://developer.salesforce.com/docs/component-library/bundle/lightning-datatable/documentation) and
-  [lightning-tree-grid](https://developer.salesforce.com/docs/component-library/bundle/lightning-tree-grid/documentation) base components.
-  - This is especially applicable to the _columns_ property
+  [lightning-tree-grid](https://developer.salesforce.com/docs/component-library/bundle/lightning-tree-grid/documentation) base components. This is especially applicable to their `columns` property.
   - Additional root properties have been added for the _CardList_ and _TileList_ modes to tune their specific layouts
-  - `title` and `icon` to configure the title and optional icon for each tile displayed in these modes,
-    icon name being either static (by providing a `name` property) or dynamic (by providing a `fieldName` property,
-    this field containing the actual icon name to be used)
-  - `cardNbr` and `fieldNbr` to respectively set the number per row of tiles and fields (within a tile,
-    if _CardList_ mode is used)
+    - `title` and `icon` to configure the title and optional icon for each tile displayed in these modes,
+      icon name being either static (by providing a `name` property) or dynamic (by providing a `fieldName` property,
+      this field containing the actual icon name to be used)
+    - `cardNbr` and `fieldNbr` to respectively set the number per row of tiles and fields (within a tile,
+      if _CardList_ mode is used)
   - An optional `menu` property describing the row action menu (`name`, `label` and optional `icon` of each menu
     item) to be displayed in each tile / at the end of each _DataTable_/_TreeGrid_ row (see `Row Actions` below).
   - An optional `variant` property enables to alter the display of the tiles
-  - For now, two values are available, i.e. _base_ for default tile box display or _timeline_ for timeline like display (no box, vertical grey border under the icon)
+    - For now, two values are available, i.e. _base_ for default tile box display or _timeline_ for timeline like display (no box, vertical grey border under the icon)
   - An optional `details` property enabling to set a second list of fields (similar to the `columns` one)
     - setting this property activates an expand/collapse on the tile content
     - when expanded, the fields of this list are displayed below the main ones in a _cardList_ mode
