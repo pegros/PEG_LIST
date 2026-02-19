@@ -188,8 +188,7 @@ export default class SfpegSearchListCmp extends LightningElement {
         }
         if (this.orderOptions) {
             this.queryContext = this.queryContext || {};
-            this.queryContext.OrderBy = this.refs.orderBySelector.value;
-            this.queryContext.OrderDir = this.refs.orderDirSelector.value;
+            this.queryContext.OrderBy = this.refs.orderBySelector.value + ' ' + this.refs.orderDirSelector.value;
             if (this.isDebug) console.log('handleApply: queryContext updated with order ',JSON.stringify(this.queryContext));
         }
         if (this.isDebug) console.log('handleApply: END SearchList');

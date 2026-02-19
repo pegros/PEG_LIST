@@ -51,7 +51,8 @@ properties:
 - `sort` (optional): activation and configuration of the available sort
   options as a JSON object with the following sub-properties:
   _ `options`: list of available sort field options as a JSON list of
-  `{"label":"fieldLabel","value":"fieldApiName"}` items.
+  `{"label":"fieldLabel","value":"fieldApiName"}` items (lookup relationships
+  being supported as API Name, e.g. `LatestPublishedVersion.LastModifiedDate`)
   _ `default` (optional): configuration of the default sort preference (if any)
   as a JSON object with:
   _ `field` (optional): API name of the default sorting field (the first option
@@ -64,11 +65,9 @@ the search form input field values being pushed into the `Query Input`
 property of the **sfpegList** metadata record via the **CTX** tokens
 (see also **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** utility).
 
-ℹ️ When sorting is activated, the current selections are provided
-respectively in the `CTX.OrderBy` and `CTX.OrderDir` tokens.
-Beware that the selected field API name may correspond to any
-field managed in your query, meaning that lookup relationships
-are supported (e.g. `Owner.Name`).
+ℹ️ When sorting is activated, the current active selection is provided
+in the `CTX.OrderBy` token (with value like `Name ASC`) to be merged in the query
+statement.
 
 ## Configuration Examples
 
@@ -246,8 +245,7 @@ should be done e.g. as follows:
     "REG":"{{{CTX.Region__c}}}",
     "DPT":"{{{CTX.Departement__c}}}",
     "NAME":"{{{CTX.Name}}}",
-    "ORDER":"{{{CTX.OrderBy}}}",
-    "DIR":"{{{CTX.OrderDir}}}"
+    "ORDER":"{{{CTX.OrderBy}}}"
 }
 ```
 
@@ -257,7 +255,7 @@ should be done e.g. as follows:
 ```
 {
     "soql": {
-        "select": "SELECT CodeINSEE__c, CodePostal__c , Name, TOLABEL(Region__c), TOLABEL(Departement__c) FROM Commune__c {{{CLAUSE}}} ORDER BY {{{ORDER}}} {{{DIR}}} LIMIT 5000",
+        "select": "SELECT CodeINSEE__c, CodePostal__c , Name, TOLABEL(Region__c), TOLABEL(Departement__c) FROM Commune__c {{{CLAUSE}}} ORDER BY {{{ORDER}}} LIMIT 5000",
         "where": {
             "CLAUSE": {
                 "AND": [
