@@ -1,0 +1,7 @@
+lightning-card {
+    --slds-c-card-body-spacing-inline-start: 0px;
+}
+.sfpegSelector {
+    height: 32px;
+    --slds-s-input-spacing: 16px;
+}

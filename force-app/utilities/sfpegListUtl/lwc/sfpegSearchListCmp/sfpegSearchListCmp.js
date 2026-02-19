@@ -33,6 +33,16 @@ import { LightningElement, api } from 'lwc';
 
 import APPLY_BUTTON     from '@salesforce/label/c.sfpegSearchListApply';
 import RESULTS_TITLE    from '@salesforce/label/c.sfpegSearchListResults';
+import ORDER_FLD_SELECT from '@salesforce/label/c.sfpegSearchListOrderSelect';
+import ORDER_DIR_SELECT from '@salesforce/label/c.sfpegSearchListDirectionSelect';
+import ORDER_ASC        from '@salesforce/label/c.sfpegSearchListOrderAscending';
+import ORDER_DESC       from '@salesforce/label/c.sfpegSearchListOrderDescending';
+
+
+const ORDER_OPTIONS = [
+    {label:ORDER_ASC,value:"ASC"},
+    {label:ORDER_DESC,value:"DESC"}
+]
 
 export default class SfpegSearchListCmp extends LightningElement {
 
@@ -65,6 +75,8 @@ export default class SfpegSearchListCmp extends LightningElement {
     //----------------------------------------------------------------
     applyButton = APPLY_BUTTON;
     resultsTitle = RESULTS_TITLE;
+    orderFieldSelect = ORDER_FLD_SELECT; 
+    orderDirSelect = ORDER_DIR_SELECT; 
 
     //----------------------------------------------------------------
     // Internal technical properties
@@ -73,8 +85,11 @@ export default class SfpegSearchListCmp extends LightningElement {
     displayList = false;
     configDetails;
     searchForm;
+    orderOptions;
+    orderField;
+    orderDirections = ORDER_OPTIONS;
+    orderDir = 'ASC';
     queryContext;   //queryContext
-
     searchFormClass;
     listCardClass;
 
@@ -94,12 +109,12 @@ export default class SfpegSearchListCmp extends LightningElement {
     get searchFormFields() {
         return JSON.stringify(this.searchForm?.fields);
     }
-    get searchFormClass() {
+    /*get searchFormClass() {
         return (this.cardClass.includes('slds-card_boundary') ? "slds-var-p-horizontal_small" : '');
     }
     get listCardClass() {
         return "slds-border_top slds-var-m-top_small slds-var-p-top_small";
-    }
+    }*/
     get configUrl() {
         return (this.configDetails?.id ? '/lightning/setup/CustomMetadata/page?address=%2F' + this.configDetails?.id : '#');
     }
@@ -119,12 +134,12 @@ export default class SfpegSearchListCmp extends LightningElement {
         if (this.cardClass.includes('slds-card_boundary')) {
             if (this.isDebug) console.log('connected: handling card with boundary');
             this.searchFormClass = "slds-var-p-horizontal_small"
-            this.listCardClass = 'slds-border_top slds-var-m-top_small sfpegNoTableRadius';
+            this.listCardClass = 'slds-border_top slds-var-m-top_medium sfpegNoTableRadius';
         }
         else {
             if (this.isDebug) console.log('connected: handling card without boundary');
             this.searchFormClass = 'slds-box slds-box_small';
-            this.listCardClass = "slds-var-m-top_small"
+            this.listCardClass = "slds-var-m-top_large"
         }
 
         if (this.isDebug) console.log('connected: END SearchList');
@@ -168,7 +183,14 @@ export default class SfpegSearchListCmp extends LightningElement {
         if (this.isDebug) console.log('handleApply: details',JSON.stringify(event.detail));
         if (event.detail?.fields) {
             this.queryContext = event.detail.fields;
-            if (this.isDebug) console.log('handleApply: queryContext updated',JSON.stringify(this.queryContext));
+
+            if (this.isDebug) console.log('handleApply: queryContext updated with search ',JSON.stringify(this.queryContext));
+        }
+        if (this.orderOptions) {
+            this.queryContext = this.queryContext || {};
+            this.queryContext.OrderBy = this.refs.orderBySelector.value;
+            this.queryContext.OrderDir = this.refs.orderDirSelector.value;
+            if (this.isDebug) console.log('handleApply: queryContext updated with order ',JSON.stringify(this.queryContext));
         }
         if (this.isDebug) console.log('handleApply: END SearchList');
     }
@@ -192,7 +214,15 @@ export default class SfpegSearchListCmp extends LightningElement {
             });
             if (this.isDebug) console.log('initSearchForm: field sizes init');
         }
-        
+        if (this.searchForm?.sort) {
+            this.orderOptions = this.searchForm.sort.options;
+            if (this.isDebug) console.log('initSearchForm: sorting init',JSON.stringify(this.orderOptions));
+            this.orderField = this.searchForm.sort.default?.field || (this.orderOptions)[0].value;
+            if (this.isDebug) console.log('initSearchForm: orderField init',this.orderField);
+            this.orderDir = this.searchForm.sort.default?.direction || 'ASC';
+            if (this.isDebug) console.log('initSearchForm: orderDirection init',this.orderDir);
+        }
+
         if (this.isDebug) console.log('initSearchForm: END / searchForm init ',JSON.stringify(this.searchForm));
     }
 }

@@ -6,14 +6,13 @@ of the **[PEG_LIST](/README.md)** repository.
 ⚠️ This page applies to the most recent (unlocked) packaging of the **PEG_LIST** repository.
 Some features described here may thus not be available on the old **[v0](https://github.com/pegros/PEG_LIST/tree/v0)** version.
 
-
 ## Introduction
 
-The **sfpegSearchListCmp** LWC Component is a LWC wrapper of the standard 
-**[sfpegListCmp](/help/sfpegListCmp.md)** component and enables to set 
+The **sfpegSearchListCmp** LWC Component is a LWC wrapper of the standard
+**[sfpegListCmp](/help/sfpegListCmp.md)** component and enables to set
 a filtering context for such lists via a search form above a result list.
 
-Typical use cases is to implement a query page letting users set various 
+Typical use cases is to implement a query page letting users set various
 search criteria before displaying the matching list.
 
 At first, only the search form is displayed.
@@ -25,11 +24,10 @@ below the search form.
 
 ![sfpegSearchListCmp Completion](/media/sfpegSearchListCmp.png)
 
-
 ## Configuration
 
-ℹ️ Please refer to the [Component Configuration](/help/configuration.md) dedicated page to 
-get more general information about the way the included components may be configured. 
+ℹ️ Please refer to the [Component Configuration](/help/configuration.md) dedicated page to
+get more general information about the way the included components may be configured.
 
 This component has almost exactly the same configuration the as the
 **[sfpegListCmp](/help/sfpegListCmp.md)** component, the main difference lying
@@ -40,29 +38,48 @@ To define the set of fields to display in the search form, an additional
 `searchForm` property is added to define the record form used to enter
 criteria values. Such a property should be a JSON object including the following
 properties:
-* `objectApiName`: API Name of the object for which input fields are used
-* `recordTypeId`: (optional) record type ID to use (e.g. for picklist values filtering)
-* `size`: default size of each input field (6 corresponding to 50%, 12 to 100%)
-* `fields`: list of input fields to display as a JSON list of  field definitions with
-the following sub-properties:
-    * `name`: API name of the field to disply
-    * `required` (optional) boolean flag to set the input as required
-    * `disabled` (optional) boolean flag to set the input as disabled
-    * `size` to override the default input size.
+
+- `objectApiName`: API Name of the object for which input fields are used
+- `recordTypeId`: (optional) record type ID to use (e.g. for picklist values filtering)
+- `size`: default size of each input field (6 corresponding to 50%, 12 to 100%)
+- `fields`: list of input fields to display as a JSON list of field definitions with
+  the following sub-properties:
+  _ `name`: API name of the field to disply
+  _ `required` (optional): boolean flag to set the input as required
+  _ `disabled` (optional): boolean flag to set the input as disabled
+  _ `size`: to override the default input size.
+- `sort` (optional): activation and configuration of the available sort
+  options as a JSON object with the following sub-properties:
+  _ `options`: list of available sort field options as a JSON list of
+  `{"label":"fieldLabel","value":"fieldApiName"}` items.
+  _ `default` (optional): configuration of the default sort preference (if any)
+  as a JSON object with:
+  _ `field` (optional): API name of the default sorting field (the first option
+  being the default)
+  _ `direction` (optional): direction of the sort (ascending being the default)
 
 ℹ️ The search query is usually implemented by leveraging the
 **[sfpegSearch_SVC](/help/sfpegSearchQueries.md)** Query Extension,
 the search form input field values being pushed into the `Query Input`
-property of the **sfpegList** metadata record vie the **CTX** tokens
+property of the **sfpegList** metadata record via the **CTX** tokens
 (see also **[sfpegMergeUtl](/help/sfpegMergeUtl.md)** utility).
 
+ℹ️ When sorting is activated, the current selections are provided
+respectively in the `CTX.OrderBy` and `CTX.OrderDir` tokens.
+Beware that the selected field API name may correspond to any
+field managed in your query, meaning that lookup relationships
+are supported (e.g. `Owner.Name`).
 
-## Configuration Example
+## Configuration Examples
 
-For the example presented above, the configuration of the **sfpegList** custom metadate
-should be done e.g. as follows:
-* `Query Type` set as `Apex`
-* `Query Input` set as
+### Search List Without Sort
+
+For the example presented above, the configuration of the **sfpegList** custom metadata
+record should be done e.g. as follows:
+
+- `Query Type` set as `Apex`
+- `Query Input` set as
+
 ```
 {
     "TITLE":"{{{CTX.Name}}}",
@@ -70,15 +87,17 @@ should be done e.g. as follows:
     "COMMENT":"{{{CTX.Comment__c}}}"
 }
 ```
-* `Query Class` set as `sfpegSearch_SVC`
-* `Query Template` set as 
+
+- `Query Class` set as `sfpegSearch_SVC`
+- `Query Template` set as
+
 ```
 {
     "soql": {
         "select": "SELECT Id, Title, ContentSize, FileType, FileExtension,
-                    TOLABEL(LatestPublishedVersion.Type__c), LatestPublishedVersion.ContentSize, 
-                    LatestPublishedVersion.Comment__c, LatestPublishedVersion.LastModifiedDate, 
-                    LatestPublishedVersion.VersionNumber, LatestPublishedVersion.DocTypeIcon__c 
+                    TOLABEL(LatestPublishedVersion.Type__c), LatestPublishedVersion.ContentSize,
+                    LatestPublishedVersion.Comment__c, LatestPublishedVersion.LastModifiedDate,
+                    LatestPublishedVersion.VersionNumber, LatestPublishedVersion.DocTypeIcon__c
                     FROM ContentDocument {{{CLAUSE}}}
                     ORDER BY LatestPublishedVersion.LastModifiedDate desc",
         "where": {
@@ -93,9 +112,11 @@ should be done e.g. as follows:
     }
 }
 ```
-* `Display Type` set as `table`
-* `Flatten Results?` set as `true`
-* `Display Configuration` set as
+
+- `Display Type` set as `table`
+- `Flatten Results?` set as `true`
+- `Display Configuration` set as
+
 ```
 {
     "keyField": "Id",
@@ -132,10 +153,12 @@ should be done e.g. as follows:
     }
 }
 ```
-* `Display Configuration` set as `RelatedFilesRowActions`
+
+- `Display Configuration` set as `RelatedFilesRowActions`
 
 The r`RelatedFilesRowActions` ow action **sfpegAction** metadata record then contains
 the definition of the different actions mentioned in the menu and the title, e.g.
+
 ```
 [
     {   "name":"previewFile",
@@ -206,7 +229,89 @@ the definition of the different actions mentioned in the menu and the title, e.g
 ]
 ```
 
+### Search List With Sort
+
+In the example below, sorting selection is activated.
+
+![sfpegSearchListCmp With Sort](/media/sfpegSearchListCmpOrder.png)
+
+The configuration of the **sfpegList** custom metadata record
+should be done e.g. as follows:
+
+- `Query Type` set as `Apex`
+- `Query Input` set as
+
+```
+{
+    "REG":"{{{CTX.Region__c}}}",
+    "DPT":"{{{CTX.Departement__c}}}",
+    "NAME":"{{{CTX.Name}}}",
+    "ORDER":"{{{CTX.OrderBy}}}",
+    "DIR":"{{{CTX.OrderDir}}}"
+}
+```
+
+- `Query Class` set as `sfpegSearch_SVC`
+- `Query Template` set as
+
+```
+{
+    "soql": {
+        "select": "SELECT CodeINSEE__c, CodePostal__c , Name, TOLABEL(Region__c), TOLABEL(Departement__c) FROM Commune__c {{{CLAUSE}}} ORDER BY {{{ORDER}}} {{{DIR}}} LIMIT 5000",
+        "where": {
+            "CLAUSE": {
+                "AND": [
+                    {"EQ": {"field": "Departement__c","context": "DPT"}},
+                    {"EQ": {"field": "Region__c","context": "REG"}},
+                    {"LK": {"field": "Name","context": "NAME"}}
+                ]
+            }
+        }
+    }
+}
+```
+
+- `Display Type` set as `table`
+- `Flatten Results?` set as `false`
+- `Display Configuration` set as
+
+```
+{
+    "keyField":"Id",
+    "type":"Table",
+    "widthMode":"auto",
+    "columns": [
+        {"label":"Name", "fieldName": "Name", "type": "lookup", "sortable": "true",
+            "typeAttributes":{"lookup":{"fieldName": "Id"}}},
+        { "label": "INSEE", "fieldName": "CodeINSEE__c", "sortable": true},
+        { "label": "Postal", "fieldName": "CodePostal__c","sortable": true},
+        { "label": "Région", "fieldName": "Region__c","sortable": true},
+        { "label": "Département", "fieldName": "Departement__c","sortable": true}
+    ],
+    "searchForm": {
+        "objectApiName":"Commune__c",
+        "size":4,
+        "fields":[
+            {"name":"Name","label":"Nom commençant par...."},
+            {"name":"Region__c"},
+            {"name":"Departement__c"}
+        ],
+        "sort": {
+            "options": [
+                {"value":"Name","label":"Nom"},
+                {"value":"Departement__c","label":"Département"},
+                {"value":"Region__c","label":"Région"}
+            ],
+            "default": {
+                "field":"Departement__c",
+                "direction":"DESC"
+            }
+        }
+    }
+}
+```
+
 ## Technical Details
 
-ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to 
+ℹ️ Please refer to the [Technical Details](/help/technical.md) dedicated page to
 get more global information about the way the components have been implemented.

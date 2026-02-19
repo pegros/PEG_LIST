@@ -25,6 +25,38 @@
         <shortDescription>Header of the results list in the sfpegSearchListCmp</shortDescription>
         <value>Matching results found</value>
     </labels>
+    <labels>
+        <fullName>sfpegSearchListOrderSelect</fullName>
+        <categories>PEG Component LWC Selector Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label of the order selector in the sfpegSearchListCmp</shortDescription>
+        <value>Ordered by</value>
+    </labels>
+    <labels>
+        <fullName>sfpegSearchListDirectionSelect</fullName>
+        <categories>PEG Component LWC Selector Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label of the direction selector in the sfpegSearchListCmp</shortDescription>
+        <value>Direction</value>
+    </labels>
+    <labels>
+        <fullName>sfpegSearchListOrderAscending</fullName>
+        <categories>PEG Component LWC Value Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label of the ASC order value in the sfpegSearchListCmp</shortDescription>
+        <value>Ascending</value>
+    </labels>
+    <labels>
+        <fullName>sfpegSearchListOrderDescending</fullName>
+        <categories>PEG Component LWC Value Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label of the DESC order value in the sfpegSearchListCmp</shortDescription>
+        <value>Descending</value>
+    </labels>
 
     <labels>
         <fullName>sfpegFilterableListApply</fullName>

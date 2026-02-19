@@ -27,12 +27,34 @@
                                 </lightning-layout-item>
                             </template>
                         </lightning-layout>
-                    
-                        <div class="slds-align_absolute-center">
-                            <lightning-button   variant="brand"     type="submit"
-                                                label={applyButton} disabled={applyDisabled} >
-                            </lightning-button>
-                        </div>
+
+                        <lightning-layout multiple-rows="true"  horizontal-align="center" vertical-align="end">
+                            <template lwc:if={orderOptions}>
+                                <lightning-layout-item padding="horizontal-small">
+                                    <lightning-select   lwc:ref="orderBySelector"
+                                                        name="orderBySelector"
+                                                        value={orderField}
+                                                        label={orderFieldSelect}
+                                                        options={orderOptions}
+                                                        class="sfpegSelector">
+                                    </lightning-select>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="horizontal-small">
+                                    <lightning-select   lwc:ref="orderDirSelector"
+                                                        name="orderDirSelector"
+                                                        label={orderDirSelect}
+                                                        value={orderDir}
+                                                        options={orderDirections}
+                                                        class="sfpegSelector">
+                                    </lightning-select>
+                                </lightning-layout-item>
+                            </template>
+                            <lightning-layout-item padding="horizontal-small" class="slds-p-bottom_xxx-small">
+                                <lightning-button   variant="brand"     type="submit"
+                                                    label={applyButton} disabled={applyDisabled} >
+                                </lightning-button>
+                            </lightning-layout-item>
+                        </lightning-layout>
                     </lightning-record-edit-form>
                 </div>
             </template>
@@ -40,24 +62,24 @@
             <!-- RESULT LIST DISPLAY -->
             <!-- card-icon="utility:table" -->
             <c-sfpeg-list-cmp   lwc:ref="listLoader"
-                                    object-api-name={objectApiName}
-                                    record-id={recordId}
-                                    card-title={resultsTitle}
-                                    card-class={listCardClass}
-                                    display-height={displayHeight}
-                                    button-size={buttonSize}
-                                    show-search={showSearch}
-                                    show-export={showExport}
-                                    max-size={maxSize}
-                                    config-name={configName}
-                                    action-config-name={actionConfigName}
-                                    footer-config-name={footerConfigName}
-                                    parent-context={queryContext}
-                                    force-hidden={hideList}
-                                    disabled={applyDisabled}
-                                    onload={handleRecordLoad}
-                                    is-debug={isDebug}
-                                    is-debug-fine={isDebugFine}>
+                                object-api-name={objectApiName}
+                                record-id={recordId}
+                                card-title={resultsTitle}
+                                card-class={listCardClass}
+                                display-height={displayHeight}
+                                button-size={buttonSize}
+                                show-search={showSearch}
+                                show-export={showExport}
+                                max-size={maxSize}
+                                config-name={configName}
+                                action-config-name={actionConfigName}
+                                footer-config-name={footerConfigName}
+                                parent-context={queryContext}
+                                force-hidden={hideList}
+                                disabled={applyDisabled}
+                                onload={handleRecordLoad}
+                                is-debug={isDebug}
+                                is-debug-fine={isDebugFine}>
             </c-sfpeg-list-cmp>
 
             <!-- DEBUG INFO DISPLAY -->
