@@ -52,7 +52,7 @@ from **App Builder**, mostly directly derived from the underlying **lightning-ma
 
 These specific properties are highlighted in red in the snapshot below.
 
-![sfpegListMapCmp with selection](/media/sfpegListMap.png)
+![sfpegListMapCmp App Builder Configuration](/media/sfpegListMapConfig.png)
 
 ℹ️ The other properties are exactly those of the underlying **[sfpegListCmp](/help/sfpegListCmp.md)** component.
 
