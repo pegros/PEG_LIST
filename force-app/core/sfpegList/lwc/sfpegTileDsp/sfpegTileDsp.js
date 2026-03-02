@@ -49,6 +49,7 @@ export default class SfpegTileDsp extends LightningElement {
         //this.setAttribute('recordData', value);
         this._recordData = value;
         //if (this.isDebug) console.log('setRecordData: _recordData updated ', this._recordData);
+        //this.isDebug = true;
         this.resetDisplayData();
         //if (this.isDebug) console.log('setRecordData: END set ');
     }
@@ -155,14 +156,14 @@ export default class SfpegTileDsp extends LightningElement {
                 titleFieldName = this._recordData.NameField;
             }
             else if (this.configDetails.title.fieldName) {
-                if (this.isDebug) console.log('resetDisplayData: title field');
                 this.cardTitle = this._recordData[this.configDetails.title.fieldName];
+                if (this.isDebug) console.log('resetDisplayData: title field ',this.cardTitleLabel);
                 this.cardTitleLabel = this.configDetails.title.label;
                 titleFieldName = this.configDetails.title.fieldName;
             }
             else if (this.configDetails.title.label) {
-                if (this.isDebug) console.log('resetDisplayData: title label');
                 this.cardTitle = this.configDetails.title.label;
+                if (this.isDebug) console.log('resetDisplayData: title label ',this.cardTitle);
                 this.cardTitleLabel = null;
             }
             else {
@@ -170,8 +171,8 @@ export default class SfpegTileDsp extends LightningElement {
                 return;
             }
             if (this.configDetails.title.lookup) {
-                if (this.isDebug) console.log('resetDisplayData: title lookup');
                 this.cardTitleLookup = this._recordData[this.configDetails.title.lookup];
+                if (this.isDebug) console.log('resetDisplayData: title lookup ',this.cardTitleLookup);
             }
         }
         if (this.isDebug) console.log('resetDisplayData: card title init', this.cardTitle);

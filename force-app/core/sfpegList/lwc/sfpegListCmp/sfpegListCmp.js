@@ -1015,7 +1015,28 @@ export default class SfpegListCmp extends LightningElement {
     @api doFilter(filterString,filterScope) {
         if (this.isDebug) console.log('doFilter: START with filterString',filterString,'and filterScope', JSON.stringify(filterScope));
         this.filterString = filterString;
-        this.filterScope = filterScope;
+
+        if (typeof filterScope == 'string') {
+            if (this.isDebug) console.log('doFilter: setting standard filter scope');
+
+            let newScope = this.filterFields.find(item => item.fieldName === filterScope);                
+            if (this.isDebug) console.log('doFilter: filter scope reset',JSON.stringify(newScope));
+                    
+            if (!newScope) {
+                console.warn('doFilter: END / unavailable scope name',filterScope );
+                return;
+            }
+
+            this.filterScope = newScope;
+            this.filterFields.forEach(item => item.selected = (item.fieldName === filterScope));
+            if (this.isDebug) console.log('doFilter: filterFields updated ',JSON.stringify(this.filterFields));
+                
+            if (this.isDebug) console.log('handleActionDone: standard filter scope set');
+        }    
+        else {
+            if (this.isDebug) console.log('handleActionDone: custom filter scope set');
+            this.filterScope = filterScope;
+        }
         this.filterRecords();
         if (this.isDebug) console.log('doFilter: END');
     }

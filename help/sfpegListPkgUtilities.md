@@ -41,6 +41,9 @@ The package includes a small set of LWC Components:
   adding any **[sfpegSearchListCmp](/help/sfpegSearchListCmp.md)** in a Popup
 - the **[sfpegFilterableListCmp](/help/sfpegFilterableListCmp.md)** component providing richer
   filtering capabilities on the **[sfpegListCmp](/help/sfpegListCmp.md)**
+- the **[sfpegListMapCmp](/help/sfpegListMapCmp.md)** component displaying data from a
+  **[sfpegListCmp](/help/sfpegListCmp.md)** component in a standard Google Map based
+  **[lightning-map](https://developer.salesforce.com/docs/platform/lightning-component-reference/guide/lightning-map.html)**.
 
 It also provides various off-the-shelf **[Org Utilities](/help/sfpegListOrgUtilities.md)**
 consisting in a set of **sfpegList** configurations with underlying Apex extensions
@@ -88,7 +91,7 @@ Version content:
 - added tabs and pages for the **[Org Utilities](/help/sfpegListOrgUtilities.md)**
 - added the **[sfpegObjectKeys_SVC](/help/sfpegListOrgUtilities.md)** (and its **sfpegList** metadata record) for quick object identification from key prefix
 - fixed some display design issues on the **[sfpegOrgLimits_SVC](/help/sfpegListOrgUtilities.md)** Org utility
-- added the **[sfpegFilterableListCmp](/help/sfpegListOrgUtilities.md)** component for richer filtering capabilities
+- added the **[sfpegFilterableListCmp](/help/sfpegFilterableListCmp.md)** component for richer filtering capabilities
   within **sfpegListCmp** (with its **sfpegMultipleFilters** and **sfpegMultiSelectCombobox** sub-components)
 
 Install it:
@@ -96,3 +99,11 @@ Install it:
 - from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xJCNIA2) for production orgs,
 - from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xJCNIA2) for sandboxes,
 - or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xJCNIA2`
+
+### February 2025 - v1.3.0
+
+Version content:
+
+- added capability to select number of columns for the **[sfpegFilterableListCmp](/help/sfpegListOrgUtilities.md)**
+- added sorting selection capability to the **[sfpegSearchListCmp](/help/sfpegSearchListCmp.md)**
+- added new **[sfpegListMapCmp](/help/sfpegListMapCmp.md)** Map display component

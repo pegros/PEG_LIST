@@ -237,4 +237,22 @@
         <shortDescription>Alternative text for the spinner of sfpegMultipleFilters</shortDescription>
         <value>Processing...</value>
     </labels>
+
+    <labels>
+        <fullName>sfpegListMapNoLocation</fullName>
+        <categories>PEG Component LWC Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label displayed when no located record is available</shortDescription>
+        <value>No located record available.</value>
+    </labels>
+    <labels>
+        <fullName>sfpegListMapResultsTitle</fullName>
+        <categories>PEG Component LWC Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Card title displayed for the detailed results</shortDescription>
+        <value>Detailed Results</value>
+    </labels>
+    
 </CustomLabels>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SF PEG List Map</masterLabel>
+    <description>This component enables to display a list of records within a Map.</description>
+
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage,lightning__RecordPage">
+            <property name="cardTitle" label="Card Title" type="String" />
+            <property name="cardIcon" label="Card Icon" type="String"/>
+            <property name="cardClass" label="Card CSS Class" type="String" default="slds-card slds-card_boundary" description="CSS Classes for the wrapping card div"/>
+            <property name="mapHeight" label="Display Map height" type="String" description="Height in px/em... of the map display."/>
+            <property name="displayHeight" label="Display List height" type="String" description="Height in px/em... of the result list."/>
+            <property name="buttonSize" label="Button Size" type="String" datasource="x-small,small,medium" default="small" description="Size of the standard header buttons (to align with custom header actions)"/>
+
+            <property name="configName" label="Query Configuration" type="String" datasource="apex://sfpegListSelector_CTL" description="(Developer)Name of the Query Configuration record to be used (see sfpegList__mdt)."/>
+            <property name="actionConfigName" label="Header Action Configuration" type="String" datasource="apex://sfpegActionSelector_CTL" description="(Developer)Name of the Action Configuration record to be used in header (see sfpegAction__mdt)."/>
+            <property name="footerConfigName" label="Footer Action Configuration" type="String" datasource="apex://sfpegActionSelector_CTL" description="(Developer)Name of the Action Configuration record to be used in footer (see sfpegAction__mdt)."/>
+            
+            <property name="showExport" label="Show Export?" type="Boolean" default="false" description="Flag to show Export action in header."/>
+            <property name="maxSize" label="Max. #Actions Displayed" type="Integer" description="Max number of actions displayed before overflow in menu."/>
+
+            <property   name="mapLegend"
+                        label="Legend"
+                        type="String"
+                        description="Map legend" />
+
+            <property   name="listView"
+                        label="List View"
+                        type="String"
+                        default="hidden"
+                        datasource="visible,hidden,auto"
+                        description="Display mode for the address side list view" />
+
+            <property   name="draggable"
+                        label="Draggable?"
+                        type="Boolean"
+                        default="true"
+                        description="Enables dragging to pan the map with the mouse." />
+            <property   name="zoomControl"
+                        label="Zoom Control?"
+                        type="Boolean"
+                        default="true"
+                        description="Shows the +/- zoom controls." />
+            <property   name="scrollwheel"
+                        label="Scroll with Wheel?"
+                        type="Boolean"
+                        default="false"
+                        description="Permits zooming with the mouse wheel." />
+            <property   name="disableDefaultUI"
+                        label="Disable Default UI?"
+                        type="Boolean"
+                        default="false"
+                        description="Remove Map/Satellite and +/- zoom buttons." />
+            <property   name="disableDoubleClickZoom"
+                        label="Disable 2-Clicks Zoom?"
+                        type="Boolean"
+                        default="false"
+                        description="Disable zooming with a mouse double-click" />
+
+            <property name="isDebug" label="Debug?" type="Boolean" default="false" description="Flag to show debug information."/>
+            <property name="isDebugFine" label="Debug (fine) ?" type="Boolean" default="false" description="Flag to show debug information for all sub-components."/>
+
+        </targetConfig>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="cardTitle" label="Card Title" type="String" />
+            <property name="cardIcon" label="Card Icon" type="String"/>
+            <property name="cardClass" label="Card CSS Class" type="String" default="slds-card slds-card_boundary slds-theme_shade" description="CSS Classes for the wrapping card div"/>
+            <property name="mapHeight" label="Display Map height" type="String" description="Height in px/em... of the map display."/>
+            <property name="displayHeight" label="Display List height" type="String" description="Height in px/em... of the result list."/>
+            <property name="buttonSize" label="Button Size" type="String" datasource="x-small,small,medium" default="small" description="Size of the standard header buttons (to align with custom header actions)"/>
+
+            <property name="configName" label="Query Configuration" type="String" datasource="apex://sfpegListSelector_CTL" description="(Developer)Name of the Query Configuration record to be used (see sfpegList__mdt)."/>
+            <property name="actionConfigName" label="Header Action Configuration" type="String" datasource="apex://sfpegActionSelector_CTL" description="(Developer)Name of the Action Configuration record to be used in header (see sfpegAction__mdt)."/>
+            <property name="footerConfigName" label="Footer Action Configuration" type="String" datasource="apex://sfpegActionSelector_CTL" description="(Developer)Name of the Action Configuration record to be used in footer (see sfpegAction__mdt)."/>
+            
+            <property name="showExport" label="Show Export?" type="Boolean" default="false" description="Flag to show Export action in results list header."/>
+            <property name="maxSize" label="Max. #Actions Displayed" type="Integer" description="Max number of actions displayed before overflow in menu."/>
+
+            <property   name="mapLegend"
+                        label="Legend"
+                        type="String"
+                        description="Map legend" />
+
+            <property   name="listView"
+                        label="List View"
+                        type="String"
+                        default="hidden"
+                        datasource="visible,hidden,auto"
+                        description="Display mode for the address side list view" />
+
+            <property   name="draggable"
+                        label="Draggable?"
+                        type="Boolean"
+                        default="true"
+                        description="Enables dragging to pan the map with the mouse." />
+            <property   name="zoomControl"
+                        label="Zoom Control?"
+                        type="Boolean"
+                        default="true"
+                        description="Shows the +/- zoom controls." />
+            <property   name="scrollwheel"
+                        label="Scroll with Wheel?"
+                        type="Boolean"
+                        default="false"
+                        description="Permits zooming with the mouse wheel." />
+            <property   name="disableDefaultUI"
+                        label="Disable Default UI?"
+                        type="Boolean"
+                        default="false"
+                        description="Remove Map/Satellite and +/- zoom buttons." />
+            <property   name="disableDoubleClickZoom"
+                        label="Disable 2-Clicks Zoom?"
+                        type="Boolean"
+                        default="false"
+                        description="Disable zooming with a mouse double-click" />
+                        
+            <property name="isDebug" label="Debug?" type="Boolean" default="false" description="Flag to show debug information."/>
+            <property name="isDebugFine" label="Debug (fine) ?" type="Boolean" default="false" description="Flag to show debug information for all sub-components."/>
+
+            <property name="objectApiName" label="Object API Name" type="String" default="{!objectApiName}" description="API Name of Current Object."/>
+            <property name="recordId" label="Record ID" type="String" default="{!recordId}" description="ID of current Record"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
