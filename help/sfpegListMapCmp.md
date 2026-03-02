@@ -1,4 +1,4 @@
-# ![Logo](/media/Logo.png) &nbsp; **sfpegSearchListCmp** Component
+# ![Logo](/media/Logo.png) &nbsp; **sfpegListMapCmp** Component
 
 This component is part of the [`sfpegList-utilities`](/help/sfpegListPkgUtilities.md) package
 of the **[PEG_LIST](/README.md)** repository.
