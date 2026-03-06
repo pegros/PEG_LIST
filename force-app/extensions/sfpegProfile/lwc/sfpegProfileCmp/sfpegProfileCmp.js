@@ -33,6 +33,8 @@
 
 import { LightningElement, api, track, wire } from 'lwc';
 
+import sfpegConfigUtl       from 'c/sfpegConfigUtl';
+
 import currentUserId        from '@salesforce/user/Id';
 import { getRecord }        from 'lightning/uiRecordApi';
 import { getObjectInfo }    from 'lightning/uiObjectInfoApi';
@@ -45,7 +47,7 @@ import LANG from '@salesforce/i18n/lang';
 /*import communityId          from '@salesforce/community/Id';
 import communityPath        from '@salesforce/community/basePath';*/
 
-var PROFILE_CONFIGS = {};
+//var PROFILE_CONFIGS = {};
 
 export default class SfpegProfileCmp extends LightningElement {
 
@@ -167,6 +169,9 @@ export default class SfpegProfileCmp extends LightningElement {
     get titleActionClass() {
         return "slds-media__figure slds-media__figure_reverse slds-var-p-right_" + this.detailsPadding;
     }
+    get profileActions() { 
+        return this.configDetails?.actions;
+    }
 
     // for details
     get hasDetails() {
@@ -252,9 +257,13 @@ export default class SfpegProfileCmp extends LightningElement {
         //this.assetRootUrl =  '/file-asset/';
         if (this.isDebug) console.log('connected: assetRootUrl init ', this.assetRootUrl);
 
-        if (PROFILE_CONFIGS[this.configName]) {
+        if (this.isDebug) console.log('connected: config name fetched ', this.configName);
+        this.configDetails = sfpegConfigUtl.sfpegConfigUtl.getConfig('sfpegProfile',this.configName);
+        
+        if(this.configDetails) {
+        //if (PROFILE_CONFIGS[this.configName]) {
             if (this.isDebug) console.log('connected: END / configuration already available');
-            this.configDetails = PROFILE_CONFIGS[this.configName];
+            //this.configDetails = PROFILE_CONFIGS[this.configName];
             this.finalizeConfig();
             this.isReady = true;
         }
@@ -264,7 +273,8 @@ export default class SfpegProfileCmp extends LightningElement {
             .then( result => {
                 if (this.isDebug) console.log('connected: configuration received  ',JSON.stringify(result));
                 try {
-                    PROFILE_CONFIGS[this.configName] = {
+                    this.configDetails = {
+                    //PROFILE_CONFIGS[this.configName] = {
                         banner:  {value: result.ProfileBanner__c, isStatic: true},
                         avatar:  {value: result.ProfileAvatar__c, isStatic: true},
                         header:  JSON.parse(result.ProfileHeader__c  || '{}'),
@@ -281,76 +291,109 @@ export default class SfpegProfileCmp extends LightningElement {
                         if (this.isDebug) console.log('connected: registering dynamic banner field ',result.ProfileBanner__c);
                         let bannerObj = JSON.parse(result.ProfileBanner__c);
                         if (bannerObj.fieldName) {
-                            (PROFILE_CONFIGS[this.configName].recordFields.raw).push(bannerObj.fieldName);
-                            (PROFILE_CONFIGS[this.configName]).banner.isStatic = false;
-                            (PROFILE_CONFIGS[this.configName]).banner.fieldName = bannerObj.fieldName;
+                            //(PROFILE_CONFIGS[this.configName]
+                            (this.configDetails.recordFields.raw).push(bannerObj.fieldName);
+                            //(PROFILE_CONFIGS[this.configName])
+                            this.configDetails.banner.isStatic = false;
+                            //(PROFILE_CONFIGS[this.configName])
+                            this.configDetails.banner.fieldName = bannerObj.fieldName;
                         }
                         if (bannerObj.fileFieldName) {
-                            (PROFILE_CONFIGS[this.configName].recordFields.raw).push(bannerObj.fileFieldName);
-                            (PROFILE_CONFIGS[this.configName]).banner.isStatic = false;
-                            (PROFILE_CONFIGS[this.configName]).banner.fileFieldName = bannerObj.fileFieldName;
+                            //(PROFILE_CONFIGS[this.configName]
+                            (this.configDetails.recordFields.raw).push(bannerObj.fileFieldName);
+                            //(PROFILE_CONFIGS[this.configName])
+                            this.configDetails.banner.isStatic = false;
+                            //(PROFILE_CONFIGS[this.configName])
+                            this.configDetails.banner.fileFieldName = bannerObj.fileFieldName;
                         }
                         if (bannerObj.assetFieldName) {
-                            (PROFILE_CONFIGS[this.configName].recordFields.raw).push(bannerObj.assetFieldName);
-                            (PROFILE_CONFIGS[this.configName]).banner.isStatic = false;
-                            (PROFILE_CONFIGS[this.configName]).banner.assetFieldName = bannerObj.assetFieldName;
+                            //(PROFILE_CONFIGS[this.configName]
+                            (this.configDetails.recordFields.raw).push(bannerObj.assetFieldName);
+                            //(PROFILE_CONFIGS[this.configName])
+                            this.configDetails.banner.isStatic = false;
+                            //(PROFILE_CONFIGS[this.configName])
+                            this.configDetails.banner.assetFieldName = bannerObj.assetFieldName;
                         }
                     }
                     if ((result.ProfileAvatar__c) && (result.ProfileAvatar__c.includes('ieldName"'))) {
                         if (this.isDebug) console.log('connected: registering dynamic avatar field ',result.ProfileAvatar__c);
                         let avatarObj = JSON.parse(result.ProfileAvatar__c);
                         if (avatarObj.fieldName) {
-                            (PROFILE_CONFIGS[this.configName].recordFields.raw).push(avatarObj.fieldName);
-                            (PROFILE_CONFIGS[this.configName]).avatar.isStatic = false;
-                            (PROFILE_CONFIGS[this.configName]).avatar.fieldName = avatarObj.fieldName;
+                            //(PROFILE_CONFIGS[this.configName]
+                            (this.configDetails.recordFields.raw).push(avatarObj.fieldName);
+                            //(PROFILE_CONFIGS[this.configName])
+                            this.configDetails.avatar.isStatic = false;
+                            //(PROFILE_CONFIGS[this.configName])
+                            this.configDetails.avatar.fieldName = avatarObj.fieldName;
                         }
                         if (avatarObj.fileFieldName) {
-                            (PROFILE_CONFIGS[this.configName].recordFields.raw).push(avatarObj.fileFieldName);
-                            (PROFILE_CONFIGS[this.configName]).avatar.isStatic = false;
-                            (PROFILE_CONFIGS[this.configName]).avatar.fileFieldName = avatarObj.fileFieldName;
+                            //(PROFILE_CONFIGS[this.configName]
+                            (this.configDetails.recordFields.raw).push(avatarObj.fileFieldName);
+                            //(PROFILE_CONFIGS[this.configName])
+                            this.configDetails.avatar.isStatic = false;
+                            //(PROFILE_CONFIGS[this.configName])
+                            this.configDetails.avatar.fileFieldName = avatarObj.fileFieldName;
                         }
                         if (avatarObj.assetFieldName) {
-                            (PROFILE_CONFIGS[this.configName].recordFields.raw).push(avatarObj.assetFieldName);
-                            (PROFILE_CONFIGS[this.configName]).avatar.isStatic = false;
-                            (PROFILE_CONFIGS[this.configName]).avatar.assetFieldName = avatarObj.assetFieldName;
+                            //(PROFILE_CONFIGS[this.configName]
+                            (this.configDetails.recordFields.raw).push(avatarObj.assetFieldName);
+                            //(PROFILE_CONFIGS[this.configName])
+                            this.configDetails.avatar.isStatic = false;
+                            //(PROFILE_CONFIGS[this.configName])
+                            this.configDetails.avatar.assetFieldName = avatarObj.assetFieldName;
                         }
                     }
 
                     if (result.ProfileHeader__c) {
                         if (this.isDebug) console.log('connected: reworking details ');
                         if (this.isDebug) console.log('connected: registering header fields for label fetch ');
-                        if (PROFILE_CONFIGS[this.configName].header.title) {
-                            (PROFILE_CONFIGS[this.configName].labelFields).push(PROFILE_CONFIGS[this.configName].header.title);
+                        //if (PROFILE_CONFIGS[this.configName].header.title) {
+                        if (this.configDetails.header.title) {
+                            //(PROFILE_CONFIGS[this.configName].labelFields).push(PROFILE_CONFIGS[this.configName].header.title);
+                            (this.configDetails.labelFields).push(this.configDetails.header.title);
                         }
-                        if (PROFILE_CONFIGS[this.configName].header.badge) {
-                            (PROFILE_CONFIGS[this.configName].labelFields).push(PROFILE_CONFIGS[this.configName].header.badge);
+                        //if (PROFILE_CONFIGS[this.configName].header.badge) {
+                        if (this.configDetails.header.badge) {
+                            //(PROFILE_CONFIGS[this.configName].labelFields).push(PROFILE_CONFIGS[this.configName].header.badge);
+                            (this.configDetails.labelFields).push(this.configDetails.header.badge);
                         }
-                        if (PROFILE_CONFIGS[this.configName].header.details) {
-                            (PROFILE_CONFIGS[this.configName].header.details).forEach(item => 
-                                (PROFILE_CONFIGS[this.configName].labelFields).push(item));
+                        //if (PROFILE_CONFIGS[this.configName].header.details) {
+                        if (this.configDetails.header.details) {
+                            //(PROFILE_CONFIGS[this.configName]
+                            (this.configDetails.header.details).forEach(item => 
+                                //(PROFILE_CONFIGS[this.configName].labelFields).push(item));
+                                (this.configDetails.labelFields).push(item));
                         }
                     }
 
                     if (result.ProfileDetails__c) {
                         if (this.isDebug) console.log('connected: reworking details ');
-                        (PROFILE_CONFIGS[this.configName]).details.fieldClass = "slds-col slds-var-p-vertical_xx-small slds-size_1-of-" + ((PROFILE_CONFIGS[this.configName]).details.columns || "1");
-                        (PROFILE_CONFIGS[this.configName]).details.variant = (PROFILE_CONFIGS[this.configName]).details.variant || "list";
+                        //(PROFILE_CONFIGS[this.configName]).fieldClass = "slds-col slds-var-p-vertical_xx-small slds-size_1-of-" + ((PROFILE_CONFIGS[this.configName]).details.columns || "1");
+                        this.configDetails.details.fieldClass = "slds-col slds-var-p-vertical_xx-small slds-size_1-of-" + (this.configDetails.details.columns || "1");
+                        //(PROFILE_CONFIGS[this.configName]).details.variant = (PROFILE_CONFIGS[this.configName]).details.variant || "list";
+                        this.configDetails.details.variant = this.configDetails.details.variant || "list";
 
                         if (this.isDebug) console.log('connected: registering details field for label fetch');
-                        if (PROFILE_CONFIGS[this.configName].details.fields) {
-                            (PROFILE_CONFIGS[this.configName].details.fields).forEach(item => {
+                        //if (PROFILE_CONFIGS[this.configName].details.fields) {
+                        if (this.configDetails.details.fields) {
+                            //(PROFILE_CONFIGS[this.configName].details.fields).forEach(item => {
+                            (this.configDetails.details.fields).forEach(item => {
                                 if (typeof item === 'object') { 
-                                    (PROFILE_CONFIGS[this.configName].labelFields).push(item.fieldName);
+                                    //(PROFILE_CONFIGS[this.configName]
+                                    (this.configDetails.labelFields).push(item.fieldName);
                                 }
                                 else {
-                                    (PROFILE_CONFIGS[this.configName].labelFields).push(item);
+                                    //(PROFILE_CONFIGS[this.configName]
+                                    (this.configDetails.labelFields).push(item);
                                 }
                             });
                         }
                     }
-                    if (this.isDebug) console.log('connected: labels to fetch registered ', JSON.stringify(PROFILE_CONFIGS[this.configName].labelFields));                    
+                    //if (this.isDebug) console.log('connected: labels to fetch registered ', JSON.stringify(PROFILE_CONFIGS[this.configName].labelFields));                    
+                    if (this.isDebug) console.log('connected: labels to fetch registered ', JSON.stringify(this.configDetails.labelFields));                    
 
-                    this.configDetails = PROFILE_CONFIGS[this.configName];
+                    //this.configDetails = PROFILE_CONFIGS[this.configName];
+                    sfpegConfigUtl.sfpegConfigUtl.setConfig('sfpegProfile',this.configName,this.configDetails);
                     if (this.isDebug) console.log('connected: END / configuration parsed');
                     this.finalizeConfig();
                     this.isReady = true;

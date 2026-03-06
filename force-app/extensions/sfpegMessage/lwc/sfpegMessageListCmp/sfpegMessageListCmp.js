@@ -32,11 +32,13 @@
 import { LightningElement, wire , api, track} from 'lwc';
 
 import sfpegMergeUtl        from 'c/sfpegMergeUtl';
+import sfpegConfigUtl       from 'c/sfpegConfigUtl';
+
 import getConfiguration     from '@salesforce/apex/sfpegMessage_CTL.getConfiguration';
 import currentUserId        from '@salesforce/user/Id';
 import { getRecord }        from 'lightning/uiRecordApi';
 
-var MSG_LIST_CONFIGS = {};
+//var MSG_LIST_CONFIGS = {};
 
 const MSG_VARIANTS = {
     base: {
@@ -216,9 +218,12 @@ export default class SfpegMessageListCmp extends LightningElement {
         }
 
         if (this.isDebug) console.log('connected: config name fetched ', this.configName);
-        if (MSG_LIST_CONFIGS[this.configName]) {
+        this.configDetails = sfpegConfigUtl.sfpegConfigUtl.getConfig('sfpegMessageList',this.configName);
+        
+        if(this.configDetails) {
+        //if (MSG_LIST_CONFIGS[this.configName]) {
             if (this.isDebug) console.log('connected: END / configuration already available');
-            this.configDetails = MSG_LIST_CONFIGS[this.configName];
+            //this.configDetails = MSG_LIST_CONFIGS[this.configName];
             this.finalizeConfig();
         }
         else {
@@ -228,13 +233,15 @@ export default class SfpegMessageListCmp extends LightningElement {
                 if (this.isDebug) console.log('connected: configuration received  ',result);
                 sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
                 try {
-                    MSG_LIST_CONFIGS[this.configName] = {
+                    this.configDetails = {
+                    //MSG_LIST_CONFIGS[this.configName] = {
                         template: (result.MessageDisplay__c || '{}'),
                         doEval : (result.DoConditionEval__c),
                         actions: (result.MessageActions__c || 'N/A'),
                         tokens: sfpegMergeUtl.sfpegMergeUtl.extractTokens((result.MessageDisplay__c || '{}'),this.objectApiName)
                     };
-                    this.configDetails = MSG_LIST_CONFIGS[this.configName];
+                    //this.configDetails = MSG_LIST_CONFIGS[this.configName];
+                    sfpegConfigUtl.sfpegConfigUtl.setConfig('sfpegMessageList',this.configName,this.configDetails);
                     this.finalizeConfig();
                     if (this.isDebug) console.log('connected: END / configuration parsed');
                 }

@@ -41,6 +41,7 @@ import { getRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
 //import LightningPrompt from 'lightning/prompt';
 //import { CurrentPageReference } from 'lightning/navigation';
 import sfpegMergeUtl    from 'c/sfpegMergeUtl';
+import sfpegConfigUtl   from 'c/sfpegConfigUtl';
 
 import SAVE_LABEL       from '@salesforce/label/c.sfpegCardSave';
 import FORCE_SAVE_LABEL from '@salesforce/label/c.sfpegCardForceSave';
@@ -49,7 +50,7 @@ import SAVE_ERROR       from '@salesforce/label/c.sfpegCardSaveError';
 import MODE_TOGGLE      from '@salesforce/label/c.sfpegCardModeToggle';
 import CLOSE_MESSAGE    from '@salesforce/label/c.sfpegCardCloseMessage';
 
-var CARD_CONFIGS = {};
+//var CARD_CONFIGS = {};
 
 export default class SfpegCardDsp extends LightningElement {
 
@@ -213,9 +214,12 @@ export default class SfpegCardDsp extends LightningElement {
         }
 
         if (this.isDebug) console.log('connected: config name fetched ', this.configName);
-        if (CARD_CONFIGS[this.configName]) {
+        this.configDetails = sfpegConfigUtl.sfpegConfigUtl.getConfig('sfpegCard',this.configName);
+        
+        if(this.configDetails) {
+        //if (CARD_CONFIGS[this.configName]) {
             if (this.isDebug) console.log('connected: configuration already available');
-            this.configDetails = CARD_CONFIGS[this.configName];
+            //this.configDetails = CARD_CONFIGS[this.configName];
 
             this.initFormTarget();
             if (this.formRecordId) {
@@ -233,9 +237,10 @@ export default class SfpegCardDsp extends LightningElement {
                 if (this.isDebug) console.log('connected: configuration received  ',result);
                 try {
                     let config = JSON.parse(result.DisplayConfig__c);
-                    if (this.isDebug) console.log('connected: config parsed ');
+                    if (this.isDebug) console.log('connected: display config parsed ');
 
-                    CARD_CONFIGS[this.configName] = {
+                    this.configDetails = {
+                    //CARD_CONFIGS[this.configName] = {
                         id:         result.Id,
                         label:      result.MasterLabel,
                         target: {
@@ -250,7 +255,7 @@ export default class SfpegCardDsp extends LightningElement {
                         context:    config.context,
                         density:    config.density || 'auto'
                     };
-                    this.configDetails = CARD_CONFIGS[this.configName];
+                    //this.configDetails = CARD_CONFIGS[this.configName];
                     if (this.isDebug) console.log('connected: configuration registered ',JSON.stringify(this.configDetails));
 
                     this.configDetails.iconSize = this.configDetails.iconSize || "small";
@@ -285,6 +290,8 @@ export default class SfpegCardDsp extends LightningElement {
                     });
                     if (this.isDebug) console.log('connected: sections reworked ', JSON.stringify(this.configDetails.sections) );
                     
+                    sfpegConfigUtl.sfpegConfigUtl.setConfig('sfpegCard',this.configName,this.configDetails);
+
                     this.initFormTarget();
                     if (this.formRecordId) {
                         if (this.isDebug) console.log('connected: END / no form record ID fetch required');

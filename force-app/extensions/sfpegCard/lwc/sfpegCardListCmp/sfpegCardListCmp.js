@@ -36,8 +36,9 @@ import currentUserId        from '@salesforce/user/Id';
 import { getRecord }        from 'lightning/uiRecordApi';
 import sfpegJsonUtl         from 'c/sfpegJsonUtl';
 import sfpegMergeUtl        from 'c/sfpegMergeUtl';
+import sfpegConfigUtl       from 'c/sfpegConfigUtl';
 
-var CARDLIST_CONFIGS = {};
+//var CARDLIST_CONFIGS = {};
 
 export default class SfpegCardListCmp extends LightningElement {
 
@@ -180,9 +181,11 @@ export default class SfpegCardListCmp extends LightningElement {
         }
 
         if (this.isDebug) console.log('connected: config name fetched ', this.configName);
-        if (CARDLIST_CONFIGS[this.configName]) {
+        this.configDetails = sfpegConfigUtl.sfpegConfigUtl.getConfig('sfpegCardList',this.configName);
+        if(this.configDetails) {
+        //if (CARDLIST_CONFIGS[this.configName]) {
             if (this.isDebug) console.log('connected: END / configuration already available');
-            this.configDetails = CARDLIST_CONFIGS[this.configName];
+            //this.configDetails = CARDLIST_CONFIGS[this.configName];
             this.isReady = true;
         }
         else {
@@ -192,7 +195,8 @@ export default class SfpegCardListCmp extends LightningElement {
                 if (this.isDebug) console.log('connected: configuration received  ',result);
                 sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
                 try {
-                    CARDLIST_CONFIGS[this.configName] = {
+                    this.configDetails = {
+                    //CARDLIST_CONFIGS[this.configName] = {
                         label: result.MasterLabel,
                         query: result.Query__c,
                         record: {"idField": result.RecordIdField__c, "nameField": result.RecordNameField__c},
@@ -201,7 +205,8 @@ export default class SfpegCardListCmp extends LightningElement {
                         card: {"name": result.CardConfig__c, "field": result.CardConfigField__c},
                         actions : {"name": result.CardActions__c, "field": result.CardActionsField__c }
                     };
-                    this.configDetails = CARDLIST_CONFIGS[this.configName];
+                    //this.configDetails = CARDLIST_CONFIGS[this.configName];
+                    sfpegConfigUtl.sfpegConfigUtl.setConfig('sfpegCardList',this.configName,this.configDetails);
                     this.isReady = true;
                     if (this.isDebug) console.log('connected: END / configuration parsed');
                 }

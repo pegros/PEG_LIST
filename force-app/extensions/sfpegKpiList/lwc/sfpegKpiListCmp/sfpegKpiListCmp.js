@@ -32,11 +32,12 @@
 
 import { LightningElement, wire, api, track } from 'lwc';
 import getConfiguration     from '@salesforce/apex/sfpegKpiList_CTL.getConfiguration';
+import sfpegConfigUtl       from 'c/sfpegConfigUtl';
 
 import currentUserId        from '@salesforce/user/Id';
 import CUSTOM_ICONS         from '@salesforce/resourceUrl/sfpegIcons';
 
-var KPI_CONFIGS = {};
+//var KPI_CONFIGS = {};
 
 export default class SfpegKpiListCmp extends LightningElement {
 
@@ -106,24 +107,27 @@ export default class SfpegKpiListCmp extends LightningElement {
     // Component initialisation  
     //----------------------------------------------------------------      
     connectedCallback() {
-        if (this.isDebug) console.log('connected: START');
+        if (this.isDebug) console.log('connected: START KPI List');
 
         if (this.isReady) {
-            console.warn('connected: END / already ready');
+            console.warn('connected: END KPI List / already ready');
             return;
         }
 
         if ((!this.configName) || (this.configName === 'N/A')){
-            console.warn('connected: END / missing configuration');
+            console.warn('connected: END KPI List KO / missing configuration');
             this.errorMsg = 'Missing configuration!';
             this.isReady = true;
             return;
         }
 
         if (this.isDebug) console.log('connected: config name fetched ', this.configName);
-        if (KPI_CONFIGS[this.configName]) {
+        this.configDetails = sfpegConfigUtl.sfpegConfigUtl.getConfig('sfpegKpiList',this.configName);
+        
+        if(this.configDetails) {
+        //if (KPI_CONFIGS[this.configName]) {
             if (this.isDebug) console.log('connected: END / configuration already available');
-            this.configDetails = KPI_CONFIGS[this.configName];
+            //this.configDetails = KPI_CONFIGS[this.configName];
             this.isReady = true;
         }
         else {
@@ -132,12 +136,13 @@ export default class SfpegKpiListCmp extends LightningElement {
             .then( result => {
                 if (this.isDebug) console.log('connected: configuration received  ',result);
                 try {
-                    KPI_CONFIGS[this.configName] = {
+                    this.configDetails = {
+                    //KPI_CONFIGS[this.configName] = {
                         label: result.MasterLabel,
                         display: JSON.parse(result.DisplayConfig__c || '[]')
                         //actions: JSON.parse(result.GroupActions__c || '[]')
                     };
-                    this.configDetails = KPI_CONFIGS[this.configName];
+                    //this.configDetails = KPI_CONFIGS[this.configName];
                     if (this.isDebug) console.log('connected: configuration parsed ',this.configDetails);
 
                     if (this.configDetails.display.groups) {
@@ -184,19 +189,20 @@ export default class SfpegKpiListCmp extends LightningElement {
                         console.warn('connected: no KPI group configured');
                         this.errorMsg = 'No KPI group configured!';
                     }
+                    sfpegConfigUtl.sfpegConfigUtl.setConfig('sfpegKpiList',this.configName,this.configDetails);
                     if (this.isDebug) console.log('connected: configuration parsed');
                 }
                 catch (parseError){
-                    console.warn('connected: END / configuration parsing failed ',parseError);
+                    console.warn('connected: KPI List configuration parsing failed ',parseError);
                     this.errorMsg = 'Configuration parsing failed: ' + parseError;
                 }
                 finally {
-                    if (this.isDebug) console.log('connected: END');
+                    if (this.isDebug) console.log('connected: END KPI List');
                     this.isReady = true;
                 }
             })
             .catch( error => {
-                console.warn('connected: END / configuration fetch error ',error);
+                console.warn('connected: END KPI List KO / configuration fetch error ',error);
                 this.errorMsg = 'Configuration fetch error: ' + error;
                 this.isReady = true;
             });
@@ -205,15 +211,15 @@ export default class SfpegKpiListCmp extends LightningElement {
     }
 
     renderedCallback(){
-        if (this.isDebug) console.log('renderered: START');
-        if (this.isDebug) console.log('renderered: END');
+        if (this.isDebug) console.log('renderered: START KPI List');
+        if (this.isDebug) console.log('renderered: END KPI List');
     }
     
     //----------------------------------------------------------------
     // Event Handlers 
     //----------------------------------------------------------------      
     handleLoad(event) {
-        if (this.isDebug) console.log('handleLoad: START');
+        if (this.isDebug) console.log('handleLoad: START KPI List');
         if (this.isDebug) console.log('handleLoad: event ',event);
         if (this.isDebug) console.log('handleLoad: event details ',JSON.stringify(event.detail));
         let recordValues = ((event.detail.records)[this.recordId]).fields;
@@ -284,53 +290,12 @@ export default class SfpegKpiListCmp extends LightningElement {
         catch(error) {
             console.warn('handleLoad: failure raised ',JSON.stringify(error));
         }
-        /*
-        iconValueFields.forEach(valueItem => {
-            if (this.isDebug) console.log('handleLoad: processing icon value name ',valueItem.fieldName);
-            if (this.isDebug) console.log('handleLoad: recordFieldValues recalled ',JSON.stringify(recordValues));
-            if (this.isDebug) console.log('handleLoad: field value recalled ',JSON.stringify(recordValues[valueItem.fieldName]));
-
-            try {
-                if ((recordValues[valueItem.fieldName]) && ((recordValues[valueItem.fieldName]).value)) {
-                    if (this.isDebug) console.log('handleLoad: data available for icon value field ', (recordValues[valueItem.fieldName]).value);
-
-                    let itemValue = (recordValues[valueItem.fieldName]).value;
-                    if (this.isDebug) console.log('handleLoad: itemValue fetched ',itemValue);
-            
-                    iconComponents.forEach(cmpIter => {
-                        if (this.isDebug) console.log('handleLoad: processing display icon ',cmpIter.id);
-                        if (this.isDebug) console.log('handleLoad: component ',cmpIter);
-                        if (this.isDebug) console.log('handleLoad: component dataset ',cmpIter.dataset);
-                        if (this.isDebug) console.log('handleLoad: icon name ',cmpIter.dataset.icon);
-                        if (this.isDebug) console.log('handleLoad: icon value ',cmpIter.dataset.value);
-                        if (this.isDebug) console.log('handleLoad: icon variant ',cmpIter.dataset.variant);
-
-                        if ((cmpIter.id).startsWith(valueItem.fieldName)) {
-                            if (this.isDebug) console.log('handleLoad: updating value for matching field');
-                            cmpIter.iconValue = itemValue;
-                        };
-                    });
-                }
-                else {
-                    if (this.isDebug) console.log('handleLoad: no data for icon value field  ');
-                }
-            }
-            catch(error) {
-                console.warn('handleLoad: failure raised ',JSON.stringify(error));
-            }
-        });
-        if (this.isDebug) console.log('handleLoad: all icon value fields processed');
-        */
 
         if (this.isDebug) console.log('handleLoad: END / dynamic icon name/variant/value possibly updated');
     }
 
     handleKpiAction(event) {
         if (this.isDebug) console.log('handleKpiAction: START');
-        /*if (this.isDebug) console.log('handleKpiAction: event',event);
-        if (this.isDebug) console.log('handleKpiAction: event SRC ',event.srcElement);
-        let actionName = event.srcElement.name;
-        if (this.isDebug) console.log('handleKpiAction: actionName fetched ',actionName);*/
 
         let actionName = event.detail;
         if (this.isDebug) console.log('handleKpiAction: actionName fetched ', actionName);

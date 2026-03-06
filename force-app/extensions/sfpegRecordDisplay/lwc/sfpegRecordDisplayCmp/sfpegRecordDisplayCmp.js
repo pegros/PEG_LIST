@@ -33,12 +33,14 @@ import { LightningElement, wire , api, track} from 'lwc';
 import getConfiguration     from '@salesforce/apex/sfpegRecordDisplay_CTL.getConfiguration';
 import currentUserId        from '@salesforce/user/Id';
 import { getRecord }        from 'lightning/uiRecordApi';
+
 import sfpegJsonUtl         from 'c/sfpegJsonUtl';
 import sfpegMergeUtl        from 'c/sfpegMergeUtl';
+import sfpegConfigUtl       from 'c/sfpegConfigUtl';
 import INIT_LABEL           from '@salesforce/label/c.sfpegListInit';
 import REFRESH_LABEL        from '@salesforce/label/c.sfpegListRefresh';
 
-var RECORD_DISPLAY_CONFIGS = {};
+//var RECORD_DISPLAY_CONFIGS = {};
 
 export default class SfpegRecordDisplayCmp extends LightningElement {
 
@@ -189,9 +191,12 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
         }
 
         if (this.isDebug) console.log('connected: config name fetched ', this.configName);
-        if (RECORD_DISPLAY_CONFIGS[this.configName]) {
+        this.configDetails = sfpegConfigUtl.sfpegConfigUtl.getConfig('sfpegRecordDisplay',this.configName);
+        
+        if(this.configDetails) {
+        //if (RECORD_DISPLAY_CONFIGS[this.configName]) {
             if (this.isDebug) console.log('connected: END / configuration already available');
-            this.configDetails = RECORD_DISPLAY_CONFIGS[this.configName];
+            //this.configDetails = RECORD_DISPLAY_CONFIGS[this.configName];
             this.finalizeConfig();
         }
         else {
@@ -201,11 +206,13 @@ export default class SfpegRecordDisplayCmp extends LightningElement {
                 if (this.isDebug) console.log('connected: configuration received  ',result);
                 sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
                 try {
-                    RECORD_DISPLAY_CONFIGS[this.configName] = {
+                    this.configDetails = {
+                    //RECORD_DISPLAY_CONFIGS[this.configName] = {
                         template: result.DisplayConfig__c || '{}',
                         tokens: sfpegMergeUtl.sfpegMergeUtl.extractTokens((result.DisplayConfig__c || '{}'),this.objectApiName)
                     };
-                    this.configDetails = RECORD_DISPLAY_CONFIGS[this.configName];
+                    //this.configDetails = RECORD_DISPLAY_CONFIGS[this.configName];
+                    sfpegConfigUtl.sfpegConfigUtl.setConfig('sfpegRecordDisplay',this.configName,this.configDetails);
                     this.finalizeConfig();
                     if (this.isDebug) console.log('connected: END / configuration parsed');
                 }

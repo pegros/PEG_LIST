@@ -5,21 +5,23 @@
         <lightning-card icon-name={cardIcon} title={formatTitle}>
 
             <!-- Card Header Actions -->
-            <lightning-button-group slot="actions">
-                <c-sfpeg-action-bar-cmp bar-class= ""
-                                        config-name={actionConfigName}
-                                        object-api-name={objectApiName}
-                                        record-id={recordId}
-                                        user-id={userId}
-                                        max-size={maxSize}
-                                        parent-context={parentContext}
-                                        ondone={handleActionDone}
-                                        is-debug={isDebugFine} >
-                </c-sfpeg-action-bar-cmp>
-            </lightning-button-group>
+            <template lwc:if={actionConfigName}>
+                <lightning-button-group slot="actions">
+                    <c-sfpeg-action-bar-cmp bar-class= ""
+                                            config-name={actionConfigName}
+                                            object-api-name={objectApiName}
+                                            record-id={recordId}
+                                            user-id={userId}
+                                            max-size={maxSize}
+                                            parent-context={parentContext}
+                                            ondone={handleActionDone}
+                                            is-debug={isDebugFine} >
+                    </c-sfpeg-action-bar-cmp>
+                </lightning-button-group>
+            </template>
 
             <!-- Card Mode Control -->
-            <template if:true={showRefresh}>
+            <template lwc:if={showRefresh}>
                 <lightning-button-group slot="actions"  style="position:relative;top:-1.5px;">
                     <lightning-button-icon  icon-name="utility:refresh"
                                             title="Refresh Record List"
@@ -30,7 +32,7 @@
             </template>
 
             <!-- Debug Info Display -->
-            <template if:true={isDebug}>
+            <template lwc:if={isDebug}>
                 <div slot="footer" class="slds-text-align_left"  >
                     <dl class="slds-dl_horizontal slds-text-align_left">
                         <dt class="slds-dl_horizontal__label slds-truncate">Configuration:</dt>
