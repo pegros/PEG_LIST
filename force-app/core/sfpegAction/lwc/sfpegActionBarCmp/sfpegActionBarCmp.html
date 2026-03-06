@@ -1,14 +1,5 @@
 <template>
 
-    <!-- Utilities -->
-    <!--
-    <c-sfpeg-popup-dsp  is-debug={isDebug}
-                        object-api-name={objectApiName}
-                        record-id={recordId}
-                        user-id={userId}>
-    </c-sfpeg-popup-dsp>
-    -->
-
     <template lwc:if={isHidden}>
         <template lwc:if={isReady}>
             <!-- Error Display -->
@@ -22,6 +13,7 @@
                 </lightning-icon>
             </template>
         </template>
+        
         <template lwc:if={isDebug}>
             <div style="display:inline-block !important;">
                 <div class={buttonClass}> 

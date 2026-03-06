@@ -30,12 +30,15 @@
 ***/
 
 import { LightningElement, wire , api, track} from 'lwc';
+
 import { NavigationMixin } from 'lightning/navigation';
 import getConfiguration from '@salesforce/apex/sfpegAction_CTL.getConfiguration';
 import currentUserId from '@salesforce/user/Id';
 import { getRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
 import sfpegMergeUtl from 'c/sfpegMergeUtl';
+import sfpegConfigUtl       from 'c/sfpegConfigUtl';
 
 // Action Interaction Popup Modals
 import sfpegConfirmPopupDsp from "c/sfpegConfirmPopupDsp";
@@ -82,8 +85,7 @@ import EXECUTION_ERROR          from '@salesforce/label/c.sfpegActionExecutionEr
 import NO_RECORD_ERROR          from '@salesforce/label/c.sfpegActionNoRecordError';
 import TOO_MANY_RECORDS_ERROR   from '@salesforce/label/c.sfpegActionTooManyRecordsError';
 
-
-var ACTION_CONFIGS = {};
+//var ACTION_CONFIGS = {};
 
 export default class SfpegActionBarCmp extends NavigationMixin(LightningElement) {
 
@@ -257,10 +259,13 @@ export default class SfpegActionBarCmp extends NavigationMixin(LightningElement)
         }
 
         if (this.isDebug) console.log('connected: config name fetched ', this.configName);
-        if (ACTION_CONFIGS[this.configName]) {
+        this.configDetails = sfpegConfigUtl.sfpegConfigUtl.getConfig('sfpegActionBar',this.configName);
+        
+        if(this.configDetails) {
+        //if (ACTION_CONFIGS[this.configName]) {
             if (this.isDebug) console.log('connected: END for ActionBar / configuration already available');
             //this.errorMsg = 'Local configuration fetched: ' + ACTION_CONFIGS[this.configName].label;
-            this.configDetails = ACTION_CONFIGS[this.configName];
+            //this.configDetails = ACTION_CONFIGS[this.configName];
             this.finalizeConfig();
             //this.isReady = true;
         }
@@ -274,7 +279,8 @@ export default class SfpegActionBarCmp extends NavigationMixin(LightningElement)
                 }
                 sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
                 try {
-                    ACTION_CONFIGS[this.configName] = {
+                    this.configDetails = {
+                    //ACTION_CONFIGS[this.configName] = {
                         id:         result.Id,
                         label:      result.MasterLabel,
                         actions:    result.Actions__c,
@@ -282,8 +288,9 @@ export default class SfpegActionBarCmp extends NavigationMixin(LightningElement)
                         channels:   JSON.parse(result.NotificationChannels__c || "[]"),
                         input:      sfpegMergeUtl.sfpegMergeUtl.extractTokens(result.Actions__c,this.objectApiName)
                     };
-                    this.configDetails = ACTION_CONFIGS[this.configName];
+                    //this.configDetails = ACTION_CONFIGS[this.configName];
                     if (this.isDebug) console.log('connected: action configuration parsed ',JSON.stringify(this.configDetails));
+                    sfpegConfigUtl.sfpegConfigUtl.setConfig('sfpegActionBar',this.configName,this.configDetails);
                     this.finalizeConfig();
                     //this.errorMsg = 'Configuration fetched and parsed: ' + ACTION_CONFIGS[this.configName].label;
                 }

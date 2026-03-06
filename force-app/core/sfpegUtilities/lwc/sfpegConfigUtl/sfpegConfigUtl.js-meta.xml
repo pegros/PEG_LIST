@@ -2,5 +2,5 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>64.0</apiVersion>
     <isExposed>false</isExposed>
-    <masterLabel>SF PEG JSON Processing Utility</masterLabel>
+    <masterLabel>SF PEG Config Cache Utility</masterLabel>
 </LightningComponentBundle>

@@ -1,6 +1,7 @@
 <template>
     
-    <c-sfpeg-action-bar-cmp bar-class={barClass}
+    <c-sfpeg-action-bar-cmp lwc:ref="actionBar"
+                            bar-class={barClass}
                             config-name={configName}
                             user-id={userId}
                             is-debug={isDebug}
@@ -8,7 +9,7 @@
                             ondone={handleActionDone}>
     </c-sfpeg-action-bar-cmp>
 
-    <template if:true={isDebug}>
+    <template lwc:if={isDebug}>
         <div class="slds-box slds-m-around_xx-small">
             <dl class="slds-dl_horizontal slds-text-align_left">
                 <dt class="slds-dl_horizontal__label slds-truncate">Handle messages?:</dt>
@@ -27,8 +28,8 @@
     </template>
 
     <!-- @Todo: refactor List view config fetch -->
-    <div class="slds-hide">
+    <!--<div class="slds-hide">
         <c-sfpeg-list-cmp></c-sfpeg-list-cmp>
-    </div>
+    </div>-->
     
 </template>

@@ -84,7 +84,7 @@ export default class SfpegActionHandlerCmp extends LightningElement {
     //----------------------------------------------------------------
 
     connectedCallback() {
-        if (this.isDebug) console.log('connected: START Action Handler');
+        if (this.isDebug) console.log('connected: START Utility Bar Action Handler');
 
         if (this.doSubscribe) {
             this.subscribeToMessageChannel();
@@ -94,13 +94,11 @@ export default class SfpegActionHandlerCmp extends LightningElement {
             if (this.isDebug) console.log('connected: no subscription to notification channels needed');
         }
 
-
-
-        if (this.isDebug) console.log('connected: END Action Handler');
+        if (this.isDebug) console.log('connected: END Utility Bar Action Handler');
     }
 
     disconnectedCallback() {
-        if (this.isDebug) console.log('disconnected: START Action Handler');
+        if (this.isDebug) console.log('disconnected: START Utility Bar Action Handler');
 
         if (this.doSubscribe) {
             this.unsubscribeToMessageChannel();
@@ -110,7 +108,7 @@ export default class SfpegActionHandlerCmp extends LightningElement {
             if (this.isDebug) console.log('disconnected: no unsubscription to notification channels needed');
         }  
 
-        if (this.isDebug) console.log('disconnected: END Action Handler');
+        if (this.isDebug) console.log('disconnected: END Utility Bar Action Handler');
     }
 
 
@@ -119,7 +117,7 @@ export default class SfpegActionHandlerCmp extends LightningElement {
     //----------------------------------------------------------------
     // Action execution service from parent component (e.g. for Action Utility Aura parent component, no merge done)
     @api executeAction(action,context) {
-        if (this.isDebug) console.log('executeAction: START Action Handler with ', JSON.stringify(action));
+        if (this.isDebug) console.log('executeAction: START Utility Bar Action Handler with ', JSON.stringify(action));
         if (this.isDebug) console.log('executeAction: with context ', JSON.stringify(context));
 
         let actionBar = this.template.querySelector('c-sfpeg-action-bar-cmp');
@@ -128,10 +126,10 @@ export default class SfpegActionHandlerCmp extends LightningElement {
         try {
             if (this.isDebug) console.log('executeAction: triggering action');
             actionBar.executeAction(action,context);
-            if (this.isDebug) console.log('executeAction: END Action Handler / action triggered');
+            if (this.isDebug) console.log('executeAction: END Utility Bar Action Handler / action triggered');
         }
         catch (error) {
-            console.warn('executeAction: END Action Handler KO / action execution failed!', JSON.stringify(error));
+            console.warn('executeAction: END Utility Bar Action Handler KO / action execution failed!', JSON.stringify(error));
         }
     }
 
@@ -142,12 +140,12 @@ export default class SfpegActionHandlerCmp extends LightningElement {
 
     // Handler for done  event from own action menu
     handleActionDone(event) {
-        if (this.isDebug) console.log('handleActionDone: START Action Handler with event ',JSON.stringify(event.detail));
+        if (this.isDebug) console.log('handleActionDone: START Utility Bar Action Handler with event ',JSON.stringify(event.detail));
         this.lastMessage = JSON.stringify(event.detail);
         if (this.isDebug) console.log('handleActionDone: lastMessage kept');
 
         this.processAction(event.detail,null);
-        if (this.isDebug) console.log('handleActionDone: END OK / action processed');
+        if (this.isDebug) console.log('handleActionDone: END Utility Bar Action Handler / action processed');
 
         /*let doneEvent = new CustomEvent('done', {
             detail: event.detail
@@ -161,24 +159,24 @@ export default class SfpegActionHandlerCmp extends LightningElement {
 
     // Handler for message received by component
     handleMessage(message) {
-        if (this.isDebug) console.log('handleMessage: START Action Handler with message ',JSON.stringify(message));
+        if (this.isDebug) console.log('handleMessage: START Utility Bar Action Handler with message ',JSON.stringify(message));
         this.lastMessage = JSON.stringify(message);
 
         if ((message.action) && (message.action.type)) {
             this.processAction(message.action,message.context);
-            if (this.isDebug) console.log('handleMessage: END OK / action processed');
+            if (this.isDebug) console.log('handleMessage: END Utility Bar Action Handler OK / action processed');
         }
         else {
-            console.warn('handleMessage: END KO / missing action type in message');
+            console.warn('handleMessage: END Utility Bar Action Handler KO / missing action type in message');
         } 
     }
 
     processAction(action,context) {
-        if (this.isDebug) console.log('processAction: START Action Handler with action',JSON.stringify(action));
+        if (this.isDebug) console.log('processAction: START Utility Bar Action Handler with action',JSON.stringify(action));
         if (this.isDebug) console.log('processAction: and context',JSON.stringify(context));
 
         if (! action?.type) {
-            console.warn('processAction: END KO / missing action type in message');
+            console.warn('processAction: END Utility Bar Action Handler KO / missing action type in message');
             return;
         }  
 
@@ -213,7 +211,8 @@ export default class SfpegActionHandlerCmp extends LightningElement {
             default:
                 if (this.isDebug) console.log('processAction: forwarding action to actionBar ',action.type);
                 handleNext = false;
-                let actionBar = this.template.querySelector('c-sfpeg-action-bar-cmp');
+                //let actionBar = this.template.querySelector('c-sfpeg-action-bar-cmp');
+                let actionBar = this.refs.actionBar;
                 if (actionBar) {
                     if (this.isDebug) console.log('processAction: actionBar found');
                     if (action) {
@@ -225,17 +224,17 @@ export default class SfpegActionHandlerCmp extends LightningElement {
                     }
                 }
                 else {
-                    console.warn('processAction: ENDAction Handler KO / actionBar not found');
+                    console.warn('processAction: Utility Bar Action Handler KO / actionBar not found');
                 }
         }
 
         if ((handleNext) && (action.next)) {
             if (this.isDebug) console.log('processAction: chained action to trigger',JSON.stringify(action.next));
             this.processAction(action.next,context);
-            if (this.isDebug) console.log('processAction: END / chained action triggered');
+            if (this.isDebug) console.log('processAction: END Utility Bar Action Handler / chained action triggered');
         }
         else {
-            if (this.isDebug) console.log('processAction: END / no chained action to trigger');
+            if (this.isDebug) console.log('processAction: END Utility Bar Action Handler / no chained action to trigger');
         }
     }
 

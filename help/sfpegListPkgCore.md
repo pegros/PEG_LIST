@@ -65,6 +65,8 @@ It also includes various frameworks, such as:
   utility LWC component
 - the custom icon framework via the **[sfpegIconDsp](/help/sfpegIconDsp.md)** LWC component
 - the field display framework for tiles via the **[sfpegFieldDsp](/help/sfpegFieldDsp.md)** LWC component
+- the caching of component configurations (after JSON parsing and / or rework) in browser
+  via the **sfpegConfigUtl** component
 
 At last, it provides a wide range of Apex query extension classes for the
 **[sfpegListCmp](/help/sfpegListCmp.md)** component configuration:
@@ -148,3 +150,12 @@ Install it:
 ⚠️ If you deploy this version as an upgrade to the `Nov 2025` (v1.1.0) version, you need to first delete the entries
 for the modified country codes in both `sfpegCountries` and `sfpegCountryCodes` global picklists. It is indeed
 impossible to change the code of an existing picklist label.
+
+### February 2025 - v1.3.0
+
+Version content:
+
+- added new **sfpegConfigUtl** utility LWV component to mutualize component configuration
+  caching in browser.
+- upgraded **sfpegListCmp**, **sfpegActionBarCmp** and **sfpegActionHandlerCmp** components
+  to use this **sfpegConfigUtl** utility.

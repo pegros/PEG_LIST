@@ -31,15 +31,18 @@
 ***/
 
 import { LightningElement, wire , api, track} from 'lwc';
+
 import getConfiguration     from '@salesforce/apex/sfpegList_CTL.getConfiguration';
 import getCount             from '@salesforce/apex/sfpegList_CTL.getCount';
 import getData              from '@salesforce/apex/sfpegList_CTL.getData';
 import getPaginatedData     from '@salesforce/apex/sfpegList_CTL.getPaginatedData';
 import currentUserId        from '@salesforce/user/Id';
 import { getRecord }        from 'lightning/uiRecordApi';
+
 import sfpegJsonUtl         from 'c/sfpegJsonUtl';
 import sfpegMergeUtl        from 'c/sfpegMergeUtl';
 import sfpegCsvUtl          from 'c/sfpegCsvUtl';
+import sfpegConfigUtl       from 'c/sfpegConfigUtl';
 
 import FORM_FACTOR          from '@salesforce/client/formFactor';
 
@@ -57,7 +60,7 @@ import LOAD_LABEL           from '@salesforce/label/c.sfpegListLoading';
 import SEARCH_LABEL         from '@salesforce/label/c.sfpegListSearching';
 import LOAD_MORE_LABEL      from '@salesforce/label/c.sfpegListLoadMore';
 
-var LIST_CONFIGS = {};
+//var LIST_CONFIGS = {};
 
 export default class SfpegListCmp extends LightningElement {
 
@@ -448,10 +451,13 @@ export default class SfpegListCmp extends LightningElement {
         }
 
         if (this.isDebug) console.log('connected: config name fetched ', this.configName);
-        if (LIST_CONFIGS[this.configName]) {
+        this.configDetails = sfpegConfigUtl.sfpegConfigUtl.getConfig('sfpegList',this.configName);
+        
+        if(this.configDetails) {
+        //if (LIST_CONFIGS[this.configName]) {
             if (this.isDebug) console.log('connected: END List / configuration already available');
             //this.errorMsg = 'Local configuration fetched: ' + LIST_CONFIGS[this.configName].label;
-            this.configDetails = LIST_CONFIGS[this.configName];
+            //this.configDetails = LIST_CONFIGS[this.configName];
             this.finalizeConfig();
             //this.isReady = true;
         }
@@ -462,7 +468,8 @@ export default class SfpegListCmp extends LightningElement {
                 if (this.isDebug) console.log('connected: configuration received  ',result);
                 sfpegMergeUtl.sfpegMergeUtl.isDebug = this.isDebugFine;
                 try {
-                    LIST_CONFIGS[this.configName] = {
+                    this.configDetails = {
+                    //LIST_CONFIGS[this.configName] = {
                         id: result.Id,
                         label: result.MasterLabel,
                         type: result.DisplayType__c,
@@ -478,7 +485,7 @@ export default class SfpegListCmp extends LightningElement {
                         },
                         rowActions: result.RowActions__c
                     };
-                    this.configDetails = LIST_CONFIGS[this.configName];
+                    //this.configDetails = LIST_CONFIGS[this.configName];
 
                     // Automatic conversion from datatable to tile list
                     if (this.formfactor === "Small") {
@@ -507,6 +514,7 @@ export default class SfpegListCmp extends LightningElement {
                         //if (this.isDebug) console.log('connected: LIST_CONFIGS[this.configName] state ',JSON.stringify(LIST_CONFIGS[this.configName]));
                     }
 
+                    sfpegConfigUtl.sfpegConfigUtl.setConfig('sfpegList',this.configName,this.configDetails);
                     this.finalizeConfig();
                     if (this.isDebug) console.log('connected: List configuration finalized',JSON.stringify(this.configDetails));
                     //this.errorMsg = 'Configuration fetched and parsed: ' + LIST_CONFIGS[this.configName].label;

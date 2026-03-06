@@ -88,7 +88,7 @@ export default class SfpegIconDsp extends LightningElement {
     // Component initialisation  
     //----------------------------------------------------------------      
     connectedCallback() {
-        if (this.isDebug) console.log('connected: START for ', this.iconName);
+        if (this.isDebug) console.log('connected: START Icon for ', this.iconName);
  
         this.iconSize = this.iconSize || 'small';
         if (this.isDebug) console.log('connected: iconSize set ', this.iconSize);
@@ -135,13 +135,13 @@ export default class SfpegIconDsp extends LightningElement {
             this.iconClass = 'kpiAction';
             if (this.isDebug) console.log('connected: setting custom action class ',this.iconClass);
         }
-        if (this.isDebug) console.log('connected: END ');
+        if (this.isDebug) console.log('connected: END Icon');
     }
 
     renderedCallback() {
-        if (this.isDebug) console.log('rendered: START for ', this.iconName);
+        if (this.isDebug) console.log('rendered: START Icon for ', this.iconName);
         if (this.isDebug) console.log('rendered: with value ', this._iconValue);
-        if (this.isDebug) console.log('rendered: END ');
+        if (this.isDebug) console.log('rendered: END Icon');
     }
 
     //----------------------------------------------------------------
