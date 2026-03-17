@@ -80,6 +80,8 @@
 .showTopBorder {
     border-top: var(--lwc-borderWidthThin,1px) solid rgb(201, 201, 201) !important;
 }
-
-
-
+[data-my-id="wrapperDiv"] {
+    overflow: hidden;
+    /*position: relative; 
+    isolation: isolate;*/
+}
