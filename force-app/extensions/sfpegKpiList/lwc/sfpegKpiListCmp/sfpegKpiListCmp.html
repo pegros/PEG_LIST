@@ -91,9 +91,11 @@
                                                 <!-- name={iterKpi.name} -->
                                                 <div    class="slds-media__body"    title={iterKpi.title}> 
                                                     <template lwc:if={iterKpi.label}>
-                                                        <lightning-formatted-text   value={iterKpi.label}
-                                                                                    class="slds-text-title">
-                                                        </lightning-formatted-text>                  
+                                                        <div class="slds-truncate" title={iterKpi.label}>
+                                                            <lightning-formatted-text   value={iterKpi.label}
+                                                                                        class="slds-text-title">
+                                                            </lightning-formatted-text>    
+                                                        </div>           
                                                     </template>
                                                     <!-- slds-list_horizontal slds-has-dividers_left slds-listbox slds-listbox_horizontal -->
                                                     <!-- slds-list_horizontal slds-has-inline-block-links slds-has-dividers_left -->
