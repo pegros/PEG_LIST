@@ -9,12 +9,17 @@
     --sds-c-card-footer-spacing-block-end: 0px;
     --sds-c-card-footer-text-align: left;
 }
-.slds-card_boundary .headerActions {
+.headerActions {
     display: flex;
     align-items: center;
     justify-content: center;
     /*max-width: 50%;*/
 }
+/*.slds-card_boundary .headerActions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}*/
 .slds-card_boundary .cardContent {
     background-color:  var(--lwc-colorBackgroundAlt);
     --sds-c-card-color-background:  var(--lwc-colorBackgroundAlt);
