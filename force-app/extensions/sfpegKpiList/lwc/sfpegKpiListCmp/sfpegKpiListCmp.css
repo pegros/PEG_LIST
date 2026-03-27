@@ -37,6 +37,7 @@ div.groupWrapper {
 .mainKpi {
     --lwc-inputStaticFontSize: 1.1em  !important;
     --lwc-inputStaticFontWeight: bold !important;
+    --slds-g-font-weight-4: 700 !important;
     /*font-size: 1.1em  !important;
     font-weight: bold !important;*/
 }
