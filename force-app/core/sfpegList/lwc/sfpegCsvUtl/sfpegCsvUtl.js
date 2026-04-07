@@ -87,7 +87,8 @@ const sfpegCsvUtl = {
             if (sfpegCsvUtl.isDebug) console.log('export: default export mode');
             const link = window.document.createElement('a');
             if (link != null) {
-                link.href='data:text/csv;charset=utf-8,' + encodeURI(fileContent);
+                //link.href='data:text/csv;charset=utf-8,' + encodeURI(fileContent);
+                link.href='data:text/csv;charset=utf-8,' + encodeURIComponent(fileContent);
                 link.target="_blank";
                 link.download=exportFilename;
                 if (sfpegCsvUtl.isDebug) console.log('export: triggering click',link);
