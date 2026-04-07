@@ -1027,7 +1027,10 @@ _Notes_:
 - for the `badge` type, the `iconName` property is of course optional and the `variant`
   property may be used to display the icon at the `end`.
 - for the `percent-fixed` type, please use the `alignment` cell attribute to force a `right`
-  alignment.
+  alignment. You may also set the `size` to define the number of digits to display
+  (mapped to the `minimum-fraction-digits` property on the underlying 
+  `lightning-formatted-number`) within the `typeAttributes`. 
+
 
 ### Multi-Value Field Type Display
 

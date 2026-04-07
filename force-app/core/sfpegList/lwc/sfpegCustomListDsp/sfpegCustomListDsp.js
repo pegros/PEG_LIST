@@ -72,7 +72,7 @@ export default class SfpegCustomListDsp extends LightningElement {
         'percent-fixed': {
           template: sfpegPercentFixedDsp,
           standardCellLayout: true,
-          typeAttributes: []
+          typeAttributes: ["size"]
         },
         richText: {
           template: sfpegRichTextDsp,
