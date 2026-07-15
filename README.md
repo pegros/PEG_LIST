@@ -56,6 +56,18 @@ included in the reporstory (with links to their _help_ page when available).
 ℹ️ Please refer to the **[PEG_DC](https://github.com/pegros/PEG_DC)** repository for extra utilities dedicated
 to **Data Cloud** or **AI Prompt** related use cases.
 
+
+## Claude Skills
+
+🛠️ To help you configure the components, a `skills` folder for **[Claude Code](https://claude.com/fr/product/claude-code)**
+is also provided.
+The included `configure-sfpeg-components` skill leverages all the the component
+documentation available in this repository to generate the metadata records and Apex extension
+classes matching your needs.
+
+Simply download its content and put it in your local `.claude` folder to let the magic happen.
+
+
 ## Repository Availability
 
 The source code is freely available for use under the MIT license from this GitHub repository.
