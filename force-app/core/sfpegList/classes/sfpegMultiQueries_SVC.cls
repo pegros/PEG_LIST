@@ -76,6 +76,20 @@ public with sharing class sfpegMultiQueries_SVC extends sfpegListQuery_SVC {
             System.debug(LoggingLevel.WARN,'getData: END KO / ' + error.getMessage());
             throw new AuraHandledException('SOQL Query failure: ' + error.getMessage());
         }
+
+        String orderByField = sfpegList_CTL.CONFIG.QueryOrderBy__c;
+        System.debug('getData: orderByField specified ' + orderByField);
+        if (String.isNotBlank(orderByField)) {
+            System.debug('getData: sorting results by ' + orderByField + ' ' + sfpegList_CTL.CONFIG.QueryOrder__c);
+            try {
+                results.sort(new FieldComparator(orderByField, sfpegList_CTL.CONFIG.QueryOrder__c));
+            }
+            catch (Exception error) {
+                System.debug(LoggingLevel.WARN,'getData: END KO / sort failed - ' + error.getMessage());
+                throw new AuraHandledException('SOQL Query sort failure: ' + error.getMessage());
+            }
+        }
+
         System.debug('getData: END sfpegMultiQueries_SVC implementation with #Items ' + results.size());
         return results;
     }
@@ -84,6 +98,62 @@ public with sharing class sfpegMultiQueries_SVC extends sfpegListQuery_SVC {
     //#####################################################
     // Private Utility Methods
     //#####################################################
+
+    /***
+    * @description  Comparator that sorts List<Object> entries (each a Map<String,Object>) by a
+    *               given field name. Supports String, Boolean, Integer, Long, Decimal/Double,
+    *               and ISO-8601 Date/Datetime strings. Nulls always sort last regardless of direction.
+    ***/
+    @TestVisible
+    private class FieldComparator implements Comparator<Object> {
+        private final String field;
+        private final Integer directionFactor; // 1 = ASC, -1 = DESC
+
+        public FieldComparator(String field, String order) {
+            this.field = field;
+            this.directionFactor = ('DESC' == order) ? -1 : 1;
+        }
+
+        public Integer compare(Object a, Object b) {
+            Object valA = ((Map<String,Object>) a).get(field);
+            Object valB = ((Map<String,Object>) b).get(field);
+
+            if (valA == null && valB == null) return 0;
+            if (valA == null) return 1;   // nulls last regardless of direction
+            if (valB == null) return -1;
+
+            return directionFactor * compareValues(valA, valB);
+        }
+
+        private Integer compareValues(Object a, Object b) {
+            if (a instanceof Boolean) {
+                Boolean bA = (Boolean) a, bB = (Boolean) b;
+                return bA == bB ? 0 : (bA ? 1 : -1);
+            }
+            if (a instanceof Integer) {
+                Integer iA = (Integer) a, iB = (Integer) b;
+                return iA > iB ? 1 : (iA < iB ? -1 : 0);
+            }
+            if (a instanceof Long) {
+                Long lA = (Long) a, lB = (Long) b;
+                return lA > lB ? 1 : (lA < lB ? -1 : 0);
+            }
+            if (a instanceof Decimal) {
+                Decimal dA = (Decimal) a, dB = (Decimal) b;
+                return dA > dB ? 1 : (dA < dB ? -1 : 0);
+            }
+            if (a instanceof Double) {
+                Double dA = (Double) a, dB = (Double) b;
+                return dA > dB ? 1 : (dA < dB ? -1 : 0);
+            }
+            // String, Date and Datetime values from JSON.deserializeUntyped are all Strings;
+            // ISO-8601 lexicographic ordering is equivalent to chronological ordering.
+            String sA = String.valueOf(a);
+            String sB = String.valueOf(b);
+            return sA.compareTo(sB);
+        }
+    }
+
 
     /***
     * @description  Private utility method to fetch the complex SOSL/SOQL query configuration for

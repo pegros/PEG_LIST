@@ -141,4 +141,123 @@ public class  sfpegMultiQueries_TST {
 		System.debug('testGetData: END');
 	}
 
+
+	/***
+	* @description  Test method for the getData() sort path: verifies that QueryOrderBy__c / QueryOrder__c
+	*               are applied to the merged result list.
+	* @see          sfpegMultiQueries_SVC
+	***/
+	@isTest
+	static void testGetDataSort() {
+		System.debug('testGetDataSort: START');
+
+		List<sfpegTestObject__c> rcdList = new List<sfpegTestObject__c>();
+		rcdList.add(new sfpegTestObject__c(Name='Test 1'));
+		rcdList.add(new sfpegTestObject__c(Name='Test 2'));
+		rcdList.add(new sfpegTestObject__c(Name='Test 3'));
+		insert rcdList;
+		System.debug('testGetDataSort: test records inserted ' + rcdList);
+
+		Test.startTest();
+
+		Map<Object,Object> inputData = new Map<Object,Object>();
+
+		System.debug('testGetDataSort: TEST 1 - DESC sort on Name');
+		try {
+			List<Object> outputList = sfpegList_CTL.getData('sfpegTestMultiQueriesSort', (Object)inputData);
+			System.debug('testGetDataSort: returning outputList ' + outputList);
+			Assert.areEqual(3, outputList.size(), '3 records should be returned');
+			String first = (String)((Map<String,Object>)outputList[0]).get('Name');
+			String last  = (String)((Map<String,Object>)outputList[2]).get('Name');
+			Assert.isTrue(first >= last, 'Results should be sorted DESC by Name');
+		}
+		catch (Exception e) {
+			System.debug(LoggingLevel.Error,'testGetDataSort: unexpected exception ' + e.getMessage());
+			Assert.fail('No exception should be raised for sort configuration');
+		}
+
+		Test.stopTest();
+		System.debug('testGetDataSort: END');
+	}
+
+
+	/***
+	* @description  Unit tests for the FieldComparator inner class, covering all supported
+	*               value types and null handling.
+	* @see          sfpegMultiQueries_SVC.FieldComparator
+	***/
+	@isTest
+	static void testFieldComparator() {
+		System.debug('testFieldComparator: START');
+
+		Test.startTest();
+
+		// String — ASC
+		System.debug('testFieldComparator: TEST 1 - String ASC');
+		sfpegMultiQueries_SVC.FieldComparator ascComp = new sfpegMultiQueries_SVC.FieldComparator('val', 'ASC');
+		Map<String,Object> recA = new Map<String,Object>{'val' => 'apple'};
+		Map<String,Object> recB = new Map<String,Object>{'val' => 'banana'};
+		Assert.isTrue(ascComp.compare(recA, recB) < 0, 'apple should sort before banana ASC');
+		Assert.isTrue(ascComp.compare(recB, recA) > 0, 'banana should sort after apple ASC');
+		Assert.areEqual(0, ascComp.compare(recA, recA), 'equal values should return 0');
+
+		// String — DESC
+		System.debug('testFieldComparator: TEST 2 - String DESC');
+		sfpegMultiQueries_SVC.FieldComparator descComp = new sfpegMultiQueries_SVC.FieldComparator('val', 'DESC');
+		Assert.isTrue(descComp.compare(recA, recB) > 0, 'apple should sort after banana DESC');
+		Assert.isTrue(descComp.compare(recB, recA) < 0, 'banana should sort before apple DESC');
+
+		// Null last — ASC
+		System.debug('testFieldComparator: TEST 3 - Null last ASC');
+		Map<String,Object> recNull = new Map<String,Object>{'val' => null};
+		Assert.isTrue(ascComp.compare(recNull, recA) > 0, 'null should sort after non-null ASC');
+		Assert.isTrue(ascComp.compare(recA, recNull) < 0, 'non-null should sort before null ASC');
+		Assert.areEqual(0, ascComp.compare(recNull, recNull), 'two nulls should return 0');
+
+		// Null last — DESC
+		System.debug('testFieldComparator: TEST 4 - Null last DESC');
+		Assert.isTrue(descComp.compare(recNull, recA) > 0, 'null should sort after non-null DESC');
+		Assert.isTrue(descComp.compare(recA, recNull) < 0, 'non-null should sort before null DESC');
+
+		// Integer
+		System.debug('testFieldComparator: TEST 5 - Integer');
+		sfpegMultiQueries_SVC.FieldComparator intComp = new sfpegMultiQueries_SVC.FieldComparator('num', 'ASC');
+		Map<String,Object> recI1 = new Map<String,Object>{'num' => 1};
+		Map<String,Object> recI2 = new Map<String,Object>{'num' => 2};
+		Assert.isTrue(intComp.compare(recI1, recI2) < 0, '1 should sort before 2');
+		Assert.isTrue(intComp.compare(recI2, recI1) > 0, '2 should sort after 1');
+
+		// Decimal
+		System.debug('testFieldComparator: TEST 6 - Decimal');
+		sfpegMultiQueries_SVC.FieldComparator decComp = new sfpegMultiQueries_SVC.FieldComparator('amt', 'DESC');
+		Map<String,Object> recD1 = new Map<String,Object>{'amt' => (Decimal)1.5};
+		Map<String,Object> recD2 = new Map<String,Object>{'amt' => (Decimal)9.9};
+		Assert.isTrue(decComp.compare(recD1, recD2) > 0, '1.5 should sort after 9.9 DESC');
+
+		// Boolean
+		System.debug('testFieldComparator: TEST 7 - Boolean');
+		sfpegMultiQueries_SVC.FieldComparator boolComp = new sfpegMultiQueries_SVC.FieldComparator('flag', 'ASC');
+		Map<String,Object> recTrue  = new Map<String,Object>{'flag' => true};
+		Map<String,Object> recFalse = new Map<String,Object>{'flag' => false};
+		Assert.isTrue(boolComp.compare(recFalse, recTrue) < 0, 'false should sort before true ASC');
+		Assert.isTrue(boolComp.compare(recTrue, recFalse) > 0, 'true should sort after false ASC');
+		Assert.areEqual(0, boolComp.compare(recTrue, recTrue), 'equal booleans should return 0');
+
+		// ISO-8601 Date strings (lexicographic = chronological)
+		System.debug('testFieldComparator: TEST 8 - ISO Date string');
+		sfpegMultiQueries_SVC.FieldComparator dateComp = new sfpegMultiQueries_SVC.FieldComparator('dt', 'ASC');
+		Map<String,Object> recDate1 = new Map<String,Object>{'dt' => '2024-01-01'};
+		Map<String,Object> recDate2 = new Map<String,Object>{'dt' => '2025-06-15'};
+		Assert.isTrue(dateComp.compare(recDate1, recDate2) < 0, '2024 should sort before 2025 ASC');
+
+		// ISO-8601 Datetime strings
+		System.debug('testFieldComparator: TEST 9 - ISO Datetime string');
+		Map<String,Object> recDT1 = new Map<String,Object>{'dt' => '2024-01-01T10:00:00.000Z'};
+		Map<String,Object> recDT2 = new Map<String,Object>{'dt' => '2024-01-01T12:00:00.000Z'};
+		Assert.isTrue(dateComp.compare(recDT1, recDT2) < 0, 'earlier datetime should sort first ASC');
+
+		Test.stopTest();
+		System.debug('testFieldComparator: END');
+	}
+
 }

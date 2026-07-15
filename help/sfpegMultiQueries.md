@@ -32,8 +32,18 @@ In order to use it, the `sfpegList` metadata record should be configured as foll
 * `Query Template` should contain a JSON object with text properties defining the names and SOQL
 query templates to execute.
 
+Optionally, the following properties of the `pagination` section may also be used to globally sort
+the results of the different queries
+* `Query OrderBy Field` should then be set to the API name of the common field to use for sorting 
+* `Order Direction` should then be set to specify the sorting, `null` values being always last
+
+⚠️ You may need to create formula fields with same API Names in the different SObjects used in your
+queries to leverage this unified sorting feature.
+
 
 ## Configuration Example
+
+### Baseline Example - Previous and Next Records
 
 The following example shows a **[sfpegListCmp](/help/sfpegListCmp.md)** in a **CourseOffering** record page
 providing the previous and next **CourseOffering** for the same parent **TrnCourse** record based on 
@@ -72,6 +82,63 @@ For this result, the **sfpegList** metadata record should be configured as follo
     ]
 }
 ```
+
+
+### Order By Example - Custom Activity
+
+The following example shows a **[sfpegListCmp](/help/sfpegListCmp.md)** in an **Account** record page
+providing a custom list of related **Tasks** and **Events** ordered by descending `ActivityDate`.
+
+![Multi SOQL Queries with Sorting](/media/sfpegMultiQueriesActivities.png)
+
+
+For this result, the **sfpegList** metadata record should be configured as follows:
+* `Query Class` set to `sfpegMultiQueries_SVC`
+* `Query Template` set to
+```
+{
+    "Tasks": "SELECT Id, Subject, TypeIcon__c, Status, ActivityDate, Description, OwnerId, Owner.Name FROM Task WHERE WhatId = '{{{ID}}}' AND CreatedDate = LAST_N_DAYS:7 ORDER BY ActivityDate DESC NULLS LAST",
+    "Events": "SELECT Id, Subject, TypeIcon__c, ActivityDate, Description, OwnerId, Owner.Name FROM Event WHERE WhatId = '{{{ID}}}' AND CreatedDate = LAST_N_DAYS:7 ORDER BY ActivityDate DESC NULLS LAST"
+}
+```
+* `Query OrderBy Field` set to `ActivityDate`
+* `Order Direction` set to  `Descending`
+* `Display Type` set to `TileList`
+* `Display Configuration` set to 
+```
+{
+    "keyField": "Id",
+    "variant": "timeline",
+    "stacked":true,
+    "title": { "fieldName": "Subject", "label": "Subject", "action": "showDetails",
+                "sortable": true, "lookup": "Id" },
+    "icon": { "fieldName": "TypeIcon__c", "size": "small" },
+    "columns": [
+        { "fieldName": "Status", "label": "Status", "sortable": true },
+        { "fieldName": "ActivityDate", "label": "Due Date", "type": "date-local", "sortable": true },
+        { "type": "lookup", "fieldName": "Owner.Name", "label": "Owner",
+            "typeAttributes": { "lookup": { "fieldName": "OwnerId" } }, "sortable": true }
+    ],
+    "details": [
+        { "fieldName": "Description", "label": "Description", "wrapText": true }
+    ]
+}
+```
+
+ℹ️ The icon displayed relies on the `TypeIcon__c` formula field defined on the
+`Activity` object (handling `Task` and `Event` customisation). Its formula is the 
+following:
+```
+IF( IsTask,
+    CASE(TEXT(ActivitySubtype),
+        "Call", "standard:log_a_call",
+        "Email", "standard:email",
+        "standard:task"
+    ),
+    "standard:event"
+)
+```
+
 
 ## Technical Details
 
