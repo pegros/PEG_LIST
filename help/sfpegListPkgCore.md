@@ -151,11 +151,20 @@ Install it:
 for the modified country codes in both `sfpegCountries` and `sfpegCountryCodes` global picklists. It is indeed
 impossible to change the code of an existing picklist label.
 
-### February 2025 - v1.3.0
+### July 2026 - v1.3.0
 
 Version content:
 
 - added new **sfpegConfigUtl** utility LWV component to mutualize component configuration
   caching in browser.
+- API version upgraded to **66.0**.
 - upgraded **sfpegListCmp**, **sfpegActionBarCmp** and **sfpegActionHandlerCmp** components
   to use this **sfpegConfigUtl** utility.
+- upgraded the **[sfpegMultiQueries__SVC](/help/sfpegMultiQueries.md)** component to
+include global sorting from multiple independent queries
+
+Install it:
+
+- from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04td2000000RQ85AAG) for production orgs,
+- from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04td2000000RQ85AAG) for sandboxes,
+- or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04td2000000RQ85AAG`

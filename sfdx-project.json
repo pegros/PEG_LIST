@@ -5,14 +5,14 @@
       "default": true
     },
     {
-      "versionName": "Jan. 2026",
-      "versionNumber": "1.2.0.NEXT",
+      "versionName": "July 2026",
+      "versionNumber": "1.3.0.NEXT",
       "path": "force-app/core",
       "default": false,
       "package": "sfpegList-core",
-      "versionDescription": "Core features of the PEG_LIST package as of mid Jan. 2026",
+      "versionDescription": "Core features of the PEG_LIST package as of mid July 2026",
       "postInstallUrl": "https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListPkgCore.md#installation",
-      "releaseNotesUrl": "https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListPkgCore.md#january-2026---v120",
+      "releaseNotesUrl": "https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListPkgCore.md#july-2026---v130",
       "apexTestAccess": {
         "permissionSets": [
           "sfpegListTest",
@@ -22,18 +22,18 @@
       }
     },
     {
-      "versionName": "Jan. 2026",
-      "versionNumber": "1.2.0.NEXT",
+      "versionName": "July 2026",
+      "versionNumber": "1.3.0.NEXT",
       "path": "force-app/extensions",
       "default": false,
       "package": "sfpegList-extensions",
-      "versionDescription": "Extensions to the core PEG_LIST package as of mid Jan. 2026",
+      "versionDescription": "Extensions to the core PEG_LIST package as of mid July 2026",
       "postInstallUrl": "https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListPkgExtensions.md#installation",
-      "releaseNotesUrl": "https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListPkgExtensions.md#january-2026---v120",
+      "releaseNotesUrl": "https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListPkgExtensions.md#july-2026---v130",
       "dependencies": [
         {
           "package": "sfpegList-core",
-          "versionNumber": "1.2.0.LATEST"
+          "versionNumber": "1.3.0.LATEST"
         }
       ],
       "apexTestAccess": {
@@ -45,22 +45,22 @@
       }
     },
     {
-      "versionName": "Jan. 2026",
-      "versionNumber": "1.2.0.NEXT",
+      "versionName": "July 2026",
+      "versionNumber": "1.3.0.NEXT",
       "path": "force-app/examples",
       "default": false,
       "package": "sfpegList-examples",
-      "versionDescription": "Configuration examples of the PEG_LIST package as of mid Jan. 2026",
+      "versionDescription": "Configuration examples of the PEG_LIST package as of mid July 2026",
       "postInstallUrl": "https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListPkgExamples.md#installation",
-      "releaseNotesUrl": "https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListPkgExamples.md#january-2026---v120",
+      "releaseNotesUrl": "https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListPkgExamples.md#july-2026---v130",
       "dependencies": [
         {
           "package": "sfpegList-core",
-          "versionNumber": "1.2.0.LATEST"
+          "versionNumber": "1.3.0.LATEST"
         },
         {
           "package": "sfpegList-extensions",
-          "versionNumber": "1.2.0.LATEST"
+          "versionNumber": "1.3.0.LATEST"
         }
       ],
       "apexTestAccess": {
@@ -75,18 +75,18 @@
       }
     },
     {
-      "versionName": "Jan. 2026",
-      "versionNumber": "1.2.0.NEXT",
+      "versionName": "July 2026",
+      "versionNumber": "1.3.0.NEXT",
       "path": "force-app/utilities",
       "default": false,
       "package": "sfpegList-utilities",
-      "versionDescription": "Utilities for the PEG_LIST package as of mid. Jan. 2026",
+      "versionDescription": "Utilities for the PEG_LIST package as of mid. July 2026",
       "postInstallUrl": "https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListPkgUtilities.md#installation",
-      "releaseNotesUrl": "https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListPkgUtilities.md#january-2026---v120",
+      "releaseNotesUrl": "https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListPkgUtilities.md#july-2026---v130",
       "dependencies": [
         {
           "package": "sfpegList-core",
-          "versionNumber": "1.2.0.LATEST"
+          "versionNumber": "1.3.0.LATEST"
         }
       ],
       "apexTestAccess": {
@@ -98,25 +98,25 @@
       }
     },
     {
-      "versionName": "Jan. 2026",
-      "versionNumber": "1.2.0.NEXT",
+      "versionName": "July 2026",
+      "versionNumber": "1.3.0.NEXT",
       "path": "force-app/legacy",
       "default": false,
       "package": "sfpegList-legacy",
-      "versionDescription": "Legacy Aura components of the PEG_LIST package as of mid Jan. 2026",
+      "versionDescription": "Legacy Aura components of the PEG_LIST package as of mid July 2026",
       "postInstallUrl": "https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListPkgLegacy.md#installation",
-      "releaseNotesUrl": "https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListPkgLegacy.md#january-2026---v120",
+      "releaseNotesUrl": "https://github.com/pegros/PEG_LIST/blob/master/help/sfpegListPkgLegacy.md#july-2026---v130",
       "dependencies": [
         {
           "package": "sfpegList-core",
-          "versionNumber": "1.2.0.LATEST"
+          "versionNumber": "1.3.0.LATEST"
         }
       ]
     }
   ],
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "64.0",
+  "sourceApiVersion": "66.0",
   "packageAliases": {
     "sfpegList-core": "0HoJ7000000XZBUKA4",
     "sfpegList-extensions": "0HoJ7000000XZBZKA4",
@@ -142,6 +142,10 @@
     "sfpegList-core@1.2.0-2": "04tJ7000000xJCDIA2",
     "sfpegList-extensions@1.2.0-2": "04tJ7000000xJCIIA2",
     "sfpegList-utilities@1.2.0-2": "04tJ7000000xJCNIA2",
-    "sfpegList-legacy@1.2.0-2": "04tJ7000000xJCSIA2"
+    "sfpegList-legacy@1.2.0-2": "04tJ7000000xJCSIA2",
+    "sfpegList-core@1.3.0-1": "04td2000000RQ85AAG",
+    "sfpegList-extensions@1.3.0-1": "04td2000000RQ9hAAG",
+    "sfpegList-utilities@1.3.0-1": "04td2000000RQBJAA4",
+    "sfpegList-legacy@1.3.0-1": "04td2000000RQCvAAO"
   }
 }

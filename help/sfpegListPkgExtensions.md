@@ -92,10 +92,18 @@ Install it:
 - from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xJCIIA2) for sandboxes,
 - or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xJCIIA2`
 
-### February 2025 - v1.3.0
+### July 2026 - v1.3.0
 
 Version content:
 
+- dependency with `sfpegList-core` package upgraded
+- API version upgraded to **66.0**.
 - upgraded **sfpegCardCmp**, **sfpegCardListCmp**, **sfpegKpiListCmp**, **sfpegMessageCmp**
   **sfpegProfileCmp** and **sfpegRecordDisplayCmp** components to use the new
   **[sfpegConfigUtl]** utility of the [`sfpegList-core`](/help/sfpegListPkgCore.md) package.
+
+Install it:
+
+- from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04td2000000RQ9hAAG) for production orgs,
+- from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04td2000000RQ9hAAG) for sandboxes,
+- or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04td2000000RQ9hAAG`

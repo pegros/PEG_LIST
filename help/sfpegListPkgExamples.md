@@ -65,3 +65,13 @@ Version content:
 
 🚧 **Pending final packaging** 🚧
 Install it directly by fetching metadata from github repo.
+
+### July 2026 - v1.3.0
+
+Version content:
+
+- dependency with `sfpegList-core` package upgraded
+- API version upgraded to 66.0.
+
+🚧 **Pending final packaging** 🚧
+Install it directly by fetching metadata from github repo.
