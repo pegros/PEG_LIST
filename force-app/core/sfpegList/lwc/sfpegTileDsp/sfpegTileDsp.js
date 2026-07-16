@@ -142,7 +142,7 @@ export default class SfpegTileDsp extends LightningElement {
     }
 
     resetDisplayData() {
-        if (this.isDebug) console.log('resetDisplayData: START ');
+        if (this.isDebug) console.log('resetDisplayData: START with data ', JSON.stringify(this._recordData));
 
         // Card Header initialisation
         if (this.isDebug) console.log('resetDisplayData: title provided ', JSON.stringify(this.configDetails.title));
@@ -269,30 +269,32 @@ export default class SfpegTileDsp extends LightningElement {
                     let newItem = {...iterItem};
                     if (iterItem.disabled) {
                         if (iterItem.disabled.fieldName) {
-                            if (this.isDebug) console.log('resetDisplayData: setting dynamic disabled value ');
+                            if (this.isDebug) console.log('resetDisplayData: setting dynamic disabled value (field based) ', iterItem.disabled.fieldName);
                             newItem.disabled = this._recordData[(iterItem.disabled.fieldName)];
                         }
                         else {
-                            if (this.isDebug) console.log('resetDisplayData: setting static disabled value ');
                             if (this.configDetails.isDynamicCondition) {
+                                if (this.isDebug) console.log('resetDisplayData: setting dynamic disabled value (condition based) ', iterItem.disabled);
                                 newItem.disabled = eval(iterItem.disabled);
                             }
                             else {
+                                if (this.isDebug) console.log('resetDisplayData: setting static disabled value ');
                                 newItem.disabled = (String(iterItem.disabled).toLowerCase() == "true");
                             }
                         }
                     }
                     if (iterItem.hidden) {
                         if (iterItem.hidden.fieldName) {
-                            if (this.isDebug) console.log('resetDisplayData: setting dynamic hidden value ');
+                            if (this.isDebug) console.log('resetDisplayData: setting dynamic hidden value (field based) ', iterItem.hidden.fieldName);
                             newItem.hidden = this._recordData[(iterItem.hidden.fieldName)];
                         }
                         else {
-                            if (this.isDebug) console.log('resetDisplayData: setting static hidden value ');
                             if (this.configDetails.isDynamicCondition) {
-                                newItem.disabled = eval(iterItem.disabled);
+                                if (this.isDebug) console.log('resetDisplayData: setting dynamic hidden value (condition based) ', iterItem.hidden);
+                                newItem.hidden = eval(iterItem.hidden);
                             }
                             else {
+                                if (this.isDebug) console.log('resetDisplayData: setting static hidden value ');
                                 newItem.hidden = (String(iterItem.hidden).toLowerCase() == "true");
                             }
                         }
