@@ -10,10 +10,11 @@
     --sds-c-card-footer-text-align: left;
 }
 .headerActions {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    /*max-width: 50%;*/
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    /*width: fit-content;*/
 }
 /*.slds-card_boundary .headerActions {
     display: flex;

@@ -22,7 +22,7 @@
                     </div>
                 </template>
                 <div class="slds-media__body" >
-                    <h2 class="slds-card__header-title">
+                    <h2 class="slds-card__header-title" title={formatTitle}>
                         <span class="slds-truncate">{formatTitle}</span>
                     </h2>
                     <!--<h2 class="slds-card__header-title">
@@ -33,11 +33,12 @@
                 </div>
             </div>
 
-            <div class="headerActions slds-var-p-vertical_xxx-small" slot="actions">
+            <!-- slot="actions" -->
+            <div lwc:ref="actionSlot" slot="actions" class="headerActions slds-var-pfrfr-vertical_xxx-small">
 
                 <!-- Header Actions -->
                 <template lwc:if={hasHeaderActionConfig}>
-                    <lightning-button-group>
+                    <lightning-button-group class="slds-var-m-vertical_xxx-small">
                         <c-sfpeg-action-bar-cmp bar-class= ""
                                                 record-list={selectedRecords}
                                                 config-name={actionConfigName}
@@ -55,7 +56,7 @@
                     </lightning-button-group>
                 </template>
 
-                <lightning-button-group>
+                <lightning-button-group  class="slds-var-m-vertical_xxx-small">
                     <!-- Export Action -->
                     <template lwc:if={showExport}>
                         <lightning-button-icon

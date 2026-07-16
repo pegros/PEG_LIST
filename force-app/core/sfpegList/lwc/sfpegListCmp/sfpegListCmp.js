@@ -86,7 +86,7 @@ export default class SfpegListCmp extends LightningElement {
     @api isCollapsed = false;   // Flag inddicating the initial/current collapsed state
 
     @api forceHidden = false;   // Flag to force the list display in hidden mode, even if configuration not hidden
-    @api disabled = false;      // Flag to block query exeution (a.g. upon init)
+    @api disabled = false;      // Flag to block query execution (a.g. upon init)
     @api isDebug = false;       // Debug mode activation
     @api isDebugFine = false;   // Debug mode activation for all subcomponents.
 
@@ -538,6 +538,8 @@ export default class SfpegListCmp extends LightningElement {
         }
     }
 
+    // Complex handling of header action bar wrapping
+    _actionHeaderObserver;
     renderedCallback() {
         if (this.isDebug) console.log('rendered: START for config ',this.configName);
 
@@ -569,7 +571,57 @@ export default class SfpegListCmp extends LightningElement {
             if (this.isDebug) console.log('rendered: Environment is in SLDS v2');
         }
 
+        if (this._actionHeaderObserver) {
+            if (this.isDebug) console.log('rendered: action header observer already initialized');
+        }
+        else {
+            if (this.isDebug) console.log('rendered: initializing action header observer');
+            const target = this.template.host.parentElement;
+
+            this._actionHeaderObserver = new ResizeObserver(([entry]) => {
+                if (this.isDebug) console.log('observer: START for actionHeader with new body width ', entry.contentRect.width);
+                const maxWidth = (entry.contentRect.width - (this.iconName ? 36 : 0) - (this.cardTitle ? entry.contentRect.width / 2 : 0));
+                this.refs.actionSlot.style.maxWidth = maxWidth + 'px';
+                if (this.isDebug) console.log('observer: new action max width ', this.refs.actionSlot.style.maxWidth);
+                
+                this.refs.actionSlot.style.width = ''; // reset to let wrapping settle
+                requestAnimationFrame(() => {
+                    if (this.isDebug) console.log('observer: first rendering occurred');
+                    const children = [...this.refs.actionSlot.children];
+                    const totalWidth = children.reduce((sum, c) => sum + c.offsetWidth, 0);
+
+                    if (totalWidth > maxWidth) {
+                        if (this.isDebug) console.log('observer: wrapping occured');
+                        const contentWidth = Math.max(
+                            ...[...this.refs.actionSlot.children].map(c => c.offsetWidth)
+                        ) + 5;
+                        if (this.isDebug) console.log('observer: max individual contentWidth evaluated ',contentWidth);
+                        this.refs.actionSlot.style.width = contentWidth + 'px';
+
+                        if (contentWidth > maxWidth) {
+                            this.refs.actionSlot.style.maxWidth =  (contentWidth + 5) + 'px';
+                            if (this.isDebug) console.log('observer: max width also reset ',this.refs.actionSlot.style.maxWidth);
+                        }
+                    }
+                    else {
+                        if (this.isDebug) console.log('observer: no wrapping occured');
+                    }
+                    if (this.isDebug) console.log('observer: END for actionHeader with new action width ', this.refs.actionSlot.style.width);
+                });
+                if (this.isDebug) console.log('observer: awaiting action wrapping');
+            });
+
+            this._actionHeaderObserver.observe(target);
+            if (this.isDebug) console.log('rendered: observing div body');
+        }
+
         if (this.isDebug) console.log('rendered: END');
+    }
+
+    disconnectedCallback() {
+        if (this.isDebug) console.log('disconnect: START for config ',this.configName);
+        this._actionHeaderObserver?.disconnect();
+        if (this.isDebug) console.log('disconnect: END');
     }
 
     //----------------------------------------------------------------
@@ -1424,8 +1476,8 @@ export default class SfpegListCmp extends LightningElement {
         this.errorMsg = '';
 
         if ((action.name) || (action.subTypeAttributes && action.subTypeAttributes.name)) {
-            let actioName = action.name || action.subTypeAttributes.name;
-            if (this.isDebug) console.log('handleRowAction: triggering action ',actioName);
+            let actionName = action.name || action.subTypeAttributes.name;
+            if (this.isDebug) console.log('handleRowAction: triggering action ',actionName);
 
             //let rowActionBar = this.template.querySelector('c-sfpeg-action-bar-cmp[data-my-id=rowActions]');
             let rowActionBar = this.refs.rowActions;
@@ -1433,7 +1485,7 @@ export default class SfpegListCmp extends LightningElement {
 
             try {
                 if (this.isDebug) console.log('handleRowAction: triggering action');
-                rowActionBar.executeBarAction(actioName,event.detail.row);
+                rowActionBar.executeBarAction(actionName,event.detail.row);
                 if (this.isDebug) console.log('handleRowAction: END / action triggered');
             }
             catch (error) {
