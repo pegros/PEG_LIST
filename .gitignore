@@ -46,3 +46,6 @@ force-app/default/
 .sf/
 .sfdx/
 Deployment.md
+
+.mcp.json
+core.code-workspace
