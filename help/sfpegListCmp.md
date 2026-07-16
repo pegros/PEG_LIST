@@ -821,7 +821,7 @@ _Notes_:
   column types. Among others it does not for row actions set in the `menu` property due to a current
   **[lightning-datatable](https://developer.salesforce.com/docs/component-library/bundle/lightning-datatable/documentation)** component limitation.
 
-For the _CardList_ and _TileList_ modes, any entry in the `menu` property may be dynamically `disabled`
+ℹ️ For the _CardList_ and _TileList_ modes, any entry in the `menu` property may be dynamically `disabled`
 or `hidden` in a similar way. However the `isDynamicMenu` boolean property needs to be explicitly set
 to `true` in the configuration:
 
@@ -843,9 +843,13 @@ to `true` in the configuration:
 ...
 ```
 
-In addition, by setting `"isDynamicCondition":true` in addition to `"isDynamicMenu":true`
+ℹ️ In addition, by setting `"isDynamicCondition":true` in addition to `"isDynamicMenu":true`
 in the configuration, the `disabled` and `hidden` parameters may be dynamically evaluated
 (via `eval()` statement) out of a textual condition instead of a pure boolean value.
+
+⚠️ Beware that this dynamic condition does not support `{{{ROW.xxx}}}` merge tokens yet
+and is meant to handle global context conditions (e.g. from `{{{ROW.xxx}}}` or `{{{USR.xxx}}}`
+tokens)!
 
 ### List Refresh after Flow Popup Execution
 
