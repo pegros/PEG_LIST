@@ -710,11 +710,20 @@ export default class SfpegListCmp extends LightningElement {
                     this.configDetails.sortFields = [];
                     let titleField = 'NOT_SET';
                     if ((this.configDetails.display.title) && (this.configDetails.display.title.sortable)) {
+                        if (this.isDebug) console.log('finalizeConfig: registering title field as sort option',JSON.stringify(this.configDetails.display.title));
                         (this.configDetails.sortFields).push(this.configDetails.display.title);
                         titleField = this.configDetails.display.title.fieldName;
                     }
                     if (this.configDetails.display.columns) {
+                        if (this.isDebug) console.log('finalizeConfig: registering sortable column fields as sort option');
                         this.configDetails.display.columns.forEach(item => {
+                            if ((item.sortable) && (item.fieldName !== titleField))
+                                (this.configDetails.sortFields).push(item);
+                        });
+                    }
+                    if (this.configDetails.display.details) {
+                        if (this.isDebug) console.log('finalizeConfig: registering sortable details fields as sort option');
+                        this.configDetails.display.details.forEach(item => {
                             if ((item.sortable) && (item.fieldName !== titleField))
                                 (this.configDetails.sortFields).push(item);
                         });
@@ -734,11 +743,20 @@ export default class SfpegListCmp extends LightningElement {
                     this.configDetails.filterFields = [{'label': this.filterAllOption,'fieldName':'ALL','selected':true}];
                     let titleField = 'NOT_SET';
                     if ((this.configDetails.display.title)) {
+                        if (this.isDebug) console.log('finalizeConfig: registering title field as filter',JSON.stringify(this.configDetails.display.title));
                         (this.configDetails.filterFields).push(this.configDetails.display.title);
                         titleField = this.configDetails.display.title.fieldName;
                     }
                     if (this.configDetails.display.columns) {
+                        if (this.isDebug) console.log('finalizeConfig: registering column fields as filters');
                         this.configDetails.display.columns.forEach(item => {
+                            if ((item.sortable) && (item.fieldName !== titleField))
+                                 (this.configDetails.filterFields).push(item);
+                        });
+                    }
+                    if (this.configDetails.display.details) {
+                        if (this.isDebug) console.log('finalizeConfig: registering details fields as filters');
+                        this.configDetails.display.details.forEach(item => {
                             if ((item.sortable) && (item.fieldName !== titleField))
                                  (this.configDetails.filterFields).push(item);
                         });

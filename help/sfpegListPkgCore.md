@@ -168,3 +168,17 @@ Install it:
 - from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04td2000000RQ85AAG) for production orgs,
 - from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04td2000000RQ85AAG) for sandboxes,
 - or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04td2000000RQ85AAG`
+
+
+### Next Version - v1.4.0 🚧
+
+Version content:
+
+- the **[sfpegListCmp](/help/sfpegListCmp.md)** component has been fixed
+to properly support `sortable` also for fields declared in the `details`
+property in **sfpegList** metadata (for expandable detailed section).
+
+Install it:
+
+🚧 **Pending final packaging** 🚧
+Install it directly by fetching metadata from github repo.
