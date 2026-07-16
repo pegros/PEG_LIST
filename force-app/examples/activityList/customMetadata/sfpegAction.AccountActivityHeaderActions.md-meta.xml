@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Account Activity Header Actions</label>
+    <protected>false</protected>
+    <values>
+        <field>ActionControls__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Actions__c</field>
+        <value xsi:type="xsd:string">[
+  {
+    &quot;name&quot;: &quot;newTask&quot;,
+    &quot;iconName&quot;: &quot;standard:task&quot;,
+    &quot;type&quot;: &quot;menu&quot;,
+    &quot;align&quot;: &quot;left&quot;,
+    &quot;items&quot;: [
+      {
+        &quot;name&quot;: &quot;newTaskForm&quot;,
+        &quot;label&quot;: &quot;New Task&quot;,
+        &quot;iconName&quot;: &quot;standard:task&quot;,
+        &quot;action&quot;: {
+          &quot;type&quot;: &quot;ldsForm&quot;,
+          &quot;params&quot;: {
+            &quot;title&quot;: &quot;New Task&quot;,
+            &quot;columns&quot;: 1,
+            &quot;record&quot;: { &quot;ObjectApiName&quot;: &quot;Task&quot;, &quot;WhatId&quot;: &quot;{{{GEN.recordId}}}&quot;, &quot;TaskSubtype&quot;: &quot;Task&quot; },
+            &quot;fields&quot;: [
+              { &quot;name&quot;: &quot;WhatId&quot;, &quot;hidden&quot;: true },
+              { &quot;name&quot;: &quot;TaskSubtype&quot;, &quot;hidden&quot;: true },
+              { &quot;name&quot;: &quot;Subject&quot;, &quot;required&quot;: true },
+              { &quot;name&quot;: &quot;Status&quot; },
+              { &quot;name&quot;: &quot;Priority&quot; },
+              { &quot;name&quot;: &quot;ActivityDate&quot; },
+              { &quot;name&quot;: &quot;OwnerId&quot; },
+              { &quot;name&quot;: &quot;Description&quot; }
+            ],
+            &quot;next&quot;: { &quot;type&quot;: &quot;done&quot;, &quot;params&quot;: { &quot;type&quot;: &quot;refresh&quot; } }
+          }
+        }
+      },
+      {
+        &quot;name&quot;: &quot;filterTasks&quot;,
+        &quot;label&quot;: &quot;Tasks only&quot;,
+        &quot;iconName&quot;: &quot;utility:filter&quot;,
+        &quot;action&quot;: {
+          &quot;type&quot;: &quot;done&quot;,
+          &quot;params&quot;: { &quot;type&quot;: &quot;filter&quot;, &quot;params&quot;: { &quot;scope&quot;: &quot;TypeName__c&quot;, &quot;string&quot;: &quot;Task&quot; } }
+        }
+      },
+      {
+        &quot;name&quot;: &quot;filterAllFromTask&quot;,
+        &quot;label&quot;: &quot;All activities&quot;,
+        &quot;iconName&quot;: &quot;utility:filterList&quot;,
+        &quot;action&quot;: {
+          &quot;type&quot;: &quot;done&quot;,
+          &quot;params&quot;: { &quot;type&quot;: &quot;filter&quot;, &quot;params&quot;: { &quot;scope&quot;: &quot;ALL&quot;, &quot;string&quot;: &quot;&quot; } }
+        }
+      }
+    ]
+  },
+  {
+    &quot;name&quot;: &quot;logCall&quot;,
+    &quot;iconName&quot;: &quot;standard:log_a_call&quot;,
+    &quot;type&quot;: &quot;menu&quot;,
+    &quot;align&quot;: &quot;left&quot;,
+    &quot;items&quot;: [
+      {
+        &quot;name&quot;: &quot;logCallForm&quot;,
+        &quot;label&quot;: &quot;Log a Call&quot;,
+        &quot;iconName&quot;: &quot;standard:log_a_call&quot;,
+        &quot;action&quot;: {
+          &quot;type&quot;: &quot;ldsForm&quot;,
+          &quot;params&quot;: {
+            &quot;title&quot;: &quot;Log a Call&quot;,
+            &quot;columns&quot;: 1,
+            &quot;record&quot;: { &quot;ObjectApiName&quot;: &quot;Task&quot;, &quot;WhatId&quot;: &quot;{{{GEN.recordId}}}&quot;, &quot;TaskSubtype&quot;: &quot;Call&quot;, &quot;Status&quot;: &quot;Completed&quot; },
+            &quot;fields&quot;: [
+              { &quot;name&quot;: &quot;WhatId&quot;, &quot;hidden&quot;: true },
+              { &quot;name&quot;: &quot;TaskSubtype&quot;, &quot;hidden&quot;: true },
+              { &quot;name&quot;: &quot;Subject&quot;, &quot;required&quot;: true },
+              { &quot;name&quot;: &quot;Status&quot; },
+              { &quot;name&quot;: &quot;ActivityDate&quot; },
+              { &quot;name&quot;: &quot;OwnerId&quot; },
+              { &quot;name&quot;: &quot;Description&quot; }
+            ],
+            &quot;next&quot;: { &quot;type&quot;: &quot;done&quot;, &quot;params&quot;: { &quot;type&quot;: &quot;refresh&quot; } }
+          }
+        }
+      },
+      {
+        &quot;name&quot;: &quot;filterCalls&quot;,
+        &quot;label&quot;: &quot;Calls only&quot;,
+        &quot;iconName&quot;: &quot;utility:filter&quot;,
+        &quot;action&quot;: {
+          &quot;type&quot;: &quot;done&quot;,
+          &quot;params&quot;: { &quot;type&quot;: &quot;filter&quot;, &quot;params&quot;: { &quot;scope&quot;: &quot;TypeName__c&quot;, &quot;string&quot;: &quot;Call&quot; } }
+        }
+      },
+      {
+        &quot;name&quot;: &quot;filterAllFromCall&quot;,
+        &quot;label&quot;: &quot;All activities&quot;,
+        &quot;iconName&quot;: &quot;utility:filterList&quot;,
+        &quot;action&quot;: {
+          &quot;type&quot;: &quot;done&quot;,
+          &quot;params&quot;: { &quot;type&quot;: &quot;filter&quot;, &quot;params&quot;: { &quot;scope&quot;: &quot;ALL&quot;, &quot;string&quot;: &quot;&quot; } }
+        }
+      }
+    ]
+  },
+  {
+    &quot;name&quot;: &quot;newEvent&quot;,
+    &quot;iconName&quot;: &quot;standard:event&quot;,
+    &quot;type&quot;: &quot;menu&quot;,
+    &quot;align&quot;: &quot;left&quot;,
+    &quot;items&quot;: [
+      {
+        &quot;name&quot;: &quot;newEventForm&quot;,
+        &quot;label&quot;: &quot;New Event&quot;,
+        &quot;iconName&quot;: &quot;standard:event&quot;,
+        &quot;action&quot;: {
+          &quot;type&quot;: &quot;ldsForm&quot;,
+          &quot;params&quot;: {
+            &quot;title&quot;: &quot;New Event&quot;,
+            &quot;columns&quot;: 1,
+            &quot;record&quot;: { &quot;ObjectApiName&quot;: &quot;Event&quot;, &quot;WhatId&quot;: &quot;{{{GEN.recordId}}}&quot;, &quot;TaskSubtype&quot;: &quot;Call&quot; },
+            &quot;fields&quot;: [
+              { &quot;name&quot;: &quot;WhatId&quot;, &quot;hidden&quot;: true },
+              { &quot;name&quot;: &quot;EventSubtype&quot;, &quot;hidden&quot;: true },
+              { &quot;name&quot;: &quot;Subject&quot;, &quot;required&quot;: true },
+              { &quot;name&quot;: &quot;ActivityDateTime&quot;, &quot;required&quot;: true },
+              { &quot;name&quot;: &quot;EndDateTime&quot;, &quot;required&quot;: true },
+              { &quot;name&quot;: &quot;OwnerId&quot; },
+              { &quot;name&quot;: &quot;Description&quot; }
+            ],
+            &quot;next&quot;: { &quot;type&quot;: &quot;done&quot;, &quot;params&quot;: { &quot;type&quot;: &quot;refresh&quot; } }
+          }
+        }
+      },
+      {
+        &quot;name&quot;: &quot;viewCalendar&quot;,
+        &quot;label&quot;: &quot;View Calendar&quot;,
+        &quot;iconName&quot;: &quot;utility:new_window&quot;,
+        &quot;action&quot;: {
+          &quot;type&quot;: &quot;navigation&quot;,
+          &quot;params&quot;: {
+            &quot;type&quot;: &quot;standard__objectPage&quot;,
+            &quot;attributes&quot;: {
+              &quot;objectApiName&quot;: &quot;Event&quot;,
+              &quot;actionName&quot;: &quot;home&quot;
+            }
+          }
+        }
+      },
+      {
+        &quot;name&quot;: &quot;filterEvents&quot;,
+        &quot;label&quot;: &quot;Events only&quot;,
+        &quot;iconName&quot;: &quot;utility:filter&quot;,
+        &quot;action&quot;: {
+          &quot;type&quot;: &quot;done&quot;,
+          &quot;params&quot;: { &quot;type&quot;: &quot;filter&quot;, &quot;params&quot;: { &quot;scope&quot;: &quot;TypeName__c&quot;, &quot;string&quot;: &quot;Event&quot; } }
+        }
+      },
+      {
+        &quot;name&quot;: &quot;filterAllFromEvent&quot;,
+        &quot;label&quot;: &quot;All activities&quot;,
+        &quot;iconName&quot;: &quot;utility:filterList&quot;,
+        &quot;action&quot;: {
+          &quot;type&quot;: &quot;done&quot;,
+          &quot;params&quot;: { &quot;type&quot;: &quot;filter&quot;, &quot;params&quot;: { &quot;scope&quot;: &quot;ALL&quot;, &quot;string&quot;: &quot;&quot; } }
+        }
+      }
+    ]
+  },
+  {
+    &quot;name&quot;: &quot;logEmail&quot;,
+    &quot;iconName&quot;: &quot;standard:email&quot;,
+    &quot;type&quot;: &quot;menu&quot;,
+    &quot;align&quot;: &quot;left&quot;,
+    &quot;items&quot;: [
+      {
+        &quot;name&quot;: &quot;logEmailForm&quot;,
+        &quot;label&quot;: &quot;Log an Email&quot;,
+        &quot;iconName&quot;: &quot;standard:email&quot;,
+        &quot;action&quot;: {
+          &quot;type&quot;: &quot;ldsForm&quot;,
+          &quot;params&quot;: {
+            &quot;title&quot;: &quot;Log an Email&quot;,
+            &quot;columns&quot;: 1,
+            &quot;record&quot;: { &quot;ObjectApiName&quot;: &quot;Task&quot;, &quot;WhatId&quot;: &quot;{{{GEN.recordId}}}&quot;, &quot;TaskSubtype&quot;: &quot;Email&quot;, &quot;Status&quot;:&quot;Completed&quot; },
+            &quot;fields&quot;: [
+              { &quot;name&quot;: &quot;WhatId&quot;, &quot;hidden&quot;: true },
+              { &quot;name&quot;: &quot;TaskSubtype&quot;, &quot;hidden&quot;: true },
+              { &quot;name&quot;: &quot;Subject&quot;, &quot;required&quot;: true },
+              { &quot;name&quot;: &quot;Status&quot; },
+              { &quot;name&quot;: &quot;ActivityDate&quot; },
+              { &quot;name&quot;: &quot;OwnerId&quot; },
+              { &quot;name&quot;: &quot;Description&quot; }
+            ],
+            &quot;next&quot;: { &quot;type&quot;: &quot;done&quot;, &quot;params&quot;: { &quot;type&quot;: &quot;refresh&quot; } }
+          }
+        }
+      },
+      {
+        &quot;name&quot;: &quot;sendEmail&quot;,
+        &quot;label&quot;: &quot;Send an Email&quot;,
+        &quot;iconName&quot;: &quot;standard:email&quot;,
+        &quot;action&quot;: {
+           &quot;type&quot;:&quot;navigation&quot;,
+           &quot;params&quot;: {
+              &quot;type&quot;: &quot;standard__quickAction&quot;,
+              &quot;attributes&quot;: {
+                 &quot;apiName&quot;: &quot;Global.SendEmail&quot;
+              },
+              &quot;state&quot;: {
+                 &quot;recordId&quot;: &quot;{{{GEN.recordId}}}&quot;,
+                 &quot;defaultFieldValues&quot;: &quot;RelatedToId={{{GEN.recordId}}},Subject=UTF(((Regarding your {{{RCD.Name}}} account update&quot;)))
+              }
+           }
+        }
+      },
+      {
+        &quot;name&quot;: &quot;filterEmails&quot;,
+        &quot;label&quot;: &quot;Emails only&quot;,
+        &quot;iconName&quot;: &quot;utility:filter&quot;,
+        &quot;action&quot;: {
+          &quot;type&quot;: &quot;done&quot;,
+          &quot;params&quot;: { &quot;type&quot;: &quot;filter&quot;, &quot;params&quot;: { &quot;scope&quot;: &quot;TypeName__c&quot;, &quot;string&quot;: &quot;Email&quot; } }
+        }
+      },
+      {
+        &quot;name&quot;: &quot;filterAllFromEmail&quot;,
+        &quot;label&quot;: &quot;All activities&quot;,
+        &quot;iconName&quot;: &quot;utility:filterList&quot;,
+        &quot;action&quot;: {
+          &quot;type&quot;: &quot;done&quot;,
+          &quot;params&quot;: { &quot;type&quot;: &quot;filter&quot;, &quot;params&quot;: { &quot;scope&quot;: &quot;ALL&quot;, &quot;string&quot;: &quot;&quot; } }
+        }
+      }
+    ]
+  }
+]</value>
+    </values>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">Header actions for Account Activity Timeline. Four menus (Task/Call/Event/Email): creation form pre-filled with Account WhatId, type filter, and reset-to-all. List refreshes on save.</value>
+    </values>
+    <values>
+        <field>DoEvaluation__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>NotificationChannels__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Permission__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Scope__c</field>
+        <value xsi:type="xsd:string">Account</value>
+    </values>
+</CustomMetadata>

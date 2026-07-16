@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Account Activity Row Actions</label>
+    <protected>false</protected>
+    <values>
+        <field>ActionControls__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Actions__c</field>
+        <value xsi:type="xsd:string">[
+  {
+    &quot;name&quot;: &quot;closeActivity&quot;,
+    &quot;label&quot;: &quot;Close&quot;,
+    &quot;iconName&quot;: &quot;utility:check&quot;,
+    &quot;action&quot;: {
+      &quot;type&quot;: &quot;ldsForm&quot;,
+      &quot;params&quot;: {
+        &quot;title&quot;: &quot;Close Activity&quot;,
+        &quot;message&quot;: &quot;Please review description before confirming the closing.&quot;,
+        &quot;columns&quot;: 1,
+        &quot;record&quot;: { &quot;Id&quot;: &quot;{{{ROW.Id}}}&quot;, &quot;ObjectApiName&quot;: &quot;Task&quot;,  &quot;Status&quot;: &quot;Completed&quot; },
+        &quot;fields&quot;: [
+          { &quot;name&quot;: &quot;Status&quot;, &quot;disabled&quot;: true },
+          { &quot;name&quot;: &quot;Description&quot; }
+        ],
+        &quot;next&quot;: { &quot;type&quot;: &quot;done&quot;, &quot;params&quot;: { &quot;type&quot;: &quot;refresh&quot; } }
+      }
+    }
+  },
+  {
+    &quot;name&quot;: &quot;editActivity&quot;,
+    &quot;label&quot;: &quot;Edit&quot;,
+    &quot;iconName&quot;: &quot;utility:edit&quot;,
+    &quot;action&quot;: {
+      &quot;type&quot;: &quot;edit&quot;
+    }
+  }
+]</value>
+    </values>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">Row actions for Account Activity Timeline. Single Edit action opens the native Salesforce edit popup for the selected row (works for both Task and Event records).</value>
+    </values>
+    <values>
+        <field>DoEvaluation__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>NotificationChannels__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Permission__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Scope__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

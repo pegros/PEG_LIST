@@ -31,7 +31,12 @@ The following set of LWC components is available for use in Lightning _App Build
   **[sfpegCardCmp](/help/sfpegCardCmp.md)** to be able to to inject the card `recordId`
   from a global context instead of being the ID of the current page record.
 
-It also provides a wide range of **sfpegList** metadata records for miscellaneous use cases
+It also provides a wide range of **sfpegList** metadata records for miscellaneous use cases, e.g.
+- a custom Activity (Event + Task) related list (`activityList` folder)
+- an actionnable Opportunity + Quote tree grid related list (`opportunityQuoteList` folder)
+
+⚠️ You might need to grant your user access to the custom fields included in these folders.
+
 
 ## Technical Details
 
