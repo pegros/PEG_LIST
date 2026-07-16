@@ -61,9 +61,13 @@ almost every non-trivial config also needs `references/actions.md`.
    `Scope`, and `Permission` if access must be restricted.
 3. **Write the JSON** for the main rich-text field(s) using the schema in the relevant
    reference. Start from one of the faithful example snippets and adapt it.
-4. **Add merge tokens** for anything contextual. Confirm the running user has read access to
+4. **For `sfpegList__mdt` records** — always ask the user whether an empty-state message
+   should be shown when the query returns no data. If yes, add `"emptyMsg"` (text) and
+   `"emptyVariant": "info"` (or omit for the default warning icon) to `DisplayConfig__c`.
+   Example: `"emptyMsg": "No records found.", "emptyVariant": "info"`.
+5. **Add merge tokens** for anything contextual. Confirm the running user has read access to
    every field referenced. Wrap text/rich-text values that may contain `"` in `ESCAPE(((…)))`.
-5. **Wire actions** if needed: create/select an `sfpegAction__mdt` record and reference it
+6. **Wire actions** if needed: create/select an `sfpegAction__mdt` record and reference it
    (row actions, header actions, card actions, message actions, profile actions, KPI actions).
 6. **Deploy** the custom metadata record(s) (`sf project deploy start --metadata
    CustomMetadata:<Object>.<Name>`), then select them in App/Site Builder.
