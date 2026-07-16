@@ -320,7 +320,11 @@ filter `scope` and `string` to be applied.
     ...
 ```
 
-_Note_: if no scope is defined, the default _ALL_ scope is used.
+ℹ️ If no scope is defined, the default _ALL_ scope is used.
+
+⚠️ Beware that only the _filterable_ fields (i.e. those with the `sortable` property 
+set to `true` in the `DisplayConfiguration`) are available for the action `scope`. 
+
 
 ### Row Selection and Mass Action Handling
 
