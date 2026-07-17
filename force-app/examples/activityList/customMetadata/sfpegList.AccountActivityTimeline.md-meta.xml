@@ -30,11 +30,11 @@ Displays subject (title), type icon, status, due date, owner (lookup) and descri
   &quot;columns&quot;: [
     { &quot;fieldName&quot;: &quot;Status&quot;, &quot;label&quot;: &quot;Status&quot;, &quot;sortable&quot;: true },
     { &quot;fieldName&quot;: &quot;ActivityDate&quot;, &quot;label&quot;: &quot;Due Date&quot;, &quot;type&quot;: &quot;date-local&quot;, &quot;sortable&quot;: true },
-    { &quot;type&quot;: &quot;lookup&quot;, &quot;fieldName&quot;: &quot;Owner.Name&quot;, &quot;label&quot;: &quot;Owner&quot;, &quot;typeAttributes&quot;: { &quot;lookup&quot;: { &quot;fieldName&quot;: &quot;OwnerId&quot; } }, &quot;sortable&quot;: true },
-    { &quot;fieldName&quot;: &quot;TypeName__c&quot;, &quot;label&quot;: &quot;Type&quot;,  &quot;sortable&quot;: true }
+    { &quot;type&quot;: &quot;lookup&quot;, &quot;fieldName&quot;: &quot;Owner.Name&quot;, &quot;label&quot;: &quot;Owner&quot;, &quot;typeAttributes&quot;: { &quot;lookup&quot;: { &quot;fieldName&quot;: &quot;OwnerId&quot; } },&quot;sortable&quot;: true }
   ],
   &quot;details&quot;: [
-    { &quot;fieldName&quot;: &quot;Description&quot;, &quot;label&quot;: &quot;Description&quot;, &quot;wrapText&quot;: true }
+    { &quot;fieldName&quot;: &quot;Description&quot;, &quot;label&quot;: &quot;Description&quot;, &quot;wrapText&quot;: true },
+    { &quot;fieldName&quot;: &quot;TypeName__c&quot;, &quot;label&quot;: &quot;Type&quot;,  &quot;sortable&quot;: true }
   ],
   &quot;isDynamicMenu&quot;:true,
   &quot;menu&quot;: [
