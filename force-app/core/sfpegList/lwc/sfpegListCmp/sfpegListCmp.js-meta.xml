@@ -38,7 +38,7 @@
                         label="Button Size"
                         type="String"
                         datasource="x-small,small,medium"
-                        default="small"
+                        default="medium"
                         description="Size of the standard header buttons (to align with custom header actions)"/>
 
             <property   name="configName"

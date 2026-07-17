@@ -538,7 +538,10 @@ export default class SfpegListCmp extends LightningElement {
         }
     }
 
-    // Complex handling of header action bar wrapping
+    //----------------------------------------------------------------
+    // Complex handling of header action bar wrapping not possible via mere CSS
+    //----------------------------------------------------------------
+
     _actionHeaderObserver;
     renderedCallback() {
         if (this.isDebug) console.log('rendered: START for config ',this.configName);
@@ -576,11 +579,16 @@ export default class SfpegListCmp extends LightningElement {
         }
         else {
             if (this.isDebug) console.log('rendered: initializing action header observer');
-            const target = this.template.host.parentElement;
+            //const target = this.template.host.parentElement;
+            //const target = this.refs.bodyWidthEval;
+            const target = this.refs.wrapperDiv;
 
             this._actionHeaderObserver = new ResizeObserver(([entry]) => {
                 if (this.isDebug) console.log('observer: START for actionHeader with new body width ', entry.contentRect.width);
-                const maxWidth = (entry.contentRect.width - (this.iconName ? 36 : 0) - (this.cardTitle ? entry.contentRect.width / 2 : 0));
+                //if (this.isDebug) console.log('observer: body offsetWidth ', this.refs.bodyWidthEval?.offsetWidth);
+                //if (this.isDebug) console.log('observer: body contentRect width ', this.refs.bodyWidthEval?.contentRect?.width);
+                const bodyWidth = entry.contentRect.width;
+                const maxWidth = (entry.contentRect.width - (this.iconName ? 36 : 0) - (this.isCollapsible ? 24 : 0) - (this.cardTitle ? 75 : 0));
                 this.refs.actionSlot.style.maxWidth = maxWidth + 'px';
                 if (this.isDebug) console.log('observer: new action max width ', this.refs.actionSlot.style.maxWidth);
                 
@@ -599,7 +607,12 @@ export default class SfpegListCmp extends LightningElement {
                         this.refs.actionSlot.style.width = contentWidth + 'px';
 
                         if (contentWidth > maxWidth) {
-                            this.refs.actionSlot.style.maxWidth =  (contentWidth + 5) + 'px';
+                            if (this.isDebug) console.log('observer: contentWidth ',contentWidth);
+                            if (this.isDebug) console.log('observer: greater than max width ',maxWidth);
+                            if (this.isDebug) console.log('observer: for body width  ',bodyWidth);
+                            //this.refs.actionSlot.style.maxWidth =  Math.min(bodyWidth - (this.iconName ? 36 : 0) - (this.cardTitle ? 10 : 0), (contentWidth + 5)) + 'px';
+                            this.refs.actionSlot.style.maxWidth =  Math.min(bodyWidth, (contentWidth + 5)) + 'px';
+                            this.refs.actionSlot.style.maxWidth = (contentWidth + 5) + 'px';
                             if (this.isDebug) console.log('observer: max width also reset ',this.refs.actionSlot.style.maxWidth);
                         }
                     }

@@ -313,6 +313,88 @@ export default class SfpegActionBarCmp extends NavigationMixin(LightningElement)
         }
     }
 
+    _overflowInitialised;
+    _overflowObserver;
+    _observerInitialised;
+    renderedCallback(){
+        if (this.isDebug) console.log('rendered: START for ActionBar', this.configName);
+        if (this.isDebug) console.log('rendered: recordId ', this.recordId);
+        //if (this.isDebug) console.log('rendered: configDetails ',JSON.stringify(this.configDetails));
+
+        // Responsive handling in horizontal (and constrained mode)
+        if ((!this.isVertical) && (!this.isHidden)) {
+            if (this.isDebug) console.log('rendered: handling horizontal resizing');
+
+            if (!this._observerInitialised) {
+                if (this.isDebug) console.log('rendered: initializing overflowObserver');
+                this._observerInitialised = true;
+                this._overflowObserver = new ResizeObserver(() => {
+                    if (this.isDebug) console.log('observer: START for actionBar ', this.configName);
+                    this._overflowInitialised = false;
+                    if (this.isDebug) console.log('observer: overflow init requested');
+                    this.mainActions = [...this.actionList];
+                    this.overflowActions = [];
+                    if (this.isDebug) console.log('observer: END / main and overflow actions reset');
+                });
+                this._overflowObserver.observe(this.refs.actionWrapper);
+                if (this.isDebug) console.log('rendered: overflowObserver connected');
+            }
+
+            //let actionWrapper = this.refs.actionWrapper;
+            const actionGroup = this.refs.actionGroup;
+            if (actionGroup) {
+                if (this.isDebug) console.log('rendered: actionGroup initialized');
+            
+                if (this._overflowInitialised) {
+                    if (this.isDebug) console.log('rendered: overflow init done');
+                }
+                else {
+                    if (this.isDebug) console.log('rendered: initializing overflow');
+                    this._overflowInitialised = true;
+
+                    requestAnimationFrame(() => {
+                        if (this.isDebug) console.log('overflow: START for config ', this.configName);
+                        if (this.isDebug) console.log('overflow: current #mainActions ', this.mainActions.length);
+                        if (this.isDebug) console.log('overflow: current #overflowActions ', this.overflowActions.length);
+
+                        const container = this.refs.actionGroup;
+                        if (this.isDebug) console.log('overflow: current actionGroup height ', container.offsetHeight);
+                        if (container.offsetHeight <= 35) {
+                            if (this.isDebug) console.log('overflow: END / correct height reached');
+                            return;
+                        }
+                        if (!this.mainActions.length) {
+                            if (this.isDebug) console.log('overflow: END / no more action to remove');
+                            return;
+                        }
+
+                        // Rough estimate: remove proportional to how much we exceed 35px
+                        const ratio = 35 / container.offsetHeight;
+                        //const keepCount = Math.max(1, Math.floor(this.mainActions.length * ratio));
+                        const keepCount = Math.floor(this.mainActions.length * ratio);
+                        if (this.isDebug) console.log('overflow: mainActions to keep ', keepCount);
+
+                        const toOverflow = this.mainActions.slice(keepCount);
+                        this.mainActions = this.mainActions.slice(0, keepCount);
+                        if (this.isDebug) console.log('overflow: mainActions kept ', this.mainActions.length);
+
+                        this.overflowActions = [...toOverflow, ...this.overflowActions];
+                        if (this.isDebug) console.log('overflow: new overflowActions ', this.overflowActions.length);
+
+                        this._overflowInitialised = false;  // fine-tune on next render if still over
+                        if (this.isDebug) console.log('overflow: END');
+                    });
+                    if (this.isDebug) console.log('rendered: awaiting overflow computation');
+                }
+            }
+            else {
+                if (this.isDebug) console.log('rendered: no actionGroup yet');
+            }
+        }
+
+        if (this.isDebug) console.log('rendered: END for ActionBar');
+    }
+
     disconnectedCallback() {
         if (this.isDebug) console.log('disconnected: START for ActionBar ',this.configName);
         if (this.isDebug) console.log('disconnected: recordId ',this.recordId);
@@ -326,67 +408,10 @@ export default class SfpegActionBarCmp extends NavigationMixin(LightningElement)
             if (this.isDebug) console.log('disconnected: no notification channel to unsubscribe');
         }
 
+        this._overflowObserver?.disconnect();
+        if (this.isDebug) console.log('disconnected: overflowObserver possibly disconnected');
+
         if (this.isDebug) console.log('disconnected: END for ActionBar');
-    }
-
-    renderedCallback(){
-        if (this.isDebug) console.log('rendered: START for ActionBar', this.configName);
-        if (this.isDebug) console.log('rendered: recordId ', this.recordId);
-        //if (this.isDebug) console.log('rendered: configDetails ',JSON.stringify(this.configDetails));
-
-        // Responsive handling in horizontal (and constrained mode)
-        if (!this.isVertical) {
-            let actionGroup = this.template.querySelectorAll("[data-type='containGroup']");
-            if (this.isDebug) console.log('rendered: actionGroup queried ',actionGroup);
-            if (this.isDebug) console.log('rendered: actionGroup[0] fetched ',actionGroup[0]);
-            if (this.isDebug) console.log('rendered: actionGroup[0] offsetHeight fetched ',(actionGroup[0])?.offsetHeight);
-
-            if ((actionGroup) && (actionGroup[0])) {
-                //console.log('renderedCallback: actionGroup width determined ',actionGroup[0]?.offsetWidth);
-                let groupHeight = (actionGroup[0])?.offsetHeight || 0;
-                if (this.isDebug) console.log('rendered: actionGroup height determined ',groupHeight);
-                //setTimeout(() => console.log('rendered: actionGroup height refetched ', (actionGroup[0])?.offsetHeight), 0);
-                //if (this.isDebug) console.log('rendered: actionGroup offset height fetched ',actionGroup[0].offsetHeight);
-                // 35 instead of 32
-                if (groupHeight > 35) {
-                    if (this.isDebug) console.log('rendered: reviewing action group size');
-                    if (this.mainActions.length > 0) {
-                        let lastAction =  this.mainActions.pop();
-                        if (this.isDebug) console.log('rendered: lastAction popped ', lastAction);
-                        this.overflowActions.unshift(lastAction);
-                        if (this.isDebug) console.log('rendered: mainActions updated ', this.mainActions);
-                        if (this.isDebug) console.log('rendered: overflowActions updated ', this.overflowActions);
-                    }
-                }
-                //@Todo: refactor this part (work-around because offsetHeight not available directly.)
-                else if (groupHeight == 0) {
-                    if (this.isDebug) console.log('rendered: null size --> waiting for actual rendering');
-                    setTimeout(() => {
-                        if (this.isDebug) console.log('rendered: actionGroup height refetched ', (actionGroup[0])?.offsetHeight);
-                        groupHeight = (actionGroup[0])?.offsetHeight || 0;
-                        if (this.isDebug) console.log('rendered: actionGroup height re-determined ',groupHeight);
-                        if (groupHeight > 35) {
-                            if (this.isDebug) console.log('rendered: reviewing action group size');
-                            if (this.mainActions.length > 0) {
-                                let lastAction =  this.mainActions.pop();
-                                if (this.isDebug) console.log('rendered: lastAction popped ', lastAction);
-                                if (this.isDebug) console.log('rendered: mainActions updated ', this.mainActions);
-                                this.overflowActions.unshift(lastAction);
-                                if (this.isDebug) console.log('rendered: overflowActions updated ', this.overflowActions);
-                            }
-                        }
-                    }, 0);
-                }
-                else {
-                    if (this.isDebug) console.log('rendered: no action rework required ');
-                }
-            }
-            else {
-                if (this.isDebug) console.log('rendered: no action directly in action group (yet)');
-            }
-        }
-
-        if (this.isDebug) console.log('rendered: END for ActionBar');
     }
 
     //----------------------------------------------------------------

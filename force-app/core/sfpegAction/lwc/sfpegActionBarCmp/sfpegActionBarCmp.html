@@ -1,5 +1,5 @@
 <template>
-
+    <div lwc:ref="actionWrapper">
     <template lwc:if={isHidden}>
         <template lwc:if={isReady}>
             <!-- Error Display -->
@@ -57,10 +57,90 @@
                     <template lwc:if={isVertical}>
                         <ul class="">
                             <template iterator:it={actionList}>
-                                <template if:false={it.value.hidden}>
+                                <template lwc:if={it.value.hidden}>
+                                </template>
+                                <template lwc:else>
                                     <li key={it.value.name} class="slds-m-around_xx-small">
+                                        <!-- Menu display -->
+                                        <template lwc:if={it.value.items}>
+                                            <template lwc:if={it.value.disabled}>
+                                                <template lwc:if={it.value.iconName}>
+                                                    <lightning-button-menu  icon-size={it.value.iconSize}
+                                                                            icon-name={it.value.iconName}
+                                                                            variant={it.value.variant}
+                                                                            label={it.value.label}
+                                                                            disabled >
+                                                    </lightning-button-menu>
+                                                </template>
+                                                <template lwc:else>
+                                                    <lightning-button-menu  variant={it.value.variant}
+                                                                            label={it.value.label}
+                                                                            disabled >
+                                                    </lightning-button-menu>
+                                                </template>
+                                            </template>
+                                            <template lwc:else>
+                                                <template lwc:if={it.value.iconName}>
+                                                    <lightning-button-menu  menu-alignment={it.value.align}
+                                                                            icon-size={it.value.iconSize}
+                                                                            icon-name={it.value.iconName}
+                                                                            variant={it.value.variant}
+                                                                            label={it.value.label}
+                                                                            onselect={handleMenuSelect} >
+                                                        <template for:each={it.value.items} for:item="menuIter">
+                                                            <template lwc:if={menuIter.hidden}>
+                                                            </template>
+                                                            <template lwc:else>
+                                                                <template lwc:if={menuIter.disabled}>
+                                                                    <lightning-menu-item    key={menuIter.name}
+                                                                                            label={menuIter.label}
+                                                                                            icon-name={menuIter.iconName}
+                                                                                            disabled>
+                                                                    </lightning-menu-item>
+                                                                </template>
+                                                                <template lwc:else>
+                                                                    <lightning-menu-item    key={menuIter.name}
+                                                                                            label={menuIter.label}
+                                                                                            icon-name={menuIter.iconName}
+                                                                                            value={menuIter}>
+                                                                    </lightning-menu-item>
+                                                                </template>
+                                                            </template>
+                                                        </template>
+                                                    </lightning-button-menu>
+                                                </template>
+                                                <template lwc:else>
+                                                    <lightning-button-menu  menu-alignment={it.value.align}
+                                                                            variant={it.value.variant}
+                                                                            label={it.value.label}
+                                                                            onselect={handleMenuSelect} >
+                                                        <template for:each={it.value.items} for:item="menuIter">
+                                                            <template lwc:if={menuIter.hidden}>
+                                                            </template>
+                                                            <template lwc:else>
+                                                                <template lwc:if={menuIter.disabled}>
+                                                                    <lightning-menu-item    key={menuIter.name}
+                                                                                            label={menuIter.label}
+                                                                                            icon-name={menuIter.iconName}
+                                                                                            disabled>
+                                                                    </lightning-menu-item>
+                                                                </template>
+                                                                <template lwc:else>
+                                                                    <lightning-menu-item    key={menuIter.name}
+                                                                                            label={menuIter.label}
+                                                                                            icon-name={menuIter.iconName}
+                                                                                            value={menuIter}>
+                                                                    </lightning-menu-item>
+                                                                </template>
+                                                            </template>
+                                                        </template>
+                                                    </lightning-button-menu>
+                                                </template>
+                                            </template>
+                                        </template>
+
                                         <!-- Button -->
-                                        <template if:false={it.value.items}>
+                                        <template lwc:else>
                                             <template if:true={it.value.label}>
                                                 <template if:true={it.value.disabled}>
                                                     <lightning-button   label={it.value.label}
@@ -108,43 +188,70 @@
                                                 </template>
                                             </template>
                                         </template>
+                                    </li>
+                                </template>
+                            </template>
+                        </ul>
+                    </template>
 
+                    <!-- Horizontal Display -->
+                    <template lwc:else>
+                        <lightning-button-group lwc:ref="actionGroup" data-type="containGroup">
+
+                            <!-- Main Action Set Display -->
+                            <template lwc:if={showMainActions}>
+                                <template iterator:it={mainActions}>
+                                    <template lwc:if={it.value.hidden}>
+                                    </template>
+                                    <template lwc:else>
                                         <!-- Menu display -->
-                                        <template if:true={it.value.items}>
-                                            <template if:true={it.value.disabled}>
-                                                <template if:true={it.value.iconName}>
-                                                    <lightning-button-menu  icon-size={it.value.iconSize}
-                                                                            icon-name={it.value.iconName}
-                                                                            variant={it.value.variant}
-                                                                            label={it.value.label}
-                                                                            disabled >
-                                                    </lightning-button-menu>
-                                                </template>
-                                                <template if:false={it.value.iconName}>
-                                                    <lightning-button-menu  variant={it.value.variant}
-                                                                            label={it.value.label}
-                                                                            disabled >
-                                                    </lightning-button-menu>
-                                                </template>
-                                            </template>
-                                            <template if:false={it.value.disabled}>
-                                                <template if:true={it.value.iconName}>
-                                                    <lightning-button-menu  menu-alignment={it.value.align}
+                                        <template lwc:if={it.value.items}>
+                                            <!-- Disabled Menu (no content) -->
+                                            <template lwc:if={it.value.disabled}>
+                                                <template lwc:if={it.value.iconName}>
+                                                    <lightning-button-menu  key={it.value.name}
                                                                             icon-size={it.value.iconSize}
                                                                             icon-name={it.value.iconName}
                                                                             variant={it.value.variant}
                                                                             label={it.value.label}
+                                                                            title={it.value.title}
+                                                                            disabled >
+                                                    </lightning-button-menu>
+                                                </template>
+                                                <template lwc:else>
+                                                    <lightning-button-menu  key={it.value.name}
+                                                                            variant={it.value.variant}
+                                                                            label={it.value.label}
+                                                                            title={it.value.title}
+                                                                            disabled >
+                                                    </lightning-button-menu>
+                                                </template>
+                                            </template>
+                                            <!-- Enabled Menu (with content) -->
+                                            <template lwc:else>
+                                                <!-- Menu with icon -->
+                                                <template lwc:if={it.value.iconName}>
+                                                    <lightning-button-menu  key={it.value.name}
+                                                                            menu-alignment={it.value.align}
+                                                                            icon-size={it.value.iconSize}
+                                                                            icon-name={it.value.iconName}
+                                                                            variant={it.value.variant}
+                                                                            label={it.value.label}
+                                                                            title={it.value.title}
                                                                             onselect={handleMenuSelect} >
                                                         <template for:each={it.value.items} for:item="menuIter">
-                                                            <template if:false={menuIter.hidden}>
-                                                                <template if:true={menuIter.disabled}>
+                                                            <template lwc:if={menuIter.hidden}>
+                                                            </template>
+                                                            <template lwc:else>
+                                                                <template lwc:if={menuIter.disabled}>
                                                                     <lightning-menu-item    key={menuIter.name}
                                                                                             label={menuIter.label}
                                                                                             icon-name={menuIter.iconName}
+                                                                                            value={menuIter}
                                                                                             disabled>
                                                                     </lightning-menu-item>
                                                                 </template>
-                                                                <template if:false={menuIter.disabled}>
+                                                                <template lwc:else>
                                                                     <lightning-menu-item    key={menuIter.name}
                                                                                             label={menuIter.label}
                                                                                             icon-name={menuIter.iconName}
@@ -155,21 +262,28 @@
                                                         </template>
                                                     </lightning-button-menu>
                                                 </template>
-                                                <template if:false={it.value.iconName}>
-                                                    <lightning-button-menu  menu-alignment={it.value.align}
+                                                <!-- Menu without icon -->
+                                                <template lwc:else>
+                                                    <lightning-button-menu  key={it.value.name}
+                                                                            menu-alignment={it.value.align}
                                                                             variant={it.value.variant}
+                                                                            icon-size={it.value.iconSize}
                                                                             label={it.value.label}
+                                                                            title={it.value.title}
                                                                             onselect={handleMenuSelect} >
                                                         <template for:each={it.value.items} for:item="menuIter">
-                                                            <template if:false={menuIter.hidden}>
-                                                                <template if:true={menuIter.disabled}>
+                                                            <template lwc:if={menuIter.hidden}>
+                                                            </template>
+                                                            <template lwc:else>
+                                                                <template lwc:if={menuIter.disabled}>
                                                                     <lightning-menu-item    key={menuIter.name}
                                                                                             label={menuIter.label}
                                                                                             icon-name={menuIter.iconName}
+                                                                                            value={menuIter}
                                                                                             disabled>
                                                                     </lightning-menu-item>
                                                                 </template>
-                                                                <template if:false={menuIter.disabled}>
+                                                                <template lwc:else>
                                                                     <lightning-menu-item    key={menuIter.name}
                                                                                             label={menuIter.label}
                                                                                             icon-name={menuIter.iconName}
@@ -182,25 +296,12 @@
                                                 </template>
                                             </template>
                                         </template>
-                                    </li>
-                                </template>
-                            </template>
-                        </ul>
-                    </template>
 
-                    <!-- Horizontal Display -->
-                    <template lwc:else>
-                        <lightning-button-group  data-type="containGroup">
-
-                            <!-- Main Action Set Display -->
-                            <template if:true={showMainActions}>
-                                <template iterator:it={mainActions}>
-                                    <template if:false={it.value.hidden}>
                                         <!-- Button -->
-                                        <template if:false={it.value.items}>
+                                        <template lwc:else>
                                             <!-- Standard Button (with label) -->
-                                            <template if:true={it.value.label}>
-                                                <template if:true={it.value.disabled}>
+                                            <template lwc:if={it.value.label}>
+                                                <template lwc:if={it.value.disabled}>
                                                     <lightning-button   key={it.value.name}
                                                                         label={it.value.label}
                                                                         variant={it.value.variant}
@@ -211,7 +312,7 @@
                                                                         disabled>
                                                     </lightning-button>
                                                 </template>
-                                                <template if:false={it.value.disabled}>
+                                                <template lwc:else>
                                                     <lightning-button   key={it.value.name}
                                                                         label={it.value.label}
                                                                         variant={it.value.variant}
@@ -225,8 +326,8 @@
                                                 </template>
                                             </template>
                                             <!-- ButtonIcon (no label) -->
-                                            <template if:false={it.value.label}>
-                                                <template if:true={it.value.disabled}>
+                                            <template lwc:else>
+                                                <template lwc:if={it.value.disabled}>
                                                     <lightning-button-icon  key={it.value.name}
                                                                             size={it.value.iconSize}
                                                                             variant={it.value.variant}
@@ -237,7 +338,7 @@
                                                                             disabled>
                                                     </lightning-button-icon>
                                                 </template>
-                                                <template if:false={it.value.disabled}>
+                                                <template lwc:else>
                                                     <lightning-button-icon  key={it.value.name}
                                                                             size={it.value.iconSize}
                                                                             variant={it.value.variant}
@@ -251,113 +352,22 @@
                                                 </template>
                                             </template>
                                         </template>
-
-                                        <!-- Menu display -->
-                                        <template if:true={it.value.items}>
-                                            <!-- Disabled Menu (no content) -->
-                                            <template if:true={it.value.disabled}>
-                                                <template if:true={it.value.iconName}>
-                                                    <lightning-button-menu  key={it.value.name}
-                                                                            icon-size={it.value.iconSize}
-                                                                            icon-name={it.value.iconName}
-                                                                            variant={it.value.variant}
-                                                                            label={it.value.label}
-                                                                            title={it.value.title}
-                                                                            disabled >
-                                                    </lightning-button-menu>
-                                                </template>
-                                                <template if:false={it.value.iconName}>
-                                                    <lightning-button-menu  key={it.value.name}
-                                                                            variant={it.value.variant}
-                                                                            label={it.value.label}
-                                                                            title={it.value.title}
-                                                                            disabled >
-                                                    </lightning-button-menu>
-                                                </template>
-                                            </template>
-                                            <!-- Enabled Menu (with content) -->
-                                            <template if:false={it.value.disabled}>
-                                                <!-- Menu with icon -->
-                                                <template if:true={it.value.iconName}>
-                                                    <lightning-button-menu  key={it.value.name}
-                                                                            menu-alignment={it.value.align}
-                                                                            icon-size={it.value.iconSize}
-                                                                            icon-name={it.value.iconName}
-                                                                            variant={it.value.variant}
-                                                                            label={it.value.label}
-                                                                            title={it.value.title}
-                                                                            onselect={handleMenuSelect} >
-                                                        <template for:each={it.value.items} for:item="menuIter">
-                                                            <template if:false={menuIter.hidden}>
-                                                                <template if:true={menuIter.disabled}>
-                                                                    <lightning-menu-item    key={menuIter.name}
-                                                                                            label={menuIter.label}
-                                                                                            icon-name={menuIter.iconName}
-                                                                                            value={menuIter}
-                                                                                            disabled>
-                                                                    </lightning-menu-item>
-                                                                </template>
-                                                                <template if:false={menuIter.disabled}>
-                                                                    <lightning-menu-item    key={menuIter.name}
-                                                                                            label={menuIter.label}
-                                                                                            icon-name={menuIter.iconName}
-                                                                                            value={menuIter}>
-                                                                    </lightning-menu-item>
-                                                                </template>
-                                                            </template>
-                                                        </template>
-                                                    </lightning-button-menu>
-                                                </template>
-                                                <!-- Menu without icon -->
-                                                <template if:false={it.value.iconName}>
-                                                    <lightning-button-menu  key={it.value.name}
-                                                                            menu-alignment={it.value.align}
-                                                                            variant={it.value.variant}
-                                                                            icon-size={it.value.iconSize}
-                                                                            label={it.value.label}
-                                                                            title={it.value.title}
-                                                                            onselect={handleMenuSelect} >
-                                                        <template for:each={it.value.items} for:item="menuIter">
-                                                            <template if:false={menuIter.hidden}>
-                                                                <template if:true={menuIter.disabled}>
-                                                                    <lightning-menu-item    key={menuIter.name}
-                                                                                            label={menuIter.label}
-                                                                                            icon-name={menuIter.iconName}
-                                                                                            value={menuIter}
-                                                                                            disabled>
-                                                                    </lightning-menu-item>
-                                                                </template>
-                                                                <template if:false={menuIter.disabled}>
-                                                                    <lightning-menu-item    key={menuIter.name}
-                                                                                            label={menuIter.label}
-                                                                                            icon-name={menuIter.iconName}
-                                                                                            value={menuIter}>
-                                                                    </lightning-menu-item>
-                                                                </template>
-                                                            </template>
-                                                        </template>
-                                                    </lightning-button-menu>
-                                                </template>
-                                            </template>
-                                        </template>
                                     </template>
                                 </template>
                             </template>
 
                             <!-- Action Overflow Menu -->
-                            <template if:true={showOverflowMenu}>
+                            <template lwc:if={showOverflowMenu}>
                                 <lightning-button-menu  menu-alignment="right"
                                                         icon-size="medium"
                                                         variant={overflowVariant}
                                                         onselect={handleOverflowMenuSelect} >
                                     <template iterator:itermenu={overflowActions} >
-                                        <lightning-menu-item    key={overflowVariant}
-                                                                label={overflowVariant}
-                                                                disabled>
-                                        </lightning-menu-item>
                                         <!-- Disabled Action or Menu -->
-                                        <template if:false={itermenu.value.hidden}>
-                                            <template if:true={itermenu.value.disabled}>
+                                        <template lwc:if={itermenu.value.hidden}>
+                                        </template>
+                                        <template lwc:else>
+                                            <template lwc:if={itermenu.value.disabled}>
                                                 <lightning-menu-item    key={itermenu.value.name}
                                                                         label={itermenu.value.label}
                                                                         icon-name={itermenu.value.iconName}
@@ -371,7 +381,7 @@
                                                                         if:false={itermenu.value.label} >
                                                 </lightning-menu-item>
                                             </template>
-                                            <template if:false={itermenu.value.disabled}>
+                                            <template lwc:else>
                                                 <template if:true={itermenu.value.items}>
                                                     <lightning-menu-divider key={itermenu.value.name}
                                                                             if:false={itermenu.first}>
@@ -451,4 +461,5 @@
             </template>
         </div>
     </template>
+    </div>
 </template>

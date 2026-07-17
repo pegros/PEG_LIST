@@ -1,6 +1,6 @@
 <template>
     <template lwc:if={isNotHidden}>
-    <div class={cardClass} data-my-id="wrapperDiv" >
+    <div class={cardClass} data-my-id="wrapperDiv" lwc:ref="wrapperDiv" >
         <lightning-card class="cardHeader">
             <div slot="title" class="slds-media slds-media_center">
                 <template lwc:if={showCardHeaderIcons}>
@@ -145,6 +145,9 @@
                     </lightning-button-icon>
                 </lightning-button-group>
             </div>
+
+            <!-- For Width evaluation -->
+            <div lwc:ref="bodyWidthEval" style="width:100%;"></div>
 
             <!-- Ready state display -->
             <template lwc:if={isReady}>
