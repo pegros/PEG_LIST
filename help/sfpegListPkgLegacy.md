@@ -59,11 +59,9 @@ Install it:
 ### November 2025 - v1.1.0
 
 Version content:
-
 - dependency with `sfpegList-core` package upgraded
 
 Install it:
-
 - from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIhIIAU) for production orgs,
 - from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIhIIAU) for sandboxes,
 - or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xIhIIAU`
@@ -71,11 +69,9 @@ Install it:
 ### January 2026 - v1.2.0
 
 Version content:
-
 - dependency with `sfpegList-core` package upgraded
 
 Install it:
-
 - from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xJCSIA2) for production orgs,
 - from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xJCSIA2) for sandboxes,
 - or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xJCSIA2`
@@ -83,12 +79,21 @@ Install it:
 ### July 2026 - v1.3.0
 
 Version content:
-
 - dependency with `sfpegList-core` package upgraded
 - API version upgraded to 66.0.
 
 Install it:
-
 - from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04td2000000RQCvAAO) for production orgs,
 - from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04td2000000RQCvAAO) for sandboxes,
 - or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04td2000000RQCvAAO`
+
+
+### October 2026 - v1.4.0
+
+Version content:
+- dependency with `sfpegList-core` package upgraded
+
+Install it:
+- from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04td2000000VBFJAA4) for production orgs,
+- from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04td2000000VBFJAA4) for sandboxes,
+- or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04td2000000VBFJAA4`

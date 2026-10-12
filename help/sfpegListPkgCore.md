@@ -96,7 +96,6 @@ better understand their behaviours.
 First version with the new unlocked package structure.
 
 Install it:
-
 - from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xHDBIA2) for production orgs,
 - from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xHDBIA2) for sandboxes,
 - or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xHDBIA2`
@@ -104,7 +103,6 @@ Install it:
 ### November 2025 - v1.1.0
 
 Version content:
-
 - many custom field types added for **[sfpegListCmp](/help/sfpegListCmp.md)**
   component to enhance results display in all modes (datatable, data-tree, tiles...):
   `richText`, `percent-fixed`, `badge`, `avatar`, `multi-value`, `lookup`.
@@ -123,7 +121,6 @@ Version content:
   in a **sfpegListCmp**.
 
 Install it:
-
 - from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIh3IAE) for production orgs,
 - from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIh3IAE) for sandboxes,
 - or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xIh3IAE`
@@ -131,7 +128,6 @@ Install it:
 ### January 2026 - v1.2.0
 
 Version content:
-
 - modified the **Country global value sets** to change the codes for non registered countries or organisations:
   England, Wales, Scotland, Northern Ireland, United Nations Organisation and Europe.
 - added the flag SVG icon for Northern Ireland
@@ -142,7 +138,6 @@ Version content:
 - minor fixes/enhacements to the **sfpegLookupDsp** component on positioning and object icon
 
 Install it:
-
 - from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xJCDIA2) for production orgs,
 - from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xJCDIA2) for sandboxes,
 - or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xJCDIA2`
@@ -154,7 +149,6 @@ impossible to change the code of an existing picklist label.
 ### July 2026 - v1.3.0
 
 Version content:
-
 - added new **sfpegConfigUtl** utility LWV component to mutualize component configuration
   caching in browser.
 - API version upgraded to **66.0**.
@@ -164,21 +158,19 @@ Version content:
 include global sorting from multiple independent queries
 
 Install it:
-
 - from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04td2000000RQ85AAG) for production orgs,
 - from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04td2000000RQ85AAG) for sandboxes,
 - or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04td2000000RQ85AAG`
 
 
-### Next Version - v1.4.0 🚧
+### October 2026 - v1.4.0
 
 Version content:
-
 - the **[sfpegListCmp](/help/sfpegListCmp.md)** component has been fixed
 to properly support `sortable` also for fields declared in the `details`
 property in **sfpegList** metadata (for expandable detailed section).
 
 Install it:
-
-🚧 **Pending final packaging** 🚧
-Install it directly by fetching metadata from github repo.
+- from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04td2000000VApVAAW) for production orgs,
+- from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04td2000000VApVAAW) for sandboxes,
+- or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04td2000000VApVAAW`

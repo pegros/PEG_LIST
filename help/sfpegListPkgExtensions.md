@@ -61,7 +61,6 @@ better understand their behaviours.
 First version with the new unlocked package structure.
 
 Install it:
-
 - from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xHDGIA2) for production orgs,
 - from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xHDGIA2) for sandboxes,
 - or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xHDGIA2`
@@ -69,13 +68,11 @@ Install it:
 ### November 2025 - v1.1.0
 
 Version content:
-
 - `kpiAlign` property added for the **[sfpegKpiListCmp](/help/sfpegKpiListCmp.md)**
   component (to override the default centered layout)
 - dependency with `sfpegList-core` package upgraded
 
 Install it:
-
 - from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIh8IAE) for production orgs,
 - from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xIh8IAE) for sandboxes,
 - or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xIh8IAE`
@@ -83,11 +80,9 @@ Install it:
 ### January 2026 - v1.2.0
 
 Version content:
-
 - dependency with `sfpegList-core` package upgraded
 
 Install it:
-
 - from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xJCIIA2) for production orgs,
 - from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tJ7000000xJCIIA2) for sandboxes,
 - or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04tJ7000000xJCIIA2`
@@ -95,7 +90,6 @@ Install it:
 ### July 2026 - v1.3.0
 
 Version content:
-
 - dependency with `sfpegList-core` package upgraded
 - API version upgraded to **66.0**.
 - upgraded **sfpegCardCmp**, **sfpegCardListCmp**, **sfpegKpiListCmp**, **sfpegMessageCmp**
@@ -103,7 +97,17 @@ Version content:
   **[sfpegConfigUtl]** utility of the [`sfpegList-core`](/help/sfpegListPkgCore.md) package.
 
 Install it:
-
 - from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04td2000000RQ9hAAG) for production orgs,
 - from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04td2000000RQ9hAAG) for sandboxes,
 - or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04td2000000RQ9hAAG`
+
+
+### October 2026 - v1.4.0
+
+Version content:
+- dependency with `sfpegList-core` package upgraded
+
+Install it:
+- from [here ⬇️](https://login.salesforce.com/packaging/installPackage.apexp?p0=04td2000000VAsjAAG) for production orgs,
+- from [here ⬇️](https://test.salesforce.com/packaging/installPackage.apexp?p0=04td2000000VAsjAAG) for sandboxes,
+- or by adding the following relative URL to your Org domain: `/packaging/installPackage.apexp?p0=04td2000000VAsjAAG`

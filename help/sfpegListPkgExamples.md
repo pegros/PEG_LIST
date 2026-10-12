@@ -26,7 +26,6 @@ get more information about the way the included components may be configured.
 ## Package content
 
 The following set of LWC components is available for use in Lightning _App Builder_ or _Site Builder_:
-
 - **[sfpegAppCardCmp](/help/sfpegCardCmp.md)** is a wrapper of the
   **[sfpegCardCmp](/help/sfpegCardCmp.md)** to be able to to inject the card `recordId`
   from a global context instead of being the ID of the current page record.
@@ -56,7 +55,6 @@ Install it directly by fetching metadata from github repo.
 ### November 2025 - v1.1.0
 
 Version content:
-
 - dependency with `sfpegList-core` package upgraded
 
 🚧 **Pending final packaging** 🚧
@@ -65,7 +63,6 @@ Install it directly by fetching metadata from github repo.
 ### November 2025 - v1.2.0
 
 Version content:
-
 - dependency with `sfpegList-core` package upgraded
 
 🚧 **Pending final packaging** 🚧
@@ -74,9 +71,16 @@ Install it directly by fetching metadata from github repo.
 ### July 2026 - v1.3.0
 
 Version content:
-
 - dependency with `sfpegList-core` package upgraded
 - API version upgraded to 66.0.
+
+🚧 **Pending final packaging** 🚧
+Install it directly by fetching metadata from github repo.
+
+### October 2026 - v1.4.0
+
+Version content:
+- dependency with `sfpegList-core` package upgraded
 
 🚧 **Pending final packaging** 🚧
 Install it directly by fetching metadata from github repo.
