@@ -224,7 +224,7 @@ export default class SfpegProfileCmp extends LightningElement {
     // Component Initialization
     //----------------------------------------------------------------
     connectedCallback(){
-        if (this.isDebug) console.log('connected: START with config ', this.configName);
+        if (this.isDebug) console.log('connected: START Profile with config ', this.configName);
 
         if (this.isDebug) console.log('connected: LANG fetched ', LANG);
 

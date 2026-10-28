@@ -72,7 +72,8 @@
                                                         style="word-wrap: break-word !important;"
                                                         title={headerConfig.title.label}>
                                                         <lightning-output-field field-name={headerConfig.title.name}
-                                                                                field-class={titleClass} 
+                                                                                field-class={titleClass}
+                                                                                class="detailField"
                                                                                 variant="label-hidden" >
                                                         </lightning-output-field>
                                                     </h2>
@@ -106,7 +107,8 @@
                                                         <li key={iterFieldH.name}       data-name={iterFieldH.name}
                                                             title={iterFieldH.label}    class="slds-item headerField">
                                                             <lightning-output-field field-name={iterFieldH.name}
-                                                                                    field-class={fieldClass} 
+                                                                                    field-class={fieldClass}
+                                                                                    class="detailField"
                                                                                     variant="label-hidden" >
                                                             </lightning-output-field>
                                                         </li>
@@ -154,6 +156,7 @@
                                         <li key={iterField.name} class="slds-item" title={iterField.label}>
                                             <lightning-output-field field-name={iterField.name}
                                                                     field-class={fieldClass} 
+                                                                    class="detailField"
                                                                     variant="label-hidden" >
                                             </lightning-output-field>
                                         </li>
@@ -171,6 +174,7 @@
                                                 <div class={configDetails.details.fieldClass} key={iterField.name} title={iterField.label}>
                                                     <lightning-output-field field-name={iterField.name}
                                                                             field-class={fieldClass}
+                                                                            class="detailField"
                                                                             variant={fieldVariant}>
                                                     </lightning-output-field>
                                                 </div>
@@ -192,6 +196,7 @@
                                                         <div class="slds-media__body"> 
                                                             <lightning-output-field field-name={iterField.name}
                                                                                     field-class={fieldClass}
+                                                                                    class="detailField"
                                                                                     variant={fieldVariant}>
                                                             </lightning-output-field>
                                                         </div>
@@ -212,6 +217,7 @@
                                                         <dd class="slds-dl_horizontal__detail" >
                                                             <lightning-output-field field-name={iterField.name}
                                                                                     field-class={fieldClass}
+                                                                                    class="detailField"
                                                                                     variant="label-hidden" >
                                                             </lightning-output-field>
                                                         </dd>

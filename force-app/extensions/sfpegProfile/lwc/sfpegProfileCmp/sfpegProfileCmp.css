@@ -73,6 +73,11 @@
 	height          :   100%;
     object-position :   center;
 }
+.slds-card .profileBannerImage {
+    border-top-left-radius: var(--slds-c-card-radius-border, var(--slds-s-container-radius-border, var(--slds-g-radius-border-2))) !important;
+    border-top-right-radius: var(--slds-c-card-radius-border, var(--slds-s-container-radius-border, var(--slds-g-radius-border-2))) !important;
+}
+
 
 /* AVATAR Classes */
 .profileAvatar-large {
@@ -151,6 +156,7 @@
 }*/
 .profileBadgeField {
     margin-bottom: 0px !important;
+    border-bottom-style: none !important;
 }
 .profileBadgeText {
     font-weight : var(--lwc-fontWeightBold) !important;
@@ -187,4 +193,11 @@
     margin-bottom : 10px   !important;*/
     text-overflow: ellipsis !important;
     /*word-wrap: break-word !important;*/
+}
+.detailField {
+    border-bottom-style: none !important;
+}
+.detailField.slds-form-element {
+    width: fit-content !important;
+    min-width: fit-content !important;
 }
