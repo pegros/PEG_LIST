@@ -1475,7 +1475,7 @@ export default class SfpegListCmp extends LightningElement {
 
         sfpegCsvUtl.sfpegCsvUtl.isDebug = this.isDebug;
         if (this.isDebug) console.log('handleExport: display type ', this.configDetails.type);
-        sfpegCsvUtl.sfpegCsvUtl.export(this.cardTitle,this.resultList,fieldList, (this.configDetails.type === 'TreeGrid'), this.configDetails.display.keyField);
+        sfpegCsvUtl.sfpegCsvUtl.export(this.cardTitle || 'Export',this.resultList,fieldList, (this.configDetails.type === 'TreeGrid'), this.configDetails.display.keyField);
         sfpegCsvUtl.sfpegCsvUtl.isDebug = false;
 
         if (this.isDebug) console.log('handleExport: END ');

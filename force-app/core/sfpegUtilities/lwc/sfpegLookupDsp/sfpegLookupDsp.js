@@ -489,9 +489,12 @@ export default class SfpegLookupDsp extends NavigationMixin(LightningElement) {
                                 if (this.isDebug) console.log('createRecordForm: replacing __c by __r');
                                 iterFieldApiName = iterFieldApiName.replace('__c','__r');
                             }
-                            else {
+                            else if (iterFieldApiName.endsWith('Id')) {
                                 if (this.isDebug) console.log('createRecordForm: removing Id at the end');
                                 iterFieldApiName = iterFieldApiName.substring(0, iterFieldApiName.length - 2)
+                            }
+                            else {
+                                if (this.isDebug) console.log('createRecordForm: keeping orig');
                             }
                             if (this.isDebug) console.log('createRecordForm: API Name reworked ',iterFieldApiName);
                         }
