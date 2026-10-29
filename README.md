@@ -53,8 +53,8 @@ packages (with their dedicated folders and overview pages):
 ℹ️ The [Component List](/help/componentList.md) page provides an exhaustive list of all metadata
 included in the reporstory (with links to their _help_ page when available).
 
-ℹ️ Please refer to the **[PEG_DC](https://github.com/pegros/PEG_DC)** repository for extra utilities dedicated
-to **Data Cloud** or **AI Prompt** related use cases.
+ℹ️ Please refer to the **[PEG_LIST_DC](https://github.com/pegros/PEG_LIST_DC)** repository for extra utilities dedicated
+to **Data360** or **GenAI** related use cases.
 
 
 ## Claude Skills
